@@ -4,13 +4,12 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>Home</title>
+	<title>TripplyMainPage</title>
 </head>
 <body>
 <h1>
-	Hello world!  
+	Hello Tripply!  
 </h1>
 
-<P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>
