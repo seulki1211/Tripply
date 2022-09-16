@@ -3,7 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
+			<!-- 	부적합한열유형1111 해결 -->
+<settings>
+	<setting name="jdbcTypeForNull" value="NULL"/>
+</settings>
+<!-- 만약에 null 데이터가 전달되었으면 빈칸이 아닌 NULL로 인식하도록 설정 -->
+
   <mappers>
-  	 <mapper resource="mappers/trade-mapper.xml"/>
+  	 <mapper resource="mappers/party-mapper.xml"/>
   </mappers>
 </configuration>
