@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PartyMapper">
+
+<insert id="insertParty">
+INSERT INTO PARTY_TBL
+VALUES(
+	SEQ_BOARDNO.NEXTVAL, #{partyTitle}, #{partyContents}, 
+	#{partyWriter}, #{partyFirstDate}, #{partyLastDate}, #{partyLocation},
+	#{partyFileName},#{partyFileRename},#{partyFilePath},
+	DEFAULT, DEFAULT, DEFAULT, DEFAULT
+	) 
+</insert>
+</mapper>
