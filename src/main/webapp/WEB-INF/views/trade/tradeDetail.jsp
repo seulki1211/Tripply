@@ -4,11 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Tripply Project</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<div>
-		<button onclick="location.href='/home.kh';">Visit Tripply!</button>
-	</div>
+
 </body>
 </html>
