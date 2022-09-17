@@ -41,9 +41,19 @@
 					</c:forEach>
 				</tr>
 			</table>
-			<div id="pageNavi">
 			
+			<div id="pageNavi">
+				<c:if test="${paging.startNavi > 1 }">
+					<a href="/review/list.kh?currentPage=${paging.startNavi-1 }">[이전]</a>
+				</c:if>
+				<c:forEach begin="${paging.startNavi }" end="${paging.endNavi }" var="p" >
+					<a href="/review/list.kh?currentPage=${p }">${p }</a>
+				</c:forEach>
+				<c:if test="${paging.endNavi < paging.endPage }">
+					<a href="/review/list.kh?currentPage=${paging.endNavi+1 }">[다음]</a>
+				</c:if>
 			</div>
+			
 			<div id="button">
 				<button onclick="location.href='/review/writeView.kh';">글 작성</button>
 			</div>

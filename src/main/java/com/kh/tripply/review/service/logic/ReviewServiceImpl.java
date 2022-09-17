@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.tripply.review.common.Paging;
 import com.kh.tripply.review.domain.Review;
 import com.kh.tripply.review.service.ReviewService;
 import com.kh.tripply.review.store.ReviewStore;
@@ -22,9 +23,14 @@ public class ReviewServiceImpl implements ReviewService {
 		return result;
 	}
 	@Override
-	public List<Review> printAllReview() {
-		List<Review> rList = rStore.selectAllReview(session);
+	public List<Review> printAllReview(Paging paging) {
+		List<Review> rList = rStore.selectAllReview(session,paging);
 		return rList;
+	}
+	@Override
+	public int getTotalCount() {
+		int totalCount = rStore.getTotalCount(session);
+		return totalCount;
 	}
 	
 }
