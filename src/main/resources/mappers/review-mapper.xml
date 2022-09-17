@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ReviewMapper">
+
+
+	<resultMap type="Review" id="reviewResultMap">
+		<id 	column="BOARD_NO" 			property="boardNo"/>
+		<result column="REVIEW_TITLE" 		property="reviewTitle"/>
+		<result column="REVIEW_CONTENTS" 	property="reviewContents"/>
+		<result column="REVIEW_WRITER" 		property="reviewWriter"/>
+		<result column="R_LOCATION_CODE" 	property="rLocationCode"/>
+		<result column="REVIEW_FILENAME" 	property="reviewFileName"/>
+		<result column="REVIEW_RENAME" 		property="reviewFileReName"/>
+		<result column="REVIEW_FILEPATH" 	property="reviewFilePath"/>
+		<result column="REVIEW_COUNT" 		property="reviewCount"/>
+		<result column="R_CREATE_DATE" 		property="rCreateDate"/>
+		<result column="R_UPDATE_DATE" 		property="rUpdateDate"/>
+		<result column="R_STATUS" 			property="rStatus"/>
+	</resultMap>  
+  	<select id="selectAllReview" resultMap="reviewResultMap">  	
+  		SELECT * FROM REVIEW_TBL
+  	</select>
+  	<insert id="insertReview">
+  		INSERT INTO REVIEW_TBL
+  		VALUES(SEQ_BOARDNO.NEXTVAL,#{reviewTitle},#{reviewContents},#{reviewWriter},#{rLocationCode},#{reviewFileName},#{reviewFileReName},#{reviewFilePath},DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+  	</insert>
+  
+  </mapper>

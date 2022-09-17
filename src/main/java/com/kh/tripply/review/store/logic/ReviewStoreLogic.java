@@ -1,5 +1,7 @@
 package com.kh.tripply.review.store.logic;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -11,8 +13,14 @@ public class ReviewStoreLogic implements ReviewStore{
 
 	@Override
 	public int insertReview(SqlSession session, Review review) {
-		int result = session.insert("", review);
+		int result = session.insert("ReviewMapper.insertReview", review);
 		return result;
+	}
+
+	@Override
+	public List<Review> selectAllReview(SqlSession session) {
+		List<Review> rList = session.selectList("ReviewMapper.selectAllReview");
+		return rList;
 	}
 
 }

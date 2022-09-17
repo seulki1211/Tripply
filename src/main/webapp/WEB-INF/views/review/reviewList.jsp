@@ -23,39 +23,22 @@
 		<div id="list-area">
 			<table align="center" width="100%">
 				<tr>
-					<td class="list-td" width="30%">
-						<div>
-							<img class="thumbnail" src="/resources/image/flower1.png" height="100" width="100">
-						</div>
-						<div>
-							<div>제목</div>
-							<div>작성자</div>
-							<div>조회수</div>
-							<div>날짜</div>
-						</div>
-					</td>
-					<td class="list-td" width="30%">
-						<div>
-							<img class="thumbnail" src="/resources/image/flower1.png" height="100" width="100">
-						</div>
-						<div>
-							<div>제목</div>
-							<div>작성자</div>
-							<div>조회수</div>
-							<div>날짜</div>
-						</div>
-					</td>
-					<td class="list-td" width="30%">
-						<div>
-							<img class="thumbnail" src="/resources/image/flower1.png" height="100" width="100">
-						</div>
-						<div>
-							<div>제목</div>
-							<div>작성자</div>
-							<div>조회수</div>
-							<div>날짜</div>
-						</div>
-					</td>
+					<c:forEach items="${rList }" var="review" varStatus="N">
+						<td class="list-td" width="30%">
+							<div>
+								<img class="thumbnail" onerror="this.src='/resources/image/flower1.png';" src="" height="90%" width="90%">
+							</div>
+							<div>
+								<div>${review.reviewTitle }</div>
+								<div>${review.reviewWriter }</div>
+								<div>${review.reviewCount }</div>
+								<div>${review.rCreateDate }</div>
+							</div>
+						</td>
+						<c:if test="${N.count % 3 == 0 }">
+							</tr><tr>
+						</c:if>			
+					</c:forEach>
 				</tr>
 			</table>
 			<div id="pageNavi">

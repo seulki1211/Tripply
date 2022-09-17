@@ -1,5 +1,7 @@
 package com.kh.tripply.review.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,8 +22,18 @@ public class ReviewController {
 	 * @return /review/reviewList
 	 */
 	@RequestMapping(value="/review/list.kh", method=RequestMethod.GET)
-	public String reviewView() {
-		return "/review/reviewList";
+	public ModelAndView reviewListView(ModelAndView mv) {
+		
+		try {
+			List<Review> rList = rService.printAllReview();
+			if(!rList.isEmpty()) {
+				mv.addObject("rList",rList).setViewName("review/reviewList");
+			}else {
+				
+			}
+		} catch (Exception e) {
+		}
+		return mv;
 	}
 	
 	/**
@@ -41,7 +53,17 @@ public class ReviewController {
 	@RequestMapping(value="/review/write.kh",method=RequestMethod.POST)
 	public ModelAndView reviewWrite(ModelAndView mv,
 					@ModelAttribute Review review) {
+		int result = rService.registerReview(review);
 		
+		try {
+			if(result > 0) {
+				mv.setViewName("/review/reviewList");
+			}else {
+				mv.addObject("msg","게시물 저장에 실패하였습니다.").setViewName("/common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg",e.getMessage()).setViewName("/common/errorPage");
+		}
 		return mv;
 	}
 

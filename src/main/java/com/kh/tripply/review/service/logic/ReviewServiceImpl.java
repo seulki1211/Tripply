@@ -1,5 +1,7 @@
 package com.kh.tripply.review.service.logic;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,11 @@ public class ReviewServiceImpl implements ReviewService {
 	public int registerReview(Review review) {
 		int result = rStore.insertReview(session, review);
 		return result;
+	}
+	@Override
+	public List<Review> printAllReview() {
+		List<Review> rList = rStore.selectAllReview(session);
+		return rList;
 	}
 	
 }

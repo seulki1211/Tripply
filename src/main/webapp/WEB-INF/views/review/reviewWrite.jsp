@@ -40,6 +40,11 @@
 						</select>
 						<input type="text" id="inputTitle" name="reviewTitle" placeholder="제목을 입력하세요"><br>
 						<textarea id="summernote" name="reviewContents"></textarea>
+						
+						<input type="hidden" name="reviewFileName" value="">
+						<input type="hidden" name="reviewFileReName" value="">
+						<input type="hidden" name="reviewFilePath" value="">
+						
 						<button>저장</button>
 			</form>
 		</div>
