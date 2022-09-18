@@ -20,7 +20,8 @@
 		<result column="THUMBNAIL_PATH"		property="thumbnailPath"/>
 	</resultMap>  
   	<select id="selectAllReview" resultMap="reviewResultMap">  	
-  		SELECT * FROM REVIEW_TBL ORDER BY R_CREATE_DATE DESC
+  		SELECT BOARD_NO,REVIEW_TITLE,REVIEW_WRITER,R_LOCATION_CODE,REVIEW_FILENAME,REVIEW_RENAME,REVIEW_FILEPATH,REVIEW_COUNT,R_CREATE_DATE,R_UPDATE_DATE,R_STATUS,THUMBNAIL_PATH
+  		FROM REVIEW_TBL ORDER BY R_CREATE_DATE DESC
   	</select>
   	<select id="selectOneReview" resultMap="reviewResultMap">
   		SELECT * FROM REVIEW_TBL WHERE BOARD_NO=#{boardNo} AND R_STATUS='Y'

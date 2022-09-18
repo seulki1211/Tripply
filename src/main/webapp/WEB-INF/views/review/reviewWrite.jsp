@@ -21,7 +21,6 @@
 <!-- 스크립트태그-썸머노트설정 -->
 <script>
 		$(document).ready(function(){
-			
 			$('#summernote').summernote({
 				height : 300,
 				width : 700,
@@ -94,6 +93,7 @@
 						<input type="text" id="inputTitle" name="reviewTitle" placeholder="제목을 입력하세요"><br>
 						<textarea id="summernote" name="reviewContents"></textarea>
 <!-- 썸네일 선택-->
+						썸네일 선택
 						<select id="thumbnailPath" name="thumbnailPath">
 						</select>
 						<button>저장</button>

@@ -76,7 +76,7 @@ public class ReviewController {
 		int result = rService.registerReview(review);
 		try {
 			if(result > 0) {
-				mv.setViewName("redirect:/review/reviewList");
+				mv.setViewName("redirect:/review/list.kh?currnentPage=1");
 			}else {
 				mv.addObject("msg","게시물 저장에 실패하였습니다.").setViewName("/common/errorPage");
 			}
@@ -106,6 +106,13 @@ public class ReviewController {
 		return mv;
 	}
 	
+	/**
+	 * 썸머노트 ajax 매핑 메소드
+	 * 에디터 업로드 이미지 저장 및 파일 경로 json반환
+	 * @param multipartFile
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/uploadSummernoteImageFile",method=RequestMethod.POST)
 	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile,
