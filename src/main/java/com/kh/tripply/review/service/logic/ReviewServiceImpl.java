@@ -37,5 +37,10 @@ public class ReviewServiceImpl implements ReviewService {
 		Review review = rStore.selectDetailReviewByNo(session, boardNo);
 		return review;
 	}
+	@Override
+	public int removeReviewByNo(Review review) {
+		int result = rStore.deleteReviewByNo(session, review);
+		return result;
+	}
 	
 }

@@ -2,12 +2,12 @@ package com.kh.tripply.review.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,6 +60,7 @@ public class ReviewController {
 	 */
 	@RequestMapping(value="/review/writeView.kh",method=RequestMethod.GET)
 	public String reviewWriteView() {
+//로그인 체크 구현 필요		
 		return "/review/reviewWrite";
 	}
 	
@@ -94,6 +95,7 @@ public class ReviewController {
 	@RequestMapping(value="/review/detailView.kh",method=RequestMethod.GET)
 	public ModelAndView reviewDetailView(ModelAndView mv,
 			@RequestParam("boardNo") Integer boardNo) {
+//로그인 체크 구현 필요
 		try {
 			Review review = rService.printDetailReviewByNo(boardNo);
 			if(review != null) {
@@ -105,6 +107,38 @@ public class ReviewController {
 		}
 		return mv;
 	}
+	
+	/**
+	 * 후기 게시물 삭제
+	 * @param mv,boardNo,review,session
+	 * @return mv
+	 */
+	@RequestMapping(value="/review/remove.kh",method=RequestMethod.GET)
+	public ModelAndView reviewDelete(ModelAndView mv,
+			@RequestParam("boardNo")Integer boardNo,
+			Review review,
+			HttpSession session) {
+//로그인 유저와(세션) 작성자 체크 필요 or 화면에서 체크.
+		try {
+//		String loginUser = (String)session.getAttribute("loginUser");
+		String loginUser = "임시작성자";
+		review.setReviewWriter(loginUser);
+		review.setBoardNo(boardNo);
+		int result = rService.removeReviewByNo(review);
+		System.out.println(result);
+		System.out.println(boardNo);
+		if(result > 0) {
+			mv.setViewName("redirect:/review/list.kh");
+		}else {
+			
+		}
+		} catch (Exception e) {
+		}
+		return mv;
+	}
+	
+	
+	
 	
 	/**
 	 * 썸머노트 ajax 매핑 메소드

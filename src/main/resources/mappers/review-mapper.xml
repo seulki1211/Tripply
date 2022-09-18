@@ -33,5 +33,8 @@
   		INSERT INTO REVIEW_TBL
   		VALUES(SEQ_BOARDNO.NEXTVAL,#{reviewTitle},#{reviewContents},#{reviewWriter},#{rLocationCode},#{reviewFileName},#{reviewFileReName},#{reviewFilePath},DEFAULT,DEFAULT,DEFAULT,DEFAULT,#{thumbnailPath})
   	</insert>
+  	<delete id="deleteOneReview">
+		DELETE FROM REVIEW_TBL WHERE BOARD_NO=#{boardNo} AND REVIEW_WRITER = #{reviewWriter}
+  	</delete>
   
   </mapper>

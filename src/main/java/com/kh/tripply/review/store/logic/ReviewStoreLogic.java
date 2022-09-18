@@ -38,4 +38,10 @@ public class ReviewStoreLogic implements ReviewStore{
 		return review;
 	}
 
+	@Override
+	public int deleteReviewByNo(SqlSession session, Review review) {
+			int result = session.delete("ReviewMapper.deleteOneReview", review);
+		return result;
+	}
+
 }

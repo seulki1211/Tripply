@@ -10,6 +10,6 @@ public interface ReviewService {
 	public List<Review> printAllReview(Paging paging);
 	public Review printDetailReviewByNo(int boardNo);
 	public int getTotalCount();
-//	public void modifyReviewById();
-//	public void removeReviewById();
+//	public void modifyReviewByNo();
+	public int removeReviewByNo(Review review);
 }

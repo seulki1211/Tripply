@@ -21,11 +21,12 @@
 		<div id="contents-1">
 			<table align="center" border="1px">
 				<tr>
+					<td>${review.boardNo }</td>
 					<td>제목</td>
 					<td>${review.reviewTitle }</td>
 				</tr>
 			   	<tr>
-					<td colspan='2"'>
+					<td colspan='3'>
 						${review.reviewWriter }
 						<span class="detail viewcount-wrap">
 						<img alt="눈모양 아이콘" src="/resources/image/viewcount.jpg" width="25px" height="25px">
@@ -38,11 +39,12 @@
 					<td colspan="2">${review.reviewContents }</td>
 				</tr>
 			</table>
-				<input type="hidden" name="reviewFileName" value="">
-				<input type="hidden" name="reviewFileReName" value="">
-				<input type="hidden" name="reviewFilePath" value="">
 		</div>
-		<div id="contents-2"></div>
+<!-- 작성자인 경우에만 수정, 삭제버튼이 노출되도록 		 -->
+		<div id="contents-2">
+			<a href="/review/modifyView.kh?boardNo=${review.boardNo }">수정</a> 
+			<a href="/review/remove.kh?boardNo=${review.boardNo }">삭제</a>
+		</div>
 	</div>
 <!-- 푸터 -->
 	<div id="footer"></div>

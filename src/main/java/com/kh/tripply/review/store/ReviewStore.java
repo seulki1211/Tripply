@@ -12,7 +12,7 @@ public interface ReviewStore {
 	public List<Review> selectAllReview(SqlSession session,Paging paging);
 	public Review selectDetailReviewByNo(SqlSession session, int boardNo);
 	public int getTotalCount(SqlSession session);
-//	public void updateReviewById(SqlSession session);
-//	public void deleteReviewById(SqlSession session);
+//	public void updateReviewByNo(SqlSession session);
+	public int deleteReviewByNo(SqlSession session,Review review);
 	
 }

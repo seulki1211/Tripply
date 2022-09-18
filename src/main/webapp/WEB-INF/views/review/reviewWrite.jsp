@@ -40,7 +40,7 @@
 					}
 				}
 			});
-			
+// 섬머노트에디터 이미지 업로드 시 동작			
 			function uploadSummernoteImageFile(file,editor){
 				data = new FormData();
 				data.append("file",file);
@@ -90,7 +90,7 @@
 							<option value="35" label="전라북도"></option>
 							<option value="36" label="전라남도"></option>
 						</select>
-						<input type="text" id="inputTitle" name="reviewTitle" placeholder="제목을 입력하세요"><br>
+						<input type="text" id="inputTitle" name="reviewTitle" placeholder="제목을 입력하세요" required="required"><br>
 						<textarea id="summernote" name="reviewContents"></textarea>
 <!-- 썸네일 선택-->
 						썸네일 선택
