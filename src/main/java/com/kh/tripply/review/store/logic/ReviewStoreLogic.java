@@ -32,4 +32,10 @@ public class ReviewStoreLogic implements ReviewStore{
 		return totalCount;
 	}
 
+	@Override
+	public Review selectDetailReviewByNo(SqlSession session, int boardNo) {
+		Review review  = session.selectOne("ReviewMapper.selectOneReview", boardNo);
+		return review;
+	}
+
 }

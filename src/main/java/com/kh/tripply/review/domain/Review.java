@@ -11,16 +11,18 @@ public class Review {
 	private String reviewFileName;
 	private String reviewFileReName;
 	private String reviewFilePath;
-    private int reviewCount;
-    private Date rCreateDate;
-    private Date rUpdateDate;
-    private String rStatus;
-    
-    public Review() {}
-    
+	private int reviewCount;
+	private Date rCreateDate;
+	private Date rUpdateDate;
+	private String rStatus;
+	private String thumbnailPath;
+
+	public Review() {
+	}
+
 	public Review(int boardNo, String reviewTitle, String reviewContents, String reviewWriter, String rLocationCode,
-			String reviewFileName, String reviewFileReName, String reviewFilePath, int reviewCount, Date rCreateDate,
-			Date rUpdateDate, String rStatus) {
+			String reviewFileName, String reviewFileReName, String reviewFilePath, String thumbnailPath,
+			int reviewCount, Date rCreateDate, Date rUpdateDate, String rStatus) {
 		super();
 		this.boardNo = boardNo;
 		this.reviewTitle = reviewTitle;
@@ -30,6 +32,7 @@ public class Review {
 		this.reviewFileName = reviewFileName;
 		this.reviewFileReName = reviewFileReName;
 		this.reviewFilePath = reviewFilePath;
+		this.thumbnailPath = thumbnailPath;
 		this.reviewCount = reviewCount;
 		this.rCreateDate = rCreateDate;
 		this.rUpdateDate = rUpdateDate;
@@ -100,6 +103,14 @@ public class Review {
 		this.reviewFilePath = reviewFilePath;
 	}
 
+	public String getThumbnailPath() {
+		return thumbnailPath;
+	}
+
+	public void setThumbnailPath(String thumbnailPath) {
+		this.thumbnailPath = thumbnailPath;
+	}
+
 	public int getReviewCount() {
 		return reviewCount;
 	}
@@ -137,14 +148,8 @@ public class Review {
 		return "Review [boardNo=" + boardNo + ", reviewTitle=" + reviewTitle + ", reviewContents=" + reviewContents
 				+ ", reviewWriter=" + reviewWriter + ", rLocationCode=" + rLocationCode + ", reviewFileName="
 				+ reviewFileName + ", reviewFileReName=" + reviewFileReName + ", reviewFilePath=" + reviewFilePath
-				+ ", reviewCount=" + reviewCount + ", rCreateDate=" + rCreateDate + ", rUpdateDate=" + rUpdateDate
-				+ ", rStatus=" + rStatus + "]";
+				+ ", thumbnailPath=" + thumbnailPath + ", reviewCount=" + reviewCount + ", rCreateDate=" + rCreateDate
+				+ ", rUpdateDate=" + rUpdateDate + ", rStatus=" + rStatus + "]";
 	}
-	
-	
-    
-    
-    
-    
-    
+
 }

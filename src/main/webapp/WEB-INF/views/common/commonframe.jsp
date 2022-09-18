@@ -10,14 +10,17 @@
 <link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css">
 </head>
 <body>
+<!-- 헤더-메뉴바 -->
 	<div id="header">
 		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
 	</div>
+<!-- 컨텐츠 -->
 	<div id="contents">
 		<div id="sideBar"></div>
 		<div id="contents-1"></div>
 		<div id="contents-2"></div>
 	</div>
+<!-- 푸터 -->
 	<div id="footer"></div>
 </body>
 </html>

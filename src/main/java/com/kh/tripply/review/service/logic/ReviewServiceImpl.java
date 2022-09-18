@@ -32,5 +32,10 @@ public class ReviewServiceImpl implements ReviewService {
 		int totalCount = rStore.getTotalCount(session);
 		return totalCount;
 	}
+	@Override
+	public Review printDetailReviewByNo(int boardNo) {
+		Review review = rStore.selectDetailReviewByNo(session, boardNo);
+		return review;
+	}
 	
 }
