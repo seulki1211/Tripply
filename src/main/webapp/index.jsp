@@ -8,5 +8,8 @@
 </head>
 <body>
 
+<button onclick="location.href='/plan/map.kh';">맵</button>
+<button onclick="location.href='/plan/plan.kh';">게시플랜</button>
+
 </body>
 </html>
