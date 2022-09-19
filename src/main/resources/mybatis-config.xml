@@ -10,7 +10,19 @@
 </settings>
 <!-- 만약에 null 데이터가 전달되었으면 빈칸이 아닌 NULL로 인식하도록 설정 -->
 
+<typeAliases>
+	<typeAlias type="com.kh.tripply.party.domain.Party" alias="Party"/>
+	<typeAlias type="com.kh.tripply.notice.domain.Notice" alias="Notice"/>
+	<typeAlias type="com.kh.tripply.banner.domain.Banner" alias="Banner"/>
+	
+	
+</typeAliases>
+
   <mappers>
   	 <mapper resource="mappers/party-mapper.xml"/>
+  	 <mapper resource="mappers/notice-mapper.xml"/>
+  	 <mapper resource="mappers/banner-mapper.xml"/>
+  	 
+  	 
   </mappers>
 </configuration>

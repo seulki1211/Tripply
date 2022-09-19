@@ -103,6 +103,15 @@ public class Party {
 	public void setpStatus(String pStatus) {
 		this.pStatus = pStatus;
 	}
+	@Override
+	public String toString() {
+		return "Party [partyNo=" + partyNo + ", partyTitle=" + partyTitle + ", partyContents=" + partyContents
+				+ ", partyWriter=" + partyWriter + ", partyFirstDate=" + partyFirstDate + ", partyLastDate="
+				+ partyLastDate + ", partyLocation=" + partyLocation + ", partyFileName=" + partyFileName
+				+ ", partyFileRename=" + partyFileRename + ", partyFilePath=" + partyFilePath + ", partyCount="
+				+ partyCount + ", pCreateDate=" + pCreateDate + ", pUpdateDate=" + pUpdateDate + ", pStatus=" + pStatus
+				+ "]";
+	}
 	
 	
 	
