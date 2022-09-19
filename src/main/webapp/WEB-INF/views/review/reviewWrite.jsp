@@ -66,6 +66,11 @@
 				alert("확인");
 			});
 			
+			var imageClick = $("img");
+			imageClick.on("click",function(){
+				alert("이미지클릭");
+			});
+			
 		});
 </script>
 <body>

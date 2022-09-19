@@ -65,7 +65,6 @@
 			imageRemoveBtn.on("click",function(){
 				alert("확인");
 			});
-			
 		});
 </script>
 <body>

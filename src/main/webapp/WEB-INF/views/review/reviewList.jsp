@@ -53,13 +53,13 @@
 <!-- 페이징처리 -->
 			<div id="pageNavi">
 				<c:if test="${paging.startNavi > 1 }">
-					<a href="/review/list.kh?currentPage=${paging.startNavi-1 }">[이전]</a>
+					<a href="/review/${urlVal }.kh?currentPage=${paging.startNavi-1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[이전]</a>
 				</c:if>
 				<c:forEach begin="${paging.startNavi }" end="${paging.endNavi }" var="p" >
-					<a href="/review/list.kh?currentPage=${p }">${p }</a>
+					<a href="/review/${urlVal }.kh?currentPage=${p }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">${p }</a>
 				</c:forEach>
 				<c:if test="${paging.endNavi < paging.endPage }">
-					<a href="/review/list.kh?currentPage=${paging.endNavi+1 }">[다음]</a>
+					<a href="/review/${urlVal }.kh?currentPage=${paging.endNavi+1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[다음]</a>
 				</c:if>
 			</div>
 <!-- 컨텐츠 하단 버튼	 -->

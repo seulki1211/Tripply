@@ -29,6 +29,45 @@
   	<select id="selectTotalCount" resultType="_int">
   		SELECT COUNT(*) FROM REVIEW_TBL
   	</select>
+  	<select id="selectSearchCount" resultType="_int">
+	  	SELECT COUNT(*) FROM REVIEW_TBL
+			<where>
+				<if test="searchCondition.toString()=='all'">
+					(REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})OR
+					(REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion} )OR
+					(REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})
+				</if> 
+				<if test="searchCondition.toString()=='title'">
+					REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+				</if>
+				<if test="searchCondition.toString()=='writer'">
+					REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+				</if>
+				<if test="searchCondition.toString()=='contents'">
+					REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+				</if>
+			</where>
+  	</select>
+  	<select id="selectSearchReview" resultMap="reviewResultMap">
+		SELECT BOARD_NO,REVIEW_TITLE,REVIEW_WRITER,R_LOCATION_CODE,REVIEW_FILENAME,REVIEW_RENAME,REVIEW_FILEPATH,REVIEW_COUNT,R_CREATE_DATE,R_UPDATE_DATE,R_STATUS,THUMBNAIL_PATH 
+		FROM REVIEW_TBL
+		<where>
+			<if test="searchCondition.toString()=='all'">
+				(REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})OR
+				(REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion} )OR
+				(REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})
+			</if> 
+			<if test="searchCondition.toString()=='title'">
+				REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+			</if>
+			<if test="searchCondition.toString()=='writer'">
+				REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+			</if>
+			<if test="searchCondition.toString()=='contents'">
+				REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+			</if>
+		</where>
+  	</select>
   	<insert id="insertReview">
   		INSERT INTO REVIEW_TBL
   		VALUES(SEQ_BOARDNO.NEXTVAL,#{reviewTitle},#{reviewContents},#{reviewWriter},#{rLocationCode},#{reviewFileName},#{reviewFileReName},#{reviewFilePath},DEFAULT,DEFAULT,DEFAULT,DEFAULT,#{thumbnailPath})
