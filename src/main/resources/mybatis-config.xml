@@ -12,5 +12,7 @@
 
   <mappers>
   	 <mapper resource="mappers/party-mapper.xml"/>
+  	 <mapper resource="mappers/member-mapper.xml"/>
   </mappers>
+  
 </configuration>

@@ -1,5 +1,7 @@
 package com.kh.tripply.free.service.logic;
 
-public interface FreeServiceImpl {
+import com.kh.tripply.free.service.FreeService;
+
+public class FreeServiceImpl implements FreeService{
 
 }
