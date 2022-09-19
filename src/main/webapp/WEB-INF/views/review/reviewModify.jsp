@@ -6,9 +6,68 @@
 <head>
 <meta charset="UTF-8">
 <title>트리플리,Tripply</title>
-<!-- 화면 뼈대 설정용 css -->
-<link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css">
+<!-- 공용css -->
+  <link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css">
+<!-- 부트스트랩,jQuery -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- 썸대노트 -->
+  <script src="/resources/js/summernote-lite.js"></script>
+  <script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
+  <link rel="stylesheet" href="/resources/css/summernote-lite.css">
 </head>
+<!-- 스크립트태그-썸머노트설정 -->
+<script>
+		$(document).ready(function(){
+			$('#summernote').summernote({
+				height : 300,
+				width : 700,
+				lang : "ko-KR",
+				callbacks:{
+					onImageUpload : function(files){
+						uploadSummernoteImageFile(files[0],this);
+					},
+					onPaste: function(e){
+						var clipboardData = e.originalEvent.clipboardData;
+						if(clipboardData && clipboardData.items && clipboardData.items.length){
+							var item = clipboardData.items[0];
+							if(item.kind === 'file' && item.type.indexOf('image/') !== -1){
+								e.preventDefault();
+							}
+						}
+					},
+// 					onChange: function(contents, $editable) {
+// 					      console.log(contents, $editable);
+// 					    }
+				}
+			});
+// 섬머노트에디터 이미지 업로드 시 동작			
+			function uploadSummernoteImageFile(file,editor){
+				data = new FormData();
+				data.append("file",file);
+				$.ajax({
+					data:data,
+					type:"POST",
+					url:"/uploadSummernoteImageFile",
+					dataType:"JSON",
+					contentType:false,
+					processData:false,
+					success:function(data){
+						$(editor).summernote("insertImage",data.url);
+						$("#thumbnailPath").append("<option value="+data.url+">"+data.originName+"</option>");
+					}
+				});
+			}
+			
+			var imageRemoveBtn = $(".note-remove");
+			imageRemoveBtn.on("click",function(){
+				alert("확인");
+			});
+			
+		});
+</script>
 <body>
 <!-- 헤더-메뉴바 -->
 	<div id="header">
@@ -40,13 +99,14 @@
 							<option value="35" label="전라북도"></option>
 							<option value="36" label="전라남도"></option>
 						</select>
-						<input type="text" id="inputTitle" name="reviewTitle" placeholder="제목을 입력하세요"><br>
-						<textarea id="summernote" name="reviewContents"></textarea>
-						
-						<input type="hidden" name="reviewFileName" value="">
-						<input type="hidden" name="reviewFileReName" value="">
-						<input type="hidden" name="reviewFilePath" value="">
-						
+						<input type="text" id="inputTitle" name="reviewTitle" value="${review.reviewTitle }" required="required"><br>
+						<textarea id="summernote" name="reviewContents">
+							${review.reviewContents }
+						</textarea>
+<!-- 썸네일 선택-->
+						썸네일 선택
+						<select id="thumbnailPath" name="thumbnailPath">
+						</select>
 						<button>저장</button>
 			</form>
 		</div>

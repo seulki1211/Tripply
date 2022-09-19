@@ -37,7 +37,10 @@
 								e.preventDefault();
 							}
 						}
-					}
+					},
+// 					onChange: function(contents, $editable) {
+// 					      console.log(contents, $editable);
+// 					    }
 				}
 			});
 // 섬머노트에디터 이미지 업로드 시 동작			
@@ -57,6 +60,12 @@
 					}
 				});
 			}
+			
+			var imageRemoveBtn = $(".note-remove");
+			imageRemoveBtn.on("click",function(){
+				alert("확인");
+			});
+			
 		});
 </script>
 <body>

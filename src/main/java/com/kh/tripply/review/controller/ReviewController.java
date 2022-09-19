@@ -97,7 +97,7 @@ public class ReviewController {
 			@RequestParam("boardNo") Integer boardNo) {
 //로그인 체크 구현 필요
 		try {
-			Review review = rService.printDetailReviewByNo(boardNo);
+			Review review = rService.printOneReviewByNo(boardNo);
 			if(review != null) {
 				mv.addObject("review",review).setViewName("/review/reviewDetail");
 			}else {
@@ -137,6 +137,20 @@ public class ReviewController {
 		return mv;
 	}
 	
+	
+	@RequestMapping(value="/review/modifyView.kh",method=RequestMethod.GET)
+	public ModelAndView reviewModifyView(ModelAndView mv,
+			@RequestParam("boardNo")Integer boardNo) {
+		
+		Review review = rService.printOneReviewByNo(boardNo);
+		if(review != null) {
+			mv.addObject("review",review).setViewName("review/reviewModify");
+		}else {
+			
+		}
+		
+		return mv;
+	}
 	
 	
 	

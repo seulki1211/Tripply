@@ -8,8 +8,8 @@ import com.kh.tripply.review.domain.Review;
 public interface ReviewService {
 	public int registerReview(Review review);
 	public List<Review> printAllReview(Paging paging);
-	public Review printDetailReviewByNo(int boardNo);
+	public Review printOneReviewByNo(int boardNo);
 	public int getTotalCount();
-//	public void modifyReviewByNo();
+	public int modifyReviewByNo(Review review);
 	public int removeReviewByNo(Review review);
 }

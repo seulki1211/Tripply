@@ -33,7 +33,7 @@ public class ReviewStoreLogic implements ReviewStore{
 	}
 
 	@Override
-	public Review selectDetailReviewByNo(SqlSession session, int boardNo) {
+	public Review selectOneReviewByNo(SqlSession session, int boardNo) {
 		Review review  = session.selectOne("ReviewMapper.selectOneReview", boardNo);
 		return review;
 	}
@@ -41,6 +41,12 @@ public class ReviewStoreLogic implements ReviewStore{
 	@Override
 	public int deleteReviewByNo(SqlSession session, Review review) {
 			int result = session.delete("ReviewMapper.deleteOneReview", review);
+		return result;
+	}
+
+	@Override
+	public int updateReviewByNo(SqlSession session,Review review) {
+		int result = session.update("ReviewMapper.updateReview", review);
 		return result;
 	}
 
