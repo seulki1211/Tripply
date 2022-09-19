@@ -1,5 +1,7 @@
 package com.kh.tripply.free.store.logic;
 
-public interface FreeStoreLogic {
+import com.kh.tripply.free.store.FreeStore;
+
+public class FreeStoreLogic implements FreeStore{
 
 }

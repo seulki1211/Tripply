@@ -25,11 +25,6 @@
   	 <mapper resource="mappers/point-mapper.xml"/>
   	 <mapper resource="mappers/notice-mapper.xml"/>
   	 <mapper resource="mappers/banner-mapper.xml"/>
-  	 
-  	 
+  	 <mapper resource="mappers/member-mapper.xml"/>
   </mappers>
-  
-  
-  
-  
 </configuration>
