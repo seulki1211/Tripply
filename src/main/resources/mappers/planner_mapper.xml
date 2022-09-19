@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+   <mapper namespace="PlannerMapper">
+   <resultMap type="Planner" id="plannerResultMap">
+   <id property="boardNo" column="PLANNER_NO"/>
+   <result property="planWriter" column="PLANNER_WRITER"/>
+   <result property="planTitle" column="PLANNER_TITLE"/>
+   <result property="firstDay" column="FIRST_DAY"/>
+   <result property="lastDay" column="LAST_DAY"/>
+   <result property="plannerCount" column="PLANNER_COUNT"/>
+   <result property="pCreateDate" column="P_CREATE_DATE"/>
+   <result property="pStatus" column="P_STATUS"/>
+   
+   </resultMap>
+   
+   <insert id="insertPlanner" useGeneratedKeys="true" keyColumn="PLANNER_NO"  keyProperty="boardNo" >
+   INSERT INTO PLANNER_TBL
+   	VALUES(SEQ_BOARDNO.NEXTVAL,'khuser1',#{planTitle},#{firstDay},#{lastDay},DEFAULT,DEFAULT,DEFAULT)
+   </insert> 
+  
+    <select id="selectInfo" resultMap="plannerResultMap">
+   SELECT * FROM PLANNER_TBL
+   WHERE PLANNER_NO=#{boardNo}
+   </select>
+   
+   <!--	<select id="selectCount" resultType="_int"> 타입은 숫자 하나 가져올때만 씀
+  	SELECT COUNT(*) FROM PLANNER_TBL 
+  	<where>
+			<if test="searchCondition.toString()=='title'">
+		 		PLANNER_TITLE LIKE '%'||#{searchValue}||'%'
+			</if>
+			
+			<if test="searchCondition.toString()=='writer'">
+		 		PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString()=='all'">
+		 		PLANNER_TITLE LIKE '%'||#{searchValue}||'%'
+		 		OR PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
+			</if>
+					
+		</where>
+  	</select>
+  	<select id="selectAllPlanner" resultMap="plannerResultMap">
+  		SELECT * FROM PLANNER_TBL  ORDER BY PLANNER_NO DESC
+  	</select> -->
+
+   </mapper>   
