@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bannerMapper">
+
+<resultMap type="Banner" id="bannerResultMap">
+		<id     property="bannerNo"         	column="BANNER_NO"/>
+		<result property="bannerWriter"      	column="BANNER_WRITER"/>
+		<result property="bannerFileName"     	column="BANNER_FILENAME"/>
+		<result property="bannerFileRename"   	column="BANNER_RENAME"/>
+		<result property="bannerFilePath" 		column="BANNER_FILEPATH"/>
+		
+</resultMap>
+
+<insert id="insertBanner">
+	INSERT INTO BANNER_TBL
+	VALUES(#{bannerNo}, #{bannerWriter}, #{bannerFileName}, #{bannerFileRename}, #{bannerFilePath})
+
+</insert>
+
+<select id="selectAllBanner" resultMap="bannerResultMap">
+	SELECT * FROM BANNER_TBL
+	ORDER BY 1
+</select>
+
+
+</mapper>

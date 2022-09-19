@@ -25,23 +25,23 @@
 	</tr>
 	
 	<tbody class="table-group-divider">
-		<c:forEach items="${pList }" var="party" varStatus="i">
+		<c:forEach items="${nList }" var="notice" varStatus="i">
 			<tr>
 				<td scope="row">${i.count }</td>
 				
-<%-- 				<td><a href='/party/detail.kh?boardNo=${party.boardNo }&page=${currentPage }'>${party.partyTitle }</a></td> --%>
-				<td scope="row">${party.partyWriter }</td>
-				<td scope="row">${party.pCreateDate }</td>
-				<td scope="row">${party.partyCount }</td>
+				<td><a href='/notice/detail.kh?noticeNo=${notice.noticeNo }&page=${currentPage }'>${notice.noticeTitle }</a></td>
+				<td scope="row">${notice.noticeWriter }</td>
+				<td scope="row">${notice.nUpdateDate }</td>
+				<td scope="row">${notice.noticeCount }</td>
 				
 			</tr>	
 		</c:forEach>
 					<!--  하단 페이지 목록 -->
 		<tr align='center' height="20">
-		<td colspan='6' scope="row">
+		<td colspan='5' scope="row">
 	
 			<c:if test="${currentPage != 1 }">
-				<a href='/party/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>[이전]</a>
+				<a href='/notice/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>[이전]</a>
 			</c:if>
 			
 			<c:forEach var='p' begin="${startNavi }" end="${endNavi }">
@@ -49,12 +49,12 @@
 					 <b>${p }</b>
 				</c:if>
 				<c:if test="${currentPage ne p}">
-					<a href="/party/${urlVal }.kh?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p }</a>
+					<a href="/notice/${urlVal }.kh?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p }</a>
 				</c:if>
 			</c:forEach>
 			
 			<c:if test="${currentPage < maxPage }">
-				<a href='/party/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>[다음]</a>
+				<a href='/notice/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>[다음]</a>
 			</c:if>
 	
 		</td>
@@ -62,16 +62,16 @@
 <%-- 	</c:if> --%>
 
 		
-		<c:if test="${empty pList }">
+		<c:if test="${empty nList }">
 		<tr>			
-			<td colspan='6' align = 'center' scope="row"> <b>검색 결과가 없습니다.</b>
+			<td colspan='5' align = 'center' scope="row"> <b>검색 결과가 없습니다.</b>
 			</td>
 		</tr>
 	</c:if>
 	
 	<tr>
 		<td colspan='5' align='center' >
-			<form action="/party/search.kh" method="get">
+			<form action="/notice/search.kh" method="get">
 				<select name="searchCondition">
 					<option value='all' <c:if test="${searchCondition eq 'all' } ">selected</c:if>>전체</option>
 					<option value='writer' <c:if test="${searchCondition eq 'writer' } ">selected</c:if>>작성자</option>
@@ -84,7 +84,7 @@
 			</td>
 			
 			<td>
-			<button type="button" onclick="location.href='/party/writeView.kh'">글 작성</button> 
+			<button type="button" onclick="location.href='/notice/writeView.kh'">글 작성</button> 
 			</td>
 		</tr>
 		

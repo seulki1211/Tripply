@@ -23,46 +23,31 @@
 	<jsp:include page="../common/menuBar.jsp"></jsp:include>
 </div>
 
-	<h1 align="center">파티 등록 페이지</h1>
+	<h1 align="center">공지사항 등록 페이지</h1>
 	<br><br>
 
 		
-	<form action="/party/register.kh" method="post" enctype="multipart/form-data">
+	<form action="/notice/register.kh" method="post">
 	
 	
 		<table border='1'  align="center">
-			<tr>
-			<td>썸네일 등록</td>
-			<td><input type="file" name="uploadFile"></td>
-			<tr>
+			
 			<tr>
 			<td>제목</td>
-			<td><input type="text" name="partyTitle"></td>
+			<td><input type="text" name="noticeTitle"></td>
 			<tr>
 			<td>작성자</td>
-			<td><input type="text" name="partyWriter" ></td>
-			</tr>
-			<tr>
-			<td>일정 시작일</td>
-			<td><input type="date" name="partyFirstDate" ></td>
-			</tr>
-			<tr>
-			<td>일정 마지막일</td>
-			<td><input type="date" name="partyLastDate" ></td>
-			</tr>
-			<tr>
-			<td>여행 장소</td>
-			<td><input type="text" name="partyLocation" ></td>
+			<td><input type="text" name="noticeWriter" ></td>
 			</tr>
 			<tr>
 			<td>내용</td>
-			<td> <textarea class="summernote" name="partyContents"></textarea>  </td>
+			<td> <textarea class="summernote" name="noticeContents"></textarea>  </td>
 			</tr>
 			<tr>
 			<td colspan='2' align='right'>
 				<input type="submit" value="등록">
 				<input type="reset" value="취소">
-				<button type="button" onclick="location.href='/party/list.kh'">리스트로</button> 
+				<button type="button" onclick="location.href='/notice/list.kh'">리스트로</button> 
 				 
 			</td>
 			</tr>

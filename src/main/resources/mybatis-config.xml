@@ -8,15 +8,25 @@
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 	
-	<typeAliases>
-  		<typeAlias type="com.kh.tripply.review.domain.Review" alias="Review"/>
-   </typeAliases>
+
+<typeAliases>
+  	<typeAlias type="com.kh.tripply.review.domain.Review" alias="Review"/>
+	<typeAlias type="com.kh.tripply.party.domain.Party" alias="Party"/>
+	<typeAlias type="com.kh.tripply.notice.domain.Notice" alias="Notice"/>
+	<typeAlias type="com.kh.tripply.banner.domain.Banner" alias="Banner"/>
+	
+	
+</typeAliases>
 
   <mappers>
   	 <mapper resource="mappers/party-mapper.xml"/>
   	 <mapper resource="mappers/review-mapper.xml"/>
   	 <mapper resource="mappers/trade-mapper.xml"/>
   	 <mapper resource="mappers/point-mapper.xml"/>
+  	 <mapper resource="mappers/notice-mapper.xml"/>
+  	 <mapper resource="mappers/banner-mapper.xml"/>
+  	 
+  	 
   </mappers>
   
   
