@@ -33,14 +33,17 @@
 								<img onclick="location.href='/review/detailView.kh?boardNo=${review.boardNo }';" onerror="this.src='/resources/image/flower1.png';" src="${review.thumbnailPath }" height="90%" width="90%">
 							</div>
 							<div align="center">
-								<a href="/review/detailView.kh?boardNo=${review.boardNo }"><div class="detail title"><b>${review.reviewTitle }</b></div></a>
+								<span class="detail region">[${review.rLocationName }]</span>
+								<a href="/review/detailView.kh?boardNo=${review.boardNo }">
+									<span class="detail title"><b>${review.reviewTitle }</b></span>
+								</a>
 								<div class="detail writer">${review.reviewWriter }</div>
 								<div class="detail info-wrap">
 									<div class="detail viewcount-wrap">
 										<img alt="눈모양 아이콘" src="/resources/image/viewcount.jpg" width="25px" height="25px">
 											${review.reviewCount }
-									</div>
-									<span  class="detail date">${review.rCreateDate }</span>
+									</div> 
+									<div  class="detail date">${review.rCreateDate }</div>
 								</div>
 							</div>
 						</td>

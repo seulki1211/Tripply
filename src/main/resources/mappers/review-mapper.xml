@@ -10,6 +10,7 @@
 		<result column="REVIEW_CONTENTS" 	property="reviewContents"/>
 		<result column="REVIEW_WRITER" 		property="reviewWriter"/>
 		<result column="R_LOCATION_CODE" 	property="rLocationCode"/>
+		<result column="LOCATION_NAME" 		property="rLocationName"/>
 		<result column="REVIEW_FILENAME" 	property="reviewFileName"/>
 		<result column="REVIEW_RENAME" 		property="reviewFileReName"/>
 		<result column="REVIEW_FILEPATH" 	property="reviewFilePath"/>
@@ -19,54 +20,62 @@
 		<result column="R_STATUS" 			property="rStatus"/>
 		<result column="THUMBNAIL_PATH"		property="thumbnailPath"/>
 	</resultMap>  
-  	<select id="selectAllReview" resultMap="reviewResultMap">  	
-  		SELECT BOARD_NO,REVIEW_TITLE,REVIEW_WRITER,R_LOCATION_CODE,REVIEW_FILENAME,REVIEW_RENAME,REVIEW_FILEPATH,REVIEW_COUNT,R_CREATE_DATE,R_UPDATE_DATE,R_STATUS,THUMBNAIL_PATH
-  		FROM REVIEW_TBL ORDER BY R_CREATE_DATE DESC
-  	</select>
   	<select id="selectOneReview" resultMap="reviewResultMap">
-  		SELECT * FROM REVIEW_TBL WHERE BOARD_NO=#{boardNo} AND R_STATUS='Y'
+  		SELECT * 
+  		FROM REVIEW_TBL R LEFT JOIN LOCATION_TBL L
+  		ON R.R_LOCATION_CODE = L.LOCATION_CODE
+  		WHERE BOARD_NO=#{boardNo} AND R_STATUS='Y'
+  	</select>
+  	<select id="selectAllReview" resultMap="reviewResultMap">  	
+		SELECT BOARD_NO,REVIEW_TITLE,REVIEW_WRITER,R_LOCATION_CODE,REVIEW_FILENAME,REVIEW_RENAME,REVIEW_FILEPATH,REVIEW_COUNT,R_CREATE_DATE,R_UPDATE_DATE,R_STATUS,THUMBNAIL_PATH,LOCATION_NAME
+		FROM REVIEW_TBL R LEFT JOIN LOCATION_TBL L
+		ON R.R_LOCATION_CODE = L.LOCATION_CODE
+		ORDER BY R_CREATE_DATE DESC
   	</select>
   	<select id="selectTotalCount" resultType="_int">
   		SELECT COUNT(*) FROM REVIEW_TBL
   	</select>
-  	<select id="selectSearchCount" resultType="_int">
-	  	SELECT COUNT(*) FROM REVIEW_TBL
-			<where>
-				<if test="searchCondition.toString()=='all'">
-					(REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})OR
-					(REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion} )OR
-					(REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})
-				</if> 
-				<if test="searchCondition.toString()=='title'">
-					REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
-				</if>
-				<if test="searchCondition.toString()=='writer'">
-					REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
-				</if>
-				<if test="searchCondition.toString()=='contents'">
-					REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
-				</if>
-			</where>
-  	</select>
   	<select id="selectSearchReview" resultMap="reviewResultMap">
-		SELECT BOARD_NO,REVIEW_TITLE,REVIEW_WRITER,R_LOCATION_CODE,REVIEW_FILENAME,REVIEW_RENAME,REVIEW_FILEPATH,REVIEW_COUNT,R_CREATE_DATE,R_UPDATE_DATE,R_STATUS,THUMBNAIL_PATH 
-		FROM REVIEW_TBL
+		SELECT BOARD_NO,REVIEW_TITLE,REVIEW_WRITER,R_LOCATION_CODE,REVIEW_FILENAME,REVIEW_RENAME,REVIEW_FILEPATH,REVIEW_COUNT,R_CREATE_DATE,R_UPDATE_DATE,R_STATUS,THUMBNAIL_PATH,LOCATION_NAME
+		FROM REVIEW_TBL R LEFT JOIN LOCATION_TBL L
+		ON R.R_LOCATION_CODE = L.LOCATION_CODE
 		<where>
-			<if test="searchCondition.toString()=='all'">
+			<if test='searchCondition.toString()=="all"'>
 				(REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})OR
 				(REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion} )OR
 				(REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})
 			</if> 
-			<if test="searchCondition.toString()=='title'">
+			<if test='searchCondition.toString()=="title"'>
 				REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
 			</if>
-			<if test="searchCondition.toString()=='writer'">
-				REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
-			</if>
-			<if test="searchCondition.toString()=='contents'">
+			<if test='searchCondition.toString()=="writer"'>
 				REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
 			</if>
+			<if test='searchCondition.toString()=="contents"'>
+				REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+			</if>
 		</where>
+		ORDER BY R_CREATE_DATE DESC
+  	</select>
+  	 <select id="selectSearchCount" resultType="_int">
+	  	SELECT COUNT(*) 
+	  	FROM REVIEW_TBL
+			<where>
+				<if test='searchCondition.toString()=="all"'>
+					(REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})OR
+					(REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion} )OR
+					(REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})
+				</if> 
+				<if test='searchCondition.toString()=="title"'>
+					REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+				</if>
+				<if test='searchCondition.toString()=="writer"'>
+					REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+				</if>
+				<if test='searchCondition.toString()=="contents"'>
+					REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+				</if>
+			</where>
   	</select>
   	<insert id="insertReview">
   		INSERT INTO REVIEW_TBL
