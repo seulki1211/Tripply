@@ -31,7 +31,7 @@ public class ReviewController {
 	ReviewService rService;
 
 	/**
-	 * 후기게시판 목록 페이지 이동
+	 * 후기게시판 목록 페이지 출력
 	 * 
 	 * @param mv,page
 	 * @return mv.addObject : rList, paging / mv.setViewName("review/reviewList")
@@ -56,6 +56,13 @@ public class ReviewController {
 		return mv;
 	}
 	
+	/**
+	 * 후기게시판 검색 결과 페이지 출력
+	 * @param mv
+	 * @param search
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value="/review/search.kh",method=RequestMethod.GET)
 	public ModelAndView reviewSerchVIew(ModelAndView mv,
 			@ModelAttribute Search search,
@@ -72,7 +79,7 @@ public class ReviewController {
 			}
 		} catch (Exception e) {
 		}
-		mv.addObject("urlVal","list");
+		mv.addObject("urlVal","search");
 		return mv;
 	}
 	
