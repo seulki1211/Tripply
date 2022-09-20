@@ -24,13 +24,14 @@
 			</form>
 		</div>
 <!-- 게시물목록출력 -->
+	${loginUser.memberId }
 		<div id="list-area">
 			<table align="center" width="100%">
 				<tr id="detail-raw-wrap">
 					<c:forEach items="${rList }" var="review" varStatus="N">
 						<td id="detail-one-wrap" aligh="center" width="30%">
 							<div class="detail title thumnale-wrap align="center">
-								<img onclick="location.href='/review/detailView.kh?boardNo=${review.boardNo }&currentPage=${paging.currentPage }';" onerror="this.src='/resources/image/flower1.png';" src="${review.thumbnailPath }" height="90%" width="90%">
+								<img onclick="loginCheck('${loginUser.memberId}',${review.boardNo },${paging.currentPage });"  onerror="this.src='/resources/image/flower1.png';" src="${review.thumbnailPath }" height="90%" width="90%">
 							</div>
 							<div align="center">
 								<span class="detail region">[${review.rLocationName }]</span>
@@ -75,4 +76,14 @@
 <!-- 푸터 -->
 	<div id="footer"></div>
 </body>
+<script>
+		function loginCheck(loginId,boardNo,currentPage){
+			if(loginId != ""){
+				location.href="/review/detailView.kh?boardNo="+boardNo+"&currentPage="+currentPage+"";
+			}else{
+				alert("로그인을 해주세요.")
+				location.href="/home.kh";
+			}
+		}
+</script>
 </html>

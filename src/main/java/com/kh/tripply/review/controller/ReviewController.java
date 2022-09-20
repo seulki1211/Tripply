@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
+import com.kh.tripply.member.domain.Member;
 import com.kh.tripply.review.common.Paging;
 import com.kh.tripply.review.common.Search;
 import com.kh.tripply.review.domain.Review;
@@ -89,7 +90,7 @@ public class ReviewController {
 	 * @return String: "/review/reviewWrite"
 	 */
 	@RequestMapping(value = "/review/writeView.kh", method = RequestMethod.GET)
-	public String reviewWriteView() {
+	public String reviewWriteView(HttpSession session) {
 //로그인 체크 구현 필요		
 		return "/review/reviewWrite";
 	}
