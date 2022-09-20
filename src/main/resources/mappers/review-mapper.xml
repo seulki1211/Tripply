@@ -82,7 +82,9 @@
   		VALUES(SEQ_BOARDNO.NEXTVAL,#{reviewTitle},#{reviewContents},#{reviewWriter},#{rLocationCode},#{reviewFileName},#{reviewFileReName},#{reviewFilePath},DEFAULT,DEFAULT,DEFAULT,DEFAULT,#{thumbnailPath})
   	</insert>
   	<update id="updateReview">
-<!--   		UPDATE REVIEW_TBL SET REVIEW_TITLE=#{},REVIEW_CONTENTS=#{},R_LOCATION_CODE=#{},THUMBNAIL_PATH WHERE BOARD_NO=#{} -->
+  		UPDATE REVIEW_TBL 
+  		SET REVIEW_TITLE=#{reviewTitle},REVIEW_CONTENTS=#{reviewContents},R_LOCATION_CODE=#{rLocationCode},THUMBNAIL_PATH=#{thumbnailPath} 
+  		WHERE BOARD_NO=#{boardNo}
   	</update>
   	<delete id="deleteOneReview">
 		DELETE FROM REVIEW_TBL WHERE BOARD_NO=#{boardNo} AND REVIEW_WRITER = #{reviewWriter}

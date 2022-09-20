@@ -123,9 +123,15 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping(value = "/review/detailView.kh", method = RequestMethod.GET)
-	public ModelAndView reviewDetailView(ModelAndView mv, @RequestParam("boardNo") Integer boardNo) {
+	public ModelAndView reviewDetailView(ModelAndView mv, 
+			@RequestParam("boardNo") Integer boardNo,
+			@RequestParam("currentPage") Integer currentPage,
+			HttpSession session) {
 //로그인 체크 구현 필요
 		try {
+//수정이나 삭제 후 게시판의 기본 페이지로 돌아가기 위해 session에 저장
+			session.setAttribute("currentPage", currentPage);
+			System.out.println(currentPage);
 			Review review = rService.printOneReviewByNo(boardNo);
 			if (review != null) {
 				mv.addObject("review", review).setViewName("/review/reviewDetail");
@@ -144,7 +150,9 @@ public class ReviewController {
 	 * @return mv
 	 */
 	@RequestMapping(value = "/review/remove.kh", method = RequestMethod.GET)
-	public ModelAndView reviewDelete(ModelAndView mv, @RequestParam("boardNo") Integer boardNo, Review review,
+	public ModelAndView reviewDelete(ModelAndView mv, 
+			@RequestParam("boardNo") Integer boardNo, 
+			Review review,
 			HttpSession session) {
 //로그인 유저와(세션) 작성자 체크 필요 or 화면에서 체크.
 		try {
@@ -153,10 +161,11 @@ public class ReviewController {
 			review.setReviewWriter(loginUser);
 			review.setBoardNo(boardNo);
 			int result = rService.removeReviewByNo(review);
-			System.out.println(result);
-			System.out.println(boardNo);
 			if (result > 0) {
-				mv.setViewName("redirect:/review/list.kh");
+//삭제가 성공하면 session에 저장했던 currentPage를 불러와 쿼리스트링으로 사용하고 session은 비운다.
+				int currentPage = (int) session.getAttribute("currentPage");
+				mv.setViewName("redirect:/review/list.kh?currentPage="+currentPage);
+				session.removeAttribute("currentPage");
 			} else {
 
 			}
@@ -173,7 +182,8 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping(value = "/review/modifyView.kh", method = RequestMethod.GET)
-	public ModelAndView reviewModifyView(ModelAndView mv, @RequestParam("boardNo") Integer boardNo) {
+	public ModelAndView reviewModifyView(ModelAndView mv, 
+			@RequestParam("boardNo") Integer boardNo) {
 
 		Review review = rService.printOneReviewByNo(boardNo);
 		if (review != null) {
@@ -183,8 +193,26 @@ public class ReviewController {
 		return mv;
 	}
 	
-	
-	
+	/**
+	 * 후기게시판 수정 로직
+	 * @param mv
+	 * @param review
+	 * @return
+	 */
+	@RequestMapping(value="/review/modify.kh",method=RequestMethod.POST)
+	public ModelAndView reviewModify(ModelAndView mv,
+			@ModelAttribute Review review,
+			HttpSession session) {
+		int result = rService.modifyReviewByNo(review);
+		if(result>0) {
+			int currentPage = (int)session.getAttribute("currentPage");
+			mv.setViewName("redirect:/review/list.kh?currentPage="+currentPage);
+			session.removeAttribute("currentPage");
+		}else {
+			
+		}
+		return mv;
+	}
 
 	/**
 	 * 썸대노트 ajax 매핑 메소드 에디터 업로드 이미지 저장 및 파일 경로 json반환

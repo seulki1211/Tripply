@@ -37,7 +37,7 @@
 								e.preventDefault();
 							}
 						}
-					},
+					},					
 // 					onChange: function(contents, $editable) {
 // 					      console.log(contents, $editable);
 // 					    }
@@ -63,7 +63,7 @@
 			
 			var imageRemoveBtn = $(".note-remove");
 			imageRemoveBtn.on("click",function(){
-				alert("확인");
+// 				alert("확인");
 			});
 		});
 </script>
@@ -76,7 +76,8 @@
 	<div id="contents">
 		<div id="sideBar"></div>
 		<div id="contents-1">
-			<form action="/review/write.kh" method="post">
+			<form action="/review/modify.kh" method="post">
+					<input type="hidden" name="boardNo" value="${review.boardNo }">
 					<input type="hidden" name="reviewWriter" value="임시작성자">
 					<select name="rLocationCode">
 							<option value="00" label="전국"></option>
@@ -97,14 +98,14 @@
 							<option value="38" label="경상남도"></option>
 							<option value="35" label="전라북도"></option>
 							<option value="36" label="전라남도"></option>
-						</select>
-						<input type="text" id="inputTitle" name="reviewTitle" value="${review.reviewTitle }" required="required"><br>
-						<textarea id="summernote" name="reviewContents">
-							${review.reviewContents }
-						</textarea>
+					</select>
+					<input type="text" id="inputTitle" name="reviewTitle" value="${review.reviewTitle }" required="required"><br>
+					<textarea id="summernote" name="reviewContents">
+						${review.reviewContents }
+					</textarea>
 <!-- 썸네일 선택-->
 						썸네일 선택
-						<select id="thumbnailPath" name="thumbnailPath">
+						<select id="thumbnailPath" name="thumbnailPath" value="${review.thumbnailPath }">
 						</select>
 						<button>저장</button>
 			</form>
