@@ -41,14 +41,23 @@
 		<c:if test="${not empty loginUser }">
 			<table align="right">
 				<tr>
-					<td colspan='2'>${sessionScope.loginUser.memberName }님환영합니다.</td>
+					<td colspan='2'>${sessionScope.loginUser.memberNickname }님 환영합니다.</td>
 				</tr>
 				<tr>
 					<td><a href="#">마이 쪽지</a></td>
-					<td><a href="#">마이페이지</a></td>
+					<td><a href="/member/modify.kh">마이페이지</a></td>
+				</tr>
+				<tr>
+					<td><a href="/member/logout.kh">로그아웃</a></td>
 				</tr>
 			</table>
 		</c:if>
+		<c:if test="${loginUser.memberId eq 'admin' }">
+               <tr>
+                  <td colspan="3" align="right"><a href="#">관리자 페이지로</a>
+                  </td>
+               </tr>
+        </c:if>
 	</div>
 	<div class="nav-area">
 		<div class="menu" onclick="location.href='/plan/plan.kh';">여행 일정</div>
