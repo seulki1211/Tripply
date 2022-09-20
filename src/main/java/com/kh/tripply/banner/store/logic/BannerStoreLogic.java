@@ -23,4 +23,10 @@ public class BannerStoreLogic implements BannerStore {
 		return bList;
 	}
 
+	@Override
+	public int deleteOneByNo(SqlSession session, int bannerNo) {
+		int result = session.update("bannerMapper.deleteBanner", bannerNo);
+		return result;
+	}
+
 }

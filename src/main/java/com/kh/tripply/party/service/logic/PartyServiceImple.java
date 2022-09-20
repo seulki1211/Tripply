@@ -25,13 +25,26 @@ public class PartyServiceImple implements PartyService {
 	}
 
 	@Override
-	public List<Party> printAllBoard(int currentPage, int boardLimit) {
-		List<Party> pList = pStore.selectAllParty(boardLimit, currentPage, session);
+	public List<Party> printAllParty(int currentPage, int boardLimit) {
+		List<Party> pList = pStore.selectAllParty(currentPage, boardLimit, session);
 		return pList;
 	}
 	
+	@Override
 	public int getTotalCount(String searchCondition, String searchValue) {
 		int result = pStore.selectTotalCount(searchCondition, searchValue, session);
+		return result;
+	}
+
+	@Override
+	public Party printOneParty(int partyNo) {
+		Party party = pStore.selectOneParty(partyNo, session);
+		return party;
+	}
+
+	@Override
+	public int removeOneByNo(int partyNo) {
+		int result = pStore.deleteOneByNo(partyNo, session);
 		return result;
 	}
 }

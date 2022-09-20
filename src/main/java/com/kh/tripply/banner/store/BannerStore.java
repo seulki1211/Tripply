@@ -14,4 +14,6 @@ public interface BannerStore {
 	//리스트 쿼리
 	public List<Banner> selectAllBanner(SqlSession session); 
 
+	public int deleteOneByNo(SqlSession session, int bannerNo);
+
 }

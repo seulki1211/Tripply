@@ -9,4 +9,6 @@ public interface BannerService {
 	public int registerBanner(Banner banner);
 
 	public List<Banner> printAllBanner(); 
+	
+	public int removeOneByNo(int bannerNo);
 }

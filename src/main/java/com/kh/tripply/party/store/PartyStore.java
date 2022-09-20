@@ -14,5 +14,10 @@ public interface PartyStore {
 	public List<Party> selectAllParty(int currentPage, int boardLimit, SqlSession session);
 
 	public int selectTotalCount(String searchCondition,String searchValue,SqlSession session);
+	
+	public Party selectOneParty(int partyNo, SqlSession session);
+
+	public int deleteOneByNo(int partyNo, SqlSession session);
+
 }
 

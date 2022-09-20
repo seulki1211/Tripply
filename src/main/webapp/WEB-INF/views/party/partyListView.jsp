@@ -29,7 +29,7 @@
 			<tr>
 				<td scope="row">${i.count }</td>
 				
-<%-- 				<td><a href='/party/detail.kh?boardNo=${party.boardNo }&page=${currentPage }'>${party.partyTitle }</a></td> --%>
+				<td><a href='/party/detail.kh?partyNo=${party.partyNo }&page=${currentPage }'>${party.partyTitle }</a></td>
 				<td scope="row">${party.partyWriter }</td>
 				<td scope="row">${party.pCreateDate }</td>
 				<td scope="row">${party.partyCount }</td>
