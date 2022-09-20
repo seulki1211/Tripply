@@ -153,25 +153,26 @@ position:relative;
         });
    </script>
 <body>
-
+<div id="header">
+		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
+</div>
 <div class="wrap">
  <h1 align="center">게시글 목록</h1>
 	<br><br>
 	<table class="p_table" border="1">
 				<tr>
-			<%--<td colspan="5"align="center">
-			<form action="/board/search.kh" method="get">
+			<td colspan="5"align="center">
+			<form action="/plan/search.kh" method="get">
 			
 				<select name = "searchCondition" >
 					<option value="all" <c:if test="${searchCondition eq 'all' }">selected</c:if>>전체</option>
 					<option value="writer" <c:if test="${searchCondition eq 'writer' }">selected</c:if>>작성자</option>
 					<option value="title"<c:if test="${searchCondition eq 'title'}">selected</c:if>>제목</option>
-					<option value="contents"<c:if test="${searchCondition eq 'contents' }">selected</c:if>>내용</option>
 				</select>
 				<input type="text" name="searchValue" value="${searchValue }">
 				<input type="submit" value="검색">
 			</form>
-				</td> --%>
+				</td> 
 				<td align="center">
 					<div>
  <button class="planL-titlebox--button__blue" id="btn">플래너 작성</button>
@@ -219,9 +220,6 @@ position:relative;
 
     </div>
 </div>
-				</td>
-	
-				</tr>
 		 <tr>
 			<td>번호</td>
 			<td>제목</td>
@@ -229,33 +227,33 @@ position:relative;
 			<td>여행날짜</td>
 			<td>조회수</td>
 		</tr>
-		<%--<c:if test="${!empty pList }">
+		<c:if test="${!empty pList }">
 		<c:forEach items ="${pList }" var="planner" varStatus = "i">
 		<!--var는 여기서 사용하는 변수명을 적음  -->
 		<tr>
 				<td>${i.count }</td>
-				<td><a href="/board/detail.kh?boardNo=${planner.boardNo }&page=${currentPage}#">${planner.planTitle }</td>
+				<td><%-- <a href="/board/detail.kh?boardNo=${planner.boardNo }&page=${currentPage}#"> --%>${planner.planTitle }</td>
 				<td>${planner.planWriter }</td>
-				<td>${planner.firstDay}</td>
-				<td>${planner.boardCount }</td>
+				<td>${planner.firstDay}-${planner.lastDay }</td>
+				<td>${planner.plannerCount }</td>
 			</tr>
 		
 		</c:forEach>
 		<tr align="center" height="20">
 			<td colspan="6">
 				<c:if test="${currentPage != 1}">
-					<a href="/board/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
+					<a href="/plan/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
 				</c:if>
 				<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
 					<c:if test="${currentPage eq p }">
 					<b>${p }</b>						
 					</c:if>
 					<c:if test="${currentPage ne p }">						
-					<a href="/board/${urlVal }.kh?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
+					<a href="/plan/${urlVal }.kh?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a>
 					</c:if>
 				</c:forEach>
 				<c:if test="${maxPage > currentPage }">
-				<a href="/board/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
+				<a href="/plan/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
 				</c:if>
 			</td>
 		</tr>
@@ -267,7 +265,7 @@ position:relative;
 		</c:if>
 		
 	
- --%>
+ 
 	</table>
 	</div>
 		

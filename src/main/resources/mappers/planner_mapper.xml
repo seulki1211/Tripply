@@ -26,7 +26,7 @@
    WHERE PLANNER_NO=#{boardNo}
    </select>
    
-   <!--	<select id="selectCount" resultType="_int"> 타입은 숫자 하나 가져올때만 씀
+   <select id="selectCount" resultType="_int"> <!-- 타입은 숫자 하나 가져올때만 씀 -->
   	SELECT COUNT(*) FROM PLANNER_TBL 
   	<where>
 			<if test="searchCondition.toString()=='title'">
@@ -45,6 +45,23 @@
   	</select>
   	<select id="selectAllPlanner" resultMap="plannerResultMap">
   		SELECT * FROM PLANNER_TBL  ORDER BY PLANNER_NO DESC
-  	</select> -->
+  	</select> 
+  	
+  	<select id="selectByValue" resultMap="plannerResultMap">
+  	SELECT *FROM PLANNER_TBL 
+		<where>
+			<if test="searchCondition.toString()=='title'">
+		 		PLANNER_TITLE LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString()=='writer'">
+		 		PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString()=='all'">
+				PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
+		 		OR PLANNER_TITLE LIKE '%'||#{searchValue}||'%'
+			</if>
+				AND P_STATUS='Y'			
+		</where>
+  	</select>
 
    </mapper>   

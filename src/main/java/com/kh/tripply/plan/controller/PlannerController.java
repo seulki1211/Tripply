@@ -30,13 +30,14 @@ public class PlannerController {
 		return "map/map";
 		
 	}
-	@RequestMapping(value="/plan/plan.kh", method=RequestMethod.GET)
-	public String plannerShow(
-			) {
-		return "planner/plannerList";
-		
-		
-	}
+
+	/*
+	 * @RequestMapping(value="/plan/plan.kh", method=RequestMethod.GET) public
+	 * String plannerShow( ) { return "planner/plannerList";
+	 * 
+	 * 
+	 * }
+	 */
 	@RequestMapping(value="/plan/regist.kh", method=RequestMethod.POST)
 	public ModelAndView addPlanner(
 			@ModelAttribute Planner planner
@@ -57,7 +58,7 @@ public class PlannerController {
 	}
 	
 	
-/*	@RequestMapping(value="/plan/plan.kh", method=RequestMethod.GET)
+	@RequestMapping(value="/plan/plan.kh", method=RequestMethod.GET)
 	public ModelAndView planShow(
 			ModelAndView mv
 			,@RequestParam(value="page", required=false) Integer page) {
@@ -78,17 +79,17 @@ public class PlannerController {
 		
 		List<Planner>pList = pService.printAllPlan(currentPage,boardLimit);
 		if(!pList.isEmpty()) {
-//			mv.addObject("listUrl","/board/list.kh?page=");
-			mv.addObject("urlVal","list");
+//			mv.addObject("listUrl","/plan/plan.kh?page=");
+			mv.addObject("urlVal","plan");
 			mv.addObject("maxPage",maxPage);
 			mv.addObject("currentPage",currentPage);// boardlistview에 값을 보내줘야한다
 			mv.addObject("startNavi",startNavi);
 			mv.addObject("endNavi",endNavi);
 			mv.addObject("pList",pList);
 		}
-		mv.setViewName("planner/planerList");
+		mv.setViewName("planner/plannerList");
 		return mv;
-	}*/
+	}
 		
 		
 		
@@ -132,11 +133,7 @@ public class PlannerController {
 		}
 //		 String[] dayList = new String[dList.size()];
 //		 dList.toArray(dayList);
-		
-			    
-			
-		
-        
+  
         ////////////////////////////////////////////일수 구하기
 //        Date format1 = planner.getFirstDay();
 //        Date format2 = planner.getLastDay();
@@ -152,6 +149,56 @@ public class PlannerController {
 		return mv;
 		
 	}
+	
+	@RequestMapping(value="/plan/search.kh",method=RequestMethod.GET)
+	public ModelAndView searchPlaner(
+			ModelAndView mv
+			, @RequestParam("searchCondition")String searchCondition
+			, @RequestParam("searchValue")String searchValue
+			,@RequestParam(value="page", required=false) Integer page) {
+		int currentPage=(page !=null) ? page : 1;
+		int totalCount = pService.getTotalCount(searchCondition,searchValue);//현재 페이지 값과 전체 게시물 갯수 가져옴
+		int boardLimit=10;
+		int naviLimit=5;
+		int maxPage;
+		int startNavi;
+		int endNavi;
+		
+		maxPage = (int)((double)totalCount/boardLimit +0.9);
+		startNavi = ((int)((double)currentPage/naviLimit+0.9)-1)*naviLimit+1;
+		endNavi = startNavi+naviLimit -1;//for문 돌리면 중간값 나옴
+		if(maxPage < endNavi) {
+			endNavi=maxPage;
+		}
+		
+			List<Planner> pList = pService.printAllValue(
+					searchCondition,searchValue,currentPage, boardLimit);
+//		BOARD_TBL<-SELECT *FROM WHERE B_STATUE='Y AND BOARD_TITLE LIKE ''%'||#{searchValue||}>
+//		BOARD_TBL<-SELECT *FROM WHERE B_STATUE='Y AND CONTENTS LIKE ''%'||#{searchValue||}>
+//		BOARD_TBL<-SELECT *FROM WHERE B_STATUE='Y AND BOARD_WRIGHTER LIKE ''%'||#{searchValue||}>
+			if(!pList.isEmpty()) {
+				
+				mv.addObject("pList",pList);				
+			}else {
+				mv.addObject("pList",null);
+			}
+			mv.addObject("urlVal","search");
+			mv.addObject("searchCondition",searchCondition);
+			mv.addObject("searchValue",searchValue);
+			mv.addObject("maxPage",maxPage);
+			mv.addObject("currentPage",currentPage);// boardlistview에 값을 보내줘야한다
+			mv.addObject("startNavi",startNavi);
+			mv.addObject("endNavi",endNavi);
+			mv.setViewName("/planner/plannerList");
+			/*}catch (Exception e) {
+			mv.addObject("msg",e.toString());
+			mv.setViewName("common/errorPage");
+		}*/
+		return mv;
+		
+		
+	}
+	
 
 	
 

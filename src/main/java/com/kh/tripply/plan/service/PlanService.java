@@ -11,7 +11,9 @@ public interface PlanService {
 
 		public Planner printInfo(Integer boardNo);
 
-		/*public int getTotalCount(String searchCondition, String searchValue);
+		public int getTotalCount(String searchCondition, String searchValue);
 
-	public List<Planner> printAllPlan(int offset, int limit);*/
+	public List<Planner> printAllPlan(int offset, int limit);
+
+	public List<Planner> printAllValue(String searchCondition, String searchValue, int currentPage, int boardLimit);
 }

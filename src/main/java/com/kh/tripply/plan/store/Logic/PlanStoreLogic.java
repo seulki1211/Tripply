@@ -24,7 +24,7 @@ public class PlanStoreLogic implements PlanStore{
 		return planner;
 	}
 
-	/*@Override
+	@Override
 	public int selectTotalCount(SqlSession session, String searchCondition, String searchValue) {
 		HashMap<String,String> paramMap = new HashMap<String,String>();
 		paramMap.put("searchCondition",searchCondition);
@@ -39,6 +39,18 @@ public class PlanStoreLogic implements PlanStore{
 		RowBounds rowBounds = new RowBounds(offset,limit);
 		List<Planner>pList = session.selectList("PlannerMapper.selectAllPlanner",null,rowBounds);
 		return pList;
-	}*/
+	}
 
+	@Override
+	public List<Planner> selectAllByValue(SqlSession session, String searchCondition, String searchValue,
+			int currentPage, int boardLimit) {
+		int offset = (currentPage-1)*boardLimit;
+		RowBounds rowBounds = new RowBounds(offset,boardLimit);
+		HashMap<String,String> paramMap = new HashMap<String,String>();
+		paramMap.put("searchCondition",searchCondition);
+		paramMap.put("searchValue",searchValue);
+		List<Planner>pList = session.selectList("PlannerMapper.selectByValue",paramMap,rowBounds);//마이바티스할때 두개값을 넘겨줄 수 있는가?
+		//클래스 만들거나 HashMap사용하면 두개의 객체를 한번에 넘길 수 있다==>클래스로 한번 해보기
+		return pList;
+	}
 }

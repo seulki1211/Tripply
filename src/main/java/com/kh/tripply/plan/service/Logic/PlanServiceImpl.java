@@ -28,7 +28,7 @@ public class PlanServiceImpl implements PlanService{
 		return planner;
 	}
 
-	/*@Override
+	@Override
 	public int getTotalCount(String searchCondition, String searchValue) {
 		int totalCount = pStore.selectTotalCount(session,searchCondition,searchValue);
 		return totalCount;
@@ -38,6 +38,12 @@ public class PlanServiceImpl implements PlanService{
 	public List<Planner> printAllPlan(int currentPage, int limit) {
 		List<Planner>pList = pStore.selectPlanner(session,currentPage,limit);
 		return pList;
-	}*/
+	}
+
+	@Override
+	public List<Planner> printAllValue(String searchCondition, String searchValue, int currentPage, int boardLimit) {
+		List<Planner>pList = pStore.selectAllByValue(session, searchCondition, searchValue,currentPage, boardLimit);
+		return pList;
+	}
 
 }

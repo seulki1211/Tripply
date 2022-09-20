@@ -72,6 +72,11 @@
 	
 </script>
 <body>
+<div id="head">
+		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
+</div>
+<div class="wrap">
+	
 	<div class="header">
 		<div class="info">
 			<input type="text" name="title" id="planTitle"value="${planner.planTitle }" />
@@ -80,10 +85,12 @@
 		
 		</div>
 		<!-- 타이틀 시작 날짜 끝날짜 보더 넘버->히든 -->
+		
 		<div class="resultButton">
-			<button class="planI-header__button--sumbit">저장</button>
-			<button class="planI-header__button--close"onclick="location.href='#'">닫기</button>
+			<button type="submit" class="planSumbit" >저장</button>
+			<button class="planClose"onclick="location.href='#'">닫기</button>
 		</div>
+		
 	</div>
 
 	<div class="plan-container">
@@ -110,8 +117,11 @@
 				</div>
 			</div>
 		</c:forEach>
+		
 		</div>
 		
+		
+
 		<div class="map_wrap">
 			<div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
 
@@ -132,6 +142,7 @@
 		
 
 		</div>
+	</div>
 	</div>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55f8ef22507421de3927e33382a4c630&libraries=services,clusterer,drawing"></script>
@@ -397,13 +408,13 @@ var markers = [];
    }
 
    function getHtml(place_name,place_y,place_x,num, data_date){
-       var div = "<div class=\"planI-planbox\" data-date=\"" + data_date + "\" data-y=\"" + place_y + "\" data-x=\"" + place_x + "\" data-planNo=\"\">";
-       div += "<div class=\"planI-plannum\""+num+">";
-       div += "<span class=\"planI-plannum__span--memo\">메모</span></div>";
-       div += " <div class=\"planI-plandetail\">";
-       div += " <span class=\"planI-plandetail__span--place\" title=\"" + place_name + "\">" + place_name + "</span>";
-       div += "<input type=\"text\" name=\"intro\" class=\"planI-plandetail__input--intro\" placeholder=\"20자 내로 메모를 입력해주세요.\"  maxlength=\"20\">";
-       div += "<button class=\"planI-plandetail__button--blue\" onclick=\"planDelete(\'" + num +  "\')\">&times;</button></div> </div>";
+       var div = "<div class=\"planDataBox\" data-date=\"" + data_date + "\" data-y=\"" + place_y + "\" data-x=\"" + place_x + "\" data-planNo=\"\">";
+       div += "<div class=\"planNum\""+num+">";
+       div += " <div class=\"planDetail\">";
+       div += " <span class=\"planPlace\" title=\"" + place_name + "\">" + place_name + "</span>";
+       div += "<span class=\"planNum-memo\">메모</span></div>";
+       div += "<input type=\"text\" name=\"memo\" class=\"planMemo\" placeholder=\"20자 내로 메모를 입력해주세요.\"  maxlength=\"20\">";
+       div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num +  "\')\">&times;</button></div> </div>";
 
        return div;
    }
@@ -415,15 +426,48 @@ var markers = [];
 
        kid.detach();
 
-       /* next_kids.each(function (index, element){
-           var url = "_image/plan/num/number" + num + ".png";
-           $(this).find('img').attr("src", url);
+        next_kids.each(function (index, element){
+      /*      var url = "_image/plan/num/number" + num + ".png";
+           $(this).find('img').attr("src", url); */
 
            var btn = "planDelete(" + num + ")";
            $(this).find('button').attr("onclick", btn);
            ++ num;
-       }); */
+       }); 
    }
+   
+    $('.planSumbit').click(function(e){
+    	
+   var date=[];
+   var address=[];
+   var y=[];
+   var x=[];
+   var memo=[];
+
+    }); 
+
+ 
+	   $('.planDataBox').each(function (i){
+           date.push($(this).attr("data-date"));
+       });
+	   $('.planPlace').each(function(i){
+		   address.push($(this).attr("title"));
+	   });
+	   $('.planDataBox').each(function(i){
+		   y.push($(this).attr("data-y"));
+	   });
+	   $('.planDataBox').each(function(i){
+		   x.push($(this).attr("data-x"));
+	   });
+
+       $('.planMemo').each(function (i){
+           if($(this).val() == null){
+               memo.push(" ");
+           }else{
+               memo.push($(this).val());
+           }
+       });
+	   
 
 	 
 	 </script>	

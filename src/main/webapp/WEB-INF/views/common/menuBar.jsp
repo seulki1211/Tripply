@@ -51,7 +51,7 @@
 		</c:if>
 	</div>
 	<div class="nav-area">
-		<div class="menu" onclick="location.href='#';">여행 일정</div>
+		<div class="menu" onclick="location.href='/plan/plan.kh';">여행 일정</div>
 		<div class="menu" onclick="location.href='/review/list.kh';">여행 후기</div>
 		<div class="menu" onclick="location.href='#';">중고 거래</div>
 		<div class="menu" onclick="location.href='/party/list.kh';">우리 함께</div>
