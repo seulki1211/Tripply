@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kh.tripply.review.common.Paging;
+import com.kh.tripply.review.common.Search;
 import com.kh.tripply.review.domain.Review;
 import com.kh.tripply.review.store.ReviewStore;
 
@@ -33,7 +34,7 @@ public class ReviewStoreLogic implements ReviewStore{
 	}
 
 	@Override
-	public Review selectDetailReviewByNo(SqlSession session, int boardNo) {
+	public Review selectOneReviewByNo(SqlSession session, int boardNo) {
 		Review review  = session.selectOne("ReviewMapper.selectOneReview", boardNo);
 		return review;
 	}
@@ -41,6 +42,24 @@ public class ReviewStoreLogic implements ReviewStore{
 	@Override
 	public int deleteReviewByNo(SqlSession session, Review review) {
 			int result = session.delete("ReviewMapper.deleteOneReview", review);
+		return result;
+	}
+
+	@Override
+	public int updateReviewByNo(SqlSession session,Review review) {
+		int result = session.update("ReviewMapper.updateReview", review);
+		return result;
+	}
+
+	@Override
+	public List<Review> selectSearchReview(SqlSession session, Search search, Paging paging) {
+		List<Review> rList = session.selectList("ReviewMapper.selectSearchReview", search, new RowBounds(paging.getOffset(), paging.getPageLimit()));
+		return rList;
+	}
+
+	@Override
+	public int getSearchCount(SqlSession session, Search search) {
+		int result = session.selectOne("ReviewMapper.selectSearchCount",search);
 		return result;
 	}
 

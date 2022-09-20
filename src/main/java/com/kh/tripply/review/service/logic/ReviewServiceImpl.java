@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.tripply.review.common.Paging;
+import com.kh.tripply.review.common.Search;
 import com.kh.tripply.review.domain.Review;
 import com.kh.tripply.review.service.ReviewService;
 import com.kh.tripply.review.store.ReviewStore;
@@ -33,13 +34,28 @@ public class ReviewServiceImpl implements ReviewService {
 		return totalCount;
 	}
 	@Override
-	public Review printDetailReviewByNo(int boardNo) {
-		Review review = rStore.selectDetailReviewByNo(session, boardNo);
+	public Review printOneReviewByNo(int boardNo) {
+		Review review = rStore.selectOneReviewByNo(session, boardNo);
 		return review;
 	}
 	@Override
 	public int removeReviewByNo(Review review) {
 		int result = rStore.deleteReviewByNo(session, review);
+		return result;
+	}
+	@Override
+	public int modifyReviewByNo(Review review) {
+		int result = rStore.updateReviewByNo(session,review);
+		return result;
+	}
+	@Override
+	public List<Review> printSearchReview(Search search, Paging paging) {
+		List<Review> rList = rStore.selectSearchReview(session,search,paging);
+		return rList;
+	}
+	@Override
+	public int getSearchCount(Search search) {
+		int result = rStore.getSearchCount(session,search);
 		return result;
 	}
 	
