@@ -63,22 +63,25 @@
 		<table id="reply-view" align="center">
 			<c:forEach items="${rReplyList }" var="rReply" varStatus="n">
 				<tr id="one-reply-area">
-					<td>
+					<td  <c:if test="${rReply.reReplyYn eq 'Y' }"> style="background-color:Silver;" </c:if> >
 						<div id="replyInfo">${rReply.rReplyWriter } ${rReply.rrCreateDate }</div>
 						<div id="replyContents">${rReply.rReplyContents }</div>
-						<div><a href="#" onclick="arcodianReReply(this);">답글</a></div>
-						<div class="reReply-input" style="display:block" >
-							<form action="/review/reply/write.kh" method="post">
-								<input type="hidden" name="currentPage" value="${sessionScope.currentPage }">
-								<input type="hidden" name="boardNo" value="${review.boardNo }">
-								<input type="hidden" name="rReplyWriter" value="${loginUser.memberId }">
-								<input type="hidden" name="reReplyYn" value="Y">
-								<input type="hidden" name ="rRefReplyNo" value="${rReply.rReplyNo }">
-								<input type="text" name="rReplyContents" value="" placeholder="답글을 입력해보세요!">
-								<button>등록</button>
-							</form>
-						</div>
-					</td>
+						<c:if test="${rReply.reReplyYn ne 'Y' }">
+							<div onclick="arcodian(this);"><a href="#" >답글</a></div>
+						<!-- 대댓글 입력창 -->
+							<div class="reReply-input" style="display:none" >
+								<form action="/review/reply/write.kh" method="post">
+									<input type="hidden" name="currentPage" value="${sessionScope.currentPage }">
+									<input type="hidden" name="boardNo" value="${review.boardNo }">
+									<input type="hidden" name="rReplyWriter" value="${loginUser.memberId }">
+									<input type="hidden" name="reReplyYn" value="Y">
+									<input type="hidden" name ="rRefReplyNo" value="${rReply.rReplyNo }">
+									<input type="text" name="rReplyContents" value="" placeholder="답글을 입력해보세요!">
+									<button>등록</button>
+								</form>
+							</div>
+						</c:if>
+					
 				</tr>
 			</c:forEach>
 		</table>
@@ -89,7 +92,17 @@
 <!-- 푸터 -->
 	<div id="footer"></div>
 	<script>
-		
+		function arcodian(reReply){
+			event.preventDefault();
+			var reReplyInput = reReply.nextElementSibling;
+			var display = reReplyInput.style.display;
+			
+			if(display == "none"){
+				reReplyInput.style.display="block";
+			}else{
+				reReplyInput.style.display="none";
+			}
+		}
 	</script>
 	
 </body>
