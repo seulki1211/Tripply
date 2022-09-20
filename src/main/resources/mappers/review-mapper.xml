@@ -86,6 +86,12 @@
   		SET REVIEW_TITLE=#{reviewTitle},REVIEW_CONTENTS=#{reviewContents},R_LOCATION_CODE=#{rLocationCode},THUMBNAIL_PATH=#{thumbnailPath} 
   		WHERE BOARD_NO=#{boardNo}
   	</update>
+  	<update id="updateCountReview">
+  		UPDATE REVIEW_TBL
+  		SET REVIEW_COUNT = REVIEW_COUNT+1
+  		WHERE BOARD_NO=#{boardNo}
+  	</update>
+  	
   	<delete id="deleteOneReview">
 		DELETE FROM REVIEW_TBL WHERE BOARD_NO=#{boardNo} AND REVIEW_WRITER = #{reviewWriter}
   	</delete>

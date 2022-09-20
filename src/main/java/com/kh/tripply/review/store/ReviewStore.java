@@ -22,4 +22,7 @@ public interface ReviewStore {
 	////////////////////댓글
 	public int insertReviewReply(SqlSession session, ReviewReply rReply);
 	public List<ReviewReply> selectReviewReplyByNo(SqlSession session,int boardNo);
+
+	////////////////////조회수 카운트
+	public int reviewViewCount(SqlSession session, int boardNo);
 }

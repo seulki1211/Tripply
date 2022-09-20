@@ -76,4 +76,10 @@ public class ReviewStoreLogic implements ReviewStore{
 		return rReplyList;
 	}
 
+	@Override
+	public int reviewViewCount(SqlSession session, int boardNo) {
+		int result = session.update("ReviewMapper.updateCountReview", boardNo);
+		return result;
+	}
+
 }

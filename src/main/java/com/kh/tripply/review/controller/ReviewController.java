@@ -120,7 +120,7 @@ public class ReviewController {
 
 	/**
 	 * 후기 게시물 상세 페이지 이동
-	 * 
+	 * 댓글 기능 추가
 	 * @param mv,boardNo
 	 * @return
 	 */
@@ -137,6 +137,19 @@ public class ReviewController {
 //댓글 출력
 			
 			List<ReviewReply> rReplyList = rService.printReviewReplyByNo(boardNo);
+//조회수 올리기			
+			
+			int dupleCheck;
+			if(session.getAttribute("preventDuplication")==null) {
+				dupleCheck=-1;
+			}else {
+				dupleCheck=(int)session.getAttribute("preventDuplication");
+			}
+			if(dupleCheck != boardNo) {
+				int result = rService.reviewViewCount(boardNo);
+				session.setAttribute("preventDuplication",boardNo);
+			}
+			
 			if(!rReplyList.isEmpty()) {
 				mv.addObject("rReplyList", rReplyList);
 			}else {
@@ -284,5 +297,7 @@ public class ReviewController {
 		}
 		return mv;
 	}
+	
+	
 
 }

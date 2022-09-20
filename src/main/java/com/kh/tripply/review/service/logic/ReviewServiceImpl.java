@@ -69,5 +69,10 @@ public class ReviewServiceImpl implements ReviewService {
 		List<ReviewReply> rReplyList = rStore.selectReviewReplyByNo(session, boardNo);
 		return rReplyList;
 	}
+	@Override
+	public int reviewViewCount(int boardNo) {
+		int result = rStore.reviewViewCount(session,boardNo);
+		return result;
+	}
 	
 }

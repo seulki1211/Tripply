@@ -20,4 +20,7 @@ public interface ReviewService {
 	////////////////////댓글
 	public int registerReviewReply(ReviewReply rReply);
 	public List<ReviewReply> printReviewReplyByNo(int boardNo);
+	
+	////////////////////조회수 카운트
+	public int reviewViewCount(int boardNo);
 }
