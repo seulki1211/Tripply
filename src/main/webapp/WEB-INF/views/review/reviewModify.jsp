@@ -65,6 +65,14 @@
 			imageRemoveBtn.on("click",function(){
 // 				alert("확인");
 			});
+			
+			var $imgTag = $("img");
+			$imgTag.on("click",function(){
+				
+				console.log(imgTag);
+				
+			});
+			
 		});
 </script>
 <body>

@@ -92,8 +92,12 @@ public class ReviewController {
 	 */
 	@RequestMapping(value = "/review/writeView.kh", method = RequestMethod.GET)
 	public String reviewWriteView(HttpSession session) {
-//로그인 체크 구현 필요		
-		return "/review/reviewWrite";
+//로그인 체크 구현 필요	
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		if(loginUser != null) {
+			return "/review/reviewWrite";
+		}
+		return "redirect:/review/list.kh";
 	}
 
 	/**
@@ -130,6 +134,12 @@ public class ReviewController {
 			@RequestParam("currentPage") Integer currentPage,
 			HttpSession session) {
 //로그인 체크 구현 필요
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		if(loginUser == null) {
+			mv.setViewName("redirect:/review/list.kh");
+			return mv;
+		}
+		
 		try {
 //수정이나 삭제 후 게시판의 기본 페이지로 돌아가기 위해 session에 저장
 			session.setAttribute("currentPage", currentPage);
