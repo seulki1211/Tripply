@@ -3,8 +3,30 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MemberMapper">
+	<resultMap type="Member" id="memberResultMap">
+		<id 	property="memberId" 			column="MEMBER_ID"/>
+		<result property="memberPwd" 			column="MEMBER_PWD"/>
+		<result property="memberName" 			column="MEMBER_NAME"/>
+		<result property="memberNickname" 		column="MEMBER_NICKNAME"/>
+		<result property="memberEmail" 			column="MEMBER_EMAIL"/>
+		<result property="memberBirth" 			column="MEMBER_BIRTH"/>
+		<result property="memberGender" 		column="MEMBER_GENDER"/>
+		<result property="memberPhone" 			column="MEMBER_PHONE"/>
+		<result property="memberAddr" 			column="MEMBER_ADDR"/>
+		<result property="enrollDate" 			column="ENROLL_DATE"/>
+		<result property="updateDate" 			column="UPDATE_DATE"/>
+		<result property="mStatus" 				column="M_STATUS"/>	
+		<result property="pointBalance" 		column="POINT_BALANCE"/>	
+		<result property="memberFileName" 		column="MEMBERFILENAME"/>	
+		<result property="memberFileRename" 	column="MEMBERFILERENAME"/>	
+		<result property="memberFilePath" 		column="MEMBERFILEPATH"/>	
+	</resultMap>
 	<insert id="insertMember">
 		INSERT INTO MEMBER_TBL 
 		VALUES(#{memberId}, #{memberPwd}, #{memberName}, #{memberNickname}, #{memberEmail}, #{memberBirth}, #{memberGender}, #{memberPhone}, #{memberAddr}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
+	<select id="selectLoginMember" resultMap="memberResultMap">
+		SELECT MEMBER_ID, MEMBER_NAME, MEMBER_NICKNAME FROM MEMBER_TBL
+		WHERE MEMBER_ID = #{memberId} AND MEMBER_PWD = #{memberPwd} AND M_STATUS = 'Y'
+	</select>
 </mapper>

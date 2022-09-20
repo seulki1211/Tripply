@@ -11,8 +11,8 @@ public class MemberStoreLogic implements MemberStore{
 
 	@Override
 	public Member selectLoginMember(SqlSession session, Member member) {
-		
-		return null;
+		Member mOne = session.selectOne("MemberMapper.selectLoginMember", member);
+		return mOne;
 	}
 
 	@Override

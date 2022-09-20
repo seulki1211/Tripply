@@ -13,7 +13,8 @@
 		<typeAlias type="com.kh.tripply.party.domain.Party" alias="Party"/>
 		<typeAlias type="com.kh.tripply.notice.domain.Notice" alias="Notice"/>
 		<typeAlias type="com.kh.tripply.banner.domain.Banner" alias="Banner"/>
-		<typeAlias type="com.kh.tripply.plan.domain.Planner" alias="Planner" />	
+		<typeAlias type="com.kh.tripply.plan.domain.Planner" alias="Planner" />
+		<typeAlias type="com.kh.tripply.member.domain.Member" alias="Member"/>	
 	</typeAliases>
 
 	<mappers>

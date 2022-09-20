@@ -5,8 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<!-- 화면 뼈대 설정용 css -->
+<link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css">
 </head>
 <body>
+<!-- 헤더-메뉴바 -->
+	<div id="header">
+		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
+	</div>
 	<h1 align="center">회원가입</h1>
 	<div class="">
 		<form action="/member/register.kh" method="post">
@@ -50,7 +56,8 @@
 				<tr>
 					<td> 성별</td>
 					<td>
-						<input type="text" name="memberGender">
+						<input type="radio" name="memberGender" value="남자">남자
+						<input type="radio" name="memberGender" value="여자">여자
 					</td>
 				</tr>	
 				<tr>

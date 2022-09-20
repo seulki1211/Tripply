@@ -1,6 +1,5 @@
 package com.kh.tripply.member.service.logic;
 
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +17,9 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Override
 	public Member loginMember(Member member) {
-		// TODO Auto-generated method stub
-		return null;
+		Member mOne 
+		= mStore.selectLoginMember(session, member);
+		return mOne;
 	}
 
 	@Override
