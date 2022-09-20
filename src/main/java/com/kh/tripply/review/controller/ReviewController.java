@@ -82,8 +82,6 @@ public class ReviewController {
 		mv.addObject("urlVal","search");
 		return mv;
 	}
-	
-	
 
 	/**
 	 * 후기 게시물 작성 페이지 이동
