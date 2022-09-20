@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,7 @@ public class BannerController {
 		return mv;
 	}
 	
-	// 배너 등록
+	// 배너 등록 수정중
 	@RequestMapping(value="/banner/register.kh", method=RequestMethod.POST)
 	public ModelAndView registerBanner(ModelAndView mv
 									,@ModelAttribute Banner banner
@@ -88,8 +89,23 @@ public class BannerController {
 		return mv;
 	}
 	
-	
-	
+//	@RequestMapping(value="banner/remove.kh", method = RequestMethod.GET)
+//	public String noticeRemove(HttpSession session
+//			, @RequestParam("bannerNo") int bannerNo) {
+//		
+//		 try {
+//			 System.out.println(bannerNo);
+//			 int result = bService.removeOneByNo(bannerNo);
+//			 if(result > 0) {
+//				return "redirect:/banner/listView.kh";
+//				
+//			 }
+//		} catch (Exception e) {
+//			return "common/errorPage";
+//		}
+//		return "redirect:/banner/listView.kh";
+//	} 
+//	
 	
 
 }

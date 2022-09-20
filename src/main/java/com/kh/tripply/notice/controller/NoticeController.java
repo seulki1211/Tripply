@@ -104,29 +104,24 @@ public class NoticeController {
 
 	}
 
-//	// 공지사항 삭제 수정중
-//	@RequestMapping(value="notice/remove.kh", method = RequestMethod.GET)
-//	public String noticeRemove(HttpSession session
-//			, Model model
-//			, @RequestParam("page") Integer page) {
-//		
-//		 try {
-//			 int noticeNo = (int) session.getAttribute("noticeNo");
-//			 System.out.println(noticeNo);
-//			 int result = nService.removeOneByNo(noticeNo);
-//			 if(result > 0) {
-//				session.removeAttribute("noticeNo");
-//				
-//			 }else {
-//				 System.out.println("실패");
-//			 }
-//			 
-//			 return "redirect:/notice/list.kh?page=" + page;
-//		} catch (Exception e) {
-//			model.addAttribute("msg", e.getMessage());
-//			return "common/errorPage";
-//		}
-//	}
+	// 공지사항 삭제
+	@RequestMapping(value="notice/remove.kh", method = RequestMethod.GET)
+	public String noticeRemove(HttpSession session
+			, @RequestParam("noticeNo") int noticeNo
+			, @RequestParam("page") Integer page) {
+		
+		 try {
+			 System.out.println(noticeNo);
+			 int result = nService.removeOneByNo(noticeNo);
+			 if(result > 0) {
+				return "redirect:/notice/list.kh?page=" + page;
+				
+			 }
+		} catch (Exception e) {
+			return "common/errorPage";
+		}
+		return "redirect:/notice/list.kh?page=" + page;
+	}
 	
 	// 공지사항 수정 뷰
 	@RequestMapping(value="notice/modifyView.kh", method = RequestMethod.GET)

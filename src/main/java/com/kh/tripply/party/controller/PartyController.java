@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.tripply.notice.domain.Notice;
 import com.kh.tripply.party.domain.Party;
 import com.kh.tripply.party.service.PartyService;
 
@@ -63,7 +65,7 @@ public class PartyController {
 			}
 
 			int result = pService.registerParty(party);
-			mv.setViewName("redirect:/party/writeView.kh");
+			mv.setViewName("redirect:/party/list.kh");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,51 +75,90 @@ public class PartyController {
 		return mv;
 	}
 	
-//	// 동행자 게시판 리스트 수정중!!!
-//	@RequestMapping(value="/party/list.kh", method=RequestMethod.GET)
-//	public ModelAndView partyListView(
-//			ModelAndView mv
-//			,@RequestParam(value = "page", required=false) Integer page
-//			,HttpServletRequest request) {
-//		
-//		try {
-//			
-//			int currentPage = (page != null) ? page : 1;
-//			int totalCount = pService.getTotalCount("","");
-//			int boardLimit = 9;
-//			int naviLimit = 5;
-//			int maxPage;
-//			int startNavi;
-//			int endNavi;
-//			
-//			maxPage = (int)((double)totalCount/boardLimit + 0.9);
-//			startNavi = ((int)((double)currentPage/naviLimit + 0.9)-1)*naviLimit+1;
-//			endNavi = startNavi + naviLimit - 1;
-//			if(maxPage < endNavi) {
-//				endNavi = maxPage;
-//			}
-//			
-//			
-//			List<Party> pList = pService.printAllBoard(currentPage, boardLimit);
-//			
-//			
-//			if(!pList.isEmpty()) {
-//				mv.addObject("currentPage", currentPage);
-//				mv.addObject("maxPage", maxPage);  
-//				mv.addObject("startNavi", startNavi);
-//				mv.addObject("endNavi", endNavi);
-//				mv.addObject("pList", pList);
-//				mv.addObject("urlVal", "list");
-//				mv.setViewName("party/partyListView");
-//			}else {
-//				mv.addObject("msg", "실패").setViewName("common/errorPage");
-//			}
-//			
-//		}catch (Exception e) {
-//			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
-//		}
-//		return mv;
-//		
-//		
-//	}
+	// 동행자 게시판 리스트
+	@RequestMapping(value="/party/list.kh", method=RequestMethod.GET)
+	public ModelAndView partyListView(
+			ModelAndView mv
+			,@ModelAttribute Party party
+			,@RequestParam(value = "page", required=false) Integer page
+			,HttpServletRequest request) {
+		
+		try {
+			//페이징
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = pService.getTotalCount("","");
+			int boardLimit = 9;
+			int naviLimit = 5;
+			int maxPage;
+			int startNavi;
+			int endNavi;
+			
+			maxPage = (int)((double)totalCount/boardLimit + 0.9);
+			startNavi = ((int)((double)currentPage/naviLimit + 0.9)-1)*naviLimit+1;
+			endNavi = startNavi + naviLimit - 1;
+			if(maxPage < endNavi) {
+				endNavi = maxPage;
+			}
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("maxPage", maxPage);  
+			mv.addObject("startNavi", startNavi);
+			mv.addObject("endNavi", endNavi);
+			mv.addObject("urlVal", "list");
+			//페이징
+
+				List<Party> pList = pService.printAllParty(currentPage, boardLimit);
+				mv.addObject("pList", pList);
+				mv.setViewName("party/partyListView");
+			
+			
+		}catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	// 동행자 디테일뷰
+	
+	@RequestMapping(value = "/party/detail.kh", method = RequestMethod.GET)
+	public ModelAndView partyDetailView(ModelAndView mv, @RequestParam("partyNo") int partyNo,
+			@RequestParam("page") Integer page, HttpSession session) {
+
+		try {
+			Party party = pService.printOneParty(partyNo);
+			mv.addObject("party", party);
+			mv.addObject("page", page);
+
+			mv.setViewName("party/partyDetailView");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+
+			mv.setViewName("common/errorPage");
+		}
+
+		return mv;
+
+	}
+	
+	// 동행자 삭제
+		@RequestMapping(value="/party/remove.kh", method = RequestMethod.GET)
+		public String noticeRemove(HttpSession session
+				, @RequestParam("partyNo") int partyNo
+				, @RequestParam("page") Integer page) {
+			
+			 try {
+				 int result = pService.removeOneByNo(partyNo);
+				 if(result > 0) {
+					return "redirect:/party/list.kh?page=" + page;
+					
+				 }
+			} catch (Exception e) {
+				return "common/errorPage";
+			}
+			return "redirect:/party/list.kh?page=" + page;
+		} 
+
+		
+	// 동행자 수정 진행중
+		
+	
 }

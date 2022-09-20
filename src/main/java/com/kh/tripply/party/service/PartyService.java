@@ -8,7 +8,11 @@ public interface PartyService {
 
 	public int registerParty(Party party);
 	
-	public List<Party> printAllBoard(int currentPage, int boardLimit);
+	public List<Party> printAllParty(int currentPage, int boardLimit);
 
 	public int getTotalCount(String searchCondition, String searchValue);
+	
+	public Party printOneParty(int partyNo);
+	
+	public int removeOneByNo(int partyNo);
 }

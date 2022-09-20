@@ -36,4 +36,16 @@ public class PartyStoreLogic implements PartyStore {
 		return result;
 	}
 
+	@Override
+	public Party selectOneParty(int partyNo, SqlSession session) {
+		Party party = session.selectOne("PartyMapper.selectOneParty", partyNo);
+		return party;
+	}
+
+	@Override
+	public int deleteOneByNo(int partyNo, SqlSession session) {
+		int result = session.delete("PartyMapper.deleteOneParty", partyNo);
+		return result;
+	}
+
 }

@@ -31,6 +31,12 @@ public class BannerServiceImpl implements BannerService{
 		List<Banner> bList = bStore.selectAllBanner(session);
 		return bList;
 	}
+
+	@Override
+	public int removeOneByNo(int bannerNo) {
+		int result = bStore.deleteOneByNo(session, bannerNo);
+		return result;
+	}
 	
 	
 }

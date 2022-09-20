@@ -35,6 +35,12 @@
 						<td colspan="3" align="right"><a href="/member/joinView.kh">회원가입</a>
 						</td>
 					</tr>
+					<c:if test="${loginUser.memberId eq 'admin' }">
+					<tr>
+						<td colspan="3" align="right"><a href="#">관리자 페이지로</a>
+						</td>
+					</tr>
+					</c:if>
 				</table>
 			</form>
 		</c:if>

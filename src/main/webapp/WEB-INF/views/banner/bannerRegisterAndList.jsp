@@ -18,6 +18,7 @@
 	<h1 align="center">배너 등록 및 리스트 페이지</h1>
 	<br><br>
 	
+		
 		<form action="/banner/register.kh" method="post" enctype="multipart/form-data">
 		<table border='1'  align="center">
 		<tr>
@@ -28,20 +29,50 @@
 				<th>삭제</th>
 			</tr>
 			
-			<c:forEach items="${bList }" var="banner" varStatus="i">
 			
 			<tr>
-				<td><input type="hidden" name="bannerNo" > ${i.count }</td>
-				<td><c:if test="${not empty banner.bannerFileName}">
-						<img alt="본문이미지" src="/resources/buploadFiles/${banner.bannerFileRename }" width = '50%'>
+				<td><input type="hidden" name="bannerNo" value='1' > 1</td>
+				<td><c:if test="${not empty bList[0].bannerFileName}">
+						<img alt="본문이미지" src="/resources/buploadFiles/${bList[0].bannerFileRename }" width = '50%'>
 					</c:if><td>
-				<td><input type="text" name="bannerWriter" value="${banner.bannerWriter }"></td>
-				<td><input type="file" name="uploadFile"></td>
-				<td><input type="submit" value="저장"></td>
-				<td> <button type="button" onclick ="location.href='/banner/remove.kh'" >삭제하기</button>  </td>
+				<td><input type="hidden" name="bannerWriter" value="${bList[0].bannerWriter }"></td>
+				<td><input type="file" name="uploadFile"><input type="submit" value="저장"></td>
 			</tr>
 			
-			</c:forEach>
+			<tr>
+				<td><input type="hidden" name="bannerNo" value='2' >2</td>
+				<td><c:if test="${not empty bList[1].bannerFileName}">
+						<img alt="본문이미지" src="/resources/buploadFiles/${bList[1].bannerFileRename }" width = '50%'>
+					</c:if><td>
+				<td><input type="hidden" name="bannerWriter" value="${bList[1].bannerWriter }"></td>
+				<td><input type="file" name="uploadFile"><input type="submit" value="저장"></td>
+				
+			</tr>
+			<tr>
+				<td><input type="hidden" name="bannerNo" value='3' > 3</td>
+				<td><c:if test="${not empty bList[2].bannerFileName}">
+						<img alt="본문이미지" src="/resources/buploadFiles/${bList[2].bannerFileRename }" width = '50%'>
+					</c:if><td>
+				<td><input type="hidden" name="bannerWriter" value="${bList[2].bannerWriter }"></td>
+				<td><input type="file" name="uploadFile"><input type="submit" value="저장"></td>
+			</tr>
+			<tr>
+				<td><input type="hidden" name="bannerNo" value='4' > 4</td>
+				<td><c:if test="${not empty bList[3].bannerFileName}">
+						<img alt="본문이미지" src="/resources/buploadFiles/${bList[3].bannerFileRename }" width = '50%'>
+					</c:if><td>
+				<td><input type="hidden" name="bannerWriter" value="${bList[3].bannerWriter }"></td>
+				<td><input type="file" name="uploadFile"><input type="submit" value="저장"></td>
+			</tr>
+			<tr>
+				<td><input type="hidden" name="bannerNo" value='5' > 5</td>
+				<td><c:if test="${not empty bList[4].bannerFileName}">
+						<img alt="본문이미지" src="/resources/buploadFiles/${bList[4].bannerFileRename }" width = '50%'>
+					</c:if><td>
+				<td><input type="hidden" name="bannerWriter" value="${bList[4].bannerWriter }"></td>
+				<td><input type="file" name="uploadFile"><input type="submit" value="저장"></td>
+			</tr>
+			
 		</table>
 
 		</form>

@@ -13,49 +13,49 @@
 	<jsp:include page="../common/menuBar.jsp"></jsp:include>
 
 
-	<h1 align='center'> ${board.boardNo }번 게시글 상세 보기</h1>
+	<h1 align='center'> ${party.partyNo }번 게시글 상세 보기</h1>
 	<br><br>
 	<table border='1'  align="center"  border="1">
 			<tr>
 			<td width = '80px' >제목</td>
-			<td>${board.boardTitle }</td>
+			<td>${party.partyTitle }</td>
 			</tr>
 			<tr>
 			<td>작성자</td>
-			<td>${board.boardWriter }</td>
+			<td>${party.partyWriter }</td>
 			</tr>
 			<tr>
 			<td>작성날짜</td>
-			<td>${board.bCreateDate }</td>
+			<td>${party.pUpdateDate }</td>
 			</tr>
 			<tr>
 			<td>조회수</td>
-			<td>${board.boardCount }</td>
+			<td>${party.partyCount }</td>
 			</tr>
 			<tr height="300" width='100'>
 			<td>내용</td>
-			<td>${board.boardContents }
+			<td>${party.partyContents }
 			</tr>
 			
-			<tr >
-			<td>첨부파일</td>
-				<td>
-					<c:if test="${not empty board.boardFilename}">
-						<img alt="본문이미지" src="/resources/buploadFiles/${board.boardFileRename }" width = '50%'>
-					</c:if>
-				</td>
-			</tr>
+<!-- 			<tr > -->
+<!-- 			<td>첨부파일</td> -->
+<!-- 				<td> -->
+<%-- 					<c:if test="${not empty party.boardFilename}"> --%>
+<%-- 						<img alt="본문이미지" src="/resources/buploadFiles/${board.boardFileRename }" width = '50%'> --%>
+<%-- 					</c:if> --%>
+<!-- 				</td> -->
+<!-- 			</tr> -->
 			
 			<tr>
 				<td colspan='2' align='center'>
-				<button type="button" onclick="location.href='/board/list.kh?&page=${page }'">리스트로</button> 
+				<button type="button" onclick="location.href='/party/list.kh?&page=${page }'">리스트로</button> 
 				
-					<c:if test="${board.boardWriter eq loginUser.memberName }">
-						<button type="button" onclick="location.href='/board/modifyView.kh?boardNo=${board.boardNo }&page=${page }'">수정하기</button>
-					</c:if> 	
-					<c:if test="${board.boardWriter eq loginUser.memberName }">
-						<button type="button" onclick="removeBoard(${page});">삭제하기</button> 
-					</c:if> 	
+<%-- 					<c:if test="${party.partyWriter eq loginUser.memberName }"> --%>
+						<button type="button" onclick="location.href='/party/modifyView.kh?partyNo=${party.partyNo }&page=${page }'">수정하기</button>
+<%-- 					</c:if> 	 --%>
+<%-- 					<c:if test="${party.partyWriter eq loginUser.memberName }"> --%>
+						<button type="button" onclick="removeBoard(${party.partyNo}, ${page});">삭제하기</button> 
+<%-- 					</c:if> 	 --%>
 							
 				</td>
 			</tr>
@@ -80,10 +80,11 @@
 		</table>
 
 <script type="text/javascript">
-function removeBoard(page) {
+function removeBoard(partyNo,page) {
  	event.preventDefault();// 하이퍼링크 이동 방지
 	if(confirm("삭제하시려면 '확인'을 클릭하세요")){
-		location.href="/board/remove.kh?page="+page;
+		location.href="/party/remove.kh?partyNo="+partyNo+"&page="+page;
+
 	}
 }
 	

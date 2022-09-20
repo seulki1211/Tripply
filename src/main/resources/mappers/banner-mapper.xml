@@ -14,16 +14,18 @@
 		
 </resultMap>
 
-<insert id="insertBanner">
-	INSERT INTO BANNER_TBL
-	VALUES(#{bannerNo}, #{bannerWriter}, #{bannerFileName}, #{bannerFileRename}, #{bannerFilePath})
-
-</insert>
+<update id="insertBanner">
+	UPDATE BANNER_TBL
+	SET BANNER_FILENAME = #{bannerFileName}, BANNER_RENAME =#{bannerFileRename}, BANNER_FILEPATH = #{bannerFilePath}
+	WHERE BANNER_NO = #{bannerNo}
+</update>
 
 <select id="selectAllBanner" resultMap="bannerResultMap">
 	SELECT * FROM BANNER_TBL
 	ORDER BY 1
 </select>
+
+
 
 
 </mapper>

@@ -62,4 +62,17 @@ SELECT * FROM PARTY_TBL
 	ORDER BY 1 DESC
 
 </select>
+
+<select id="selectOneParty" resultMap="partyResultMap">
+SELECT * FROM PARTY_TBL
+WHERE P_STATUS = 'Y'
+AND BOARD_NO = #{partyNo}
+
+</select>
+
+<update id="deleteOneParty">
+UPDATE PARTY_TBL
+SET P_STATUS = 'N'
+WHERE BOARD_NO = #{partyNo}
+</update>
 </mapper>
