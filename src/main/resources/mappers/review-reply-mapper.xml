@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReviewReplyMapper">
+	<resultMap type="ReviewReply" 			id="ReviewReplyMap">
+		<id 	column="R_REPLY_NO" 		property="rReplyNo"/>
+		<result column="BOARD_NO"			property="boardNo"/>
+		<result column="R_REF_REPLY_NO" 	property="rRefReplyNo"/>
+		<result column="R_REPLY_WRITER" 	property="rReplyWriter"/>
+		<result column="R_REPLY_CONTENTS" 	property="rReplyContents"/>
+		<result column="R_R_CREATE_DATE" 	property="rrCreateDate"/>
+		<result column="R_R_UPDATE_DATE" 	property="rrUpdateDate"/>
+		<result column="R_R_STATUS" 		property="rrStatus"/>
+		<result column="RE_REPLY_YN " 		property="reReplyYn"/>
+	</resultMap>
+	
+	<insert id="insertReviewReply">
+		INSERT INTO REVIEW_REPLY_TBL
+		VALUES(SEQ_REPLYNO.NEXTVAL,#{boardNo},#{rRefReplyNo},#{rReplyWriter},#{rReplyContents},DEFAULT,DEFAULT,DEFAULT,#{reReplyYn})
+	</insert>
+	<select id="selectReviewReply" resultMap="ReviewReplyMap">
+		SELECT * FROM REVIEW_REPLY_TBL
+		
+	</select>
+
+</mapper>

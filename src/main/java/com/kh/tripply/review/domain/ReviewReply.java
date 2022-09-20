@@ -11,11 +11,15 @@ public class ReviewReply {
 	private Date rrCreateDate;
 	private Date rrUpdateDate;
 	private String rrStatus;
+	private String reReplyYn;
 	
 	public ReviewReply() {}
 	
+	
+	
+
 	public ReviewReply(int rReplyNo, int boardNo, int rRefReplyNo, String rReplyWriter, String rReplyContents,
-			Date rrCreateDate, Date rrUpdateDate, String rrStatus) {
+			Date rrCreateDate, Date rrUpdateDate, String rrStatus, String reReplyYn) {
 		super();
 		this.rReplyNo = rReplyNo;
 		this.boardNo = boardNo;
@@ -25,7 +29,11 @@ public class ReviewReply {
 		this.rrCreateDate = rrCreateDate;
 		this.rrUpdateDate = rrUpdateDate;
 		this.rrStatus = rrStatus;
+		this.reReplyYn = reReplyYn;
 	}
+
+
+
 
 	public int getrReplyNo() {
 		return rReplyNo;
@@ -91,15 +99,26 @@ public class ReviewReply {
 		this.rrStatus = rrStatus;
 	}
 
+	public String getReReplyYn() {
+		return reReplyYn;
+	}
+
+	public void setReReplyYn(String reReplyYn) {
+		this.reReplyYn = reReplyYn;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "ReviewReply [rReplyNo=" + rReplyNo + ", boardNo=" + boardNo + ", rRefReplyNo=" + rRefReplyNo
 				+ ", rReplyWriter=" + rReplyWriter + ", rReplyContents=" + rReplyContents + ", rrCreateDate="
-				+ rrCreateDate + ", rrUpdateDate=" + rrUpdateDate + ", rrStatus=" + rrStatus + "]";
+				+ rrCreateDate + ", rrUpdateDate=" + rrUpdateDate + ", rrStatus=" + rrStatus + ", reReplyYn="
+				+ reReplyYn + "]";
 	}
 	
 	
 	
 	
-   	
 }

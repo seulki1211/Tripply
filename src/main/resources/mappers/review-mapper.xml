@@ -90,4 +90,6 @@
 		DELETE FROM REVIEW_TBL WHERE BOARD_NO=#{boardNo} AND REVIEW_WRITER = #{reviewWriter}
   	</delete>
   
+
+  
   </mapper>

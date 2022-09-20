@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.kh.tripply.review.common.Paging;
 import com.kh.tripply.review.common.Search;
 import com.kh.tripply.review.domain.Review;
+import com.kh.tripply.review.domain.ReviewReply;
 
 public interface ReviewStore {
 	public int insertReview(SqlSession session,Review review);
@@ -17,5 +18,8 @@ public interface ReviewStore {
 	public int getSearchCount(SqlSession session,Search search);
 	public int updateReviewByNo(SqlSession session,Review review);
 	public int deleteReviewByNo(SqlSession session,Review review);
-	
+
+	////////////////////댓글
+	public int insertReviewReply(SqlSession session, ReviewReply rReply);
+	public List<ReviewReply> selectReviewReplyByNo(SqlSession session,int boardNo);
 }

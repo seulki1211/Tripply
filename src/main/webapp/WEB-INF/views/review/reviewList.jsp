@@ -31,11 +31,11 @@
 					<c:forEach items="${rList }" var="review" varStatus="N">
 						<td id="detail-one-wrap" aligh="center" width="30%">
 							<div class="detail title thumnale-wrap align="center">
-								<img onclick="loginCheck('${loginUser.memberId}',${review.boardNo },${paging.currentPage });"  onerror="this.src='/resources/image/flower1.png';" src="${review.thumbnailPath }" height="90%" width="90%">
+								<img onclick="loginCheck('${loginUser.memberId}','/review/detailView.kh?boardNo=${review.boardNo }&currentPage=${paging.currentPage }');"  onerror="this.src='/resources/image/flower1.png';" src="${review.thumbnailPath }" height="90%" width="90%">
 							</div>
 							<div align="center">
 								<span class="detail region">[${review.rLocationName }]</span>
-								<a href="/review/detailView.kh?boardNo=${review.boardNo }&currentPage=${paging.currentPage }">
+								<a href="#" onclick="loginCheck('${loginUser.memberId}','/review/detailView.kh?boardNo=${review.boardNo }&currentPage=${paging.currentPage }');"  >
 									<span class="detail title"><b>${review.reviewTitle }</b></span>
 								</a>
 								<div class="detail writer">${review.reviewWriter }</div>
@@ -68,7 +68,7 @@
 			</div>
 <!-- 컨텐츠 하단 버튼	 -->
 			<div id="button">
-				<button onclick="location.href='/review/writeView.kh';">글 작성</button>
+				<button onclick="loginCheck('${loginUser.memberId}','/review/writeView.kh');">글 작성</button>
 			</div>
 			
 		</div>
@@ -77,12 +77,11 @@
 	<div id="footer"></div>
 </body>
 <script>
-		function loginCheck(loginId,boardNo,currentPage){
+		function loginCheck(loginId,url){
 			if(loginId != ""){
-				location.href="/review/detailView.kh?boardNo="+boardNo+"&currentPage="+currentPage+"";
+				location.href=url;
 			}else{
 				alert("로그인을 해주세요.")
-				location.href="/home.kh";
 			}
 		}
 </script>

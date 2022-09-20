@@ -24,6 +24,7 @@ import com.kh.tripply.member.domain.Member;
 import com.kh.tripply.review.common.Paging;
 import com.kh.tripply.review.common.Search;
 import com.kh.tripply.review.domain.Review;
+import com.kh.tripply.review.domain.ReviewReply;
 import com.kh.tripply.review.service.ReviewService;
 
 @Controller
@@ -132,14 +133,22 @@ public class ReviewController {
 		try {
 //수정이나 삭제 후 게시판의 기본 페이지로 돌아가기 위해 session에 저장
 			session.setAttribute("currentPage", currentPage);
-			System.out.println(currentPage);
 			Review review = rService.printOneReviewByNo(boardNo);
+//댓글 출력
+			
+			List<ReviewReply> rReplyList = rService.printReviewReplyByNo(boardNo);
+			if(!rReplyList.isEmpty()) {
+				mv.addObject("rReplyList", rReplyList);
+			}else {
+				mv.addObject("rReplyList",null);
+			}
 			if (review != null) {
-				mv.addObject("review", review).setViewName("/review/reviewDetail");
+				mv.addObject("review", review).
+				setViewName("/review/reviewDetail");
 			} else {
 			}
 		} catch (Exception e) {
-
+			System.out.println(e.getMessage());
 		}
 		return mv;
 	}
@@ -158,8 +167,8 @@ public class ReviewController {
 //로그인 유저와(세션) 작성자 체크 필요 or 화면에서 체크.
 		try {
 //		String loginUser = (String)session.getAttribute("loginUser");
-			String loginUser = "임시작성자";
-			review.setReviewWriter(loginUser);
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			review.setReviewWriter(loginUser.getMemberId());
 			review.setBoardNo(boardNo);
 			int result = rService.removeReviewByNo(review);
 			if (result > 0) {
@@ -253,4 +262,27 @@ public class ReviewController {
 
 		return jsonObject;
 	}
+	
+/////////////////////댓글기능///////////////////	
+	
+	/**
+	 * 댓글 등록
+	 * @param mv
+	 * @param currentPage
+	 * @param rReply
+	 * @return
+	 */
+	@RequestMapping(value="/review/reply/write.kh",method=RequestMethod.POST)
+	public ModelAndView reviewReplyWrite(ModelAndView mv,
+			@RequestParam("currentPage") Integer currentPage,
+			@ModelAttribute ReviewReply rReply) {
+		int boardNo = rReply.getBoardNo();
+		int result = rService.registerReviewReply(rReply);
+		if(result>0 ) {
+			mv.setViewName("redirect:/review/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+		}else {
+		}
+		return mv;
+	}
+
 }

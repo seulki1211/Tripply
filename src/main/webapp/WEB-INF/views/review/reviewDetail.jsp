@@ -33,6 +33,13 @@
 						조회수 ${review.reviewCount } &nbsp;
 						</span>
 						<span  class="detail date">${review.rCreateDate }</span>
+<!-- 작성자인 경우에만 수정, 삭제버튼이 노출되도록 		 -->
+						<c:if test="${loginUser.memberId eq review.reviewWriter }">
+							<span class="detail btn">
+								<a href="/review/modifyView.kh?boardNo=${review.boardNo }">수정</a> 
+								<a href="/review/remove.kh?boardNo=${review.boardNo }">삭제</a>
+							</span>
+						</c:if>
 					</td>
 				</tr>
 				<tr>
@@ -40,13 +47,50 @@
 				</tr>
 			</table>
 		</div>
-<!-- 작성자인 경우에만 수정, 삭제버튼이 노출되도록 		 -->
-		<div id="contents-2">
-			<a href="/review/modifyView.kh?boardNo=${review.boardNo }">수정</a> 
-			<a href="/review/remove.kh?boardNo=${review.boardNo }">삭제</a>
+<!-- 댓글 입력창 -->
+		<div id="reply-input" align="center">
+			<form action="/review/reply/write.kh" method="post">
+				<input type="hidden" name="currentPage" value="${sessionScope.currentPage }">
+				<input type="hidden" name="boardNo" value="${review.boardNo }">
+				<input type="hidden" name="rReplyWriter" value="${loginUser.memberId }">
+				<input type="hidden" name="reReplyYn" value="N">
+				<input type="hidden" name ="rRefReplyNo" value="-1">
+				<input type="text" name="rReplyContents" value="" placeholder="댓글을 입력해보세요!">
+				<button>등록</button>
+			</form>
 		</div>
+<!-- 댓글출력  -->
+		<table id="reply-view" align="center">
+			<c:forEach items="${rReplyList }" var="rReply" varStatus="n">
+				<tr id="one-reply-area">
+					<td>
+						<div id="replyInfo">${rReply.rReplyWriter } ${rReply.rrCreateDate }</div>
+						<div id="replyContents">${rReply.rReplyContents }</div>
+						<div><a href="#" onclick="arcodianReReply(this);">답글</a></div>
+						<div class="reReply-input" style="display:block" >
+							<form action="/review/reply/write.kh" method="post">
+								<input type="hidden" name="currentPage" value="${sessionScope.currentPage }">
+								<input type="hidden" name="boardNo" value="${review.boardNo }">
+								<input type="hidden" name="rReplyWriter" value="${loginUser.memberId }">
+								<input type="hidden" name="reReplyYn" value="Y">
+								<input type="hidden" name ="rRefReplyNo" value="${rReply.rReplyNo }">
+								<input type="text" name="rReplyContents" value="" placeholder="답글을 입력해보세요!">
+								<button>등록</button>
+							</form>
+						</div>
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+
+
+
 	</div>
 <!-- 푸터 -->
 	<div id="footer"></div>
+	<script>
+		
+	</script>
+	
 </body>
 </html>
