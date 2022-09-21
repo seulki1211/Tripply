@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.kh.tripply.plan.domain.PlanList;
 import com.kh.tripply.plan.domain.Planner;
 
 
@@ -19,5 +20,7 @@ public interface PlanStore {
 
 	public List<Planner> selectAllByValue(SqlSession session, String searchCondition, String searchValue,
 			int currentPage, int boardLimit);
+
+	public int insertPlan(SqlSession session, PlanList l);
 
 }

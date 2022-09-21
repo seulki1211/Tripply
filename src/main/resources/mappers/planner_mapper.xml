@@ -63,5 +63,19 @@
 				AND P_STATUS='Y'			
 		</where>
   	</select>
+  		 
+  	 <insert id="insertPlan" parameterType="list">
+  		INSERT INTO PLAN_TBL
+		SELECT SEQ_PLANNO.NEXTVAL AS PLAN_NO, A.*
+		FROM ( 
+  		<foreach collection="planList" item="item" separator="UNION ALL" >
+  		SELECT	
+  		#{item.boardNo} AS PLANNER_NO ,#{item.day} AS PLAN_DAY,#{item.Y} AS Y,#{item.X} AS X,#{item.address} AS ADDRESS ,#{item.Memo} AS MEMO FROM DUAL
+  		</foreach>)A
+   </insert> 
 
+   
+   
+   
+   
    </mapper>   

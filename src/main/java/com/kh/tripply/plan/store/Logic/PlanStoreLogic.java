@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.kh.tripply.plan.domain.PlanList;
 import com.kh.tripply.plan.domain.Planner;
 import com.kh.tripply.plan.store.PlanStore;
 
@@ -52,5 +53,11 @@ public class PlanStoreLogic implements PlanStore{
 		List<Planner>pList = session.selectList("PlannerMapper.selectByValue",paramMap,rowBounds);//마이바티스할때 두개값을 넘겨줄 수 있는가?
 		//클래스 만들거나 HashMap사용하면 두개의 객체를 한번에 넘길 수 있다==>클래스로 한번 해보기
 		return pList;
+	}
+
+	@Override
+	public int insertPlan(SqlSession session, PlanList l) {
+		int result=session.insert("PlannerMapper.insertPlan",l);
+		return result;
 	}
 }

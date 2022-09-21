@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.tripply.member.domain.Member;
+import com.kh.tripply.plan.domain.PlanList;
 import com.kh.tripply.plan.domain.Planner;
 import com.kh.tripply.plan.service.PlanService;
 
@@ -24,6 +25,14 @@ import com.kh.tripply.plan.service.PlanService;
 public class PlannerController {
 	@Autowired
 	private PlanService pService;
+	@RequestMapping(value="/planner/planerDetail.kh", method=RequestMethod.GET)
+	public String showdd() {
+		
+		return "planner/plannerDetail";
+		
+	}
+
+	
 	@RequestMapping(value="/plan/map.kh", method=RequestMethod.GET)
 	public String showMap() {
 		
@@ -37,6 +46,15 @@ public class PlannerController {
 	 * 
 	 * 
 	 * }
+	 */
+	
+	/**
+	 *  여행 제목,일정 등록
+	 * 
+	 * @param planner
+	 * @param mv
+	 * @param session
+	 * @return
 	 */
 	@RequestMapping(value="/plan/regist.kh", method=RequestMethod.POST)
 	public ModelAndView addPlanner(
@@ -57,9 +75,15 @@ public class PlannerController {
 		
 	}
 	
-	
+	/**
+	 * 플래너 리스트 보여지기
+	 * 
+	 * @param mv
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value="/plan/plan.kh", method=RequestMethod.GET)
-	public ModelAndView planShow(
+	public ModelAndView planerListShow(
 			ModelAndView mv
 			,@RequestParam(value="page", required=false) Integer page) {
 		int currentPage=(page !=null) ? page : 1;
@@ -93,6 +117,63 @@ public class PlannerController {
 		
 		
 		
+	/**
+		 * 리스트 검색
+		 * 
+		 * @param mv
+		 * @param searchCondition
+		 * @param searchValue
+		 * @param page
+		 * @return
+		 */
+		@RequestMapping(value="/plan/search.kh",method=RequestMethod.GET)
+		public ModelAndView searchPlaner(
+				ModelAndView mv
+				, @RequestParam("searchCondition")String searchCondition
+				, @RequestParam("searchValue")String searchValue
+				,@RequestParam(value="page", required=false) Integer page) {
+			int currentPage=(page !=null) ? page : 1;
+			int totalCount = pService.getTotalCount(searchCondition,searchValue);//현재 페이지 값과 전체 게시물 갯수 가져옴
+			int boardLimit=10;
+			int naviLimit=5;
+			int maxPage;
+			int startNavi;
+			int endNavi;
+			
+			maxPage = (int)((double)totalCount/boardLimit +0.9);
+			startNavi = ((int)((double)currentPage/naviLimit+0.9)-1)*naviLimit+1;
+			endNavi = startNavi+naviLimit -1;//for문 돌리면 중간값 나옴
+			if(maxPage < endNavi) {
+				endNavi=maxPage;
+			}
+			
+				List<Planner> pList = pService.printAllValue(
+						searchCondition,searchValue,currentPage, boardLimit);
+	//		BOARD_TBL<-SELECT *FROM WHERE B_STATUE='Y AND BOARD_TITLE LIKE ''%'||#{searchValue||}>
+	//		BOARD_TBL<-SELECT *FROM WHERE B_STATUE='Y AND CONTENTS LIKE ''%'||#{searchValue||}>
+	//		BOARD_TBL<-SELECT *FROM WHERE B_STATUE='Y AND BOARD_WRIGHTER LIKE ''%'||#{searchValue||}>
+				if(!pList.isEmpty()) {
+					
+					mv.addObject("pList",pList);				
+				}else {
+					mv.addObject("pList",null);
+				}
+				mv.addObject("urlVal","search");
+				mv.addObject("searchCondition",searchCondition);
+				mv.addObject("searchValue",searchValue);
+				mv.addObject("maxPage",maxPage);
+				mv.addObject("currentPage",currentPage);// boardlistview에 값을 보내줘야한다
+				mv.addObject("startNavi",startNavi);
+				mv.addObject("endNavi",endNavi);
+				mv.setViewName("/planner/plannerList");
+				/*}catch (Exception e) {
+				mv.addObject("msg",e.toString());
+				mv.setViewName("common/errorPage");
+			}*/
+			return mv;
+		
+		}
+
 	/*@RequestMapping(value="/plan/regist.kh", method=RequestMethod.POST)
 	public ModelAndView addPlanner(
 			@ModelAttribute Planner planner
@@ -109,8 +190,16 @@ public class PlannerController {
 		
 	}
 	*/
+	/**
+	 *plan등록하는 화면, 지도
+	 *보드넘버,여행 제목,일정 데이터 넘겨줘서 보여주기
+	 * 
+	 * @param mv
+	 * @param boardNo
+	 * @return
+	 */
 	@RequestMapping(value="plan/addplanView.kh", method=RequestMethod.GET)
-	public ModelAndView printPlanner(
+	public ModelAndView showAddPlan(
 			ModelAndView mv	
 			,@RequestParam("boardNo")Integer boardNo
 			
@@ -150,51 +239,18 @@ public class PlannerController {
 		
 	}
 	
-	@RequestMapping(value="/plan/search.kh",method=RequestMethod.GET)
-	public ModelAndView searchPlaner(
+	
+	//지도 장소,x,y좌표 등록
+	@RequestMapping(value="/plan/registplan.kh",method={RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView registPlan(
 			ModelAndView mv
-			, @RequestParam("searchCondition")String searchCondition
-			, @RequestParam("searchValue")String searchValue
-			,@RequestParam(value="page", required=false) Integer page) {
-		int currentPage=(page !=null) ? page : 1;
-		int totalCount = pService.getTotalCount(searchCondition,searchValue);//현재 페이지 값과 전체 게시물 갯수 가져옴
-		int boardLimit=10;
-		int naviLimit=5;
-		int maxPage;
-		int startNavi;
-		int endNavi;
+			, @ModelAttribute(value="PlanList") PlanList l) {
+		int result = pService.registPlanner(l);
 		
-		maxPage = (int)((double)totalCount/boardLimit +0.9);
-		startNavi = ((int)((double)currentPage/naviLimit+0.9)-1)*naviLimit+1;
-		endNavi = startNavi+naviLimit -1;//for문 돌리면 중간값 나옴
-		if(maxPage < endNavi) {
-			endNavi=maxPage;
-		}
-		
-			List<Planner> pList = pService.printAllValue(
-					searchCondition,searchValue,currentPage, boardLimit);
-//		BOARD_TBL<-SELECT *FROM WHERE B_STATUE='Y AND BOARD_TITLE LIKE ''%'||#{searchValue||}>
-//		BOARD_TBL<-SELECT *FROM WHERE B_STATUE='Y AND CONTENTS LIKE ''%'||#{searchValue||}>
-//		BOARD_TBL<-SELECT *FROM WHERE B_STATUE='Y AND BOARD_WRIGHTER LIKE ''%'||#{searchValue||}>
-			if(!pList.isEmpty()) {
-				
-				mv.addObject("pList",pList);				
-			}else {
-				mv.addObject("pList",null);
-			}
-			mv.addObject("urlVal","search");
-			mv.addObject("searchCondition",searchCondition);
-			mv.addObject("searchValue",searchValue);
-			mv.addObject("maxPage",maxPage);
-			mv.addObject("currentPage",currentPage);// boardlistview에 값을 보내줘야한다
-			mv.addObject("startNavi",startNavi);
-			mv.addObject("endNavi",endNavi);
-			mv.setViewName("/planner/plannerList");
-			/*}catch (Exception e) {
-			mv.addObject("msg",e.toString());
-			mv.setViewName("common/errorPage");
-		}*/
+		System.out.println(l);
+		mv.setViewName("redirect:/plan/plan.kh");
 		return mv;
+		
 		
 		
 	}

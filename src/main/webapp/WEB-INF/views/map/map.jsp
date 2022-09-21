@@ -79,6 +79,7 @@
 	
 	<div class="header">
 		<div class="info">
+			<input type="hidden" name="boardNo" id="boardNo"value="${planner.boardNo }" />
 			<input type="text" name="title" id="planTitle"value="${planner.planTitle }" />
 			<input type="text" name="firstDay" id="firstDay"value="<fmt:formatDate value="${planner.firstDay}" pattern="yyyy-MM-dd" />" />
 			<input type="text" name="lastDate" id="lastDay"value="<fmt:formatDate value="${planner.lastDay}" pattern="yyyy-MM-dd" />" /> 
@@ -87,7 +88,7 @@
 		<!-- 타이틀 시작 날짜 끝날짜 보더 넘버->히든 -->
 		
 		<div class="resultButton">
-			<button type="submit" class="planSumbit" >저장</button>
+			<button  form="submitForm" type="submit" class="planSumbit" >저장</button>
 			<button class="planClose"onclick="location.href='#'">닫기</button>
 		</div>
 		
@@ -107,6 +108,7 @@
 		</c:forEach> 
 		
 		</div>
+		<form action="/plan/registplan.kh" method="post" id="submitForm">
 		<div class="plan-area">
 			<c:forEach items="${dayList }" var="day" varStatus="status">
 			<div class="planI-plansbox" data-date="${day}">
@@ -119,8 +121,7 @@
 		</c:forEach>
 		
 		</div>
-		
-		
+		</form>
 
 		<div class="map_wrap">
 			<div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
@@ -396,18 +397,21 @@ var markers = [];
 	 
 	
     function planInsert(place_name,place_y,place_x){
+    	
+        var parentss =  $('.planI-plansbox');
         var parent =  $('.planI-plansbox[style*="display: block"]');
         var data_date = parent.attr('data-date');
+        var boardNo=$('#boardNo').attr('value');
         var num = parent.children().length; // 하위 엘리먼트기에 일정 - 제목 (DAY) 부분도 포함됨
-
-       if(num<10){ // 일정은 9개까지만 추가 가능
-           parent.append(getHtml(place_name,place_y,place_x,num, data_date));
+        var i = parentss.children().length-parentss.length;
+        if(num<10){ // 일정은 9개까지만 추가 가능
+           parent.append(getHtml(place_name,place_y,place_x,num, data_date,i,boardNo));
        }else{
            alert("일정은 최대 9개로 제한됩니다.");
        }
    }
 
-   function getHtml(place_name,place_y,place_x,num, data_date){
+ /*   function getHtml(place_name,place_y,place_x,num, data_date){
        var div = "<div class=\"planDataBox\" data-date=\"" + data_date + "\" data-y=\"" + place_y + "\" data-x=\"" + place_x + "\" data-planNo=\"\">";
        div += "<div class=\"planNum\""+num+">";
        div += " <div class=\"planDetail\">";
@@ -417,9 +421,23 @@ var markers = [];
        div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num +  "\')\">&times;</button></div> </div>";
 
        return div;
-   }
+   } */
+   function getHtml(place_name,place_y,place_x,num, data_date,i,boardNo){
+	
+	var div="<div class=\"planNum\""+num+">"+num+"";
+   	div +="<input type='hidden' name='planList["+i+"].boardNo' id='boardNo'value="+boardNo +" />"
+   	div +="<input type='hidden' name='planList["+i+"].day' id='planDate'value="+data_date +" />"
+   	div +="<input type='hidden' name='planList["+i+"].Y' id='planY'value="+place_y+" />"
+   	div +="<input type='hidden' name='planList["+i+"].X' id='planX'value="+place_x +" />"
+   	div +="<input type='text' name='planList["+i+"].address' id='planTitle'value="+place_name+" /><br>"
+   	div +="<input type='text' name='planList["+i+"].Memo' id='planMemo'placeholder='20자 이내로 입력하세요'maxlength='20' />"
+    div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\')\">&times;</button></div> </div>";
    
-   function planDelete(num){
+    return div;
+   }
+  
+   
+   function planDelete(num,i){
        var parent =  $('.planI-plansbox[style*="display: block"]');
        var kid = parent.children().eq(num); // 일정 부분에 제목도 자식에 포함되기에 index +1
        var next_kids = kid.nextAll();
@@ -435,39 +453,6 @@ var markers = [];
            ++ num;
        }); 
    }
-   
-    $('.planSumbit').click(function(e){
-    	
-   var date=[];
-   var address=[];
-   var y=[];
-   var x=[];
-   var memo=[];
-
-    }); 
-
- 
-	   $('.planDataBox').each(function (i){
-           date.push($(this).attr("data-date"));
-       });
-	   $('.planPlace').each(function(i){
-		   address.push($(this).attr("title"));
-	   });
-	   $('.planDataBox').each(function(i){
-		   y.push($(this).attr("data-y"));
-	   });
-	   $('.planDataBox').each(function(i){
-		   x.push($(this).attr("data-x"));
-	   });
-
-       $('.planMemo').each(function (i){
-           if($(this).val() == null){
-               memo.push(" ");
-           }else{
-               memo.push($(this).val());
-           }
-       });
-	   
 
 	 
 	 </script>	
