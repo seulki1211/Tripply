@@ -1,6 +1,8 @@
-package com.kh.tripply.review.common;
+package com.kh.tripply.common;
 
 public class Search {
+	//검색에 필요한 검색조건, 검색지역, 검색값을 다루기 위한 클래스입니다.
+	
 	private String searchCondition;
 	private String searchRegion;
 	private String searchValue;

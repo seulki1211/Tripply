@@ -42,7 +42,7 @@
 		<where>
 			<if test='searchCondition.toString()=="all"'>
 				(REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})OR
-				(REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion} )OR
+				(REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})OR
 				(REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})
 			</if> 
 			<if test='searchCondition.toString()=="title"'>

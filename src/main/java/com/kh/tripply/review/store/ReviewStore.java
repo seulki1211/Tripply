@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.kh.tripply.review.common.Paging;
-import com.kh.tripply.review.common.Search;
+import com.kh.tripply.common.Paging;
+import com.kh.tripply.common.Search;
 import com.kh.tripply.review.domain.Review;
 import com.kh.tripply.review.domain.ReviewReply;
 

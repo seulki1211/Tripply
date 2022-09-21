@@ -1,8 +1,13 @@
-package com.kh.tripply.review.common;
+package com.kh.tripply.common;
 
 import org.springframework.stereotype.Component;
 
 public class Paging {
+	
+	//생성자에 매개변수를 넣어주면
+	//필요한 값들을 getter로 얻을 수 있다.
+	//1.게시물 개수, 2.현재페이지, 3.페이지당 게시물개수, 4.페이징네비사이즈
+	
 	private int totalCount;
 	private int currentPage;
 	private int pageLimit;
@@ -12,10 +17,7 @@ public class Paging {
 	private int startNavi;
 	private int endNavi;
 	private int offset;
-
-	public Paging() {
-	}
-
+	
 	public Paging(int totalCount, int currentPage, int pageLimit, int naviSize) {
 		super();
 		this.totalCount = totalCount;

@@ -20,9 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
+import com.kh.tripply.common.Paging;
+import com.kh.tripply.common.Search;
 import com.kh.tripply.member.domain.Member;
-import com.kh.tripply.review.common.Paging;
-import com.kh.tripply.review.common.Search;
 import com.kh.tripply.review.domain.Review;
 import com.kh.tripply.review.domain.ReviewReply;
 import com.kh.tripply.review.service.ReviewService;
@@ -33,7 +33,7 @@ public class ReviewController {
 	ReviewService rService;
 
 	/**
-	 * 후기게시판 목록 페이지 출력
+	 * 후기 게시판 목록 페이지 출력
 	 * 
 	 * @param mv,page
 	 * @return mv.addObject : rList, paging / mv.setViewName("review/reviewList")
@@ -248,35 +248,46 @@ public class ReviewController {
 	}
 
 	/**
-	 * 썸대노트 ajax 매핑 메소드 에디터 업로드 이미지 저장 및 파일 경로 json반환
+	 * 썸대노트 ajax 매핑 메소드+1 에디터 업로드 이미지 저장 및 파일 경로 json반환
 	 * 
 	 * @param multipartFile
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/uploadSummernoteImageFile", method = RequestMethod.POST)
+	@RequestMapping(value = "/review/uploadSummernoteImageFile", method = RequestMethod.POST)
 	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile,
 			HttpServletRequest request) {
 		JsonObject jsonObject = new JsonObject();
-//파일저장 외부 경로, 파일명, 저장할 파일명		
 		try {
+			//에디터에서 업로드한 file을 MultipartFile로 받았다.
+			
+			//1.파일 이름과 경로를 설정한다.
 			String originalFileName = multipartFile.getOriginalFilename();
 			String root = request.getSession().getServletContext().getRealPath("resources");
 			String savePath = root + "\\image\\review\\summerImageFiles";
+			
+			//2.파일이름이 중복되지 않도록 재정의 해준다.
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 			String extension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
 			String boardFileRename = sdf.format(new Date(System.currentTimeMillis())) + "." + extension;
+			
+			//3.저장할 경로의 폴더(디렉토리)가 없으면 새로 만든다.
 			File targetFile = new File(savePath);
 			if (!targetFile.exists()) {
 				targetFile.mkdir();
 			}
+			
+			//4.설정한경로에 재정의한 이름으로 파일을 저장한다.
 			multipartFile.transferTo(new File(savePath + "\\" + boardFileRename));
-
-			System.out.println(savePath);
+			
+			//5.ajax의 success로 리턴해줄 json오브젝트에 프로퍼티를 저장해준다.
+			// 1)썸머노트의 insertImage 설정값에 넣어줄 파일의 경로.
+			// 2)원래 파일이름
+			// 3)ajax 성공여부
 			jsonObject.addProperty("url", "/resources/image/review/summerImageFiles/" + boardFileRename);
 			jsonObject.addProperty("originName", originalFileName);
-			jsonObject.addProperty("reponseCode", "success");
+			jsonObject.addProperty("responseCode", "success");
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

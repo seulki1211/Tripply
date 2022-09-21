@@ -6,8 +6,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.kh.tripply.review.common.Paging;
-import com.kh.tripply.review.common.Search;
+import com.kh.tripply.common.Paging;
+import com.kh.tripply.common.Search;
 import com.kh.tripply.review.domain.Review;
 import com.kh.tripply.review.domain.ReviewReply;
 import com.kh.tripply.review.store.ReviewStore;

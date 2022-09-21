@@ -7,30 +7,34 @@
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
-	
+<!-- 사전순으로 배치 -->
 	<typeAliases>
-  		<typeAlias type="com.kh.tripply.review.domain.Review" alias="Review"/>
-		<typeAlias type="com.kh.tripply.party.domain.Party" alias="Party"/>
-		<typeAlias type="com.kh.tripply.party.domain.PartyReply" alias="PartyReply"/>
-		<typeAlias type="com.kh.tripply.notice.domain.Notice" alias="Notice"/>
-		<typeAlias type="com.kh.tripply.banner.domain.Banner" alias="Banner"/>
-		<typeAlias type="com.kh.tripply.plan.domain.Planner" alias="Planner" />
-		<typeAlias type="com.kh.tripply.member.domain.Member" alias="Member"/>
-		<typeAlias type="com.kh.tripply.review.domain.ReviewReply" alias="ReviewReply"/>	
-		<typeAlias type="com.kh.tripply.free.domain.Free" alias="Free"/>	
+		<typeAlias type="com.kh.tripply.banner.domain.Banner" 			alias="Banner"/>
+		<typeAlias type="com.kh.tripply.free.domain.Free" 				alias="Free"/>	
+		<typeAlias type="com.kh.tripply.member.domain.Member"   		alias="Member"/>
+		<typeAlias type="com.kh.tripply.notice.domain.Notice"			alias="Notice"/>
+		<typeAlias type="com.kh.tripply.party.domain.Party" 			alias="Party"/>
+		<typeAlias type="com.kh.tripply.party.domain.PartyReply" 		alias="PartyReply"/>
+		<typeAlias type="com.kh.tripply.plan.domain.Planner" 			alias="Planner" />
+		<typeAlias type="com.kh.tripply.point.domain.Point" 			alias="Point"/>	
+  		<typeAlias type="com.kh.tripply.review.domain.Review" 			alias="Review"/>
+		<typeAlias type="com.kh.tripply.review.domain.ReviewReply"		alias="ReviewReply"/>	
+		<typeAlias type="com.kh.tripply.trade.domain.Trade" 			alias="Trade"/>
+		<typeAlias type="com.kh.tripply.trade.domain.TradeReply" 		alias="TradeReply"/>
 	</typeAliases>
 
 	<mappers>
-		 <mapper resource="mappers/party-mapper.xml"/>
-		 <mapper resource="mappers/review-mapper.xml"/>
-		 <mapper resource="mappers/trade-mapper.xml"/>
-		 <mapper resource="mappers/point-mapper.xml"/>
-		 <mapper resource="mappers/notice-mapper.xml"/>
 		 <mapper resource="mappers/banner-mapper.xml"/>
-		 <mapper resource="mappers/member-mapper.xml"/>
-		 <mapper resource="mappers/planner_mapper.xml" />
-		 <mapper resource="mappers/review-reply-mapper.xml" />
 		 <mapper resource="mappers/free-mapper.xml"/>
+		 <mapper resource="mappers/member-mapper.xml"/>
+		 <mapper resource="mappers/notice-mapper.xml"/>
+		 <mapper resource="mappers/party-mapper.xml"/>
+		 <mapper resource="mappers/planner_mapper.xml" />
+		 <mapper resource="mappers/point-mapper.xml"/>
+		 <mapper resource="mappers/review-mapper.xml"/>
+		 <mapper resource="mappers/review-reply-mapper.xml" />
+		 <mapper resource="mappers/trade-mapper.xml"/>
+		 <mapper resource="mappers/trade-reply-mapper.xml"/>
 	</mappers>
 
 </configuration>
