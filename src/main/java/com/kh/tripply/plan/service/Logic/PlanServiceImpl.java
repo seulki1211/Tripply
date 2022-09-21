@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.tripply.plan.domain.PlanList;
 import com.kh.tripply.plan.domain.Planner;
 import com.kh.tripply.plan.service.PlanService;
 import com.kh.tripply.plan.store.PlanStore;
@@ -44,6 +45,12 @@ public class PlanServiceImpl implements PlanService{
 	public List<Planner> printAllValue(String searchCondition, String searchValue, int currentPage, int boardLimit) {
 		List<Planner>pList = pStore.selectAllByValue(session, searchCondition, searchValue,currentPage, boardLimit);
 		return pList;
+	}
+
+	@Override
+	public int registPlanner(PlanList l) {
+		int result = pStore.insertPlan(session, l);
+		return result;
 	}
 
 }
