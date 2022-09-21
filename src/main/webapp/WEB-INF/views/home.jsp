@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>트리플리,Tripply</title>
 <!-- 화면 뼈대 설정용 css -->
-<link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css">
+<!-- <link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css"> -->
 </head>
 <body>
 	<div id="header">

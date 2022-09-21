@@ -17,10 +17,10 @@
 	text-align : center;
 	vertical-align : middle;
 	font-size : 20px;
-	background : gray;
+	background : red;
 	color : black;
 }
 .menu:hover {
-	background : gold;
+	background : red;
 	cursor : pointer;
 }

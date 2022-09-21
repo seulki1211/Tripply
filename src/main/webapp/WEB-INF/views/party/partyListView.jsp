@@ -34,7 +34,7 @@
 				<a href='/party/detail.kh?partyNo=${party.partyNo }&page=${currentPage }'>${party.partyTitle }</a>
 				</td>
 				</c:if>
-				<c:if test="${(!empty loginUser) and (party.partyFirstDate gt today) }">
+				<c:if test="${(!empty loginUser) and (today gt party.partyFirstDate) }">
 				<td>여행 기간이 만료되었습니다ㅜㅜㅜ</td>
 				</c:if>
 				
