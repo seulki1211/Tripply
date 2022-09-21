@@ -3,7 +3,7 @@ package com.kh.tripply.trade.store.logic;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.tripply.common.Paging;
@@ -15,45 +15,46 @@ import com.kh.tripply.trade.store.TradeStore;
 public class TradeStoreLogic implements TradeStore{
 
 	@Override
-	public int insertTrade(SqlSession session, Trade trade) {
+	public int insertTrade(SqlSessionTemplate session, Trade trade) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public List<Trade> selectAllTrade(SqlSession session, Paging paging) {
+	public Trade selectOneTradeByNo(SqlSessionTemplate session, int boardNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public List<Trade> selectAllTrade(SqlSessionTemplate session, Paging paging) {
 		RowBounds rowBounds = new RowBounds(paging.getOffset(), paging.getPageLimit());
 		List<Trade> tList = session.selectList("TradeMapper.selectAllTrade",null,rowBounds);
 		return tList;
 	}
 
-	@Override
-	public Trade selectOneTradeByNo(SqlSession session, int boardNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public int getTotalCount(SqlSession session) {
+	public int getTotalCount(SqlSessionTemplate session) {
 		int getTotalTrade = session.selectOne("TradeMapper.selectTotalCount");
 		System.out.println("왜 값을 못가져오냐.");
 		return getTotalTrade;
 	}
 
 	@Override
-	public List<Trade> selectSearchTrade(SqlSession session, Trade trade, Paging paging) {
+	public List<Trade> selectSearchTrade(SqlSessionTemplate session, Trade trade, Paging paging) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int getSearchCount(SqlSession session, Search search) {
+	public int getSearchCount(SqlSessionTemplate session, Search search) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int removeTradeByNo(SqlSession session, Trade trade) {
+	public int removeTradeByNo(SqlSessionTemplate session, Trade trade) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

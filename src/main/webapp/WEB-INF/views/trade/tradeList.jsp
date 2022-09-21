@@ -34,7 +34,7 @@
 								<img onclick="loginCheck('${loginUser.memberId}','/trade/detailView.kh?boardNo=${trade.boardNo }&currentPage=${paging.currentPage }');"  onerror="this.src='/resources/image/forest1.png';" src="${trade.thumbnailPath }" height="90%" width="90%">
 							</div>
 							<div align="center">
-								<span class="detail region">[${trade.rLocationName }]</span>
+								<span class="detail region">[${trade.tLocationName }]</span>
 								<a href="#" onclick="loginCheck('${loginUser.memberId}','/trade/detailView.kh?boardNo=${trade.boardNo }&currentPage=${paging.currentPage }');"  >
 									<span class="detail title"><b>${trade.tradeTitle }</b></span>
 								</a>

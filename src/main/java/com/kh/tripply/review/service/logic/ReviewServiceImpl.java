@@ -2,7 +2,7 @@ package com.kh.tripply.review.service.logic;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	ReviewStore rStore;
 	@Autowired
-	SqlSession session;
+	SqlSessionTemplate session;
 	@Override
 	public int registerReview(Review review) {
 		int result = rStore.insertReview(session, review);
