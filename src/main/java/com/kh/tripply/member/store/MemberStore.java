@@ -1,6 +1,7 @@
 package com.kh.tripply.member.store;
 
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.tripply.member.domain.Member;
 
@@ -13,4 +14,5 @@ public interface MemberStore {
 	public int updatemember(SqlSession session, Member member);
 	// deleteMember
 	public int deleteMember(SqlSession session, String memberId);
+	public Member selectMemberId(SqlSessionTemplate session, String memberId);
 }

@@ -1,6 +1,7 @@
 package com.kh.tripply.member.store.logic;
 
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.tripply.member.domain.Member;
@@ -23,14 +24,20 @@ public class MemberStoreLogic implements MemberStore{
 
 	@Override
 	public int updatemember(SqlSession session, Member member) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.update("MemberMapper.updateMember", member);
+		return result;
 	}
 
 	@Override
 	public int deleteMember(SqlSession session, String memberId) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.delete("MemberMapper.deleteMember", memberId);
+		return result;
+	}
+
+	@Override
+	public Member selectMemberId(SqlSessionTemplate session, String memberId) {
+		Member mOne = session.selectOne("MemberMapper.selectMemberId", memberId);
+		return mOne;
 	}
 
 }

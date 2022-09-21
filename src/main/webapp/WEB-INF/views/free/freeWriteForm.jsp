@@ -20,13 +20,13 @@
 </head>
 <body>
 <div>
-	<%-- <jsp:include page="../common/menuBar.jsp"></jsp:include> --%>
+	<jsp:include page="../common/menuBar.jsp"></jsp:include>
 </div>
 
 	<h1 align="center">게시글 등록 페이지</h1>
 	<br><br>
 		
-	<form action="/board/register.kh" method="post" enctype="multipart/form-data">
+	<form action="/free/register.kh" method="post" enctype="multipart/form-data">
 	<div class="mb-3">
 		<table border='1'  align="center">
 			<tr>
@@ -43,14 +43,10 @@
 			
 			</tr>
 			<tr>
-			<td>첨부파일</td>
-			<td><input type="file" name="uploadFile"></td>
-			</tr>
-			<tr>
 			<td colspan='2' align='right'>
 				<input type="submit" value="등록">
 				<input type="reset" value="취소">
-				<button type="button" onclick="#">리스트로</button> 
+				<button type="button" onclick="/free/list.kh">리스트로</button> 
 				 
 			</td>
 			</tr>

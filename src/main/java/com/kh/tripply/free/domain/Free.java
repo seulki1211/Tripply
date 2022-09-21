@@ -2,13 +2,13 @@ package com.kh.tripply.free.domain;
 
 import java.sql.Date;
 
-public class FreeBoard {
+public class Free {
 	private int boardNo;
 	private String freeTitle;
 	private String freeContents;
 	private String freeWriter;
 	private String freeFilename;
-	private String freeRename;
+	private String freeFileRename;
 	private String freeFilepath;
 	private int freeCount;
 	private Date fCreateDate;
@@ -16,20 +16,20 @@ public class FreeBoard {
 	private String fStatus;
 	
 	// 기본생성자
-	public FreeBoard() {
+	public Free() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	// 전체 매개변수 생성자
-	public FreeBoard(int boardNo, String freeTitle, String freeContents, String freeWriter, String freeFilename,
-			String freeRename, String freeFilepath, int freeCount, Date fCreateDate, Date fUpdateDate, String fStatus) {
+	public Free(int boardNo, String freeTitle, String freeContents, String freeWriter, String freeFilename,
+			String freeFileRename, String freeFilepath, int freeCount, Date fCreateDate, Date fUpdateDate, String fStatus) {
 		super();
 		this.boardNo = boardNo;
 		this.freeTitle = freeTitle;
 		this.freeContents = freeContents;
 		this.freeWriter = freeWriter;
 		this.freeFilename = freeFilename;
-		this.freeRename = freeRename;
+		this.freeFileRename = freeFileRename;
 		this.freeFilepath = freeFilepath;
 		this.freeCount = freeCount;
 		this.fCreateDate = fCreateDate;
@@ -78,12 +78,12 @@ public class FreeBoard {
 		this.freeFilename = freeFilename;
 	}
 
-	public String getFreeRename() {
-		return freeRename;
+	public String getFreeFileRename() {
+		return freeFileRename;
 	}
 
-	public void setFreeRename(String freeRename) {
-		this.freeRename = freeRename;
+	public void setFreeFileRename(String freeFileRename) {
+		this.freeFileRename = freeFileRename;
 	}
 
 	public String getFreeFilepath() {
@@ -128,8 +128,8 @@ public class FreeBoard {
 	// toString
 	@Override
 	public String toString() {
-		return "FreeBoard [boardNo=" + boardNo + ", freeTitle=" + freeTitle + ", freeContents=" + freeContents
-				+ ", freeWriter=" + freeWriter + ", freeFilename=" + freeFilename + ", freeRename=" + freeRename
+		return "Free [boardNo=" + boardNo + ", freeTitle=" + freeTitle + ", freeContents=" + freeContents
+				+ ", freeWriter=" + freeWriter + ", freeFilename=" + freeFilename + ", freeFileRename=" + freeFileRename
 				+ ", freeFilepath=" + freeFilepath + ", freeCount=" + freeCount + ", fCreateDate=" + fCreateDate
 				+ ", fUpdateDate=" + fUpdateDate + ", fStatus=" + fStatus + "]";
 	}
