@@ -15,11 +15,12 @@ public interface TradeService {
 	public int getTotalCount();
 	public List<Trade> printSearchTrade(Trade trade,Paging paging);
 	public int getSearchCount(Search search);
+	public int modifyTradeByNo(Trade trade);
 	public int removeTradeByNo(Trade trade);
 	
 	////////////////////댓글
 	public int registerReviewReply(TradeReply rReply);
-	public List<TradeReply> printReviewReplyByNo(int boardNo);
+	public List<TradeReply> printTradeReplyByNo(int boardNo);
 	
 	////////////////////조회수 카운트
 	public int tradeViewCount(int boardNo);

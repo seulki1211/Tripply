@@ -7,9 +7,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.JsonObject;
 import com.kh.tripply.common.Paging;
 import com.kh.tripply.trade.domain.Trade;
+import com.kh.tripply.trade.domain.TradeReply;
 import com.kh.tripply.trade.service.TradeService;
 
 @Controller
@@ -62,6 +65,114 @@ public class TradeController {
 	@RequestMapping(value="/trade/writeView.kh",method=RequestMethod.GET)
 	public ModelAndView tradeWriteView(ModelAndView mv) {
 		mv.setViewName("trade/tradeWrite");
+		return mv;
+	}
+	
+	/**
+	 * 거래 게시물 저장
+	 * @param mv
+	 * @param trade
+	 * @return
+	 */
+	@RequestMapping(value="/trade/write.kh",method=RequestMethod.POST)
+	public ModelAndView tradeWrite(ModelAndView mv,
+			@ModelAttribute Trade trade) {
+		int result = tService.registerTrade(trade);
+		if(result>0) {
+			mv.setViewName("redirect:/trade/list.kh");
+		}
+		return mv;
+	}
+	
+	/**
+	 * 거래 게시물 상세조회
+	 * @param mv
+	 * @param boardNo
+	 * @param currentPage
+	 * @return
+	 */
+	@RequestMapping(value="/trade/detailView.kh",method=RequestMethod.GET)
+	public ModelAndView tradeDetailView(ModelAndView mv,
+			@RequestParam("boardNo") Integer boardNo,
+			@RequestParam("currentPage") Integer currentPage,
+			HttpSession session) {
+		//수정 및 삭제 작업후 원래의 페이지로 갈 때 사용하기 위해
+		//currentPage를 세션에 저장한다.
+		session.setAttribute("currentPage", currentPage);
+		
+		
+		//1.선택한 글의 댓글 목록을 List로 가져온다.
+		// 댓글이 없으면 null로 셋팅하고 댓글이 있으면 setting한다.
+		List<TradeReply> tReplyList = tService.printTradeReplyByNo(boardNo);
+		if(!tReplyList.isEmpty()) {
+			mv.addObject("tReplyList",tReplyList);
+		}else {
+			mv.addObject("tReplyList",null);
+		}
+		
+		//2.게시물 하나를 가져온다.
+		//해당 게시물이 존재하면 trade객체를 담아서 tradeDetail.jsp로 이동한다.
+		Trade trade = tService.printOneTradeByNo(boardNo);
+		if(trade != null) {
+			mv.addObject("trade",trade).setViewName("/trade/tradeDetail");
+		}else {
+			
+		}
+		return mv;
+	}
+	
+	/**
+	 * 거래게시물 수정페이지 이동
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/trade/modifyView.kh",method=RequestMethod.POST)
+	public ModelAndView tradeModifyView(ModelAndView mv,
+			@RequestParam("boardNo") Integer boardNo) {
+		
+		Trade trade = tService.printOneTradeByNo(boardNo);
+		if(trade != null) {
+			mv.addObject("trade",trade).setViewName("/trade.tradeModify");
+		}else {
+		}
+		return mv;
+	}
+	
+	/**
+	 * 거래게시물 수정
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/trade/modify.kh",method=RequestMethod.POST)
+	public ModelAndView tradeModify(ModelAndView mv,
+			@ModelAttribute Trade trade,
+			HttpSession session) {
+		int result = tService.modifyTradeByNo(trade);
+		if(result>0) {
+			//수정 후 원래의 페이지로 돌아가기 위해 세션에서 currentPage를 꺼낸다.
+			int currentPage = (int)session.getAttribute("currentPage");
+			mv.setViewName("redirect:trade/list.kh?currentPage="+currentPage);
+		}else {
+			
+		}
+		return mv;
+	}
+	
+	/**
+	 * 거래게시물 삭제
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/trade/remove.kh",method=RequestMethod.POST)
+	public ModelAndView tradeRemove(ModelAndView mv,
+			@RequestParam("boardNo")Integer boardNo) {
+		int result = tService.removeTradeByNo(trade);
+		if(result>0) {
+			//삭제 후 원래의 페이지로 돌아가기 위해 currentPage를 세션에서 꺼낸다.
+			int currentPage = (int)session.getAttribute("currentPage");
+			mv.setViewName("redirect:/trade/list.kh?currentPage?="+currentPage);
+		}
+		
 		return mv;
 	}
 	
@@ -115,4 +226,20 @@ public class TradeController {
 		
 		return jsonObject;
 	}
+
+
+/////////////////////댓글기능///////////////////	
+
+	/**
+	 * 거래게시물 댓글 등록 기능
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/trade/reply/write.kh",method=RequestMethod.POST)
+	public ModelAndView tradeReplyWrite(ModelAndView mv) {
+		return mv;
+	}
+
+
 }
+

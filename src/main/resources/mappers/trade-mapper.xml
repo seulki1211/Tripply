@@ -22,6 +22,10 @@
 	  	<result column="SOLD_OUT" 			property="soldOut"/>
 	  	<result column="THUMBNAIL_PATH" 	property="thumbnailPath"/>
   </resultMap>
+  <select id="selectOneTrade" resultMap="TradeResultMap">
+	SELECT * FROM TRADE_TBL
+	WHERE BOARD_NO=#{boardNo}  
+  </select>
   <select id="selectAllTrade" resultMap="TradeResultMap">
   	SELECT BOARD_NO,TRADE_TITLE,TRADE_WRITER,T_LOCATION_CODE,TRADE_FILENAME,TRADE_RENAME,TRADE_FILEPATH,TRADE_COUNT,T_CREATE_DATE,T_UPDATE_DATE,T_STATUS,THUMBNAIL_PATH,LOCATION_NAME
   	FROM TRADE_TBL T LEFT JOIN LOCATION_TBL L
@@ -31,5 +35,10 @@
   <select id="selectTotalCount" resultType="_int">
   	SELECT COUNT(*) FROM TRADE_TBL
   </select>
+  
+  <insert id="insertTrade">
+  	INSERT INTO TRADE_TBL
+  	VALUES(SEQ_BOARDNO.NEXTVAL,#{tradeTitle},#{tradeContents},#{tradeWriter},#{tLocationCode},#{tradeFileName},#{tradeFileReName},#{tradeFilePath},DEFAULT,DEFAULT,DEFAULT,DEFAULT,NULL,DEFAULT,#{thumbnailPath})
+  </insert>
 
   </mapper>

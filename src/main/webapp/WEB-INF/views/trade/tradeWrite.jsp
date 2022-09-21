@@ -82,9 +82,9 @@
 	<div id="contents">
 		<div id="sideBar"></div>
 		<div id="contents-1">
-			<form action="/review/write.kh" method="post">
-					<input type="hidden" name="reviewWriter" value="${loginUser.memberId }">
-					<select name="rLocationCode">
+			<form action="/trade/write.kh" method="post">
+					<input type="hidden" name="tradeWriter" value="${loginUser.memberId }">
+					<select name="tLocationCode">
 							<option value="00" label="전국"></option>
 							<option value="11" label="서울"></option>
 							<option value="21" label="부산"></option>
@@ -104,8 +104,8 @@
 							<option value="35" label="전라북도"></option>
 							<option value="36" label="전라남도"></option>
 						</select>
-						<input type="text" id="inputTitle" name="reviewTitle" placeholder="제목을 입력하세요" required="required"><br>
-						<textarea id="summernote" name="reviewContents"></textarea>
+						<input type="text" id="inputTitle" name="tradeTitle" placeholder="제목을 입력하세요" required="required"><br>
+						<textarea id="summernote" name="tradeContents"></textarea>
 <!-- 썸네일 선택-->
 						썸네일 선택
 						<select id="thumbnailPath" name="thumbnailPath">

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.tripply.common.Paging;
 import com.kh.tripply.common.Search;
 import com.kh.tripply.trade.domain.Trade;
+import com.kh.tripply.trade.domain.TradeReply;
 import com.kh.tripply.trade.store.TradeStore;
 
 @Repository
@@ -16,14 +17,14 @@ public class TradeStoreLogic implements TradeStore{
 
 	@Override
 	public int insertTrade(SqlSessionTemplate session, Trade trade) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.insert("TradeMapper.insertTrade", trade);
+		return result;
 	}
 
 	@Override
 	public Trade selectOneTradeByNo(SqlSessionTemplate session, int boardNo) {
-		// TODO Auto-generated method stub
-		return null;
+		Trade trade = session.selectOne("TradeMapper.selectOneTrade",boardNo);
+		return trade;
 	}
 	
 	@Override
@@ -37,7 +38,6 @@ public class TradeStoreLogic implements TradeStore{
 	@Override
 	public int getTotalCount(SqlSessionTemplate session) {
 		int getTotalTrade = session.selectOne("TradeMapper.selectTotalCount");
-		System.out.println("왜 값을 못가져오냐.");
 		return getTotalTrade;
 	}
 
@@ -55,6 +55,29 @@ public class TradeStoreLogic implements TradeStore{
 
 	@Override
 	public int removeTradeByNo(SqlSessionTemplate session, Trade trade) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int registerTradeReply(TradeReply rReply) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<TradeReply> printTradeReplyByNo(SqlSessionTemplate session,int boardNo) {
+		List<TradeReply> tReplyList = session.selectList("TradeReplyMapper.selectTradeReply", boardNo);
+		return tReplyList;
+	}
+
+	@Override
+	public int tradeViewCount(SqlSessionTemplate session, int boardNo) {
+		return 0;
+	}
+
+	@Override
+	public int updateTradeByNo(SqlSessionTemplate session, Trade trade) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

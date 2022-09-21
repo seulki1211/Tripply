@@ -23,14 +23,14 @@ public class TradeServiceImpl implements TradeService {
 
 	@Override
 	public int registerTrade(Trade trade) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = tStore.insertTrade(session, trade);
+		return result;
 	}
 
 	@Override
 	public Trade printOneTradeByNo(int boardNo) {
-		// TODO Auto-generated method stub
-		return null;
+		Trade trade = tStore.selectOneTradeByNo(session, boardNo);
+		return trade;
 	}
 
 	@Override
@@ -70,13 +70,19 @@ public class TradeServiceImpl implements TradeService {
 	}
 
 	@Override
-	public List<TradeReply> printReviewReplyByNo(int boardNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<TradeReply> printTradeReplyByNo(int boardNo) {
+		List<TradeReply> tReplyList = tStore.printTradeReplyByNo(session,boardNo);
+		return tReplyList;
 	}
 
 	@Override
 	public int tradeViewCount(int boardNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int modifyTradeByNo(Trade trade) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

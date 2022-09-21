@@ -3,7 +3,7 @@ package com.kh.tripply.trade.domain;
 import java.sql.Date;
 
 public class TradeReply {
-	private int tReplyNo ;
+	private int tReplyNo;
 	private int boardNo;
 	private int tRefReplyNo;
 	private String tReplyWriter;
@@ -12,11 +12,13 @@ public class TradeReply {
 	private Date trUpdateDate;
 	private String trStatus;
 	private String reReplyYn;
-	
-	public TradeReply() {}
-	
+	private String trChoiced;
+
+	public TradeReply() {
+	}
+
 	public TradeReply(int tReplyNo, int boardNo, int tRefReplyNo, String tReplyWriter, String tReplyContents,
-			Date trCreateDate, Date trUpdateDate, String trStatus, String reReplyYn) {
+			Date trCreateDate, Date trUpdateDate, String trStatus, String reReplyYn, String trChoiced) {
 		super();
 		this.tReplyNo = tReplyNo;
 		this.boardNo = boardNo;
@@ -27,6 +29,15 @@ public class TradeReply {
 		this.trUpdateDate = trUpdateDate;
 		this.trStatus = trStatus;
 		this.reReplyYn = reReplyYn;
+		this.trChoiced = trChoiced;
+	}
+
+	@Override
+	public String toString() {
+		return "TradeReply [tReplyNo=" + tReplyNo + ", boardNo=" + boardNo + ", tRefReplyNo=" + tRefReplyNo
+				+ ", tReplyWriter=" + tReplyWriter + ", tReplyContents=" + tReplyContents + ", trCreateDate="
+				+ trCreateDate + ", trUpdateDate=" + trUpdateDate + ", trStatus=" + trStatus + ", reReplyYn="
+				+ reReplyYn + ", trChoiced=" + trChoiced + "]";
 	}
 
 	public int gettReplyNo() {
@@ -101,17 +112,12 @@ public class TradeReply {
 		this.reReplyYn = reReplyYn;
 	}
 
-	@Override
-	public String toString() {
-		return "TradeReply [tReplyNo=" + tReplyNo + ", boardNo=" + boardNo + ", tRefReplyNo=" + tRefReplyNo
-				+ ", tReplyWriter=" + tReplyWriter + ", tReplyContents=" + tReplyContents + ", trCreateDate="
-				+ trCreateDate + ", trUpdateDate=" + trUpdateDate + ", trStatus=" + trStatus + ", reReplyYn="
-				+ reReplyYn + "]";
+	public String getTrChoiced() {
+		return trChoiced;
 	}
-	
-	
-	
-	
-	
-	
+
+	public void setTrChoiced(String trChoiced) {
+		this.trChoiced = trChoiced;
+	}
+
 }
