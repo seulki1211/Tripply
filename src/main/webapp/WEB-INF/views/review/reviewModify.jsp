@@ -63,12 +63,13 @@
 			
 			var imageRemoveBtn = $(".note-remove");
 			imageRemoveBtn.on("click",function(){
-// 				alert("확인");
+				alert("확인");
+				console.log($(".note-editable img"));
 			});
 			
-			var $imgTag = $("img");
-			$imgTag.on("click",function(){
-				
+			var imgTag = $("img");
+			imgTag.on("click",function(){
+				alert("이미지온클릭");
 				console.log(imgTag);
 				
 			});
