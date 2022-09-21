@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.tripply.review.common.Paging;
 import com.kh.tripply.review.common.Search;
 import com.kh.tripply.review.domain.Review;
+import com.kh.tripply.review.domain.ReviewReply;
 import com.kh.tripply.review.store.ReviewStore;
 
 @Repository
@@ -60,6 +61,24 @@ public class ReviewStoreLogic implements ReviewStore{
 	@Override
 	public int getSearchCount(SqlSession session, Search search) {
 		int result = session.selectOne("ReviewMapper.selectSearchCount",search);
+		return result;
+	}
+
+	@Override
+	public int insertReviewReply(SqlSession session, ReviewReply rReply) {
+		int result = session.insert("ReviewReplyMapper.insertReviewReply", rReply);
+		return result;
+	}
+
+	@Override
+	public List<ReviewReply> selectReviewReplyByNo(SqlSession session,int boardNo) {
+		List<ReviewReply> rReplyList = session.selectList("ReviewReplyMapper.selectReviewReply", boardNo);
+		return rReplyList;
+	}
+
+	@Override
+	public int reviewViewCount(SqlSession session, int boardNo) {
+		int result = session.update("ReviewMapper.updateCountReview", boardNo);
 		return result;
 	}
 

@@ -83,7 +83,7 @@
 		<div id="sideBar"></div>
 		<div id="contents-1">
 			<form action="/review/write.kh" method="post">
-					<input type="hidden" name="reviewWriter" value="임시작성자">
+					<input type="hidden" name="reviewWriter" value="${loginUser.memberId }">
 					<select name="rLocationCode">
 							<option value="00" label="전국"></option>
 							<option value="11" label="서울"></option>

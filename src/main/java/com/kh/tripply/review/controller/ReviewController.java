@@ -20,9 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
+import com.kh.tripply.member.domain.Member;
 import com.kh.tripply.review.common.Paging;
 import com.kh.tripply.review.common.Search;
 import com.kh.tripply.review.domain.Review;
+import com.kh.tripply.review.domain.ReviewReply;
 import com.kh.tripply.review.service.ReviewService;
 
 @Controller
@@ -89,9 +91,13 @@ public class ReviewController {
 	 * @return String: "/review/reviewWrite"
 	 */
 	@RequestMapping(value = "/review/writeView.kh", method = RequestMethod.GET)
-	public String reviewWriteView() {
-//로그인 체크 구현 필요		
-		return "/review/reviewWrite";
+	public String reviewWriteView(HttpSession session) {
+//로그인 체크 구현 필요	
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		if(loginUser != null) {
+			return "/review/reviewWrite";
+		}
+		return "redirect:/review/list.kh";
 	}
 
 	/**
@@ -118,21 +124,54 @@ public class ReviewController {
 
 	/**
 	 * 후기 게시물 상세 페이지 이동
-	 * 
+	 * 댓글 기능 추가
 	 * @param mv,boardNo
 	 * @return
 	 */
 	@RequestMapping(value = "/review/detailView.kh", method = RequestMethod.GET)
-	public ModelAndView reviewDetailView(ModelAndView mv, @RequestParam("boardNo") Integer boardNo) {
+	public ModelAndView reviewDetailView(ModelAndView mv, 
+			@RequestParam("boardNo") Integer boardNo,
+			@RequestParam("currentPage") Integer currentPage,
+			HttpSession session) {
 //로그인 체크 구현 필요
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		if(loginUser == null) {
+			mv.setViewName("redirect:/review/list.kh");
+			return mv;
+		}
+		
 		try {
+//수정이나 삭제 후 게시판의 기본 페이지로 돌아가기 위해 session에 저장
+			session.setAttribute("currentPage", currentPage);
 			Review review = rService.printOneReviewByNo(boardNo);
+//댓글 출력
+			
+			List<ReviewReply> rReplyList = rService.printReviewReplyByNo(boardNo);
+//조회수 올리기			
+			
+			int dupleCheck;
+			if(session.getAttribute("preventDuplication")==null) {
+				dupleCheck=-1;
+			}else {
+				dupleCheck=(int)session.getAttribute("preventDuplication");
+			}
+			if(dupleCheck != boardNo) {
+				int result = rService.reviewViewCount(boardNo);
+				session.setAttribute("preventDuplication",boardNo);
+			}
+			
+			if(!rReplyList.isEmpty()) {
+				mv.addObject("rReplyList", rReplyList);
+			}else {
+				mv.addObject("rReplyList",null);
+			}
 			if (review != null) {
-				mv.addObject("review", review).setViewName("/review/reviewDetail");
+				mv.addObject("review", review).
+				setViewName("/review/reviewDetail");
 			} else {
 			}
 		} catch (Exception e) {
-
+			System.out.println(e.getMessage());
 		}
 		return mv;
 	}
@@ -144,19 +183,22 @@ public class ReviewController {
 	 * @return mv
 	 */
 	@RequestMapping(value = "/review/remove.kh", method = RequestMethod.GET)
-	public ModelAndView reviewDelete(ModelAndView mv, @RequestParam("boardNo") Integer boardNo, Review review,
+	public ModelAndView reviewDelete(ModelAndView mv, 
+			@RequestParam("boardNo") Integer boardNo, 
+			Review review,
 			HttpSession session) {
 //로그인 유저와(세션) 작성자 체크 필요 or 화면에서 체크.
 		try {
 //		String loginUser = (String)session.getAttribute("loginUser");
-			String loginUser = "임시작성자";
-			review.setReviewWriter(loginUser);
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			review.setReviewWriter(loginUser.getMemberId());
 			review.setBoardNo(boardNo);
 			int result = rService.removeReviewByNo(review);
-			System.out.println(result);
-			System.out.println(boardNo);
 			if (result > 0) {
-				mv.setViewName("redirect:/review/list.kh");
+//삭제가 성공하면 session에 저장했던 currentPage를 불러와 쿼리스트링으로 사용하고 session은 비운다.
+				int currentPage = (int) session.getAttribute("currentPage");
+				mv.setViewName("redirect:/review/list.kh?currentPage="+currentPage);
+				session.removeAttribute("currentPage");
 			} else {
 
 			}
@@ -173,7 +215,8 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping(value = "/review/modifyView.kh", method = RequestMethod.GET)
-	public ModelAndView reviewModifyView(ModelAndView mv, @RequestParam("boardNo") Integer boardNo) {
+	public ModelAndView reviewModifyView(ModelAndView mv, 
+			@RequestParam("boardNo") Integer boardNo) {
 
 		Review review = rService.printOneReviewByNo(boardNo);
 		if (review != null) {
@@ -183,8 +226,26 @@ public class ReviewController {
 		return mv;
 	}
 	
-	
-	
+	/**
+	 * 후기게시판 수정 로직
+	 * @param mv
+	 * @param review
+	 * @return
+	 */
+	@RequestMapping(value="/review/modify.kh",method=RequestMethod.POST)
+	public ModelAndView reviewModify(ModelAndView mv,
+			@ModelAttribute Review review,
+			HttpSession session) {
+		int result = rService.modifyReviewByNo(review);
+		if(result>0) {
+			int currentPage = (int)session.getAttribute("currentPage");
+			mv.setViewName("redirect:/review/list.kh?currentPage="+currentPage);
+			session.removeAttribute("currentPage");
+		}else {
+			
+		}
+		return mv;
+	}
 
 	/**
 	 * 썸대노트 ajax 매핑 메소드 에디터 업로드 이미지 저장 및 파일 경로 json반환
@@ -224,4 +285,29 @@ public class ReviewController {
 
 		return jsonObject;
 	}
+	
+/////////////////////댓글기능///////////////////	
+	
+	/**
+	 * 댓글 등록
+	 * @param mv
+	 * @param currentPage
+	 * @param rReply
+	 * @return
+	 */
+	@RequestMapping(value="/review/reply/write.kh",method=RequestMethod.POST)
+	public ModelAndView reviewReplyWrite(ModelAndView mv,
+			@RequestParam("currentPage") Integer currentPage,
+			@ModelAttribute ReviewReply rReply) {
+		int boardNo = rReply.getBoardNo();
+		int result = rService.registerReviewReply(rReply);
+		if(result>0 ) {
+			mv.setViewName("redirect:/review/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+		}else {
+		}
+		return mv;
+	}
+	
+	
+
 }

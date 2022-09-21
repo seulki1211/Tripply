@@ -12,12 +12,11 @@
   		<typeAlias type="com.kh.tripply.review.domain.Review" alias="Review"/>
 		<typeAlias type="com.kh.tripply.party.domain.Party" alias="Party"/>
 		<typeAlias type="com.kh.tripply.party.domain.PartyReply" alias="PartyReply"/>
-		
 		<typeAlias type="com.kh.tripply.notice.domain.Notice" alias="Notice"/>
 		<typeAlias type="com.kh.tripply.banner.domain.Banner" alias="Banner"/>
 		<typeAlias type="com.kh.tripply.plan.domain.Planner" alias="Planner" />
-		<typeAlias type="com.kh.tripply.member.domain.Member" alias="Member"/>	
-		
+		<typeAlias type="com.kh.tripply.member.domain.Member" alias="Member"/>
+		<typeAlias type="com.kh.tripply.review.domain.ReviewReply" alias="ReviewReply"/>	
 	</typeAliases>
 
 	<mappers>
@@ -29,6 +28,7 @@
 		 <mapper resource="mappers/banner-mapper.xml"/>
 		 <mapper resource="mappers/member-mapper.xml"/>
 		 <mapper resource="mappers/planner_mapper.xml" />
+		 <mapper resource="mappers/review-reply-mapper.xml" />
 	</mappers>
 
 </configuration>

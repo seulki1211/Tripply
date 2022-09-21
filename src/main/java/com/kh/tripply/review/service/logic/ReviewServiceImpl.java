@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.tripply.review.common.Paging;
 import com.kh.tripply.review.common.Search;
 import com.kh.tripply.review.domain.Review;
+import com.kh.tripply.review.domain.ReviewReply;
 import com.kh.tripply.review.service.ReviewService;
 import com.kh.tripply.review.store.ReviewStore;
 
@@ -56,6 +57,21 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int getSearchCount(Search search) {
 		int result = rStore.getSearchCount(session,search);
+		return result;
+	}
+	@Override
+	public int registerReviewReply(ReviewReply rReply) {
+		int result = rStore.insertReviewReply(session, rReply);
+		return result;
+	}
+	@Override
+	public List<ReviewReply> printReviewReplyByNo(int boardNo) {
+		List<ReviewReply> rReplyList = rStore.selectReviewReplyByNo(session, boardNo);
+		return rReplyList;
+	}
+	@Override
+	public int reviewViewCount(int boardNo) {
+		int result = rStore.reviewViewCount(session,boardNo);
 		return result;
 	}
 	
