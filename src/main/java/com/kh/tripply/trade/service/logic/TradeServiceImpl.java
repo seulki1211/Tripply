@@ -46,7 +46,7 @@ public class TradeServiceImpl implements TradeService {
 	}
 
 	@Override
-	public List<Trade> printSearchTrade(Trade trade, Paging paging) {
+	public List<Trade> printSearchTrade(Search search, Paging paging) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -77,14 +77,14 @@ public class TradeServiceImpl implements TradeService {
 
 	@Override
 	public int tradeViewCount(int boardNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = tStore.tradeViewCount(session, boardNo);
+		return result;
 	}
 
 	@Override
 	public int modifyTradeByNo(Trade trade) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = tStore.updateTradeByNo(session, trade);
+		return result;
 	}
 
 }

@@ -21,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
 import com.kh.tripply.common.Paging;
+import com.kh.tripply.common.Search;
+import com.kh.tripply.member.domain.Member;
 import com.kh.tripply.trade.domain.Trade;
 import com.kh.tripply.trade.domain.TradeReply;
 import com.kh.tripply.trade.service.TradeService;
@@ -36,14 +38,19 @@ public class TradeController {
 	 * @param mv
 	 * @return
 	 */
-	@RequestMapping(value="trade/list.kh",method=RequestMethod.GET)
+	@RequestMapping(value="/trade/list.kh",method=RequestMethod.GET)
 	public ModelAndView tradeListView(ModelAndView mv,
 			@RequestParam(value="currentPage",required=false) Integer page) {
+
+		//1.page null체크한다.
 		int currentPage = (page!=null)?page : 1;
+		
+		//2.페이징에 필요한 Paging객체를 생성한다. Paging객체는 화면과 RowBounds에 필요한 값을 get할 수 있다.
 		Paging paging = new Paging(tService.getTotalCount(), currentPage,9,5);
+		
 		try {
+			//3.거래게시판 목록 List를 SELECT 한다.
 			List<Trade> tList = tService.printAllTrade(paging);
-			System.out.println(tList.get(0).getTradeTitle());
 			if(!tList.isEmpty()) {
 				mv.addObject("tList",tList).addObject("paging",paging)
 				.setViewName("trade/tradeList");
@@ -53,7 +60,45 @@ public class TradeController {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		//4.tradeList.jsp의 페이지네비 링크에서 사용할 url을 동적으로 변경해주기 위한 부분이다.
+		// 검색 결과 조회와 구분을 위하여 'list'문자열을 화면에 전달한다.
 		mv.addObject("urlVal","list");
+		return mv;
+	}
+	
+	/**
+	 * 거래게시판 검색 결과 페이지 출력
+	 * @param mv
+	 * @param search
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value="/trade/search.kh",method=RequestMethod.GET)
+	public ModelAndView tradeSearchView(ModelAndView mv,
+			@ModelAttribute Search search,
+			@RequestParam(value="currentPage",required=false)Integer page) {
+
+		//1.page null체크한다.
+		int currentPage = (page!=null)?page : 1;
+		
+		//2.페이징에 필요한 Paging객체를 생성한다. Paging객체는 화면과 RowBounds에 필요한 값을 get할 수 있다.
+		Paging paging = new Paging(tService.getTotalCount(), currentPage,9,5);
+		
+		try {
+			//3.거래게시판 검색결과 List를 SELECT한다.
+			List<Trade> tList = tService.printSearchTrade(search, paging);
+			if(!tList.isEmpty()) {
+				mv.addObject("tList",tList).addObject("search",search).addObject("paging",paging)
+				.setViewName("trade/tradeList");
+			}else {
+				
+			}
+		} catch (Exception e) {
+		}
+		
+		//4.tradeList.jsp의 페이지네비 링크에서 사용할 url을 동적으로 변경해주기 위한 부분이다.
+		// 검색 결과 조회와 구분을 위하여 'search'문자열을 화면에 전달한다.
+		mv.addObject("urlVal","search");
 		return mv;
 	}
 	
@@ -63,7 +108,15 @@ public class TradeController {
 	 * @return
 	 */
 	@RequestMapping(value="/trade/writeView.kh",method=RequestMethod.GET)
-	public ModelAndView tradeWriteView(ModelAndView mv) {
+	public ModelAndView tradeWriteView(ModelAndView mv,
+			HttpSession session) {
+		//1.로그인 여부를 확인하고 로그인하지 않은 경우 list로 리다이렉트한다.(mv반환)
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		if(loginUser == null) {
+			mv.setViewName("redirect/trade/list.kh");
+			return mv;
+		}
+		
 		mv.setViewName("trade/tradeWrite");
 		return mv;
 	}
@@ -79,7 +132,7 @@ public class TradeController {
 			@ModelAttribute Trade trade) {
 		int result = tService.registerTrade(trade);
 		if(result>0) {
-			mv.setViewName("redirect:/trade/list.kh");
+			mv.setViewName("redirect:/trade/list.kh?currentPage=1");
 		}
 		return mv;
 	}
@@ -96,27 +149,46 @@ public class TradeController {
 			@RequestParam("boardNo") Integer boardNo,
 			@RequestParam("currentPage") Integer currentPage,
 			HttpSession session) {
-		//수정 및 삭제 작업후 원래의 페이지로 갈 때 사용하기 위해
-		//currentPage를 세션에 저장한다.
-		session.setAttribute("currentPage", currentPage);
 		
-		
-		//1.선택한 글의 댓글 목록을 List로 가져온다.
-		// 댓글이 없으면 null로 셋팅하고 댓글이 있으면 setting한다.
-		List<TradeReply> tReplyList = tService.printTradeReplyByNo(boardNo);
-		if(!tReplyList.isEmpty()) {
-			mv.addObject("tReplyList",tReplyList);
-		}else {
-			mv.addObject("tReplyList",null);
+		//1.로그인 여부를 확인하고 로그인하지 않은 경우 list로 리다이렉트한다.
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		if(loginUser == null) {
+			mv.setViewName("redirect/trade/list.kh");
+			return mv;
 		}
-		
-		//2.게시물 하나를 가져온다.
-		//해당 게시물이 존재하면 trade객체를 담아서 tradeDetail.jsp로 이동한다.
-		Trade trade = tService.printOneTradeByNo(boardNo);
-		if(trade != null) {
-			mv.addObject("trade",trade).setViewName("/trade/tradeDetail");
-		}else {
+		try {
+			//2.수정이나 삭제 후 게시판의 원래 페이지로 돌아가기 위해 session에 currentPage를 저장한다.
+			session.setAttribute("currentPage", currentPage);
 			
+			//3.세션을 이용하여 중복카운팅을 방지하며 조회수를 UPDATE한다.
+			int dupleCheck;
+			if(session.getAttribute("preventDuplication") == null) {
+				dupleCheck = -1; //boardNo와 겹칠 수 없는 숫자 -1로 설정.
+			}else {
+				dupleCheck = (int)session.getAttribute("preventDuplication");
+			}
+			if(dupleCheck != boardNo) {
+				int result = tService.tradeViewCount(boardNo);
+				session.setAttribute("preventDuplication",boardNo);
+			}
+	
+			//4.해당 글의 댓글 List를 SELECT한다. 댓글이 없으면 null처리한다.
+			List<TradeReply> tReplyList = tService.printTradeReplyByNo(boardNo);
+			if(!tReplyList.isEmpty()) {
+				mv.addObject("tReplyList",tReplyList);
+			}else {
+				mv.addObject("tReplyList",null);
+			}
+			
+			//5.boardNo에 해당하는 Trade 데이터를 SELECT한다.
+			Trade trade = tService.printOneTradeByNo(boardNo);
+			if(trade != null) {
+				mv.addObject("trade",trade).
+				setViewName("/trade/tradeDetail");
+			}else {
+				
+			}
+		} catch (Exception e) {
 		}
 		return mv;
 	}
@@ -126,13 +198,13 @@ public class TradeController {
 	 * @param mv
 	 * @return
 	 */
-	@RequestMapping(value="/trade/modifyView.kh",method=RequestMethod.POST)
+	@RequestMapping(value="/trade/modifyView.kh",method=RequestMethod.GET)
 	public ModelAndView tradeModifyView(ModelAndView mv,
 			@RequestParam("boardNo") Integer boardNo) {
 		
 		Trade trade = tService.printOneTradeByNo(boardNo);
 		if(trade != null) {
-			mv.addObject("trade",trade).setViewName("/trade.tradeModify");
+			mv.addObject("trade",trade).setViewName("/trade/tradeModify");
 		}else {
 		}
 		return mv;
@@ -151,7 +223,7 @@ public class TradeController {
 		if(result>0) {
 			//수정 후 원래의 페이지로 돌아가기 위해 세션에서 currentPage를 꺼낸다.
 			int currentPage = (int)session.getAttribute("currentPage");
-			mv.setViewName("redirect:trade/list.kh?currentPage="+currentPage);
+			mv.addObject("currentPage",currentPage).setViewName("/trade/tradeList");
 		}else {
 			
 		}
@@ -163,9 +235,11 @@ public class TradeController {
 	 * @param mv
 	 * @return
 	 */
-	@RequestMapping(value="/trade/remove.kh",method=RequestMethod.POST)
+	@RequestMapping(value="/trade/remove.kh",method=RequestMethod.GET)
 	public ModelAndView tradeRemove(ModelAndView mv,
-			@RequestParam("boardNo")Integer boardNo) {
+			@RequestParam("boardNo")Integer boardNo,
+			@ModelAttribute Trade trade,
+			HttpSession session) {
 		int result = tService.removeTradeByNo(trade);
 		if(result>0) {
 			//삭제 후 원래의 페이지로 돌아가기 위해 currentPage를 세션에서 꺼낸다.

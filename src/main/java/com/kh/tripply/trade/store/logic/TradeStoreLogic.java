@@ -42,7 +42,7 @@ public class TradeStoreLogic implements TradeStore{
 	}
 
 	@Override
-	public List<Trade> selectSearchTrade(SqlSessionTemplate session, Trade trade, Paging paging) {
+	public List<Trade> selectSearchTrade(SqlSessionTemplate session, Search search, Paging paging) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -73,13 +73,14 @@ public class TradeStoreLogic implements TradeStore{
 
 	@Override
 	public int tradeViewCount(SqlSessionTemplate session, int boardNo) {
-		return 0;
+		int result = session.update("TradeMapper.updateTradeViewCount", boardNo);
+		return result;
 	}
 
 	@Override
 	public int updateTradeByNo(SqlSessionTemplate session, Trade trade) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.update("TradeMapper.updateTrade", trade);
+		return result;
 	}
 
 }

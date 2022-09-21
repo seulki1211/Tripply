@@ -66,12 +66,18 @@ public class ReviewController {
 	 * @return
 	 */
 	@RequestMapping(value="/review/search.kh",method=RequestMethod.GET)
-	public ModelAndView reviewSerchVIew(ModelAndView mv,
+	public ModelAndView reviewSearchView(ModelAndView mv,
 			@ModelAttribute Search search,
 			@RequestParam(value="currentPage",required=false)Integer page) {
+		
+		//1.page null체크한다.
 		int currentPage = (page != null)? page : 1;
+		
+		//2.페이징에 필요한 Paging객체를 생성한다. Paging객체는 화면과 RowBounds에 필요한 값을 get할 수 있다.
 		Paging paging = new Paging(rService.getSearchCount(search),currentPage,9,5);
+		
 		try {
+			//3.후기게시판 검색결과 List를 SELECT 한다.
 			List<Review> rList = rService.printSearchReview(search,paging);
 			if(!rList.isEmpty()) {
 				mv.addObject("rList",rList).addObject("search",search).addObject("paging",paging)
@@ -81,6 +87,9 @@ public class ReviewController {
 			}
 		} catch (Exception e) {
 		}
+		
+		//4.reviewList.jsp의 페이지네비 링크에서 사용할 url을 동적으로 변경해주기 위한 부분이다.
+		// 검색 결과 조회와 구분을 위하여 'search'문자열을 화면에 전달한다.
 		mv.addObject("urlVal","search");
 		return mv;
 	}
@@ -92,7 +101,7 @@ public class ReviewController {
 	 */
 	@RequestMapping(value = "/review/writeView.kh", method = RequestMethod.GET)
 	public String reviewWriteView(HttpSession session) {
-//로그인 체크 구현 필요	
+		//1.로그인 여부를 확인하고 로그인하지 않은 경우 list로 리다이렉트한다.(String반환)
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		if(loginUser != null) {
 			return "/review/reviewWrite";
@@ -133,7 +142,8 @@ public class ReviewController {
 			@RequestParam("boardNo") Integer boardNo,
 			@RequestParam("currentPage") Integer currentPage,
 			HttpSession session) {
-//로그인 체크 구현 필요
+		
+		//1.로그인 여부를 확인하고 로그인하지 않은 경우 list로 리다이렉트한다.
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		if(loginUser == null) {
 			mv.setViewName("redirect:/review/list.kh");
@@ -141,17 +151,13 @@ public class ReviewController {
 		}
 		
 		try {
-//수정이나 삭제 후 게시판의 기본 페이지로 돌아가기 위해 session에 저장
+			//2.수정이나 삭제 후 게시판의 원래 페이지로 돌아가기 위해 session에 currentPage를 저장한다.
 			session.setAttribute("currentPage", currentPage);
-			Review review = rService.printOneReviewByNo(boardNo);
-//댓글 출력
 			
-			List<ReviewReply> rReplyList = rService.printReviewReplyByNo(boardNo);
-//조회수 올리기			
-			
+			//3.세션을 이용하여 중복카운팅을 방지하며 조회수를 UPDATE한다.	
 			int dupleCheck;
-			if(session.getAttribute("preventDuplication")==null) {
-				dupleCheck=-1;
+			if(session.getAttribute("preventDuplication") == null) {
+				dupleCheck=-1; //boardNo와 겹칠 수 없는 숫자 -1로 설정.
 			}else {
 				dupleCheck=(int)session.getAttribute("preventDuplication");
 			}
@@ -160,11 +166,16 @@ public class ReviewController {
 				session.setAttribute("preventDuplication",boardNo);
 			}
 			
+			//4.해당 글의 댓글 List를 SELECT한다. 댓글이 없으면 null처리한다.
+			List<ReviewReply> rReplyList = rService.printReviewReplyByNo(boardNo);
 			if(!rReplyList.isEmpty()) {
 				mv.addObject("rReplyList", rReplyList);
 			}else {
 				mv.addObject("rReplyList",null);
 			}
+			
+			//5.boardNo에 해당하는 Review 데이터를 SELECT한다.
+			Review review = rService.printOneReviewByNo(boardNo);
 			if (review != null) {
 				mv.addObject("review", review).
 				setViewName("/review/reviewDetail");

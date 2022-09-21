@@ -13,7 +13,7 @@ public interface TradeService {
 	public List<Trade> printAllTrade(Paging paging);
 	public Trade printOneTradeByNo(int boardNo);
 	public int getTotalCount();
-	public List<Trade> printSearchTrade(Trade trade,Paging paging);
+	public List<Trade> printSearchTrade(Search search,Paging paging);
 	public int getSearchCount(Search search);
 	public int modifyTradeByNo(Trade trade);
 	public int removeTradeByNo(Trade trade);

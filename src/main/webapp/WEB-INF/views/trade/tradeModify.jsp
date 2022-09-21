@@ -87,7 +87,7 @@
 		<div id="contents-1">
 			<form action="/trade/modify.kh" method="post">
 					<input type="hidden" name="boardNo" value="${trade.boardNo }">
-					<input type="hidden" name="tradeWriter" value="임시작성자">
+					<input type="hidden" name="tradeWriter" value="${trade.tradeWriter }">
 					<select name="tLocationCode">
 							<option value="00" label="전국"></option>
 							<option value="11" label="서울"></option>

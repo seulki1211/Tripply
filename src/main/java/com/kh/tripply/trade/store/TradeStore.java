@@ -15,7 +15,7 @@ public interface TradeStore {
 	public List<Trade> selectAllTrade(SqlSessionTemplate session,Paging paging);
 	public Trade selectOneTradeByNo(SqlSessionTemplate session,int boardNo);
 	public int getTotalCount(SqlSessionTemplate session);
-	public List<Trade> selectSearchTrade(SqlSessionTemplate session,Trade trade,Paging paging);
+	public List<Trade> selectSearchTrade(SqlSessionTemplate session,Search search,Paging paging);
 	public int getSearchCount(SqlSessionTemplate session,Search search);
 	public int updateTradeByNo(SqlSessionTemplate session,Trade trade);
 	public int removeTradeByNo(SqlSessionTemplate session,Trade trade);
