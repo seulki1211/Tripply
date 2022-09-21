@@ -36,21 +36,21 @@ VALUES(
 SELECT COUNT(*) FROM PARTY_TBL
 <where>
 		<if test="searchCondition.toString()== 'title'">
-		PARTY_TITLE LIKE '%'||#{searchValue}||'%'
+		PARTY_TITLE LIKE '%'||#{searchValue}||'%' AND P_LOCATION=#{searchRegion}
 		</if>
 		
 		<if test="searchCondition.toString()== 'contents'">
-		PARTY_CONTENTS LIKE '%'||#{searchValue}||'%'
+		PARTY_CONTENTS LIKE '%'||#{searchValue}||'%' AND P_LOCATION=#{searchRegion}
 		</if>
 		
 		<if test="searchCondition.toString()== 'writer'">
-		PARTY_WRITER LIKE '%'||#{searchValue}||'%'
+		PARTY_WRITER LIKE '%'||#{searchValue}||'%' AND P_LOCATION=#{searchRegion}
 		</if>
 		
 		<if test="searchCondition.toString()== 'all'">
-			PARTY_TITLE LIKE '%'||#{searchValue}||'%'
-		OR	PARTY_CONTENTS LIKE '%'||#{searchValue}||'%'
-	  	OR	PARTY_WRITER LIKE '%'||#{searchValue}||'%'
+			(PARTY_TITLE LIKE '%'||#{searchValue}||'%'  AND P_LOCATION=#{searchRegion} )
+		OR	(PARTY_CONTENTS LIKE '%'||#{searchValue}||'%'  AND P_LOCATION=#{searchRegion} )
+	  	OR	(PARTY_WRITER LIKE '%'||#{searchValue}||'%' AND P_LOCATION=#{searchRegion} )
 		</if>
 		AND P_STATUS = 'Y' 
 	</where>
@@ -64,7 +64,7 @@ SELECT * FROM PARTY_TBL
 </select>
 
 <select id="selectOneParty" resultMap="partyResultMap">
-SELECT * FROM PARTY_TBL
+SELECT * FROM PARTY_TBL 
 WHERE P_STATUS = 'Y'
 AND BOARD_NO = #{partyNo}
 
@@ -75,4 +75,122 @@ UPDATE PARTY_TBL
 SET P_STATUS = 'N'
 WHERE BOARD_NO = #{partyNo}
 </update>
+
+<update id="updateOneParty">
+UPDATE PARTY_TBL
+SET PARTY_TITLE = #{partyTitle}, PARTY_CONTENTS = #{partyContents}
+, PARTY_FILENAME =#{partyFileName} , PARTY_RENAME =#{partyFileRename} , PARTY_FILEPATH =#{partyFilePath} 
+WHERE BOARD_NO = #{partyNo}
+</update>
+
+<update id="updatePartyCount">
+UPDATE PARTY_TBL
+SET PARTY_COUNT = PARTY_COUNT + 1
+WHERE BOARD_NO = #{partyNo}
+
+</update>
+
+<select id="selectAllByValue" resultMap="partyResultMap">
+SELECT * FROM PARTY_TBL
+		<where>
+			
+			
+			<if test="searchRegion.toString()=='전국'">
+				<if test="searchCondition.toString()== 'title'">
+					PARTY_TITLE LIKE '%'||#{searchValue}||'%' 
+				</if>
+			</if>
+			<if test="searchRegion.toString() !='전국'">
+				<if test="searchCondition.toString()== 'title'">
+					PARTY_TITLE LIKE '%'||#{searchValue}||'%' AND P_LOCATION=#{searchRegion}
+				</if>
+			</if>
+			
+			<if test="searchRegion.toString() =='전국'">
+				<if test="searchCondition.toString()== 'contents'">
+				PARTY_CONTENTS LIKE '%'||#{searchValue}||'%' 
+				</if>
+			</if>
+			
+			<if test="searchRegion.toString() !='전국'">
+				<if test="searchCondition.toString()== 'contents'">
+				PARTY_CONTENTS LIKE '%'||#{searchValue}||'%' AND P_LOCATION=#{searchRegion}
+				</if>
+			</if>
+			
+			<if test="searchRegion.toString() =='전국'">
+				<if test="searchCondition.toString()== 'writer'">
+					PARTY_WRITER LIKE '%'||#{searchValue}||'%' 
+				</if>
+			</if>
+			
+			<if test="searchRegion.toString() !='전국'">
+				<if test="searchCondition.toString()== 'writer'">
+					PARTY_WRITER LIKE '%'||#{searchValue}||'%' AND P_LOCATION=#{searchRegion}
+				</if>
+			</if>
+		
+			<if test="searchRegion.toString() =='전국'">
+				<if test="searchCondition.toString()== 'all'">
+					(PARTY_TITLE LIKE '%'||#{searchValue}||'%'
+				OR	PARTY_CONTENTS LIKE '%'||#{searchValue}||'%'  
+			  	OR	PARTY_WRITER LIKE '%'||#{searchValue}||'%')
+				</if>
+			</if>
+		
+			<if test="searchRegion.toString() !='전국'">
+				<if test="searchCondition.toString()== 'all'">
+					(PARTY_TITLE LIKE '%'||#{searchValue}||'%'
+				OR	PARTY_CONTENTS LIKE '%'||#{searchValue}||'%'  
+			  	OR	PARTY_WRITER LIKE '%'||#{searchValue}||'%')
+			  	AND P_LOCATION=#{searchRegion}
+				</if>
+			</if>
+		AND P_STATUS = 'Y' 
+		</where>
+		ORDER BY 1 DESC
+</select>
+
+<!-- 댓글 관리 -->
+
+<resultMap type="PartyReply" id="partyReplyResultMap">
+
+		<id     property="pReplyNo"         	column="P_REPLY_NO"/>
+		<result property="refBoardNo"      		column="BOARD_NO"/>
+		<result property="pReplyWriter"     	column="P_REPLY_WRITER"/>
+		<result property="pReplyContents"   	column="P_REPLY_CONTENTS"/>
+		<result property="prCreateDate" 		column="P_R_CREATE_DATE"/>
+		<result property="prUpdateDate"  		column="P_R_UPDATE_DATE"/>
+		<result property="prStatus"     		column="P_R_STATUS"/>
+	
+
+</resultMap>
+
+<insert id="insertPartyReply">
+INSERT INTO PARTY_REPLY_TBL
+VALUES(
+	SEQ_REPLYNO.NEXTVAL, #{refBoardNo}, #{pReplyWriter}, 
+	#{pReplyContents}, DEFAULT, DEFAULT, DEFAULT
+	) 
+</insert>
+
+<select id="selectAllPartyReply" resultMap="partyReplyResultMap">
+SELECT * FROM PARTY_REPLY_TBL
+WHERE P_R_STATUS = 'Y' AND BOARD_NO = #{refBoardNo}
+ORDER BY 1 
+</select>
+
+<update id="deletePartyReply">
+UPDATE PARTY_REPLY_TBL
+SET P_R_STATUS = 'N'
+WHERE P_REPLY_NO = #{pReplyNo}
+
+</update>
+
+<update id="updatePartyReply">
+UPDATE PARTY_REPLY_TBL
+SET P_REPLY_CONTENTS = #{pReplyContents}
+WHERE P_REPLY_NO = #{pReplyNo} 
+</update>
+
 </mapper>

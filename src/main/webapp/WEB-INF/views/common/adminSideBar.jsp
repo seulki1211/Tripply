@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>여행 올인원 플랫폼,Tripply</title>
-<link href="/resources/css/menubar-style.css" rel="stylesheet">
+<link href="/resources/css/sidebar-style.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 </head>
 <body>
@@ -40,29 +40,25 @@
 				<tr>
 					<td colspan='2'>${sessionScope.loginUser.memberNickname }님 환영합니다.</td>
 				</tr>
-				<tr>
-					<td><a href="#">마이 쪽지</a></td>
-					<td><a href="/member/modify.kh">마이페이지</a></td>
-				</tr>
-				<tr>
-					<td><a href="/member/logout.kh">로그아웃</a></td>
-						<c:if test="${loginUser.memberId eq 'admin' }">
-						<td colspan="3" align="right">
-		                <a href="/admin/banner/list.kh">관리자 페이지로</a>
-		                </td>
-		                </c:if>
-		   
-				</tr>
 						
 			</table>
 		</c:if>
 	</div>
-	<div class="nav-area">
-		<div class="menu" onclick="location.href='/plan/plan.kh';">여행 일정</div>
-		<div class="menu" onclick="location.href='/review/list.kh';">여행 후기</div>
-		<div class="menu" onclick="location.href='#';">중고 거래</div>
-		<div class="menu" onclick="location.href='/party/list.kh';">우리 함께</div>
-		<div class="menu" onclick="location.href='#';">자유롭게</div>
-	</div>
+	<ul class="nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link" href="#">회원 관리</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">배너 관리</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">공지사항 관리</a>
+  </li>
+</ul>
+<!-- 	<div class="nav-area"> -->
+<!-- 		<div class="menu" onclick="location.href='#';">회원 관리</div> -->
+<!-- 		<div class="menu" onclick="location.href='#';">배너 관리</div> -->
+<!-- 		<div class="menu" onclick="location.href='#';">공지사항 관리</div> -->
+<!-- 	</div> -->
 </body>
 </html>

@@ -24,18 +24,18 @@ public class NoticeController {
 	private NoticeService nService;
 
 	// 공지사항 등록 화면
-	@RequestMapping(value = "/notice/writeView.kh", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/notice/writeView.kh", method = RequestMethod.GET)
 	public String showBoardWrite() {
-		return "notice/noticeWriteForm";
+		return "admin/notice/noticeWriteForm";
 	}
 
 	// 공지사항 등록
-	@RequestMapping(value = "/notice/register.kh", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/notice/register.kh", method = RequestMethod.POST)
 	public ModelAndView registerBoard(ModelAndView mv, @ModelAttribute Notice notice) {
 
 		try {
 			int result = nService.registerNotice(notice);
-			mv.setViewName("redirect:/notice/list.kh");
+			mv.setViewName("redirect:/admin/notice/list.kh");
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage());
@@ -45,7 +45,7 @@ public class NoticeController {
 	}
 
 	// 공지사항 리스트
-	@RequestMapping(value = "/notice/list.kh", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/notice/list.kh", method = RequestMethod.GET)
 	public ModelAndView noticeListView(ModelAndView mv
 			, @RequestParam(value = "page", required = false) Integer page,
 			HttpServletRequest request) {
@@ -74,7 +74,7 @@ public class NoticeController {
 
 			List<Notice> nList = nService.printAllNotice(currentPage, boardLimit);
 			mv.addObject("nList", nList);
-			mv.setViewName("notice/noticeListView");
+			mv.setViewName("admin/notice/noticeListView");
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.addObject("msg", e.getMessage());
@@ -84,7 +84,7 @@ public class NoticeController {
 	}
 
 	// 공지사항 상세 뷰
-	@RequestMapping(value = "/notice/detail.kh", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/notice/detail.kh", method = RequestMethod.GET)
 	public ModelAndView noticeDetailView(ModelAndView mv, @RequestParam("noticeNo") int noticeNo,
 			@RequestParam("page") Integer page, HttpSession session) {
 
@@ -93,7 +93,7 @@ public class NoticeController {
 			mv.addObject("notice", notice);
 			mv.addObject("page", page);
 
-			mv.setViewName("notice/noticeDetailView");
+			mv.setViewName("/admin/notice/noticeDetailView");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 
@@ -105,7 +105,7 @@ public class NoticeController {
 	}
 
 	// 공지사항 삭제
-	@RequestMapping(value="notice/remove.kh", method = RequestMethod.GET)
+	@RequestMapping(value="/admin/notice/remove.kh", method = RequestMethod.GET)
 	public String noticeRemove(HttpSession session
 			, @RequestParam("noticeNo") int noticeNo
 			, @RequestParam("page") Integer page) {
@@ -114,17 +114,17 @@ public class NoticeController {
 			 System.out.println(noticeNo);
 			 int result = nService.removeOneByNo(noticeNo);
 			 if(result > 0) {
-				return "redirect:/notice/list.kh?page=" + page;
+				return "redirect:/admin/notice/list.kh?page=" + page;
 				
 			 }
 		} catch (Exception e) {
 			return "common/errorPage";
 		}
-		return "redirect:/notice/list.kh?page=" + page;
+		return "redirect:/admin/notice/list.kh?page=" + page;
 	}
 	
 	// 공지사항 수정 뷰
-	@RequestMapping(value="notice/modifyView.kh", method = RequestMethod.GET)
+	@RequestMapping(value="admin/notice/modifyView.kh", method = RequestMethod.GET)
 	public ModelAndView noticeModifyView(
 							ModelAndView mv
 							, @RequestParam("page") Integer page
@@ -134,7 +134,7 @@ public class NoticeController {
 			Notice notice = nService.printOneNotice(noticeNo);
 			mv.addObject("notice", notice);
 			mv.addObject("page", page);
-			mv.setViewName("notice/noticeModifyForm");
+			mv.setViewName("/admin/notice/noticeModifyForm");
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("common/errorPage");
@@ -144,7 +144,7 @@ public class NoticeController {
 	}
 	
 	// 공지사항 수정
-	@RequestMapping(value="notice/modify.kh", method = RequestMethod.POST)
+	@RequestMapping(value="/admin/notice/modify.kh", method = RequestMethod.POST)
 	public ModelAndView noticeModify(
 			ModelAndView mv
 			, @ModelAttribute Notice notice

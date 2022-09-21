@@ -19,43 +19,44 @@
 <body>
 	<jsp:include page="../common/menuBar.jsp"></jsp:include>
 
-<h1 align="center">${board.boardNo }번 게시글 수정 페이지</h1>
+<h1 align="center">${party.partyNo }번 게시글 수정 페이지</h1>
 	<br><br>
 	
-	<form action="/board/modify.kh" method="post" enctype="multipart/form-data">
+	<form action="/party/modify.kh" method="post" enctype="multipart/form-data">
 	
 <!-- 	board에 이미 데이터가 다 담겨있음 가져오고 싶은데 보여주기 싫으면 hidden 으로 처리-->
-		<input type="hidden" name="boardNo" value='${board.boardNo }'>
-		<input type="hidden" name="boardFilename" value='${board.boardFilename }'>
-		<input type="hidden" name="boardFileRename" value='${board.boardFileRename }'>
+		<input type="hidden" name="partyNo" value='${party.partyNo }'>
+		<input type="hidden" name="partyFileName" value='${party.partyFileName }'>
+		<input type="hidden" name="partyFileRename" value='${party.partyFileRename }'>
 		<input type="hidden" name="page" value='${page }'>
 		
 		
 	
 		<table border='1'  align="center">
+		<tr>
+			<td>썸네일 수정</td>
+			<td><input type="file" name="reloadFile">
+				<a href="">${party.partyFileName }</a>
+			</td>
+			</tr>
 			<tr>
 			<td>제목</td>
-			<td><input type="text" name="boardTitle" value='${board.boardTitle }'></td>
+			<td><input type="text" name="partyTitle" value='${party.partyTitle }'></td>
 			</tr>
 			<tr>
 			<td>작성자</td>
-			<td><input type="text" name="boardWriter" value='${board.boardWriter }' readonly ></td>
+			<td><input type="text" name="partyWriter" value='${party.partyWriter }' readonly ></td>
 			</tr>
 			<tr>
 			<td>내용</td>
-			<td><textarea class="summernote" name="boardContents" >${board.boardContents }</textarea></td>
+			<td><textarea class="summernote" name="partyContents" >${party.partyContents }</textarea></td>
 			</tr>
-			<tr>
-			<td>첨부파일</td>
-			<td><input type="file" name="reloadFile">
-				<a href="">${board.boardFilename }</a>
-			</td>
-			</tr>
+			
 			<tr>
 			<td colspan='2' align='right'>
 				<input type="submit" value="수정">
 				<button type="button" onclick="location.href= 'javascript:history.go(-1);'">이전페이지로</button> 
-				<button type="button" onclick="location.href='/board/list.kh'">리스트로</button> 
+				<button type="button" onclick="location.href='/party/list.kh'">리스트로</button> 
 				
 			</td>
 			</tr>

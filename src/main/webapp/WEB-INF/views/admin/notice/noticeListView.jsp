@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	<jsp:include page="../common/menuBar.jsp"></jsp:include>
+	<jsp:include page="../../common/menuBar.jsp"></jsp:include>
 
 
 	<h1 align="center"> 게시글 목록</h1>
@@ -29,7 +29,7 @@
 			<tr>
 				<td scope="row">${i.count }</td>
 				
-				<td><a href='/notice/detail.kh?noticeNo=${notice.noticeNo }&page=${currentPage }'>${notice.noticeTitle }</a></td>
+				<td><a href='/admin/notice/detail.kh?noticeNo=${notice.noticeNo }&page=${currentPage }'>${notice.noticeTitle }</a></td>
 				<td scope="row">${notice.noticeWriter }</td>
 				<td scope="row">${notice.nUpdateDate }</td>
 				<td scope="row">${notice.noticeCount }</td>
@@ -41,7 +41,7 @@
 		<td colspan='5' scope="row">
 	
 			<c:if test="${currentPage != 1 }">
-				<a href='/notice/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>[이전]</a>
+				<a href='/admin/notice/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>[이전]</a>
 			</c:if>
 			
 			<c:forEach var='p' begin="${startNavi }" end="${endNavi }">
@@ -49,12 +49,12 @@
 					 <b>${p }</b>
 				</c:if>
 				<c:if test="${currentPage ne p}">
-					<a href="/notice/${urlVal }.kh?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p }</a>
+					<a href="/admin/notice/${urlVal }.kh?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p }</a>
 				</c:if>
 			</c:forEach>
 			
 			<c:if test="${currentPage < maxPage }">
-				<a href='/notice/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>[다음]</a>
+				<a href='/admin/notice/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>[다음]</a>
 			</c:if>
 	
 		</td>
@@ -71,7 +71,7 @@
 	
 	<tr>
 		<td colspan='5' align='center' >
-			<form action="/notice/search.kh" method="get">
+			<form action="/admin/admin/notice/search.kh" method="get">
 				<select name="searchCondition">
 					<option value='all' <c:if test="${searchCondition eq 'all' } ">selected</c:if>>전체</option>
 					<option value='writer' <c:if test="${searchCondition eq 'writer' } ">selected</c:if>>작성자</option>
@@ -84,7 +84,7 @@
 			</td>
 			
 			<td>
-			<button type="button" onclick="location.href='/notice/writeView.kh'">글 작성</button> 
+			<button type="button" onclick="location.href='/admin/notice/writeView.kh'">글 작성</button> 
 			</td>
 		</tr>
 		

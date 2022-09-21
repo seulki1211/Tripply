@@ -15,5 +15,13 @@ public interface BannerStore {
 	public List<Banner> selectAllBanner(SqlSession session); 
 
 	public int deleteOneByNo(SqlSession session, int bannerNo);
+	
+	//배너체크
+	public int chkOneBanner(SqlSession session, int bannerNo);
+	
+	//배너 업데이트
+	public int updateBanner(SqlSession session, Banner banner);
+
+
 
 }

@@ -37,6 +37,21 @@ public class BannerServiceImpl implements BannerService{
 		int result = bStore.deleteOneByNo(session, bannerNo);
 		return result;
 	}
+
+	//배너체크
+	@Override
+	public int chkBanner(int bannerNo) {
+		int chkBanner = bStore.chkOneBanner(session, bannerNo);
+		return chkBanner;
+	}
+
+	@Override
+	public int renewBanner(Banner banner) {
+		int result = bStore.updateBanner(session, banner);
+		return result;
+	}
+	
+	
 	
 	
 }

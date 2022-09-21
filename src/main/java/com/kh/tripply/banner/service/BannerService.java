@@ -11,4 +11,8 @@ public interface BannerService {
 	public List<Banner> printAllBanner(); 
 	
 	public int removeOneByNo(int bannerNo);
+	
+	public int chkBanner(int bannerNo);
+	
+	public int renewBanner(Banner banner);
 }

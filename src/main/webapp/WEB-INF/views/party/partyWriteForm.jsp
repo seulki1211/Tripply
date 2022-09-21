@@ -31,6 +31,7 @@
 	
 	
 		<table border='1'  align="center">
+		
 			<tr>
 			<td>썸네일 등록</td>
 			<td><input type="file" name="uploadFile"></td>
@@ -40,7 +41,7 @@
 			<td><input type="text" name="partyTitle"></td>
 			<tr>
 			<td>작성자</td>
-			<td><input type="text" name="partyWriter" ></td>
+			<td><input type="text" name="partyWriter" value = "${loginUser.memberNickname }" readonly></td>
 			</tr>
 			<tr>
 			<td>일정 시작일</td>
@@ -52,7 +53,28 @@
 			</tr>
 			<tr>
 			<td>여행 장소</td>
-			<td><input type="text" name="partyLocation" ></td>
+			<td>
+					<select name="partyLocation">
+							<option value="전국" label="전국"></option>
+							<option value="서울" label="서울"></option>
+							<option value="부산" label="부산"></option>
+							<option value="제주" label="제주"></option>
+							<option value="인천" label="인천"></option>
+							<option value="대전" label="대전"></option>
+							<option value="대구" label="대구"></option>
+							<option value="광주" label="광주"></option>
+							<option value="울산" label="울산"></option>
+							<option value="세종" label="세종"></option>
+							<option value="경기도" label="경기도"></option>
+							<option value="강원도" label="강원도"></option>
+							<option value="충청북도" label="충청북도"></option>
+							<option value="충청남도" label="충청남도"></option>
+							<option value="경상북도" label="경상북도"></option>
+							<option value="경상남도" label="경상남도"></option>
+							<option value="전라북도" label="전라북도"></option>
+							<option value="전라남도" label="전라남도"></option>
+						</select>
+						</td>
 			</tr>
 			<tr>
 			<td>내용</td>

@@ -10,7 +10,7 @@
 <title>게시글 상세 정보</title>
 </head>
 <body>
-	<jsp:include page="../common/menuBar.jsp"></jsp:include>
+	<jsp:include page="../../common/menuBar.jsp"></jsp:include>
 
 
 	<h1 align='center'> ${notice.noticeNo }번 공지</h1>
@@ -41,8 +41,8 @@
 			
 			<tr>
 				<td colspan='2' align='center'>
-				<button type="button" onclick="location.href='/notice/list.kh?&page=${page }'">리스트로</button> 
-						<button type="button" onclick="location.href='/notice/modifyView.kh?noticeNo=${notice.noticeNo }&page=${page }'">수정하기</button>
+				<button type="button" onclick="location.href='/admin/notice/list.kh?&page=${page }'">리스트로</button> 
+						<button type="button" onclick="location.href='/admin/notice/modifyView.kh?noticeNo=${notice.noticeNo }&page=${page }'">수정하기</button>
 						<button type="button" onclick="removeNotice(${notice.noticeNo }, ${page});">삭제하기</button> 
 				</td>
 			</tr>
@@ -53,7 +53,7 @@
  function removeNotice(noticeNo,page) {
   	event.preventDefault();// 하이퍼링크 이동 방지
  	if(confirm("삭제하시려면 '확인'을 클릭하세요")){
- 		location.href="/notice/remove.kh?noticeNo="+noticeNo+"&page="+page;
+ 		location.href="/admin/notice/remove.kh?noticeNo="+noticeNo+"&page="+page;
  	}
  }
 	

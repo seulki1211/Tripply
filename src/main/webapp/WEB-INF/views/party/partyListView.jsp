@@ -29,16 +29,46 @@
 			<tr>
 				<td scope="row">${i.count }</td>
 				
-				<td><a href='/party/detail.kh?partyNo=${party.partyNo }&page=${currentPage }'>${party.partyTitle }</a></td>
+				<c:if test="${!empty loginUser and party.partyFirstDate le today }">
+				<td>
+				<a href='/party/detail.kh?partyNo=${party.partyNo }&page=${currentPage }'>${party.partyTitle }</a>
+				</td>
+				</c:if>
+				<c:if test="${(!empty loginUser) and (party.partyFirstDate gt today) }">
+				<td>여행 기간이 만료되었습니다ㅜㅜㅜ</td>
+				</c:if>
+				
+				<c:if test="${empty loginUser }">
+				<td>${party.partyTitle }</td>
+				</c:if>
 				<td scope="row">${party.partyWriter }</td>
 				<td scope="row">${party.pCreateDate }</td>
 				<td scope="row">${party.partyCount }</td>
-				
 			</tr>	
 		</c:forEach>
-					<!--  하단 페이지 목록 -->
+		
+		<c:if test="${empty pList }">
+		<tr>			
+			<td colspan='6' align = 'center' scope="row"> <b>검색 결과가 없습니다.</b>
+			</td>
+		</tr>
+	</c:if>
+	
+	<form action="/party/search.kh" method="get">
+		<jsp:include page="../common/search_party.jsp"></jsp:include>
+	</form>
+			
+	<tr>
+			<td>
+			<c:if test="${!empty loginUser }">
+			<button type="button" onclick="location.href='/party/writeView.kh'">글 작성</button> 
+			</c:if>
+			</td>
+	</tr>
+	
+				<!--  하단 페이지 목록 -->
 		<tr align='center' height="20">
-		<td colspan='6' scope="row">
+		<td colspan='6' scope="row" align='center'>
 	
 			<c:if test="${currentPage != 1 }">
 				<a href='/party/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>[이전]</a>
@@ -58,34 +88,6 @@
 			</c:if>
 	
 		</td>
-		</tr>
-<%-- 	</c:if> --%>
-
-		
-		<c:if test="${empty pList }">
-		<tr>			
-			<td colspan='6' align = 'center' scope="row"> <b>검색 결과가 없습니다.</b>
-			</td>
-		</tr>
-	</c:if>
-	
-	<tr>
-		<td colspan='5' align='center' >
-			<form action="/party/search.kh" method="get">
-				<select name="searchCondition">
-					<option value='all' <c:if test="${searchCondition eq 'all' } ">selected</c:if>>전체</option>
-					<option value='writer' <c:if test="${searchCondition eq 'writer' } ">selected</c:if>>작성자</option>
-					<option value='title' <c:if test="${searchCondition eq 'title' } ">selected</c:if>>제목</option>
-					<option value='contents'<c:if test="${searchCondition eq 'contents' } ">selected</c:if>>내용</option>
-				</select>
-				<input type="text" name ='searchValue' value="${searchValue }">
-				<input type="submit" value='검색'>			
-			</form>
-			</td>
-			
-			<td>
-			<button type="button" onclick="location.href='/party/writeView.kh'">글 작성</button> 
-			</td>
 		</tr>
 		
 		</tbody>

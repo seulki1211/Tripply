@@ -20,14 +20,14 @@
 </head>
 <body>
 <div>
-	<jsp:include page="../common/menuBar.jsp"></jsp:include>
+	<jsp:include page="../../common/menuBar.jsp"></jsp:include>
 </div>
 
 	<h1 align="center">공지사항 등록 페이지</h1>
 	<br><br>
 
 		
-	<form action="/notice/register.kh" method="post">
+	<form action="/admin/notice/register.kh" method="post">
 	
 	
 		<table border='1'  align="center">
@@ -47,7 +47,7 @@
 			<td colspan='2' align='right'>
 				<input type="submit" value="등록">
 				<input type="reset" value="취소">
-				<button type="button" onclick="location.href='/notice/list.kh'">리스트로</button> 
+				<button type="button" onclick="location.href='/admin/notice/list.kh'">리스트로</button> 
 				 
 			</td>
 			</tr>

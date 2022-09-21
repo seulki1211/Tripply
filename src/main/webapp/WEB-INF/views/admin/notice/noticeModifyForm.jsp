@@ -17,12 +17,12 @@
 <title>수정 페이지</title>
 </head>
 <body>
-	<jsp:include page="../common/menuBar.jsp"></jsp:include>
+	<jsp:include page="../../common/menuBar.jsp"></jsp:include>
 
 <h1 align="center">${notice.noticeNo }번 게시글 수정 페이지</h1>
 	<br><br>
 	
-	<form action="/notice/modify.kh" method="post" >
+	<form action="/admin/notice/modify.kh" method="post" >
 	
 <!-- 	board에 이미 데이터가 다 담겨있음 가져오고 싶은데 보여주기 싫으면 hidden 으로 처리-->
 		<input type="hidden" name="noticeNo" value='${notice.noticeNo }'>
@@ -48,7 +48,7 @@
 			<td colspan='2' align='right'>
 				<input type="submit" value="수정">
 				<button type="button" onclick="location.href= 'javascript:history.go(-1);'">이전페이지로</button> 
-				<button type="button" onclick="location.href='/notice/list.kh'">리스트로</button> 
+				<button type="button" onclick="location.href='/admin/notice/list.kh'">리스트로</button> 
 				
 			</td>
 			</tr>

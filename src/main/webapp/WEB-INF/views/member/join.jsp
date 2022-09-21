@@ -11,7 +11,7 @@
 <body>
 <!-- 헤더-메뉴바 -->
 	<div id="header">
-		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
+	<jsp:include page="../common/menuBar.jsp"></jsp:include>
 	</div>
 	<h1 align="center">회원가입</h1>
 	<div class="">

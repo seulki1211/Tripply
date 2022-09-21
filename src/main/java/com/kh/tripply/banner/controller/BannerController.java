@@ -28,13 +28,13 @@ public class BannerController {
 	private BannerService bService;
 	
 	// 배너 리스트 및 등록 뷰
-	@RequestMapping(value="/banner/listView.kh", method=RequestMethod.GET)
+	@RequestMapping(value="admin/banner/list.kh", method=RequestMethod.GET)
 	public ModelAndView showBannerWriteAndList(ModelAndView mv) {
 		
 		List<Banner> bList = bService.printAllBanner();
 		if(!bList.isEmpty()) {
 			mv.addObject("bList", bList);
-			mv.setViewName("banner/bannerRegisterAndList");
+			mv.setViewName("/admin/banner/bannerRegisterAndList");
 		}else {
 			mv.addObject("msg", "실패");
 			mv.setViewName("common/errorPage");
@@ -44,69 +44,103 @@ public class BannerController {
 	}
 	
 	// 배너 등록 수정중
-	@RequestMapping(value="/banner/register.kh", method=RequestMethod.POST)
+	@RequestMapping(value="admin/banner/register.kh", method=RequestMethod.POST)
 	public ModelAndView registerBanner(ModelAndView mv
 									,@ModelAttribute Banner banner
+									,@RequestParam("bannerNo") int bannerNo
 									,@RequestParam(value = "uploadFile", required = false) 
 													MultipartFile uploadFile
 									, HttpServletRequest request) { // resources 경로 가져오려고
 		
-		try {
-			
-			String bannerFileName = uploadFile.getOriginalFilename();
-			
-			if(!bannerFileName.equals("")) {
-				String root = request.getSession().getServletContext().getRealPath("resources");
-				String savePath = root + "\\buploadFiles"; // 저장경로 지정
-				File file = new File(savePath);
+		
+		int chkBanner  = bService.chkBanner(bannerNo);
+		
+		if(chkBanner > 0) { // 업데이트
+				try {
 				
-				// 파일 이름이 같다고 안들어가는 경우 방지 --> 파일명을 날짜+시간으로 바꿈
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-				String bannerFileRename = sdf.format(new Date(System.currentTimeMillis()))+"."
-						+bannerFileName.substring(bannerFileName.lastIndexOf(".")+1);// .다음부터 끝까지 잘라서 반환
-				if(!file.exists()) {
-					file.mkdir(); // 경로 폴더가 없으면 폴더 생성
+				String bannerFileName = uploadFile.getOriginalFilename();
+				
+				if(!bannerFileName.equals("")) {
+					String root = request.getSession().getServletContext().getRealPath("resources");
+					String savePath = root + "\\buploadFiles"; // 저장경로 지정
+					File file = new File(savePath);
+					
+					// 파일 이름이 같다고 안들어가는 경우 방지 --> 파일명을 날짜+시간으로 바꿈
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					String bannerFileRename = sdf.format(new Date(System.currentTimeMillis()))+"."
+							+bannerFileName.substring(bannerFileName.lastIndexOf(".")+1);// .다음부터 끝까지 잘라서 반환
+					if(!file.exists()) {
+						file.mkdir(); // 경로 폴더가 없으면 폴더 생성
+					}
+					uploadFile.transferTo(new File(savePath + "\\" + bannerFileRename));//파일을 buploadFile경로에 저장하는 메소드
+					
+					banner.setBannerFileName(bannerFileName);
+					banner.setBannerFileRename(bannerFileRename);
+					
+					String boardFilepath = savePath + "\\" +bannerFileRename;// 절대경로
+					
+					banner.setBannerFilePath(boardFilepath);
+					
 				}
-				uploadFile.transferTo(new File(savePath + "\\" + bannerFileRename));//파일을 buploadFile경로에 저장하는 메소드
 				
-				banner.setBannerFileName(bannerFileName);
-				banner.setBannerFileRename(bannerFileRename);
+				int result = bService.renewBanner(banner);
+				mv.setViewName("redirect:/admin/banner/list.kh");
 				
-				String boardFilepath = savePath + "\\" +bannerFileRename;// 절대경로
-				
-				banner.setBannerFilePath(boardFilepath);
-				
+			}catch (Exception e) {
+				e.printStackTrace();
+				mv.addObject("msg", e.getMessage());
+				mv.setViewName("common/errorPage");		
 			}
-			
-			int result = bService.registerBanner(banner);
-				mv.setViewName("redirect:/banner/listView.kh");
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("msg", e.getMessage());
-			mv.setViewName("common/errorPage");		
+			return mv;
+		
+		}else{
+			// 인서트
+			try {
+				
+				String bannerFileName = uploadFile.getOriginalFilename();
+				
+				if(!bannerFileName.equals("")) {
+					String root = request.getSession().getServletContext().getRealPath("resources");
+					String savePath = root + "\\buploadFiles"; // 저장경로 지정
+					File file = new File(savePath);
+					
+					// 파일 이름이 같다고 안들어가는 경우 방지 --> 파일명을 날짜+시간으로 바꿈
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					String bannerFileRename = sdf.format(new Date(System.currentTimeMillis()))+"."
+							+bannerFileName.substring(bannerFileName.lastIndexOf(".")+1);// .다음부터 끝까지 잘라서 반환
+					if(!file.exists()) {
+						file.mkdir(); // 경로 폴더가 없으면 폴더 생성
+					}
+					uploadFile.transferTo(new File(savePath + "\\" + bannerFileRename));//파일을 buploadFile경로에 저장하는 메소드
+					
+					banner.setBannerFileName(bannerFileName);
+					banner.setBannerFileRename(bannerFileRename);
+					
+					String boardFilepath = savePath + "\\" +bannerFileRename;// 절대경로
+					
+					banner.setBannerFilePath(boardFilepath);
+					
+					banner.setBannerNo(bannerNo);
+					banner.setBannerWriter("관리자");
+					
+					
+				}
+				
+				int result = bService.registerBanner(banner);
+				mv.setViewName("redirect:/admin/banner/list.kh");
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+				mv.addObject("msg", e.getMessage());
+				mv.setViewName("common/errorPage");		
 			}
-		return mv;
+			return mv;
+		}
+		
+		
 	}
 	
-//	@RequestMapping(value="banner/remove.kh", method = RequestMethod.GET)
-//	public String noticeRemove(HttpSession session
-//			, @RequestParam("bannerNo") int bannerNo) {
-//		
-//		 try {
-//			 System.out.println(bannerNo);
-//			 int result = bService.removeOneByNo(bannerNo);
-//			 if(result > 0) {
-//				return "redirect:/banner/listView.kh";
-//				
-//			 }
-//		} catch (Exception e) {
-//			return "common/errorPage";
-//		}
-//		return "redirect:/banner/listView.kh";
-//	} 
-//	
-	
+
 
 }
 

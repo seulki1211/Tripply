@@ -14,7 +14,14 @@
 		
 </resultMap>
 
-<update id="insertBanner">
+<insert id="insertBanner">
+	INSERT INTO BANNER_TBL
+	VALUES (#{bannerNo},#{bannerWriter}
+	, #{bannerFileName},  #{bannerFileRename},  #{bannerFilePath})
+
+</insert>
+
+<update id="updateBanner">
 	UPDATE BANNER_TBL
 	SET BANNER_FILENAME = #{bannerFileName}, BANNER_RENAME =#{bannerFileRename}, BANNER_FILEPATH = #{bannerFilePath}
 	WHERE BANNER_NO = #{bannerNo}
@@ -24,6 +31,12 @@
 	SELECT * FROM BANNER_TBL
 	ORDER BY 1
 </select>
+
+<select id="chkOneBanner" resultType="_int">
+	SELECT COUNT(*) FROM BANNER_TBL
+	WHERE BANNER_NO = #{bannerNo}
+</select>
+
 
 
 
