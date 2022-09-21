@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FreeMapper">
+	<insert id="insertFreeBoard">
+		INSERT INTO FREE_TBL VALUES(SEQ_BOARDNO.NEXTVAL(), #{freeTitle}, #{freeContents}
+		, #{freeWriter}, #{freeFilename}, #{freeFileRename}, #{freeFilePath}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+</mapper>

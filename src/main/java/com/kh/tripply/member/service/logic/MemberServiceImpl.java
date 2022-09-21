@@ -17,8 +17,7 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Override
 	public Member loginMember(Member member) {
-		Member mOne 
-		= mStore.selectLoginMember(session, member);
+		Member mOne = mStore.selectLoginMember(session, member);
 		return mOne;
 	}
 
@@ -30,14 +29,20 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int modifyMember(Member member) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = mStore.updatemember(session, member);
+		return result;
 	}
 
 	@Override
 	public int removeMember(String memberId) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = mStore.deleteMember(session, memberId);
+		return result;
+	}
+
+	@Override
+	public Member printMemberId(String memberId) {
+		Member mOne = mStore.selectMemberId(session, memberId);
+		return mOne;
 	}
 
 }

@@ -17,6 +17,7 @@
 		<typeAlias type="com.kh.tripply.plan.domain.Planner" alias="Planner" />
 		<typeAlias type="com.kh.tripply.member.domain.Member" alias="Member"/>
 		<typeAlias type="com.kh.tripply.review.domain.ReviewReply" alias="ReviewReply"/>	
+		<typeAlias type="com.kh.tripply.free.domain.Free" alias="Free"/>	
 	</typeAliases>
 
 	<mappers>
@@ -29,6 +30,7 @@
 		 <mapper resource="mappers/member-mapper.xml"/>
 		 <mapper resource="mappers/planner_mapper.xml" />
 		 <mapper resource="mappers/review-reply-mapper.xml" />
+		 <mapper resource="mappers/free-mapper.xml"/>
 	</mappers>
 
 </configuration>
