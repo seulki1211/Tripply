@@ -11,10 +11,10 @@ public class Plan implements Serializable{
 	private int boardNo;
 	private int planNo;
 	private String day;
-	private Float Y;
-	private Float X;
+	private Float y;
+	private Float x;
 	private String address;
-	private String Memo;
+	private String memo;
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -34,16 +34,16 @@ public class Plan implements Serializable{
 		this.day = day;
 	}
 	public Float getY() {
-		return Y;
+		return y;
 	}
 	public void setY(Float y) {
-		Y = y;
+		this.y = y;
 	}
 	public Float getX() {
-		return X;
+		return x;
 	}
 	public void setX(Float x) {
-		X = x;
+		this.x = x;
 	}
 	public String getAddress() {
 		return address;
@@ -52,19 +52,20 @@ public class Plan implements Serializable{
 		this.address = address;
 	}
 	public String getMemo() {
-		return Memo;
+		return memo;
 	}
 	public void setMemo(String memo) {
-		Memo = memo;
+		this.memo = memo;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	@Override
 	public String toString() {
-		return "Plan [boardNo=" + boardNo + ", planNo=" + planNo + ", day=" + day + ", Y=" + Y + ", X=" + X
-				+ ", address=" + address + ", Memo=" + Memo + "]";
+		return "Plan [boardNo=" + boardNo + ", planNo=" + planNo + ", day=" + day + ", y=" + y + ", x=" + x
+				+ ", address=" + address + ", memo=" + memo + "]";
 	}
+	
 	
 	
 

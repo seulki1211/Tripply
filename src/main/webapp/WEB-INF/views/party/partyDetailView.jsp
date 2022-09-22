@@ -145,7 +145,7 @@ function removeBoard(partyNo,page) {
 		$form.appendTo("body");
 		$form.submit(); // 전송
 
-		}
+		};
  	
 	
 </script>

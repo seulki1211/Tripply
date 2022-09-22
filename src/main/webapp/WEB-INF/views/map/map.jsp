@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,6 +79,7 @@
 	
 	<div class="header">
 		<div class="info">
+			<input type="hidden" name="page" id="page"value="${page }" />
 			<input type="hidden" name="boardNo" id="boardNo"value="${planner.boardNo }" />
 			<input type="text" name="title" id="planTitle"value="${planner.planTitle }" />
 			<input type="text" name="firstDay" id="firstDay"value="<fmt:formatDate value="${planner.firstDay}" pattern="yyyy-MM-dd" />" />
@@ -89,7 +90,7 @@
 		
 		<div class="resultButton">
 			<button  form="submitForm" type="submit" class="planSumbit" >저장</button>
-			<button class="planClose"onclick="location.href='#'">닫기</button>
+			<button class="planClose"onclick="plannerRemove()">닫기</button>
 		</div>
 		
 	</div>
@@ -145,6 +146,16 @@
 		</div>
 	</div>
 	</div>
+	</body>
+<script type="text/javascript">
+function plannerRemove(page){
+	event.preventDefault();//하이퍼링크 이동 방지
+	if(confirm("게시물작성을 취소하시겠습니까?")){
+		location.href="/plan/infoRremove.kh";
+		
+	}
+}
+</script>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55f8ef22507421de3927e33382a4c630&libraries=services,clusterer,drawing"></script>
 	<script>
@@ -289,10 +300,10 @@ var markers = [];
 	        itemStr += '    <span>' +  places.address_name  + '</span>'; 
 	    }
 	                 
-	      itemStr += '  <span class="tel">' + places.phone  + '</span>' +
-	                '</div>';           
+	      itemStr += '  <span class="tel">' + places.phone  + '</span>'
+	               ;           
 	
-	   	itemStr += '<div class="placelist-div"><button class="placelist-div__button" onclick="planInsert(\'' + places.place_name + '\',\'' + places.y + '\',\'' + places.x +  '\')">+</button></div>';
+	   	itemStr += '<div class="placelist-div"><button class="placelist-div__button" onclick="planInsert(\'' + places.place_name + '\',\'' + places.y + '\',\'' + places.x +  '\')">+</button></div>'+'</div>';
 	    el.innerHTML = itemStr;
 	    el.className = 'item';
 	
@@ -457,5 +468,5 @@ var markers = [];
 	 
 	 </script>	
 
-</body>
+
 </html>

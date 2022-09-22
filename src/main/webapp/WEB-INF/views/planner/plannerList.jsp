@@ -136,7 +136,10 @@ position:relative;
     cursor: pointer;
 }
 
-
+.p_table{
+width:100%;
+height:100%;
+}
 </style>
 </head>
 
@@ -232,7 +235,7 @@ position:relative;
 		<!--var는 여기서 사용하는 변수명을 적음  -->
 		<tr>
 				<td>${i.count }</td>
-				<td><%-- <a href="/board/detail.kh?boardNo=${planner.boardNo }&page=${currentPage}#"> --%>${planner.planTitle }</td>
+				<td><a href="/planner/planerDetail.kh?boardNo=${planner.boardNo }&page=${currentPage}#"> ${planner.planTitle }</td>
 				<td>${planner.planWriter }</td>
 				<td>${planner.firstDay}-${planner.lastDay }</td>
 				<td>${planner.plannerCount }</td>

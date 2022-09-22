@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.kh.tripply.plan.domain.Plan;
 import com.kh.tripply.plan.domain.PlanList;
 import com.kh.tripply.plan.domain.Planner;
+import com.kh.tripply.plan.domain.PlannerReply;
 
 
 public interface PlanStore {
@@ -22,5 +24,21 @@ public interface PlanStore {
 			int currentPage, int boardLimit);
 
 	public int insertPlan(SqlSession session, PlanList l);
+
+	public List<Plan> selectAllPlan(SqlSession session, Integer boardNo);
+
+	public int deletePlanner(SqlSession session, int boardNo);
+
+	public int deletePlan(SqlSession session, int boardNo);
+
+	public int updatePlannerCount(SqlSession session, Integer boardNo);
+
+	public int insertReply(SqlSession session, PlannerReply plannerReply);
+
+	public List<PlannerReply> selectReply(SqlSession session, Integer boardNo);
+
+	public int deleteReply(SqlSession session, Integer replyNo);
+
+	public int updateReply(SqlSession session, PlannerReply plannerReply);
 
 }
