@@ -17,6 +17,18 @@
 		position:absolute;
 		display:flex;
 	}
+	.reReply{
+		background-color:gainsboro;
+		position:relative;
+		left:10px;
+		padding:10px;
+		
+	}
+	.replyMenuBtn{
+		position:block;
+		right:10px;
+		padding:10px;
+	}
 </style>
 <body>
 
@@ -72,7 +84,7 @@
 		<table id="reply-view" align="center">
 			<c:forEach items="${tReplyList }" var="tReply" varStatus="n">
 				<tr id="one-reply-area">
-					<td <c:if test="${tReply.reReplyYn eq 'Y' }"> style="background-color:Silver;" </c:if> >
+					<td <c:if test="${tReply.reReplyYn eq 'Y' }">   class="reReply" </c:if> >
 						<div id="replyInfo">
 							${tReply.tReplyWriter } ${tReply.trCreateDate }
 						</div>
@@ -81,7 +93,7 @@
 							<span align="right" id="replyMenu">
 <!-- 댓글메뉴 -->
 								<c:if test="${(loginUser.memberId eq tReply.tReplyWriter) || (loginUser.memberId eq trade.tradeWriter) }">
-									<a href="#" onclick="replyMenu(this);" > ▤ </a>
+									<a href="#" onclick="replyMenu(this);" class="replyMenuBtn"> ▤ </a>
 								</c:if>
 							</span>
 						</div> 
@@ -122,7 +134,7 @@
 <!-- 답글 버튼 -->
 						<c:if test="${tReply.reReplyYn ne 'Y' }">
 							<div onclick="arcodian(this);">
-								<a href="#">답글</a>
+								<a href="#">답글 달기</a>
 							</div>
 <!-- 답글 입력창 -->
 							<div class="reReply-input" style="display: none">
