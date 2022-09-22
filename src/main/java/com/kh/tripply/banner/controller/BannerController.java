@@ -32,18 +32,19 @@ public class BannerController {
 	public ModelAndView showBannerWriteAndList(ModelAndView mv) {
 		
 		List<Banner> bList = bService.printAllBanner();
-		if(!bList.isEmpty()) {
+		if (!bList.isEmpty()) {
 			mv.addObject("bList", bList);
 			mv.setViewName("/admin/banner/bannerRegisterAndList");
-		}else {
+		} else if (bList.isEmpty()) {
+			mv.setViewName("/admin/banner/bannerRegisterAndList");
+		} else {
 			mv.addObject("msg", "실패");
 			mv.setViewName("common/errorPage");
 		}
 		
 		return mv;
 	}
-	
-	// 배너 등록 수정중
+	// 배너 등록
 	@RequestMapping(value="admin/banner/register.kh", method=RequestMethod.POST)
 	public ModelAndView registerBanner(ModelAndView mv
 									,@ModelAttribute Banner banner
@@ -138,6 +139,23 @@ public class BannerController {
 		}
 		
 		
+	}
+	
+	@RequestMapping(value="/banner/test.kh", method=RequestMethod.GET)
+	public ModelAndView showBanner(ModelAndView mv) {
+		
+		List<Banner> bList = bService.printAllBanner();
+		if (!bList.isEmpty()) {
+			mv.addObject("bList", bList);
+			mv.setViewName("common/banner");
+		} else if (bList.isEmpty()) {
+			mv.setViewName("common/banner");
+		} else {
+			mv.addObject("msg", "실패");
+			mv.setViewName("common/errorPage");
+		}
+		
+		return mv;
 	}
 	
 

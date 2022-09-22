@@ -6,60 +6,49 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>동행자 게시판</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+
+<style type="text/css">
+
+</style>
+<title>공지사항</title>
 </head>
+
+
 <body>
+<div>
+<jsp:include page="../../common/adminSideBar.jsp"></jsp:include>
+</div>
+ <div class="right-side">
 
-	<jsp:include page="../../common/menuBar.jsp"></jsp:include>
+   <br><br>
 
+	<h1 align="center">공지사항</h1>
+	
+   <br><br>
 
-	<h1 align="center"> 게시글 목록</h1>
-
-	<table align="center" class="table table-hover">
+	<table align="center" class="table table-hover col-10">
 	<tr>
-		<th scope="col">번호</th>
-		<th scope="col">제목</th>
-		<th scope="col">작성자</th>
-		<th scope="col">날짜</th>
-		<th scope="col">조회수</th>
+		<th class="col-1" scope="col">번호</th>
+		<th class="col-4" scope="col">제목</th>
+		<th class="col-2" scope="col">작성자</th>
+		<th class="col-1" scope="col">날짜</th>
+		<th class="col-1" scope="col">조회수</th>
 	</tr>
 	
-	<tbody class="table-group-divider">
+	<tbody class="table-group-divider"">
 		<c:forEach items="${nList }" var="notice" varStatus="i">
 			<tr>
 				<td scope="row">${i.count }</td>
 				
 				<td><a href='/admin/notice/detail.kh?noticeNo=${notice.noticeNo }&page=${currentPage }'>${notice.noticeTitle }</a></td>
-				<td scope="row">${notice.noticeWriter }</td>
-				<td scope="row">${notice.nUpdateDate }</td>
-				<td scope="row">${notice.noticeCount }</td>
+				<td>${notice.noticeWriter }</td>
+				<td>${notice.nUpdateDate }</td>
+				<td>${notice.noticeCount }</td>
 				
 			</tr>	
 		</c:forEach>
-					<!--  하단 페이지 목록 -->
-		<tr align='center' height="20">
-		<td colspan='5' scope="row">
-	
-			<c:if test="${currentPage != 1 }">
-				<a href='/admin/notice/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>[이전]</a>
-			</c:if>
-			
-			<c:forEach var='p' begin="${startNavi }" end="${endNavi }">
-				<c:if test="${currentPage eq p}">
-					 <b>${p }</b>
-				</c:if>
-				<c:if test="${currentPage ne p}">
-					<a href="/admin/notice/${urlVal }.kh?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p }</a>
-				</c:if>
-			</c:forEach>
-			
-			<c:if test="${currentPage < maxPage }">
-				<a href='/admin/notice/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>[다음]</a>
-			</c:if>
-	
-		</td>
-		</tr>
-<%-- 	</c:if> --%>
+		
 
 		
 		<c:if test="${empty nList }">
@@ -67,29 +56,63 @@
 			<td colspan='5' align = 'center' scope="row"> <b>검색 결과가 없습니다.</b>
 			</td>
 		</tr>
-	</c:if>
+		</c:if>
 	
-	<tr>
-		<td colspan='5' align='center' >
-			<form action="/admin/admin/notice/search.kh" method="get">
-				<select name="searchCondition">
-					<option value='all' <c:if test="${searchCondition eq 'all' } ">selected</c:if>>전체</option>
-					<option value='writer' <c:if test="${searchCondition eq 'writer' } ">selected</c:if>>작성자</option>
-					<option value='title' <c:if test="${searchCondition eq 'title' } ">selected</c:if>>제목</option>
-					<option value='contents'<c:if test="${searchCondition eq 'contents' } ">selected</c:if>>내용</option>
-				</select>
-				<input type="text" name ='searchValue' value="${searchValue }">
-				<input type="submit" value='검색'>			
-			</form>
-			</td>
+	</tbody>
+		
+					<!--  하단 페이지 목록 -->
+		<tr align='center' height="20" align='center'>
+		<td colspan='4'  align='center'>
+<!-- 		<nav aria-label="Page navigation example"> -->
+			<ul class="pagination justify-content-center">
+			<c:if test="${currentPage != 1 }">
+			<li class="page-item"><a class="page-link" href='/admin/notice/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>이전</a></li>
+			</c:if>
 			
-			<td>
-			<button type="button" onclick="location.href='/admin/notice/writeView.kh'">글 작성</button> 
-			</td>
+			<c:forEach var='p' begin="${startNavi }" end="${endNavi }">
+				<c:if test="${currentPage eq p}">
+				<li class="page-item disabled"><a class="page-link" href='#' >${p }</a></li>
+				</c:if>
+				<c:if test="${currentPage ne p}">
+				<li class="page-item"><a class="page-link" href="/admin/notice/${urlVal }.kh?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p }</a></li>
+				</c:if>
+			</c:forEach>
+			
+			<c:if test="${currentPage < maxPage }">
+			<li class="page-item"><a class="page-link" href='/admin/notice/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>다음</a></li>
+			</c:if>
+	 	  </ul>
+<!-- 	</nav> -->
+		</td>
+		<td>
+			<button type="button" onclick="location.href='/admin/notice/writeView.kh'" class="btn btn-dark">글 작성</button> 
+		</td>
 		</tr>
 		
-		</tbody>
+		
+<!-- 	<tr> -->
+<!-- 		<td colspan='4' align='center' > -->
+<!-- 			<form action="/admin/notice/search.kh" method="get"> -->
+<!-- 				<select name="searchCondition"> -->
+<%-- 					<option value='all' <c:if test="${searchCondition eq 'all' } ">selected</c:if>>전체</option> --%>
+<%-- 					<option value='writer' <c:if test="${searchCondition eq 'writer' } ">selected</c:if>>작성자</option> --%>
+<%-- 					<option value='title' <c:if test="${searchCondition eq 'title' } ">selected</c:if>>제목</option> --%>
+<%-- 					<option value='contents'<c:if test="${searchCondition eq 'contents' } ">selected</c:if>>내용</option> --%>
+<!-- 				</select> -->
+<%-- 				<input type="text" name ='searchValue' value="${searchValue }"> --%>
+<!-- 				<input type="submit" value='검색'>		 -->
+					
+<!-- 			</form> -->
+<!-- 			</td> -->
+			
+<!-- 			<td colspan='1'> -->
+		
+<!-- 			</td> -->
+<!-- 		</tr> -->
 	</table>
-	<br><br><br>
+	
+	
+	
+</div>
 </body>
 </html>

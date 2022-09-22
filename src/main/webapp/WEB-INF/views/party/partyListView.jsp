@@ -12,7 +12,6 @@
 
 	<jsp:include page="../common/menuBar.jsp"></jsp:include>
 
-
 	<h1 align="center"> 게시글 목록</h1>
 
 	<table align="center" class="table table-hover">
@@ -29,7 +28,7 @@
 			<tr>
 				<td scope="row">${i.count }</td>
 				
-				<c:if test="${!empty loginUser and party.partyFirstDate le today }">
+				<c:if test="${(!empty loginUser) and (today le party.partyFirstDate) }">
 				<td>
 				<a href='/party/detail.kh?partyNo=${party.partyNo }&page=${currentPage }'>${party.partyTitle }</a>
 				</td>

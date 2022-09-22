@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MessageMapper">
+
+<resultMap type="Message" id="messageResultMap">
+		<id     property="msgNo"         		column="MSG_NO"/>
+		<result property="msgTitle"      		column="MSG_TITLE"/>
+		<result property="msgContents"     		column="MSG_CONTENTS"/>
+		<result property="msgWriter"   			column="MSG_WRITER"/>
+		<result property="msgReciever" 			column="MSG_RECEIVER"/>
+		<result property="msgCreateDate"  		column="MSG_CREATE_DATE"/>
+		
+</resultMap>
+
+
+
+<insert id="insertMsg">
+INSERT INTO MESSAGE_TBL
+VALUES (
+SEQ_MSGNO.NEXTVAL,#{msgTitle},#{msgContents},#{msgWriter},#{msgReciever},DEFAULT)
+</insert>
+
+<select id="selectSendMsg" resultMap="messageResultMap">
+SELECT * FROM MESSAGE_TBL
+WHERE MSG_WRITER = #{msgWriter}
+ORDER BY 1 DESC
+</select>
+
+<select id="selectRecvMsg" resultMap="messageResultMap">
+SELECT * FROM MESSAGE_TBL
+WHERE MSG_RECEIVER = #{msgReciever}
+ORDER BY 1 DESC
+</select>
+
+<select id="chkMsgReciever" resultType="_int">
+SELECT COUNT(*) FROM MEMBER_TBL
+WHERE MEMBER_NICKNAME = #{msgReciever}
+</select>
+
+<select id="selectOneMsg" resultMap="messageResultMap">
+SELECT * FROM MESSAGE_TBL
+WHERE MSG_NO = #{msgNo}
+</select>
+
+<select id="selectTotalSendCount" resultType="_int">
+SELECT COUNT(*) FROM MESSAGE_TBL
+<where>
+	<if test="searchCondition.toString()=='title'">
+	MSG_TITLE LIKE '%'||#{searchValue}||'%'
+	</if>
+	<if test="searchCondition.toString()=='contents'">
+	MSG_CONTENTS LIKE '%'||#{searchValue}||'%'
+	</if>
+	<if test="searchCondition.toString()=='writer'">
+	MSG_RECEIVER LIKE '%'||#{searchValue}||'%'
+	</if>
+	<if test="searchCondition.toString()=='all'">
+		MSG_TITLE LIKE '%'||#{searchValue}||'%'
+	OR	MSG_CONTENTS LIKE '%'||#{searchValue}||'%'
+	OR	MSG_RECEIVER LIKE '%'||#{searchValue}||'%'
+	</if>
+	AND	MSG_WRITER = #{msgWriter}
+</where>
+</select>
+
+<select id="selectTotalRecvCount" resultType="_int">
+SELECT COUNT(*) FROM MESSAGE_TBL
+<where>
+	<if test="searchCondition.toString()=='title'">
+	MSG_TITLE LIKE '%'||#{searchValue}||'%'
+	</if>
+	<if test="searchCondition.toString()=='contents'">
+	MSG_CONTENTS LIKE '%'||#{searchValue}||'%'
+	</if>
+	<if test="searchCondition.toString()=='writer'">
+	MSG_RECEIVER LIKE '%'||#{searchValue}||'%'
+	</if>
+	<if test="searchCondition.toString()=='all'">
+		MSG_TITLE LIKE '%'||#{searchValue}||'%'
+	OR	MSG_CONTENTS LIKE '%'||#{searchValue}||'%'
+	OR	MSG_WRITER LIKE '%'||#{searchValue}||'%'
+	</if>
+	AND MSG_RECEIVER = #{msgReciever}
+</where>
+</select>
+
+<select id="selectSearchSendMsg" resultMap="messageResultMap">
+SELECT * FROM MESSAGE_TBL
+<where>
+	<if test="searchCondition.toString()=='title'">
+	MSG_TITLE LIKE '%'||#{searchValue}||'%'
+	</if>
+	<if test="searchCondition.toString()=='contents'">
+	MSG_CONTENTS LIKE '%'||#{searchValue}||'%'
+	</if>
+	<if test="searchCondition.toString()=='writer'">
+	MSG_WRITER LIKE '%'||#{searchValue}||'%'
+	</if>
+	<if test="searchCondition.toString()=='all'">
+		MSG_TITLE LIKE '%'||#{searchValue}||'%'
+	OR	MSG_CONTENTS LIKE '%'||#{searchValue}||'%'
+	OR	MSG_WRITER LIKE '%'||#{searchValue}||'%'
+	</if>
+	AND MSG_RECEIVER = #{msgWriter}
+</where>
+</select>
+
+
+<select id="selectSearchRecvMsg" resultMap="messageResultMap">
+SELECT * FROM MESSAGE_TBL
+<where>
+	<if test="searchCondition.toString()=='title'">
+	MSG_TITLE LIKE '%'||#{searchValue}||'%'
+	</if>
+	<if test="searchCondition.toString()=='contents'">
+	MSG_CONTENTS LIKE '%'||#{searchValue}||'%'
+	</if>
+	<if test="searchCondition.toString()=='writer'">
+	MSG_RECEIVER LIKE '%'||#{searchValue}||'%'
+	</if>
+	<if test="searchCondition.toString()=='all'">
+		MSG_TITLE LIKE '%'||#{searchValue}||'%'
+	OR	MSG_CONTENTS LIKE '%'||#{searchValue}||'%'
+	OR	MSG_RECEIVER LIKE '%'||#{searchValue}||'%'
+	</if>
+	AND MSG_WRITER = #{msgReciever}
+</where>
+</select>
+
+</mapper>

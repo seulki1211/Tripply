@@ -16,7 +16,7 @@
 
 <insert id="insertBanner">
 	INSERT INTO BANNER_TBL
-	VALUES (#{bannerNo},#{bannerWriter}
+	VALUES (#{bannerNo},'관리자'
 	, #{bannerFileName},  #{bannerFileRename},  #{bannerFilePath})
 
 </insert>

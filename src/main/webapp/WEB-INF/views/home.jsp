@@ -12,8 +12,12 @@
 <body>
 	<div id="header">
 		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/common/banner.jsp"></jsp:include>
+		
 	</div>
-	<div id="contents">
+
+		
+		
 		<div id="sideBar"></div>
 		<div id="contents-1"></div>
 		<div id="contents-2"></div>
