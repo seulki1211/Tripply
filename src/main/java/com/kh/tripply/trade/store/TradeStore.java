@@ -1,5 +1,6 @@
 package com.kh.tripply.trade.store;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -26,4 +27,7 @@ public interface TradeStore {
 	
 	////////////////////조회수 카운트
 	public int tradeViewCount(SqlSessionTemplate session, int boardNo);
+	
+		/////////////////////거래
+	public int updateBuyer(SqlSessionTemplate session,HashMap<String,String> paramMap);
 }

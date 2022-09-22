@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -351,6 +352,46 @@ public class TradeController {
 		}else {
 			
 		}
+		return mv;
+	}
+
+	/**
+	 * 거래 게시물 댓글 채택
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/trade/reply/choice.kh", method= RequestMethod.POST)
+	public ModelAndView tradeReplyChoice(ModelAndView mv,
+			@RequestParam("buyer") String buyer,
+			@RequestParam("boardNo") String boardNo,
+			@RequestParam("currentPage") Integer currentPage) {
+		
+		HashMap<String,String> paramMap = new HashMap<>();
+		paramMap.put("boardNo", boardNo);
+		paramMap.put("buyer",buyer);
+		int result = tService.modifyBuyer(paramMap);
+		if(result>0) {
+			mv.setViewName("redirect:/trade/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+		}else {
+			
+		}
+		
+		
+		return mv;
+	}
+	
+	/**
+	 * 거래 게시물 댓글 채택 취소
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/trade/reply/choiceCancel.kh",method=RequestMethod.POST)
+	public ModelAndView tradeReplyChoiceCancel(ModelAndView mv,
+			@RequestParam("choicedId") String choicedId) {
+		
+		
+		
+		
 		return mv;
 	}
 }

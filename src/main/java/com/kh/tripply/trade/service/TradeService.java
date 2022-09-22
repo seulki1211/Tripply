@@ -1,6 +1,8 @@
 package com.kh.tripply.trade.service;
 
+import java.util.HashMap;
 import java.util.List;
+
 import com.kh.tripply.common.Paging;
 import com.kh.tripply.common.Search;
 import com.kh.tripply.trade.domain.Trade;
@@ -25,5 +27,7 @@ public interface TradeService {
 	////////////////////조회수 카운트
 	public int tradeViewCount(int boardNo);
 	
+	/////////////////////거래
+	public int modifyBuyer(HashMap<String,String> paramMap);
 	
 }

@@ -1,5 +1,6 @@
 package com.kh.tripply.trade.store.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -80,6 +81,14 @@ public class TradeStoreLogic implements TradeStore{
 	@Override
 	public int updateTradeByNo(SqlSessionTemplate session, Trade trade) {
 		int result = session.update("TradeMapper.updateTrade", trade);
+		return result;
+	}
+
+	@Override
+	public int updateBuyer(SqlSessionTemplate session,HashMap<String,String> paramMap) {
+		
+		
+		int result = session.update("", paramMap);
 		return result;
 	}
 
