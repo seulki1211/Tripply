@@ -6,9 +6,12 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import com.kh.tripply.plan.domain.Plan;
 import com.kh.tripply.plan.domain.PlanList;
 import com.kh.tripply.plan.domain.Planner;
+import com.kh.tripply.plan.domain.PlannerReply;
 import com.kh.tripply.plan.store.PlanStore;
 
 @Repository
@@ -58,6 +61,56 @@ public class PlanStoreLogic implements PlanStore{
 	@Override
 	public int insertPlan(SqlSession session, PlanList l) {
 		int result=session.insert("PlannerMapper.insertPlan",l);
+		return result;
+	}
+
+	@Override
+	public List<Plan> selectAllPlan(SqlSession session, Integer boardNo) {
+		List<Plan>planList=session.selectList("PlannerMapper.selectPlan",boardNo);
+		
+		return planList;
+	}
+
+	@Override
+	public int deletePlanner(SqlSession session, int boardNo) {
+		int result = session.delete("PlannerMapper.deletePlanner",boardNo);
+		return result;
+	}
+
+	@Override
+	public int deletePlan(SqlSession session, int boardNo) {
+		int result2 = session.delete("PlannerMapper.deletePlan",boardNo);
+		return result2;
+	}
+
+	@Override
+	public int updatePlannerCount(SqlSession session, Integer boardNo) {
+		
+		int result = session.update("PlannerMapper.updateCount",boardNo);
+		return result;
+	}
+
+	@Override
+	public int insertReply(SqlSession session, PlannerReply plannerReply) {
+		int result = session.insert("PlannerMapper.insertReply",plannerReply);
+		return result;
+	}
+
+	@Override
+	public List<PlannerReply> selectReply(SqlSession session,Integer boardNo) {
+		List<PlannerReply>rList = session.selectList("PlannerMapper.selectReply",boardNo);
+		return rList;
+	}
+
+	@Override
+	public int deleteReply(SqlSession session, Integer replyNo) {
+		int result= session.delete("PlannerMapper.deleteReply",replyNo);
+		return result;
+	}
+
+	@Override
+	public int updateReply(SqlSession session, PlannerReply plannerReply) {
+		int result = session.update("PlannerMapper.updateReply",plannerReply);
 		return result;
 	}
 }

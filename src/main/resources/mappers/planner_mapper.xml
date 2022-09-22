@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
    <mapper namespace="PlannerMapper">
+   
    <resultMap type="Planner" id="plannerResultMap">
    <id property="boardNo" column="PLANNER_NO"/>
    <result property="planWriter" column="PLANNER_WRITER"/>
@@ -18,8 +19,12 @@
    
    <insert id="insertPlanner" useGeneratedKeys="true" keyColumn="PLANNER_NO"  keyProperty="boardNo" >
    INSERT INTO PLANNER_TBL
-   	VALUES(SEQ_BOARDNO.NEXTVAL,'khuser1',#{planTitle},#{firstDay},#{lastDay},DEFAULT,DEFAULT,DEFAULT)
+   	VALUES(SEQ_BOARDNO.NEXTVAL,#{planWriter},#{planTitle},#{firstDay},#{lastDay},DEFAULT,DEFAULT,DEFAULT)
    </insert> 
+   
+     <update id="updateCount">
+  		UPDATE PLANNER_TBL SET PLANNER_COUNT=PLANNER_COUNT +1 WHERE PLANNER_NO=#{boardNo}
+  	</update>
   
     <select id="selectInfo" resultMap="plannerResultMap">
    SELECT * FROM PLANNER_TBL
@@ -63,19 +68,77 @@
 				AND P_STATUS='Y'			
 		</where>
   	</select>
-  		 
-  	 <insert id="insertPlan" parameterType="list">
-  		INSERT INTO PLAN_TBL
-		SELECT SEQ_PLANNO.NEXTVAL AS PLAN_NO, A.*
-		FROM ( 
-  		<foreach collection="planList" item="item" separator="UNION ALL" >
-  		SELECT	
-  		#{item.boardNo} AS PLANNER_NO ,#{item.day} AS PLAN_DAY,#{item.Y} AS Y,#{item.X} AS X,#{item.address} AS ADDRESS ,#{item.Memo} AS MEMO FROM DUAL
-  		</foreach>)A
-   </insert> 
+  	
+  	<resultMap type="Plan" id="planResultMap">
+  	 <id property="planNo" column="PLAN_NO"/>
+   <result property="boardNo" column="PLANNER_NO"/>
+   <result property="day" column="PLAN_DAY"/>
+   <result property="y" column="Y"/>
+   <result property="x" column="X"/>
+   <result property="address" column="ADDRESS"/>
+   <result property="memo" column="MEMO"/>
+  </resultMap>
+  
+  
+  <insert id="insertPlan" parameterType="list">
+ 	INSERT INTO PLAN_TBL
+	SELECT SEQ_PLANNO.NEXTVAL AS PLAN_NO, A.*
+	FROM ( 
+ 	<foreach collection="planList" item="item" separator="UNION ALL" >
+ 	SELECT	
+ 	#{item.boardNo} AS PLANNER_NO ,#{item.day} AS PLAN_DAY,#{item.y} AS Y,#{item.x} AS X,#{item.address} AS ADDRESS ,#{item.memo} AS MEMO FROM DUAL
+ 	</foreach>)A
+  </insert> 
+   
+   
+   
+   <delete id="deletePlanner">
+   DELETE FROM PLANNER_TBL
+   WHERE PLANNER_NO=#{boardNo}
 
+
+   </delete>
+   <delete id="deletePlan">
+    DELETE FROM PLAN_TBL
+   WHERE PLANNER_NO=#{boardNo}
+   
+   </delete>
    
    
+   <select id="selectPlan" resultMap="planResultMap">
+   	SELECT *FROM PLAN_TBL
+   	WHERE PLANNER_NO=#{boardNo}
+   
+   
+   </select>
+   <resultMap type="PlannerReply" id="plannerReplyResultMap">
+   <id property="pReplyNo"  column="P_REPLY_NO"/>
+   <result property="boardNo" column="BOARD_NO"/>
+   <result property="pReplyWriter" column="P_REPLY_WRITER"/>
+   <result property="pReplyContents" column="P_REPLY_CONTENTS"/>
+   <result property="pRCreateDate" column="P_R_CREATE_DATE"/>
+   <result property="pRUpdateDate" column="P_R_UPDATE_DATE"/>
+   <result property="pRStatus" column="P_R_STATUS"/>
+   </resultMap>
+   
+   <insert id="insertReply">
+   INSERT INTO PLANNER_REPLY_TBL
+   VALUES(SEQ_REPLYNO.NEXTVAL,#{boardNo},#{pReplyWriter},#{pReplyContents},DEFAULT,DEFAULT,DEFAULT)
+   </insert>
+
+	<delete id="deleteReply">
+	DELETE FROM PLANNER_REPLY_TBL
+	WHERE P_REPLY_NO=#{replyNo}
+	</delete>
+	
+	<select id="selectReply" resultMap="plannerReplyResultMap">
+	SELECT * FROM PLANNER_REPLY_TBL
+	WHERE BOARD_NO=#{boardNo}
+	</select>   
+	
+	<update id="updateReply">
+	UPDATE PLANNER_REPLY_TBL SET P_REPLY_CONTENTS=#{pReplyContents} WHERE P_REPLY_NO=#{pReplyNo}
+	</update>
    
    
    </mapper>   
