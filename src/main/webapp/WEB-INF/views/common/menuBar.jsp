@@ -41,15 +41,15 @@
 					<td colspan='2'>${sessionScope.loginUser.memberNickname }님 환영합니다.</td>
 				</tr>
 				<tr>
-					<td><a href="#">마이 쪽지</a></td>
+					<td><a href="/message/recvList.kh?msgReciever=${sessionScope.loginUser.memberNickname} ">마이 쪽지</a></td>
 					<td><a href="/member/myPage.kh">마이페이지</a></td>
 				</tr>
 				<tr>
 					<td><a href="/member/logout.kh">로그아웃</a></td>
 						<c:if test="${loginUser.memberId eq 'admin' }">
-						<td colspan="3" align="right">
-		                <a href="/admin/banner/list.kh">관리자 페이지로</a>
-		                </td>
+							<td colspan="3" align="right">
+			                <a href="/admin/banner/list.kh">관리자 페이지로</a>
+			                </td>
 		                </c:if>
 		   
 				</tr>
@@ -64,5 +64,7 @@
 		<div class="menu" onclick="location.href='/party/list.kh';">우리 함께</div>
 		<div class="menu" onclick="location.href='/free/writeView.kh';">자유롭게</div>
 	</div>
+	
+	
 </body>
 </html>

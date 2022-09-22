@@ -105,7 +105,6 @@ public class PartyController {
 			mv.addObject("pList", pList);
 			
 			Date today = new Date(System.currentTimeMillis());
-			System.out.println(today);
 			mv.addObject("today",today);
 			mv.setViewName("party/partyListView");
 

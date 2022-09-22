@@ -4,61 +4,65 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>여행 올인원 플랫폼,Tripply</title>
-<link href="/resources/css/sidebar-style.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+<title>관리자 페이지입니다</title>
+
+<style type="text/css">
+
+ul.admin-menu {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    width: 150px;
+    background: #101c4f;
+    height: 100%;
+    overflow: auto;
+    position: fixed;
+  }
+  
+  li.admin-menu  {
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  li.admin-menu:hover {
+    background: rgb(190, 189, 229);
+        font-weight: bold;
+    
+    color: #000;
+  }
+  
+  li.service {
+   margin-top : 10px;
+   background: rgb(190, 189, 229);
+   padding: 10px;
+   display: block;
+   color: #000;
+   font-weight: bold;
+    
+  }
+  
+  .right-side {
+    margin-left: 150px;
+  }
+
+</style>
 </head>
+
 <body>
-	<div id="header-logo">
-		<img alt="트리플리 로고" src="#">
-	</div>
-	<h1 align="left">Tripply</h1>
-	<div class="login-area">
-		<c:if test="${empty loginUser }">
-			<form action="/member/login.kh" method="post">
-				<table align="right">
-					<tr>
-						<td>아이디:</td>
-						<td><input type="text" name="memberId"></td>
-						<td rowspan="2"><input type="submit" value="로그인"></td>
-					</tr>
-					<tr>
-						<td>비밀번호:</td>
-						<td><input type="password" name="memberPwd"></td>
-						<!-- 					<td></td> -->
-					</tr>
-					<tr>
-						<td colspan="3" align="right"><a href="/member/joinView.kh">회원가입</a>
-						</td>
-					</tr>
-					
-				</table>
-			</form>
-		</c:if>
-		<c:if test="${not empty loginUser }">
-			<table align="right">
-				<tr>
-					<td colspan='2'>${sessionScope.loginUser.memberNickname }님 환영합니다.</td>
-				</tr>
-						
-			</table>
-		</c:if>
-	</div>
-	<ul class="nav flex-column">
-  <li class="nav-item">
-    <a class="nav-link" href="#">회원 관리</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">배너 관리</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">공지사항 관리</a>
-  </li>
-</ul>
-<!-- 	<div class="nav-area"> -->
-<!-- 		<div class="menu" onclick="location.href='#';">회원 관리</div> -->
-<!-- 		<div class="menu" onclick="location.href='#';">배너 관리</div> -->
-<!-- 		<div class="menu" onclick="location.href='#';">공지사항 관리</div> -->
-<!-- 	</div> -->
+	<div id="left-sidebar">
+            <ul class="admin-menu">
+            	<li class="service" > 관리자 페이지 </li>
+            	
+                <li class="admin-menu"  onclick="location.href='/home.kh';">서비스 페이지</li>
+                <li class="admin-menu" onclick="location.href='#';">회원 관리</li>
+                <li class="admin-menu" onclick="location.href='/admin/banner/list.kh';">배너 관리</li>
+                <li class="admin-menu" onclick="location.href='/admin/notice/list.kh';">공지사항 관리</li>
+            </ul>
+        </div>
+        
+       
 </body>
 </html>

@@ -139,7 +139,6 @@ function removeBoard(partyNo,page) {
 		$form.append("<input type='hidden' value='"+pReplyContents+"' name='pReplyContents'>");
 		$form.append("<input type='hidden' value='"+pReplyNo+"' name='pReplyNo'>");
 		$form.append("<input type='hidden' value='"+refBoardNo+"' name='refBoardNo'>");
-
 		$form.append("<input type='hidden' value='"+page+"' name='page'>");
 
 		$form.appendTo("body");
