@@ -24,13 +24,13 @@
 			</form>
 		</div>
 <!-- 게시물목록출력 -->
-	${loginUser.memberId }
+	로그인 유저 체크 :${loginUser.memberId }
 		<div id="list-area">
 			<table align="center" width="100%">
 				<tr id="detail-raw-wrap">
 					<c:forEach items="${rList }" var="review" varStatus="N">
 						<td id="detail-one-wrap" aligh="center" width="30%">
-							<div class="detail title thumnale-wrap align="center">
+							<div class="detail title thumbnale-wrap" align="center">
 								<img onclick="loginCheck('${loginUser.memberId}','/review/detailView.kh?boardNo=${review.boardNo }&currentPage=${paging.currentPage }');"  onerror="this.src='/resources/image/flower1.png';" src="${review.thumbnailPath }" height="90%" width="90%">
 							</div>
 							<div align="center">
@@ -76,6 +76,7 @@
 <!-- 푸터 -->
 	<div id="footer"></div>
 </body>
+<!-- 스크립트영역 -->
 <script>
 		function loginCheck(loginId,url){
 			if(loginId != ""){

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
    <mapper namespace="PlannerMapper">
-   
+   <!-- 
    <resultMap type="Planner" id="plannerResultMap">
    <id property="boardNo" column="PLANNER_NO"/>
    <result property="planWriter" column="PLANNER_WRITER"/>
@@ -31,7 +31,7 @@
    WHERE PLANNER_NO=#{boardNo}
    </select>
    
-   <select id="selectCount" resultType="_int"> <!-- 타입은 숫자 하나 가져올때만 씀 -->
+   <select id="selectCount" resultType="_int"> 타입은 숫자 하나 가져올때만 씀
   	SELECT COUNT(*) FROM PLANNER_TBL 
   	<where>
 			<if test="searchCondition.toString()=='title'">
@@ -140,5 +140,5 @@
 	UPDATE PLANNER_REPLY_TBL SET P_REPLY_CONTENTS=#{pReplyContents} WHERE P_REPLY_NO=#{pReplyNo}
 	</update>
    
-   
-   </mapper>   
+   -->
+   </mapper>  

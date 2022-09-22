@@ -3,6 +3,103 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="TradeMapper">
+ <mapper namespace="TradeMapper">
+  <resultMap type="Trade" id="TradeResultMap">
+	  	<id 	column="BOARD_NO" 			property="boardNo"/>
+	  	<result column="TRADE_TITLE"		property="tradeTitle"/>
+	  	<result column="TRADE_CONTENTS" 	property="tradeContents"/>
+	  	<result column="TRADE_WRITER" 		property="tradeWriter"/>
+	  	<result column="T_LOCATION_CODE" 	property="tLocationCode"/>
+	  	<result column="LOCATION_NAME" 		property="tLocationName"/>
+	  	<result column="TRADE_FILENAME" 	property="tradeFileName"/>
+	  	<result column="TRADE_RENAME"	    property="tradeFileReName"/>
+	  	<result column="TRADE_FILEPATH"	    property="tradeFilePath"/>
+	  	<result column="TRADE_COUNT" 		property="tradeCount"/>
+	  	<result column="T_CREATE_DATE"	    property="tCreateDate"/>
+	  	<result column="T_UPDATE_DATE" 		property="tUpdateDate"/>
+	  	<result column="T_STATUS" 			property="tStatus"/>
+	  	<result column="BUYER_ID" 			property="buyerId"/>
+	  	<result column="SOLD_OUT" 			property="soldOut"/>
+	  	<result column="THUMBNAIL_PATH" 	property="thumbnailPath"/>
+  </resultMap>
   
+  <select id="selectOneTrade" resultMap="TradeResultMap">
+	SELECT * FROM TRADE_TBL
+	WHERE BOARD_NO=#{boardNo}  
+  </select>
+  
+  <select id="selectAllTrade" resultMap="TradeResultMap">
+  	SELECT BOARD_NO,TRADE_TITLE,TRADE_WRITER,T_LOCATION_CODE,TRADE_FILENAME,TRADE_RENAME,TRADE_FILEPATH,TRADE_COUNT,T_CREATE_DATE,T_UPDATE_DATE,T_STATUS,THUMBNAIL_PATH,LOCATION_NAME
+  	FROM TRADE_TBL T LEFT JOIN LOCATION_TBL L
+  	ON T.T_LOCATION_CODE = L.LOCATION_CODE
+  	ORDER BY T_CREATE_DATE DESC
+  </select>
+  
+  <select id="selectTotalCount" resultType="_int">
+  	SELECT COUNT(*) FROM TRADE_TBL 
+  </select>
+  
+  <select id="selectSearchTrade" resultMap="TradeResultMap">
+  	SELECT BOARD_NO,TRADE_TITLE,TRADE_WRITER,T_LOCATION_CODE,LOCATION_NAME,TRADE_COUNT,T_CREATE_DATE,T_UPDATE_DATE,T_STATUS,SOLD_OUT,THUMBNAIL_PATH
+  	FROM TRADE_TBL T LEFT JOIN LOCATION_TBL L
+  	ON T.T_LOCATION_CODE = L.LOCATION_CODE
+  	<where>
+  		<if test='searchCondition.toString()=="all"'>
+				(TRADE_TITLE LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})OR
+				(TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})OR
+				(TRADE_WRITER LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})
+		</if> 
+		<if test='searchCondition.toString()=="title"'>
+				TRADE_TITLE LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+		</if>
+		<if test='searchCondition.toString()=="writer"'>
+				TRADE_WRITER LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+		</if>
+		<if test='searchCondition.toString()=="contents"'>
+				TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+		</if>
+  	</where>
+  	ORDER BY T_CREATE_DATE DESC
+  </select>
+  
+  <select id="selectSearchCount"  resultType="_int">
+  	SELECT COUNT(*)
+  	FROM TRADE_TBL
+  		<where>
+			<if test='searchCondition.toString()=="all"'>
+				(TRADE_TITLE LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})OR
+				(TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion} )OR
+				(TRADE_WRITER LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})
+			</if> 
+			<if test='searchCondition.toString()=="title"'>
+				TRADE_TITLE LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+			</if>
+			<if test='searchCondition.toString()=="writer"'>
+				TRADE_WRITER LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+			</if>
+			<if test='searchCondition.toString()=="contents"'>
+				TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+			</if>
+  		</where>
+  </select>
+  
+  <insert id="insertTrade">
+  	INSERT INTO TRADE_TBL
+  	VALUES(SEQ_BOARDNO.NEXTVAL,#{tradeTitle},#{tradeContents},#{tradeWriter},#{tLocationCode},#{tradeFileName},#{tradeFileReName},#{tradeFilePath},DEFAULT,DEFAULT,DEFAULT,DEFAULT,NULL,DEFAULT,#{thumbnailPath})
+  </insert>
+  
+  <update id="updateTrade">
+  	UPDATE TRADE_TBL SET T_LOCATION_CODE=#{tLocationCode},TRADE_TITLE=#{tradeTitle},TRADE_CONTENTS=#{tradeContents},THUMBNAIL_PATH=#{thumbnailPath}
+  	WHERE BOARD_NO=#{boardNo}
+  </update>
+  
+  <update id="updateTradeViewCount">
+  	UPDATE TRADE_TBL SET TRADE_COUNT=TRADE_COUNT+1 
+  	WHERE BOARD_NO=#{boardNo}
+  </update>
+  
+  <delete id="deleteTrade">
+  	DELETE FROM TRADE_TBL WHERE BOARD_NO=#{boardNo}
+  </delete>
+
   </mapper>

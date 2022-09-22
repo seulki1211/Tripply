@@ -50,7 +50,7 @@
 				$.ajax({
 					data:data,
 					type:"POST",
-					url:"/uploadSummernoteImageFile",
+					url:"/review/uploadSummernoteImageFile",
 					dataType:"JSON",
 					contentType:false,
 					processData:false,

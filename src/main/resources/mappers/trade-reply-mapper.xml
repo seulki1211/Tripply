@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="TradeReplyMapper">
+  	<resultMap type="TradeReply" id="TradeReplyResultMap">
+  		<id 	column="T_REPLY_NO" property="tReplyNo"/>
+  		<result column="BOARD_NO" property="boardNo"/>
+  		<result column="T_REF_REPLY_NO" property="tRefReplyNo"/>
+  		<result column="T_REPLY_WRITER" property="tReplyWriter"/>
+  		<result column="T_REPLY_CONTENTS" property="tReplyContents"/>
+  		<result column="T_R_CREATE_DATE" property="trCreateDate"/>
+  		<result column="T_R_UPDATE_DATE" property="trUpdateDate"/>
+  		<result column="T_R_STATUS" property="trStatus"/>
+  		<result column="T_R_CHOICED" property="trChoiced"/>
+  		<result column="RE_REPLY_YN" property="reReplyYn"/>
+  	</resultMap>
+  	
+  	<insert id="insertTradeReply">
+  		<if test='tRefReplyNo == -1'>
+  			INSERT INTO TRADE_REPLY_TBL
+  			VALUES(SEQ_REPLYNO.NEXTVAL,#{boardNo},SEQ_REPLYNO.CURRVAL,#{tReplyWriter},#{tReplyContents},DEFAULT,DEFAULT,DEFAULT,DEFAULT,#{reReplyYn})
+  		</if>
+  		<if test='tRefReplyNo != -1'>
+  			INSERT INTO TRADE_REPLY_TBL
+  			VALUES(SEQ_REPLYNO.NEXTVAL,#{boardNo},#{tRefReplyNo},#{tReplyWriter},#{tReplyContents},DEFAULT,DEFAULT,DEFAULT,DEFAULT,#{reReplyYn})
+  		</if>
+  	</insert>
+  	
+  	<select id="selectTradeReply" resultMap="TradeReplyResultMap">
+  		SELECT ROW_NUMBER() OVER(PARTITION BY T_REF_REPLY_NO ORDER BY T_R_CREATE_DATE) AS TEMP, TRADE_REPLY_TBL.*
+  		FROM TRADE_REPLY_TBL
+  		WHERE BOARD_NO=#{boardNo}
+  	</select>
+  </mapper>

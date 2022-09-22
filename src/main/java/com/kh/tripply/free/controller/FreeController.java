@@ -43,31 +43,31 @@ public class FreeController {
 	public ModelAndView registBoard(
 			ModelAndView mv
 			, @ModelAttribute Free free
-			, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
+//			, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
 			,HttpServletRequest request) {
 		try {
-			String boardFilename = uploadFile.getOriginalFilename();
-			if(!boardFilename.equals("")) {
-				///////////////////////////////////////////////////////////////////////////
-				String root = request.getSession().getServletContext().getRealPath("resources");
-				String savePath = root + "\\buploadFiles";
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-				String boardFileRename 
-				= sdf.format(new Date(System.currentTimeMillis()))+"."
-						+boardFilename.substring(boardFilename.lastIndexOf(".")+1);
-				// 1.png, img.png
-				File file = new File(savePath);
-				if(!file.exists()) {
-					file.mkdir();
-				}
-				/////////////////////////////////////////////////////////////////////////////
-				uploadFile.transferTo(new File(savePath+"\\"+boardFileRename)); 
-				// 파일을 buploadFiles 경로에 저장하는 메소드
-				String boardFilepath = savePath+"\\"+boardFileRename;
-				free.setFreeFilename(boardFilename);
-				free.setFreeFileRename(boardFileRename);
-				free.setFreeFilepath(boardFilepath);
-			}
+//			String boardFilename = uploadFile.getOriginalFilename();
+//			if(!boardFilename.equals("")) {
+//				///////////////////////////////////////////////////////////////////////////
+//				String root = request.getSession().getServletContext().getRealPath("resources");
+//				String savePath = root + "\\buploadFiles";
+//				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+//				String boardFileRename 
+//				= sdf.format(new Date(System.currentTimeMillis()))+"."
+//						+boardFilename.substring(boardFilename.lastIndexOf(".")+1);
+//				// 1.png, img.png
+//				File file = new File(savePath);
+//				if(!file.exists()) {
+//					file.mkdir();
+//				}
+//				/////////////////////////////////////////////////////////////////////////////
+//				uploadFile.transferTo(new File(savePath+"\\"+boardFileRename)); 
+//				// 파일을 buploadFiles 경로에 저장하는 메소드
+//				String boardFilepath = savePath+"\\"+boardFileRename;
+//				free.setFreeFilename(boardFilename);
+//				free.setFreeFileRename(boardFileRename);
+//				free.setFreeFilepath(boardFilepath);
+//			}
 			int result = fService.registerBoard(free);
 			mv.setViewName("redirect:/free/list.kh");
 		} catch (Exception e) {
