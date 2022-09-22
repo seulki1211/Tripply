@@ -42,7 +42,7 @@ public class TradeController {
 	public ModelAndView tradeListView(ModelAndView mv,
 			@RequestParam(value="currentPage",required=false) Integer page) {
 
-		//1.page null체크한다.
+		//1.page를 null체크한다.
 		int currentPage = (page!=null)?page : 1;
 		
 		//2.페이징에 필요한 Paging객체를 생성한다. Paging객체는 화면과 RowBounds에 필요한 값을 get할 수 있다.
@@ -58,7 +58,6 @@ public class TradeController {
 			}
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 		}
 		//4.tradeList.jsp의 페이지네비 링크에서 사용할 url을 동적으로 변경해주기 위한 부분이다.
 		// 검색 결과 조회와 구분을 위하여 'list'문자열을 화면에 전달한다.
@@ -130,9 +129,15 @@ public class TradeController {
 	@RequestMapping(value="/trade/write.kh",method=RequestMethod.POST)
 	public ModelAndView tradeWrite(ModelAndView mv,
 			@ModelAttribute Trade trade) {
-		int result = tService.registerTrade(trade);
-		if(result>0) {
-			mv.setViewName("redirect:/trade/list.kh?currentPage=1");
+		try {
+			//1. 작성페이지에서 전달받은 trade로 INSERT한다.	
+			int result = tService.registerTrade(trade);
+			if(result>0) {
+				mv.setViewName("redirect:/trade/list.kh?currentPage=1");
+			}else {
+				
+			}
+		} catch (Exception e) {
 		}
 		return mv;
 	}
@@ -153,7 +158,7 @@ public class TradeController {
 		//1.로그인 여부를 확인하고 로그인하지 않은 경우 list로 리다이렉트한다.
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		if(loginUser == null) {
-			mv.setViewName("redirect/trade/list.kh");
+			mv.setViewName("redirect:/trade/list.kh");
 			return mv;
 		}
 		try {
@@ -204,7 +209,7 @@ public class TradeController {
 		
 		Trade trade = tService.printOneTradeByNo(boardNo);
 		if(trade != null) {
-			mv.addObject("trade",trade).setViewName("/trade/tradeModify");
+			mv.addObject("trade",trade).setViewName("trade/tradeModify");
 		}else {
 		}
 		return mv;
@@ -219,11 +224,17 @@ public class TradeController {
 	public ModelAndView tradeModify(ModelAndView mv,
 			@ModelAttribute Trade trade,
 			HttpSession session) {
+		//화면에서 로그인유저 == 작성자 인 경우 수정 버튼이 노출된다.
+		
+		//1.수정페이지에서 넘겨받은 trade로 UPDATE한다.
 		int result = tService.modifyTradeByNo(trade);
 		if(result>0) {
-			//수정 후 원래의 페이지로 돌아가기 위해 세션에서 currentPage를 꺼낸다.
+			
+			//2. 수정 후 원래의 페이지로 돌아가기 위해 세션에서 currentPage를 꺼낸다.
+			//사용한 세션을 삭제해준다.
 			int currentPage = (int)session.getAttribute("currentPage");
-			mv.addObject("currentPage",currentPage).setViewName("/trade/tradeList");
+			mv.setViewName("redirect:/trade/list.kh?currentPage="+currentPage);
+			session.removeAttribute("currentPage");
 		}else {
 			
 		}
@@ -238,15 +249,31 @@ public class TradeController {
 	@RequestMapping(value="/trade/remove.kh",method=RequestMethod.GET)
 	public ModelAndView tradeRemove(ModelAndView mv,
 			@RequestParam("boardNo")Integer boardNo,
-			@ModelAttribute Trade trade,
+			Trade trade,  //데이터 전달용으로 trade객체를 주입한다.
 			HttpSession session) {
-		int result = tService.removeTradeByNo(trade);
-		if(result>0) {
-			//삭제 후 원래의 페이지로 돌아가기 위해 currentPage를 세션에서 꺼낸다.
-			int currentPage = (int)session.getAttribute("currentPage");
-			mv.setViewName("redirect:/trade/list.kh?currentPage?="+currentPage);
-		}
+			//화면에서 로그인유저 == 작성자 인 경우 삭제 버튼이 노출된다.
 		
+		try {
+			
+			//1. 로그인 유저의 ID를 가져와 전달용 review객체에 set한다.
+			// boardNo도 전달용 review객체에 set한다.
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			trade.setTradeWriter(loginUser.getMemberId());
+			trade.setBoardNo(boardNo);
+			
+			//2.DELETE한다.
+			int result = tService.removeTradeByNo(trade);
+			if(result>0) {
+				
+				//3.삭제가 성공하면 세션에서 원래 페이지 값을 꺼내고 리다이렉트 시 전달값으로 사용한다.
+				//사용한 세션은 제거한다.
+				int currentPage = (int)session.getAttribute("currentPage");
+				mv.setViewName("redirect:/trade/list.kh?currentPage="+currentPage);
+				session.removeAttribute("currentPage");
+			}
+		
+		} catch (Exception e) {
+		}
 		return mv;
 	}
 	
@@ -287,7 +314,7 @@ public class TradeController {
 			
 			
 			//5.ajax의 success로 리턴해줄 json오브젝트에 프로퍼티를 저장해준다.
-			// 1)썸머노트의 insertImage 설정값에 넣어줄 파일의 경로.
+			// 1)썸대노트의 insertImage 설정값에 넣어줄 파일의 경로.
 			// 2)원래 파일이름
 			// 3)ajax 성공여부
 			jsonObject.addProperty("url","/resources/image/trade/summerTemp/"+ boardFileRename);
@@ -310,10 +337,21 @@ public class TradeController {
 	 * @return
 	 */
 	@RequestMapping(value="/trade/reply/write.kh",method=RequestMethod.POST)
-	public ModelAndView tradeReplyWrite(ModelAndView mv) {
+	public ModelAndView tradeReplyWrite(ModelAndView mv,
+			@RequestParam("currentPage") Integer currentPage,
+			@ModelAttribute TradeReply tReply) {
+		
+		//1.댓글작성form에서 가져온 rReply를 INSERT해준다.
+		int result = tService.registerTradeReply(tReply);
+		if(result>0) {
+			
+			//2.등록 성공 시 파라미터 값을 전달하면서 상세페이지로 리다이렉트한다.
+			int boardNo = tReply.getBoardNo();
+			mv.setViewName("redirect:/trade/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+		}else {
+			
+		}
 		return mv;
 	}
-
-
 }
 

@@ -41,10 +41,15 @@ public class ReviewController {
 	@RequestMapping(value = "/review/list.kh", method = RequestMethod.GET)
 	public ModelAndView reviewListView(ModelAndView mv,
 			@RequestParam(value = "currentPage", required = false) Integer page) {
+		
+		//1.page를 null체크한다.
 		int currentPage = (page != null) ? page : 1;
-//		게시물의 총 개수, 현재페이지, 페이지 당 게시물 개수, 페이징네비 사이즈
+		
+		//2.페이징에 필요한 Paging객체를 생성한다. Paging객체는 화면과 RowBounds에 필요한 값을 get할 수 있다.
 		Paging paging = new Paging(rService.getTotalCount(), currentPage, 9, 5);
+		
 		try {
+			//3.후기게시판 목록 List를 SELECT 한다.
 			List<Review> rList = rService.printAllReview(paging);
 			if (!rList.isEmpty()) {
 				mv.addObject("rList", rList).addObject("paging", paging)
@@ -54,6 +59,8 @@ public class ReviewController {
 			}
 		} catch (Exception e) {
 		}
+		//4.tradeList.jsp의 페이지네비 링크에서 사용할 url을 동적으로 변경해주기 위한 부분이다.
+		// 검색 결과 조회와 구분을 위하여 'list'문자열을 화면에 전달한다.
 		mv.addObject("urlVal","list");
 		return mv;
 	}
@@ -116,8 +123,10 @@ public class ReviewController {
 	 * @return mv.seViewName("/review/reviewList")
 	 */
 	@RequestMapping(value = "/review/write.kh", method = RequestMethod.POST)
-	public ModelAndView reviewWrite(ModelAndView mv, @ModelAttribute Review review) {
-
+	public ModelAndView reviewWrite(ModelAndView mv, 
+			@ModelAttribute Review review) {
+		
+		//1. 작성페이지에서 전달받은 review로 INSERT한다.
 		int result = rService.registerReview(review);
 		try {
 			if (result > 0) {
@@ -132,7 +141,7 @@ public class ReviewController {
 	}
 
 	/**
-	 * 후기 게시물 상세 페이지 이동
+	 * 후기 게시물 상세 조회
 	 * 댓글 기능 추가
 	 * @param mv,boardNo
 	 * @return
@@ -187,39 +196,9 @@ public class ReviewController {
 		return mv;
 	}
 
-	/**
-	 * 후기 게시물 삭제
-	 * 
-	 * @param mv,boardNo,review,session
-	 * @return mv
-	 */
-	@RequestMapping(value = "/review/remove.kh", method = RequestMethod.GET)
-	public ModelAndView reviewDelete(ModelAndView mv, 
-			@RequestParam("boardNo") Integer boardNo, 
-			Review review,
-			HttpSession session) {
-//로그인 유저와(세션) 작성자 체크 필요 or 화면에서 체크.
-		try {
-//		String loginUser = (String)session.getAttribute("loginUser");
-			Member loginUser = (Member) session.getAttribute("loginUser");
-			review.setReviewWriter(loginUser.getMemberId());
-			review.setBoardNo(boardNo);
-			int result = rService.removeReviewByNo(review);
-			if (result > 0) {
-//삭제가 성공하면 session에 저장했던 currentPage를 불러와 쿼리스트링으로 사용하고 session은 비운다.
-				int currentPage = (int) session.getAttribute("currentPage");
-				mv.setViewName("redirect:/review/list.kh?currentPage="+currentPage);
-				session.removeAttribute("currentPage");
-			} else {
-
-			}
-		} catch (Exception e) {
-		}
-		return mv;
-	}
 
 	/**
-	 * 후기게시판 수정 화면 이동
+	 * 후기게시판 수정페이지 이동
 	 * 
 	 * @param mv
 	 * @param boardNo
@@ -238,7 +217,7 @@ public class ReviewController {
 	}
 	
 	/**
-	 * 후기게시판 수정 로직
+	 * 후기게시판 수정
 	 * @param mv
 	 * @param review
 	 * @return
@@ -247,8 +226,14 @@ public class ReviewController {
 	public ModelAndView reviewModify(ModelAndView mv,
 			@ModelAttribute Review review,
 			HttpSession session) {
+	    //화면에서 로그인유저 == 작성자 인 경우 수정 버튼이 노출된다.
+		
+		//1.수정페이지에서 넘겨받은 review로 UPDATE한다.
 		int result = rService.modifyReviewByNo(review);
 		if(result>0) {
+			
+			//2. 수정 후 원래의 페이지로 돌아가기 위해 세션에서 currentPage를 꺼낸다.
+			//사용한 세션을 삭제해준다.
 			int currentPage = (int)session.getAttribute("currentPage");
 			mv.setViewName("redirect:/review/list.kh?currentPage="+currentPage);
 			session.removeAttribute("currentPage");
@@ -257,6 +242,46 @@ public class ReviewController {
 		}
 		return mv;
 	}
+	
+	/**
+	 * 후기 게시물 삭제
+	 * 
+	 * @param mv,boardNo,review,session
+	 * @return mv
+	 */
+	@RequestMapping(value = "/review/remove.kh", method = RequestMethod.GET)
+	public ModelAndView reviewDelete(ModelAndView mv, 
+			@RequestParam("boardNo") Integer boardNo, 
+			Review review,  //데이터 전달용으로 review 객체를 주입한다.
+			HttpSession session) {
+		//화면에서 로그인유저 == 작성자 인 경우 삭제 버튼이 노출된다.
+		
+		try {
+			
+			//1. 로그인 유저의 ID를 가져와 전달용 review객체에 set한다.
+			// boardNo도 전달용 review객체에 set한다.
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			review.setReviewWriter(loginUser.getMemberId());
+			review.setBoardNo(boardNo);
+			
+			//2.DELETE한다.
+			int result = rService.removeReviewByNo(review);
+			if (result > 0) {
+				
+				//3.삭제가 성공하면 세션에서 원래 페이지 값을 꺼내고 리다이렉트 시 전달값으로 사용한다.
+				//사용한 세션은 제거한다.
+				int currentPage = (int) session.getAttribute("currentPage");
+				mv.setViewName("redirect:/review/list.kh?currentPage="+currentPage);
+				session.removeAttribute("currentPage");
+			} else {
+
+			}
+		} catch (Exception e) {
+		}
+		return mv;
+	}
+
+	
 
 	/**
 	 * 썸대노트 ajax 매핑 메소드+1 에디터 업로드 이미지 저장 및 파일 경로 json반환
@@ -299,6 +324,7 @@ public class ReviewController {
 			jsonObject.addProperty("url", "/resources/image/review/summerImageFiles/" + boardFileRename);
 			jsonObject.addProperty("originName", originalFileName);
 			jsonObject.addProperty("responseCode", "success");
+			
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -321,9 +347,13 @@ public class ReviewController {
 	public ModelAndView reviewReplyWrite(ModelAndView mv,
 			@RequestParam("currentPage") Integer currentPage,
 			@ModelAttribute ReviewReply rReply) {
-		int boardNo = rReply.getBoardNo();
+
+		//1.댓글작성form에서 가져온 rReply를 INSERT해준다.
 		int result = rService.registerReviewReply(rReply);
 		if(result>0 ) {
+			
+			//2.등록 성공 시 파라미터 값을 전달하면서 상세페이지로 리다이렉트한다.
+			int boardNo = rReply.getBoardNo();
 			mv.setViewName("redirect:/review/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
 		}else {
 		}

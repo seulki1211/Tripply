@@ -43,26 +43,26 @@ public class TradeStoreLogic implements TradeStore{
 
 	@Override
 	public List<Trade> selectSearchTrade(SqlSessionTemplate session, Search search, Paging paging) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Trade> tList = session.selectList("TradeMapper.selectSearchTrade", search, new RowBounds(paging.getOffset(), paging.getPageLimit()));
+		return tList;
 	}
 
 	@Override
 	public int getSearchCount(SqlSessionTemplate session, Search search) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.selectOne("TradeMapper.selectSearchCount", search);
+		return result;
 	}
 
 	@Override
-	public int removeTradeByNo(SqlSessionTemplate session, Trade trade) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteTradeByNo(SqlSessionTemplate session, Trade trade) {
+		int result = session.delete("TradeMapper.deleteTrade", trade);
+		return result;
 	}
 
 	@Override
-	public int registerTradeReply(TradeReply rReply) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertTradeReply(SqlSessionTemplate session,TradeReply tReply) {
+		int result = session.insert("TradeReplyMapper.insertTradeReply", tReply);
+		return result;
 	}
 
 	@Override

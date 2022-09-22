@@ -47,26 +47,26 @@ public class TradeServiceImpl implements TradeService {
 
 	@Override
 	public List<Trade> printSearchTrade(Search search, Paging paging) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Trade> tList = tStore.selectSearchTrade(session, search, paging);
+		return tList;
 	}
 
 	@Override
 	public int getSearchCount(Search search) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = tStore.getSearchCount(session, search);
+		return result;
 	}
 
 	@Override
 	public int removeTradeByNo(Trade trade) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = tStore.deleteTradeByNo(session, trade);
+		return result;
 	}
 
 	@Override
-	public int registerReviewReply(TradeReply rReply) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int registerTradeReply(TradeReply tReply) {
+		int result = tStore.insertTradeReply(session,tReply);
+		return result;
 	}
 
 	@Override

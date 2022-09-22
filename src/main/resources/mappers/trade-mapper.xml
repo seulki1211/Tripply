@@ -39,6 +39,50 @@
   	SELECT COUNT(*) FROM TRADE_TBL 
   </select>
   
+  <select id="selectSearchTrade" resultMap="TradeResultMap">
+  	SELECT BOARD_NO,TRADE_TITLE,TRADE_WRITER,T_LOCATION_CODE,LOCATION_NAME,TRADE_COUNT,T_CREATE_DATE,T_UPDATE_DATE,T_STATUS,SOLD_OUT,THUMBNAIL_PATH
+  	FROM TRADE_TBL T LEFT JOIN LOCATION_TBL L
+  	ON T.T_LOCATION_CODE = L.LOCATION_CODE
+  	<where>
+  		<if test='searchCondition.toString()=="all"'>
+				(TRADE_TITLE LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})OR
+				(TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})OR
+				(TRADE_WRITER LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})
+		</if> 
+		<if test='searchCondition.toString()=="title"'>
+				TRADE_TITLE LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+		</if>
+		<if test='searchCondition.toString()=="writer"'>
+				TRADE_WRITER LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+		</if>
+		<if test='searchCondition.toString()=="contents"'>
+				TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+		</if>
+  	</where>
+  	ORDER BY T_CREATE_DATE DESC
+  </select>
+  
+  <select id="selectSearchCount"  resultType="_int">
+  	SELECT COUNT(*)
+  	FROM TRADE_TBL
+  		<where>
+			<if test='searchCondition.toString()=="all"'>
+				(TRADE_TITLE LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})OR
+				(TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion} )OR
+				(TRADE_WRITER LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})
+			</if> 
+			<if test='searchCondition.toString()=="title"'>
+				TRADE_TITLE LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+			</if>
+			<if test='searchCondition.toString()=="writer"'>
+				TRADE_WRITER LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+			</if>
+			<if test='searchCondition.toString()=="contents"'>
+				TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+			</if>
+  		</where>
+  </select>
+  
   <insert id="insertTrade">
   	INSERT INTO TRADE_TBL
   	VALUES(SEQ_BOARDNO.NEXTVAL,#{tradeTitle},#{tradeContents},#{tradeWriter},#{tLocationCode},#{tradeFileName},#{tradeFileReName},#{tradeFilePath},DEFAULT,DEFAULT,DEFAULT,DEFAULT,NULL,DEFAULT,#{thumbnailPath})

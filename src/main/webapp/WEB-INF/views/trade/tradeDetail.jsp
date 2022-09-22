@@ -47,14 +47,12 @@
 		<!-- 댓글 입력창 -->
 		<div id="reply-input" align="center">
 			<form action="/trade/reply/write.kh" method="post">
-				<input type="hidden" name="currentPage"
-					value="${sessionScope.currentPage }"> <input type="hidden"
-					name="boardNo" value="${trade.boardNo }"> <input
-					type="hidden" name="tReplyWriter" value="${loginUser.memberId }">
-				<input type="hidden" name="reReplyYn" value="N"> <input
-					type="hidden" name="tRefReplyNo" value="-1"> <input
-					type="text" name="tReplyContents" value=""
-					placeholder="댓글을 입력해보세요!">
+				<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
+				<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
+				<input type="hidden" name="tReplyWriter" value="${loginUser.memberId }">
+				<input type="hidden" name="reReplyYn" value="N"> 
+				<input type="hidden" name="tRefReplyNo" value="-1"> 
+				<input type="text" name="tReplyContents" value="" placeholder="댓글을 입력해보세요!">
 				<button>등록</button>
 			</form>
 		</div>
@@ -62,31 +60,44 @@
 		<table id="reply-view" align="center">
 			<c:forEach items="${tReplyList }" var="tReply" varStatus="n">
 				<tr id="one-reply-area">
-					<td
-						<c:if test="${tReply.reReplyYn eq 'Y' }"> style="background-color:Silver;" </c:if>>
-						<div id="replyInfo">${tReply.tReplyWriter }
-							${tReply.trCreateDate }</div>
-						<div id="replyContents">${tReply.tReplyContents }</div> <c:if
-							test="${tReply.reReplyYn ne 'Y' }">
+					<td <c:if test="${tReply.reReplyYn eq 'Y' }"> style="background-color:Silver;" </c:if>>
+						<div id="replyInfo">
+							${tReply.tReplyWriter } ${tReply.trCreateDate }
+						</div>
+						<div id="replyContents">
+							${tReply.tReplyContents }
+							<span align="right" id="replyMenu">
+								<a href="#" onclick="replyMenu(this);" > ▤ </a>
+							</span>
+						</div> 
+						<div id="replyMenu" style="display:none">
+							<ul>
+								<li>댓글 수정</li>
+								<li>댓글 삭제</li>
+								<li>댓글 신고</li>
+								<li>댓글 채택</li>
+							</ul>
+						</div>
+						
+
+						<c:if test="${tReply.reReplyYn ne 'Y' }">
 							<div onclick="arcodian(this);">
 								<a href="#">답글</a>
 							</div>
 							<!-- 대댓글 입력창 -->
 							<div class="reReply-input" style="display: none">
 								<form action="/trade/reply/write.kh" method="post">
-									<input type="hidden" name="currentPage"
-										value="${sessionScope.currentPage }"> <input
-										type="hidden" name="boardNo" value="${trade.boardNo }">
-									<input type="hidden" name="tReplyWriter"
-										value="${loginUser.memberId }"> <input type="hidden"
-										name="teReplyYn" value="Y"> <input type="hidden"
-										name="tRefReplyNo" value="${tReply.rReplyNo }"> <input
-										type="text" name="tReplyContents" value=""
-										placeholder="답글을 입력해보세요!">
+										<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
+										<input type="hidden" name="boardNo" value="${trade.boardNo }">
+										<input type="hidden" name="tReplyWriter" value="${loginUser.memberId }"> 
+										<input type="hidden" name="reReplyYn" value="Y"> 
+										<input type="hidden" name="tRefReplyNo" value="${tReply.tReplyNo }"> 
+										<input type="text" name="tReplyContents" value="" placeholder="답글을 입력해보세요!">
 									<button>등록</button>
 								</form>
 							</div>
 						</c:if>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -106,6 +117,18 @@
 				reReplyInput.style.display = "block";
 			} else {
 				reReplyInput.style.display = "none";
+			}
+		}
+		
+		function replyMenu(target){
+			event.preventDefault();
+			var replyMenu = target.parentNode.parentNode.nextElementSibling;
+			var display = replyMenu.style.display;
+			
+			if (display == "none"){
+				replyMenu.style.display ="block";
+			}else{
+				replyMenu.style.display ="none";
 			}
 		}
 	</script>

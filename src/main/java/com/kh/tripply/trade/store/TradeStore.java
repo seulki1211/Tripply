@@ -18,10 +18,10 @@ public interface TradeStore {
 	public List<Trade> selectSearchTrade(SqlSessionTemplate session,Search search,Paging paging);
 	public int getSearchCount(SqlSessionTemplate session,Search search);
 	public int updateTradeByNo(SqlSessionTemplate session,Trade trade);
-	public int removeTradeByNo(SqlSessionTemplate session,Trade trade);
+	public int deleteTradeByNo(SqlSessionTemplate session,Trade trade);
 	
 	////////////////////댓글
-	public int registerTradeReply(TradeReply rReply);
+	public int insertTradeReply(SqlSessionTemplate session, TradeReply tReply);
 	public List<TradeReply> printTradeReplyByNo(SqlSessionTemplate session,int boardNo);
 	
 	////////////////////조회수 카운트

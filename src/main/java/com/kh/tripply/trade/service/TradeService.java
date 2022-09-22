@@ -19,7 +19,7 @@ public interface TradeService {
 	public int removeTradeByNo(Trade trade);
 	
 	////////////////////댓글
-	public int registerReviewReply(TradeReply rReply);
+	public int registerTradeReply(TradeReply tReply);
 	public List<TradeReply> printTradeReplyByNo(int boardNo);
 	
 	////////////////////조회수 카운트
