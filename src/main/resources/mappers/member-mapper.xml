@@ -41,4 +41,7 @@
 	<select id="selectMemberId" resultMap="memberResultMap">
 		SELECT * FROM MEMBER_TBL WHERE MEMBER_ID = #{memberId} AND M_STATUS = 'Y'
 	</select>
+	<select id="findMemberId" resultMap="memberResultMap">
+		SELECT MEMBER_ID FROM MEMBER_TBL WHERE MEMBER_EMAIL = #{memberEmail} AND M_STATUS = 'Y'
+	</select>
 </mapper>

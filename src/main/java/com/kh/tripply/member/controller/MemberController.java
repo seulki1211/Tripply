@@ -1,5 +1,9 @@
 package com.kh.tripply.member.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.tripply.member.domain.Member;
@@ -114,10 +119,34 @@ public class MemberController {
 			, @ModelAttribute Member member
 			, @RequestParam("post") String post
 			, @RequestParam("address1") String address1
-			, @RequestParam("address2") String address2) {
+			, @RequestParam("address2") String address2
+			, @RequestParam(value="reloadFile", required=false) MultipartFile reloadFile
+			, HttpServletRequest request) {
 		try {
 			member.setMemberAddr(post + "," + address1 + "," + address2);
 			int result = mService.modifyMember(member);
+			String memberFilename = reloadFile.getOriginalFilename();
+			if(reloadFile != null && !memberFilename.equals("")) {
+				// 수정, 1. 대체(replace) / 2. 삭제 후 저장
+				// 파일삭제
+				String root = request.getSession().getServletContext().getRealPath("resources");
+				String savedPath = root + "\\buploadFiles";
+				//Board bOne = bService.printOneByNo(board.getBoardNo());
+				File file = new File(savedPath + "\\" + member.getMemberFileRename());
+				if(file.exists()) {
+					file.delete();
+				}
+				// 파일 다시 저장
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				String memberFileRename = sdf.format(new Date(System.currentTimeMillis()))
+						+ "." + memberFilename.substring(memberFilename.lastIndexOf(".")+1);
+				String memberFilepath = savedPath + "\\" + memberFileRename;
+				reloadFile.transferTo(new File(memberFilepath));
+				member.setMemberFileName(memberFilename);
+				member.setMemberFileRename(memberFileRename);
+				member.setMemberFilePath(memberFilepath);
+			}
+			int profile = mService.modifyMember(member);
 			if(result > 0) {
 				mv.setViewName("redirect:/home.kh");
 			}else {
@@ -145,4 +174,19 @@ public class MemberController {
 		}
 		return mv;
 	}
+	
+	// 회원ID찾기
+	@RequestMapping(value="member/findIdView.kh", method=RequestMethod.GET)
+	public String findMemberIdView() {
+		return "/member/findId";
+	}
+	
+	// 회원ID찾기 기능
+//	@RequestMapping(value="member/findId.kh", method=RequestMethod.GET)
+//	public ModelAndView findMemberId(HttpServletRequest request
+//			, ModelAndView mv
+//			, @RequestParam("memberEmail")) {
+//		
+//		return mv;
+//	}
 }

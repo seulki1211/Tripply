@@ -6,7 +6,7 @@
 <head>
 <title>여행 올인원 플랫폼,Tripply</title>
 <link href="/resources/css/menubar-style.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"> -->
 </head>
 <body>
 	<div id="header-logo">
@@ -28,7 +28,9 @@
 						<!-- 					<td></td> -->
 					</tr>
 					<tr>
-						<td colspan="3" align="right"><a href="/member/joinView.kh">회원가입</a>
+						<td colspan="2" align="right"><a href="/member/findId.kh">ID찾기</a>
+						</td>
+						<td align="right"><a href="/member/joinView.kh">회원가입</a>
 						</td>
 					</tr>
 					
@@ -62,7 +64,7 @@
 		<div class="menu" onclick="location.href='/review/list.kh';">여행 후기</div>
 		<div class="menu" onclick="location.href='#';">중고 거래</div>
 		<div class="menu" onclick="location.href='/party/list.kh';">우리 함께</div>
-		<div class="menu" onclick="location.href='/free/writeView.kh';">자유롭게</div>
+		<div class="menu" onclick="location.href='/free/list.kh';">자유롭게</div>
 	</div>
 </body>
 </html>

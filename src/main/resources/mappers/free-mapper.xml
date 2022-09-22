@@ -3,8 +3,78 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="FreeMapper">
-	<insert id="insertFreeBoard">
+	<resultMap type="Free" id="freeResultMap">
+		<id 	property="boardNo" 			column="BOARD_NO" />
+		<result property="freeTitle" 		column="FREE_TITLE" />
+		<result property="freeContents" 	column="FREE_CONTENTS" />
+		<result property="freeWriter" 		column="FREE_WRITER" />
+		<result property="freeFilename" 	column="FREE_FILENAME" />
+		<result property="freeFileRename" 	column="FREE_FILERENAME" />
+		<result property="freeFilePath"		column="FREE_FILEPATH" />
+		<result property="freeCount" 		column="FREE_COUNT" />
+		<result property="fCreateDate" 		column="F_CREATE_DATE" />
+		<result property="fUpdateDate" 		column="F_UPDATE_DATE" />
+		<result property="fStatus" 			column="F_STATUS" />
+	</resultMap>
+	<insert id="insertFree">
 		INSERT INTO FREE_TBL VALUES(SEQ_BOARDNO.NEXTVAL(), #{freeTitle}, #{freeContents}
 		, #{freeWriter}, #{freeFilename}, #{freeFileRename}, #{freeFilePath}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
+	<update id="updateFree">
+		UPDATE FREE_TBL SET FREE_TITLE = #{freeTitle}, FREE_CONTENTS = #{freeContents}, FREE_FILENAME = #{freeFilename}
+		, FREE_FILERENAME = #{freeFileRename}, FREE_FILEPATH = #{freeFilePath}, F_UPDATE_DATE = DEFAULT
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	<delete id="deleteFree">
+		DELETE FROM FREE_TBL WHERE BOARD_NO = #{boardNo}
+	</delete>
+	<update id="updateCount">
+		UPDATE FREE_TBL SET FREE_COUNT = FREE_COUNT + 1 WHERE BOARD_NO = #{boardNo}
+	</update>
+	<select id="selectAllBoard" resultMap="freeResultMap">
+		SELECT * FROM FREE_TBL WHERE F_STATUS = 'Y' ORDER BY BOARD_NO DESC
+	</select>
+	<select id="selectTotalCount" resultType="_int">
+		SELECT COUNT(*) FROM FREE_TBL
+		<where>
+			<if test="searchCondition.toString() == 'title'">
+				FREE_TITLE LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'contents'">
+				FREE_CONTENTS LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'writer'">
+				FREE_WRITER LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'all'">
+				FREE_TITLE LIKE '%'||#{searchValue}||'%'
+				OR FREE_CONTENTS LIKE '%'||#{searchValue}||'%'
+				OR FREE_WRITER LIKE '%'||#{searchValue}||'%'
+			</if>
+			AND F_STATUS = 'Y'
+		</where>
+	</select>
+	<select id="selectOneByNo" resultMap="freeResultMap">
+		SELECT * FROM FREE_TBL WHERE BOARD_NO = #{boardNo } AND F_STATUS = 'Y'
+	</select>
+	<select id="selectAllByValue" resultMap="freeResultMap">
+		SELECT * FROM FREE_TBL 
+		<where>
+			<if test="searchCondition.toString() == 'title'">
+				FREE_TITLE LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'contents'">
+				FREE_CONTENTS LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'writer'">
+				FREE_WRITER LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="searchCondition.toString() == 'all'">
+				FREE_TITLE LIKE '%'||#{searchValue}||'%'
+				OR FREE_CONTENTS LIKE '%'||#{searchValue}||'%'
+				OR FREE_WRITER LIKE '%'||#{searchValue}||'%'
+			</if>
+			AND F_STATUS = 'Y'
+		</where> 		
+	</select>
 </mapper>
