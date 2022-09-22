@@ -88,7 +88,19 @@ public class TradeStoreLogic implements TradeStore{
 	public int updateBuyer(SqlSessionTemplate session,HashMap<String,String> paramMap) {
 		
 		
-		int result = session.update("", paramMap);
+		int result = session.update("TradeMapper.updateBuyer", paramMap);
+		return result;
+	}
+
+	@Override
+	public int updateTradeReply(SqlSessionTemplate session, TradeReply tReply) {
+		int result = session.update("TradeReplyMapper.updateTradeReply", tReply);
+		return result;
+	}
+
+	@Override
+	public int deleteTradeReply(SqlSessionTemplate session, TradeReply tReply) {
+		int result = session.update("TradeReplyMapper.deleteTradeReply", tReply);
 		return result;
 	}
 

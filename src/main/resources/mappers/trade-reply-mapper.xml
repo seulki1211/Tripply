@@ -33,4 +33,16 @@
   		FROM TRADE_REPLY_TBL
   		WHERE BOARD_NO=#{boardNo}
   	</select>
+  	
+  	<update id="updateTradeReply">
+  		UPDATE TRADE_REPLY_TBL
+  		SET T_REPLY_CONTENTS=#{tReplyContents}, T_R_UPDATE_DATE=SYSDATE
+  		WHERE T_REPLY_NO=#{tReplyNo}
+  	</update>
+  	
+  	<update id="deleteTradeReply">
+  		UPDATE TRADE_REPLY_TBL
+  		SET T_REPLY_CONTENTS='작성자에 의해 삭제된 댓글입니다.'
+  		WHERE T_REPLY_NO=#{tReplyNo}
+  	</update>
   </mapper>

@@ -94,4 +94,16 @@ public class TradeServiceImpl implements TradeService {
 		return result;
 	}
 
+	@Override
+	public int modifyTradeReply(TradeReply tReply) {
+		int result = tStore.updateTradeReply(session, tReply);
+		return result;
+	}
+
+	@Override
+	public int removeTradeReply(TradeReply tReply) {
+		int result = tStore.deleteTradeReply(session, tReply);
+		return result;
+	}
+
 }

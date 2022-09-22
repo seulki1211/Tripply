@@ -23,6 +23,8 @@ public interface TradeService {
 	////////////////////댓글
 	public int registerTradeReply(TradeReply tReply);
 	public List<TradeReply> printTradeReplyByNo(int boardNo);
+	public int modifyTradeReply(TradeReply tReply);
+	public int removeTradeReply(TradeReply tReply);
 	
 	////////////////////조회수 카운트
 	public int tradeViewCount(int boardNo);

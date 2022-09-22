@@ -55,6 +55,8 @@
 			</table>
 		</div>
 <!-- 댓글 입력창 -->
+ 구매 채택된 사람 아이디: ${trade.buyerId }
+
 		<div id="reply-input" align="center">
 			<form action="/trade/reply/write.kh" method="post">
 				<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
@@ -88,23 +90,27 @@
 							<ul>
 								<c:if test="${loginUser.memberId eq tReply.tReplyWriter }">
 									<li onclick="replyModify(this);" ><a href="#">댓글 수정</a></li>
-									<div id="replyModify" class="modal" style="display:none;">
+									<div class="replyModify" style="display:none;">
 										<form action="/trade/reply/modify.kh" method="post">
 											<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
 											<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
-											<input type="hidden" name="tReplyWriter" value="${loginUser.memberId }">
-											<input type="hidden" name="reReplyYn" value="N"> 
-											<input type="hidden" name="tRefReplyNo" value="-1"> 
+											<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
 											<input type="text" name="tReplyContents" value="" placeholder="${tReply.tReplyContents }">
 											<button>수정</button>
 										</form>
 									</div>
-									<li><a href="/trade/reply/remove.kh">댓글 삭제</a></li>
+<!-- 댓글삭제 -->
+									<li><a href="#" onclick="replyRemove(this);">댓글 삭제</a></li>
+									<form action="/trade/reply/remove.kh" method="post">
+										<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
+										<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
+										<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
+									</form>
 								</c:if>
 <!-- 댓글 채택		 -->
 								<c:if test="${(loginUser.memberId eq trade.tradeWriter) and (loginUser.memberId ne tReply.tReplyWriter) }">
-									<li><a href="#" onclick="submitChoice();">댓글 채택</a></li>
-									<form id="choiceForm" action="/trade/reply/choice.kh" method="post">
+									<li><a href="#" onclick="submitChoice(this);">댓글 채택</a></li>
+									<form class="choiceForm" action="/trade/reply/choice.kh" method="post">
 										<input type="hidden" name="currentPage" value="${sessionScope.currentPage }">
 										<input type="hidden" name="buyer" value="${tReply.tReplyWriter }">
 										<input type="hidden" name="boardNo" value="${trade.boardNo }">
@@ -176,13 +182,32 @@
 			}
 }
 
-//댓글 채택 실행 함수
-	function submitChoice(){
-		alert("a");
-		event.preventDefault();
-		var choiceForm = document.querySelector("#choiceForm");
-		choiceForm.submit();
+//댓글 삭제 함수
+	function replyRemove(target){
+	
+	event.preventDefault();
+	var replyRemoveForm = target.parentNode.nextElementSibling;
+	console.log(replyRemoveForm);
+	
+	if(confirm("정말 삭제하시겠습니까?")){
+		replyRemoveForm.submit();
+	}else{
+		
+	}
 }
+
+
+//댓글 채택 실행 함수
+	function submitChoice(target){
+		event.preventDefault();
+		var choiceForm = target.parentNote.nextElementSibling;
+		console.log(choiceForm);
+		if(confirm("정말 채택하시겠습니까?")){
+			choiceForm.submit();
+		}
+}
+
+//
 		
 	
 		

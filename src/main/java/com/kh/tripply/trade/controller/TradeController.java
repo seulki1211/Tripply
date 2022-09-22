@@ -354,6 +354,43 @@ public class TradeController {
 		}
 		return mv;
 	}
+	
+	/**
+	 * 댓글 수정 기능
+	 * @param mv
+	 * @param tReply
+	 * @param currentPage
+	 * @return
+	 */
+	@RequestMapping(value="/trade/reply/modify.kh",method=RequestMethod.POST)
+	public ModelAndView tradeReplyModify(ModelAndView mv,
+			@ModelAttribute TradeReply tReply,
+			@RequestParam("currentPage") Integer currentPage) {
+		int result = tService.modifyTradeReply(tReply);
+		if(result>0) {
+			int boardNo = tReply.getBoardNo();
+			mv.setViewName("redirect:/trade/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+		}else {
+			
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value="/trade/reply/remove.kh",method=RequestMethod.POST)
+	public ModelAndView tradeReplyRemove(ModelAndView mv,
+			@ModelAttribute TradeReply tReply,
+			@RequestParam("currentPage") Integer currentPage) {
+		
+		int result = tService.removeTradeReply(tReply);
+		if(result>0) {
+			int boardNo = tReply.getBoardNo();
+			mv.setViewName("redirect:/trade/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+		}else {
+			
+		}
+		return mv;
+	}
+	
 
 	/**
 	 * 거래 게시물 댓글 채택
@@ -369,14 +406,13 @@ public class TradeController {
 		HashMap<String,String> paramMap = new HashMap<>();
 		paramMap.put("boardNo", boardNo);
 		paramMap.put("buyer",buyer);
+		System.out.println(buyer);
 		int result = tService.modifyBuyer(paramMap);
 		if(result>0) {
 			mv.setViewName("redirect:/trade/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
 		}else {
 			
 		}
-		
-		
 		return mv;
 	}
 	
@@ -388,8 +424,6 @@ public class TradeController {
 	@RequestMapping(value="/trade/reply/choiceCancel.kh",method=RequestMethod.POST)
 	public ModelAndView tradeReplyChoiceCancel(ModelAndView mv,
 			@RequestParam("choicedId") String choicedId) {
-		
-		
 		
 		
 		return mv;
