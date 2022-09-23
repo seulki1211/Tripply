@@ -15,4 +15,6 @@ public interface MemberStore {
 	// deleteMember
 	public int deleteMember(SqlSession session, String memberId);
 	public Member selectMemberId(SqlSessionTemplate session, String memberId);
+	
+	public Member selectMemberIdByEmail(SqlSession session, String memberEmail);
 }

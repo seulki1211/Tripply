@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.tripply.free.domain.Free;
 import com.kh.tripply.free.domain.FreeReply;
 import com.kh.tripply.free.service.FreeService;
+import com.kh.tripply.member.domain.Member;
 
 @Controller
 public class FreeController {
@@ -34,40 +35,18 @@ public class FreeController {
 	}
 	
 	/**
-	 * 게시글 등록, 첨부파일 등록
+	 * 게시글 등록
 	 * @param mv
 	 * @param free
-	 * @return mv
+	 * @param request
+	 * @return
 	 */
 	@RequestMapping(value="/free/register.kh", method=RequestMethod.POST)
 	public ModelAndView registBoard(
 			ModelAndView mv
 			, @ModelAttribute Free free
-//			, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
 			,HttpServletRequest request) {
 		try {
-//			String boardFilename = uploadFile.getOriginalFilename();
-//			if(!boardFilename.equals("")) {
-//				///////////////////////////////////////////////////////////////////////////
-//				String root = request.getSession().getServletContext().getRealPath("resources");
-//				String savePath = root + "\\buploadFiles";
-//				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-//				String boardFileRename 
-//				= sdf.format(new Date(System.currentTimeMillis()))+"."
-//						+boardFilename.substring(boardFilename.lastIndexOf(".")+1);
-//				// 1.png, img.png
-//				File file = new File(savePath);
-//				if(!file.exists()) {
-//					file.mkdir();
-//				}
-//				/////////////////////////////////////////////////////////////////////////////
-//				uploadFile.transferTo(new File(savePath+"\\"+boardFileRename)); 
-//				// 파일을 buploadFiles 경로에 저장하는 메소드
-//				String boardFilepath = savePath+"\\"+boardFileRename;
-//				free.setFreeFilename(boardFilename);
-//				free.setFreeFileRename(boardFileRename);
-//				free.setFreeFilepath(boardFilepath);
-//			}
 			int result = fService.registerBoard(free);
 			mv.setViewName("redirect:/free/list.kh");
 		} catch (Exception e) {
@@ -214,10 +193,10 @@ public class FreeController {
 			, HttpSession session) {
 		try {
 			Free free = fService.printOneByNo(boardNo);
-			List<FreeReply> rList = fService.printAllReply(boardNo);
+			List<FreeReply> frList = fService.printAllReply(boardNo);
 			session.setAttribute("boardNo", free.getBoardNo());
 			// 세션에 boardNo 저장 -> 삭제하기 위해서
-			mv.addObject("rList", rList);
+			mv.addObject("frList", frList);
 			mv.addObject("free", free);
 			mv.addObject("page", page);
 			mv.setViewName("free/freeDetailView");
@@ -228,5 +207,94 @@ public class FreeController {
 		
 		return mv;
 	}
+	
+	/**
+	 * 게시글 조건 검색 
+	 * @param mv
+	 * @param searchCondition
+	 * @param searchValue
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value="/free/search.kh", method=RequestMethod.GET)
+	public ModelAndView boardSearchList(
+			ModelAndView mv
+			, @RequestParam("searchCondition") String searchCondition
+			, @RequestParam("searchValue") String searchValue
+			, @RequestParam(value="page", required=false) Integer page) {
+		try {
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = fService.getTotalCount(searchCondition, searchValue);
+			int boardLimit = 10;
+			int naviLimit = 5;
+			int maxPage;
+			int startNavi;
+			int endNavi;
+			maxPage = (int)((double)totalCount/boardLimit + 0.9);
+			startNavi = ((int)((double)currentPage/naviLimit+0.9)-1)*naviLimit+1;
+			endNavi = startNavi + naviLimit - 1;
+			if(maxPage < endNavi) {
+				endNavi = maxPage;
+			}
+			List<Free> fList = fService.printAllByValue(
+					searchCondition, searchValue, currentPage, boardLimit);
+			if(!fList.isEmpty()) {
+				mv.addObject("fList", fList);
+			}else {
+				mv.addObject("fList", null);
+			}
+			mv.addObject("urlVal", "search");
+			mv.addObject("searchCondition", searchCondition);
+			mv.addObject("searchValue", searchValue);
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("startNavi", startNavi);
+			mv.addObject("endNavi", endNavi);
+			mv.setViewName("free/freeListView");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	
+	// 댓글 관리
+		/**
+		 * 댓글 등록
+		 * @param mv
+		 * @return
+		 */
+		@RequestMapping(value="/free/addReply.kh", method=RequestMethod.POST)
+		public ModelAndView addBoardReply(
+				ModelAndView mv
+				, @ModelAttribute FreeReply fReply
+				, @RequestParam("page") int page
+				, HttpSession session) {
+			Member member = (Member)session.getAttribute("loginUser");
+			String freeReplyWriter = member.getMemberId();
+			fReply.setFreeReplyWriter(freeReplyWriter);
+			int result = fService.registerReply(fReply);
+			if(result > 0) {
+				mv.setViewName(
+				"redirect:/free/detail.kh?boardNo="+fReply.getBoardNo()+"&page="+page);
+			}
+			return mv;
+		}
+//		@RequestMapping(value="/board/modifyReply.kh", method=RequestMethod.POST)
+//		public String modifyBoardReply(
+//				//@RequestParam("replyNo") Integer replyNo
+//				//, @RequestParam("replyContents") String replyContents
+//				@ModelAttribute Reply reply) {
+//			int result = bService.modifyReply(reply);
+////			return "redirect:/board/detail.kh?boardNo=";
+//			return "redirect:/board/list.kh";
+//		}
+//		@RequestMapping(value="/board/removeReply.kh", method=RequestMethod.POST)
+//		public String removeBoardReply(
+//				@RequestParam("replyNo") Integer replyNo) {
+//			int result = bService.deleteReply(replyNo);
+//			return "redirect:/board/list.kh";
+//		}
+	
 	
 }

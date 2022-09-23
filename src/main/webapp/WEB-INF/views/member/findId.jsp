@@ -23,7 +23,7 @@
 					<td>
 						<input type="text" id="memberEmail" name="memberEmail" placeholder="Tripply@iei.or.kr">
 						<button type="submit" id="findBtn">확인</button>
-						<button type="button" onclick="history.go(-1);">취소</button>
+						<button type="button" onclick="location.href='/home.kh';">취소</button>
 					</td>
 				</tr>
 			</table>

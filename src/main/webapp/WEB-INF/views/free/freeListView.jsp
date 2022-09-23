@@ -18,28 +18,19 @@
 	<table align="center" border="1">
 		<tr>
 			<th>번호</th>
-			<th>제목</th>
+			<th colspan="2">제목</th>
 			<th>작성자</th>
 			<th>날짜</th>
 			<th>조회수</th>
-			<th>첨부파일</th>
 		</tr>
 		<c:if test="${!empty fList }">
 			<c:forEach items="${fList }" var="free" varStatus="i">
 				<tr>
 					<td>${fn:length(fList) - i.index}<!--${i.count } 얘는 게시글 순서대로 출력--></td>
-					<td><a href="/free/detail.kh?boardNo=${free.boardNo }&page=${currentPage }">${free.freeTitle }</a></td>
+					<td colspan="2"><a href="/free/detail.kh?boardNo=${free.boardNo }&page=${currentPage }">${free.freeTitle }</a></td>
 					<td>${free.freeWriter }</td>
 					<td>${free.fCreateDate }</td>
 					<td>${free.freeCount }</td>
-					<td>
-						<c:if test="${!empty free.freeFilename }">
-							O
-						</c:if>
-						<c:if test="${empty free.freeFilename }">
-							X
-						</c:if>
-					</td>
 				</tr>
 			</c:forEach>
 			<tr align="center" height="20">
@@ -80,9 +71,18 @@
 				</form>
 			</td>
 			<td>
-				<button onclick="location.href='/free/writeView.kh';">글쓰기</button>
+				<button onclick="loginCheck('${loginUser.memberId}','/free/writeView.kh')";>글쓰기</button>
 			</td>
 		</tr>
 	</table>
+	<script>
+		function loginCheck(loginId, url){
+			if(loginId != ""){
+				location.href=url;
+			}else{
+				alert("로그인을 해주세요.")
+			}
+		}
+	</script>
 </body>
 </html>

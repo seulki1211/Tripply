@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kh.tripply.free.domain.Free;
+import com.kh.tripply.free.domain.FreeReply;
 import com.kh.tripply.free.store.FreeStore;
 
 @Repository
@@ -74,6 +75,13 @@ public class FreeStoreLogic implements FreeStore{
 		= session.selectList("FreeMapper.selectAllByValue"
 				, paramMap, rowBounds);
 		return fList;
+	}
+
+	
+	@Override
+	public int insertFreeReply(SqlSession session, FreeReply fReply) {
+		int result = session.insert("FreeReplyMapper.insertFreeReply", fReply);
+		return result;
 	}
 
 }

@@ -70,6 +70,11 @@ public class FreeServiceImpl implements FreeService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public int registerReply(FreeReply fReply) {
+		int result = fStore.insertFreeReply(session, fReply);
+		return result;
+	}
 
 
 

@@ -40,4 +40,10 @@ public class MemberStoreLogic implements MemberStore{
 		return mOne;
 	}
 
+	@Override
+	public Member selectMemberIdByEmail(SqlSession session, String memberEmail) {
+		Member mOne =  session.selectOne("MemberMapper.selectMemberIdByEmail", memberEmail);
+		return mOne;
+	};
+
 }

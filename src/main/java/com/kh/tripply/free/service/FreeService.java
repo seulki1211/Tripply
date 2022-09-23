@@ -23,4 +23,7 @@ public interface FreeService {
 			, int currentPage, int boardLimit);
 	public List<FreeReply> printAllReply(int boardNo);
 	
+	
+	public int registerReply(FreeReply fReply);
+	
 }

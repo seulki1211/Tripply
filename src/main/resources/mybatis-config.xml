@@ -11,6 +11,7 @@
 	<typeAliases>
 		<typeAlias type="com.kh.tripply.banner.domain.Banner" 			alias="Banner"/>
 		<typeAlias type="com.kh.tripply.free.domain.Free" 				alias="Free"/>	
+		<typeAlias type="com.kh.tripply.free.domain.FreeReply" 			alias="FreeReply"/>	
 		<typeAlias type="com.kh.tripply.member.domain.Member"   		alias="Member"/>
 		<typeAlias type="com.kh.tripply.notice.domain.Notice"			alias="Notice"/>
 		<typeAlias type="com.kh.tripply.party.domain.Party" 			alias="Party"/>
@@ -25,12 +26,13 @@
 		<typeAlias type="com.kh.tripply.trade.domain.TradeReply" 		alias="TradeReply"/>
 		<typeAlias type="com.kh.tripply.message.domain.Message" 		alias="Message"/>
 		<typeAlias type="com.kh.tripply.plan.domain.Plan"             alias="Plan" />
-      <typeAlias type="com.kh.tripply.plan.domain.PlannerReply"       alias="PlannerReply" />
+      	<typeAlias type="com.kh.tripply.plan.domain.PlannerReply"       alias="PlannerReply" />
 	</typeAliases>
 
 	<mappers>
 		 <mapper resource="mappers/banner-mapper.xml"/>
 		 <mapper resource="mappers/free-mapper.xml"/>
+		 <mapper resource="mappers/free-reply-mapper.xml"/>
 		 <mapper resource="mappers/message-mapper.xml"/>
 		 <mapper resource="mappers/member-mapper.xml"/>
 		 <mapper resource="mappers/notice-mapper.xml"/>

@@ -21,11 +21,11 @@
 			<div class="my-side-bar" onclick="location.href='/point/chargeView.kh';">포인트관리</div>
 		</div>
 		<div class="profile-form">
-	<h1 align="center">회원정보수정</h1>
-				<form action="/member/modify.kh" method="post" name="modify_form" enctype="multipart/form-data">
+			<h1 align="center">회원정보수정</h1>
+			<form action="/member/modify.kh" method="post" name="modify_form" enctype="multipart/form-data">
 			<div class="wrapper">
 				<div class="profile-box">
-					<img class="profile" alt="본문이미지" src="/resources/buploadFiles/${member.memberFilename }" >
+					<img class="profile" alt="본문이미지" src="/resources/buploadFiles/20220922193622.JPG" >
 				</div>
 			</div>
 			<div class="">

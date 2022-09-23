@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.kh.tripply.free.domain.Free;
+import com.kh.tripply.free.domain.FreeReply;
 
 public interface FreeStore {
 	// 게시글 등록
@@ -23,6 +24,7 @@ public interface FreeStore {
 	public Free selectOneByNo(SqlSession session, Integer boardNo);
 	
 	public List<Free> selectAllByValue(SqlSession session, String searchCondition, String searchValue, int currentPage, int boardLimit);
+	public int insertFreeReply(SqlSession session, FreeReply fReply);
 	
 
 

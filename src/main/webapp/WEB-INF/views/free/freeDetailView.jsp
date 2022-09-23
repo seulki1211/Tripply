@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>게시글 상세 조회</title>
+<script src="/resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
 	<div>
@@ -32,12 +34,14 @@
 			<td>내용</td>
 			<td>${free.freeContents }</td>
 		</tr>
-		<tr>
-			<td colspan="2" align="center">
-				<a href="/free/modifyView.kh?boardNo=${free.boardNo }&page=${page}">글 수정</a>
-				<a href="#" onclick="freeRemove(${page});">삭제하기</a>
-			</td>
-		</tr>
+		<c:if test="${loginUser.memberNickname eq free.freeWriter }">
+			<tr>
+				<td colspan="2" align="center">
+					<a href="/free/modifyView.kh?boardNo=${free.boardNo }&page=${page}">글 수정</a>
+					<a href="#" onclick="freeRemove(${page});">삭제하기</a>
+				</td>
+			</tr>
+		</c:if>
 	</table>
 	<!-- 	댓글 등록 -->
 	<form action="/free/addReply.kh" method="post">
@@ -55,21 +59,17 @@
 		</table>
 	</form>
 	<!-- 	댓글 목록 -->
-	<%-- <table align="center" width="500" border="1">
-		<c:forEach items="${rList }" var="reply">
+	<table align="center" width="500" border="1">
+		<c:forEach items="${frList }" var="freeReply" >
 			<tr>
-				<td width="100">${reply.replyWriter }</td>
-				<td>${reply.replyContents }</td>
-				<td>${reply.rUpdateDate }</td>
-				<td><a href="#" onclick="modifyView(this, '${reply.replyContents}', ${reply.replyNo });">수정</a>
-				<a href="#" onclick="removeReply(${reply.replyNo});">삭제</a></td>
-			</tr>
-			<tr>
-				<td colspan="3"><input type="text" size="50" value="${reply.replyContents }"></td>
-				<td><button>수정</button></td>
+				<td width="100">${freeReply.freeReplyWriter }</td>
+				<td>${freeReply.freeReplyContents }</td>
+				<td>${freeReply.fUpdateDate }</td>
+				<td><a href="#" onclick="modifyView(this, '${freeReply.freeReplyContents}', ${freeReply.freeReplyNo });">수정</a>
+				<a href="#" onclick="removeReply(${freeReply.freeReplyNo});">삭제</a></td>
 			</tr>
 		</c:forEach>
-	</table> --%>
+	</table>
 	<script>
 		function freeRemove(value) {
 			event.preventDefault(); // 하이퍼링크 이동 방지
@@ -102,9 +102,6 @@
 			var inputTag = $(obj).parent().prev().children();
 			console.log(inputTag.val());
 			var freeReplyContents = inputTag.val(); //= $("#modifyInput").val();
-			//console.log(replyContents);
-			//console.log(rNo);
-			// <form action="" method=""></form>
 			var $form =$("<form>");
 			$form.attr("action", "/free/modifyReply.kh");
 			$form.attr("method", "post");
@@ -114,6 +111,7 @@
 			$form.appendTo("body");
 			$form.submit();
 		}
+		
 	</script>
 </body>
 </html>

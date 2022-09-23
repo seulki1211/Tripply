@@ -126,7 +126,7 @@ public class MemberController {
 			member.setMemberAddr(post + "," + address1 + "," + address2);
 //			int result = mService.modifyMember(member);
 			String memberFilename = uploadFile.getOriginalFilename();
-			if(memberFilename != null && !memberFilename.equals("")) {
+			if(!memberFilename.equals("")) {
 				// 수정, 1. 대체(replace) / 2. 삭제 후 저장
 				// 파일삭제
 				String root = request.getSession().getServletContext().getRealPath("resources");
@@ -184,8 +184,16 @@ public class MemberController {
 	@RequestMapping(value="member/findId", method=RequestMethod.GET)
 	public ModelAndView findMemberId(HttpServletRequest request
 			, ModelAndView mv
-			, @RequestParam("memberEmail") String memberEmail) {
-		
+			, @ModelAttribute Member member) {
+		String memberEmail =  member.getMemberEmail();
+		Member mOne = mService.findMemberId(memberEmail);
+		return mv;
+	}
+	
+	// 작성글 불러오기
+	@RequestMapping(value="member/myWrite.kh", method=RequestMethod.GET)
+	public ModelAndView lookMyWrite(HttpServletRequest request
+			, ModelAndView mv) {
 		return mv;
 	}
 }
