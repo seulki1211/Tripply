@@ -42,3 +42,7 @@
 	display:flex;
 	height:100px;
 }
+
+li{
+	text-decoration: none;
+}

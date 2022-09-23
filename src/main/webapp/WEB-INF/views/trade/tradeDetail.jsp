@@ -9,15 +9,42 @@
 <!-- 화면 뼈대 설정용 css -->
 <link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css">
 </head>
+
+<!-- css -->
+<style>
+/* 댓글아코디언메뉴 스타일 */
+	.modal{
+		background-color:white;
+/* 		position:absolute; */
+		z-index: 100;
+	}
+/* 답글 스타일 */
+	.reReply{
+		background-color:gainsboro;
+		position:relative;
+		left:10px;
+		padding:10px;
+		z-index:40;		
+		
+	}
+/* 댓글 메뉴 버튼 스타일 */
+	.replyMenuBtn{
+		position:block;
+		right:10px;
+		padding:10px;
+		z-index:50;
+	}
+</style>
 <body>
-	<!-- 헤더-메뉴바 -->
+
+<!-- 헤더-메뉴바 -->
 	<div id="header">
 		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
 	</div>
-	<!-- 컨텐츠 -->
+<!-- 컨텐츠 -->
 	<div id="contents">
 		<div id="sideBar"></div>
-		<!-- 게시물 출력 -->
+<!-- 게시물 출력 -->
 		<div id="contents-1">
 			<table align="center" border="1px">
 				<tr>
@@ -44,7 +71,9 @@
 				</tr>
 			</table>
 		</div>
-		<!-- 댓글 입력창 -->
+<!-- 댓글 입력창 -->
+ 구매 채택된 사람 아이디: ${trade.buyerId }
+
 		<div id="reply-input" align="center">
 			<form action="/trade/reply/write.kh" method="post">
 				<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
@@ -56,35 +85,63 @@
 				<button>등록</button>
 			</form>
 		</div>
-		<!-- 댓글출력  -->
+<!-- 댓글출력  -->
 		<table id="reply-view" align="center">
 			<c:forEach items="${tReplyList }" var="tReply" varStatus="n">
 				<tr id="one-reply-area">
-					<td <c:if test="${tReply.reReplyYn eq 'Y' }"> style="background-color:Silver;" </c:if>>
+					<td <c:if test="${tReply.reReplyYn eq 'Y' }">   class="reReply" </c:if> >
 						<div id="replyInfo">
 							${tReply.tReplyWriter } ${tReply.trCreateDate }
 						</div>
 						<div id="replyContents">
 							${tReply.tReplyContents }
+<!-- 댓글메뉴 -->
 							<span align="right" id="replyMenu">
-								<a href="#" onclick="replyMenu(this);" > ▤ </a>
+								<c:if test="${(loginUser.memberId eq tReply.tReplyWriter) || (loginUser.memberId eq trade.tradeWriter) }">
+									<a href="#" onclick="replyMenu(this);" class="replyMenuBtn"> ▤ </a>
+								</c:if>
 							</span>
 						</div> 
-						<div id="replyMenu" style="display:none">
+<!-- 댓글 수정 창 -->
+						<div id="replyMenu" class="modal" style="display:none">
 							<ul>
-								<li>댓글 수정</li>
-								<li>댓글 삭제</li>
-								<li>댓글 신고</li>
-								<li>댓글 채택</li>
+								<c:if test="${loginUser.memberId eq tReply.tReplyWriter }">
+									<li onclick="replyModify(this);" ><a href="#">댓글 수정</a></li>
+									<div class="replyModify" style="display:none;">
+										<form action="/trade/reply/modify.kh" method="post">
+											<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
+											<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
+											<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
+											<input type="text" name="tReplyContents" value="" placeholder="${tReply.tReplyContents }">
+											<button>수정</button>
+										</form>
+									</div>
+<!-- 댓글삭제 -->
+									<li><a href="#" onclick="replyRemove(this);">댓글 삭제</a></li>
+									<form action="/trade/reply/remove.kh" method="post">
+										<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
+										<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
+										<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
+									</form>
+								</c:if>
+<!-- 댓글 채택		 -->
+								<c:if test="${(loginUser.memberId eq trade.tradeWriter) and (loginUser.memberId ne tReply.tReplyWriter) }">
+									<li><a href="#" onclick="submitChoice(this);">댓글 채택</a></li>
+									<form class="choiceForm" action="/trade/reply/choice.kh" method="post">
+										<input type="hidden" name="currentPage" value="${sessionScope.currentPage }">
+										<input type="hidden" name="buyer" value="${tReply.tReplyWriter }">
+										<input type="hidden" name="boardNo" value="${trade.boardNo }">
+									</form>
+									<li><a href="/trade/reply/choiceCancel.kh">댓글 채택 취소</a></li>
+								</c:if>
 							</ul>
 						</div>
-						
-
+<!-- 답글 버튼 -->
 						<c:if test="${tReply.reReplyYn ne 'Y' }">
 							<div onclick="arcodian(this);">
-								<a href="#">답글</a>
+								<a href="#">답글 달기</a>
 							</div>
-							<!-- 대댓글 입력창 -->
+<!-- 답글 입력창 -->
 							<div class="reReply-input" style="display: none">
 								<form action="/trade/reply/write.kh" method="post">
 										<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
@@ -101,13 +158,11 @@
 				</tr>
 			</c:forEach>
 		</table>
-
-
-
 	</div>
-	<!-- 푸터 -->
+<!-- 푸터 -->
 	<div id="footer"></div>
 	<script>
+//답글 아코디언 함수
 		function arcodian(reReply) {
 			event.preventDefault();
 			var reReplyInput = reReply.nextElementSibling;
@@ -119,7 +174,7 @@
 				reReplyInput.style.display = "none";
 			}
 		}
-		
+//댓글 메뉴 아코디언 함수		
 		function replyMenu(target){
 			event.preventDefault();
 			var replyMenu = target.parentNode.parentNode.nextElementSibling;
@@ -131,6 +186,48 @@
 				replyMenu.style.display ="none";
 			}
 		}
+//댓글 수정 창 아코디언 함수
+		function replyModify(target){
+			event.preventDefault();
+			var replyModifyInput = target.nextElementSibling;
+			var display = replyModifyInput.style.display;
+			
+			if (display == "none"){
+				replyModifyInput.style.display ="block";
+			}else{
+				replyModifyInput.style.display ="none";
+			}
+}
+
+//댓글 삭제 함수
+	function replyRemove(target){
+	
+	event.preventDefault();
+	var replyRemoveForm = target.parentNode.nextElementSibling;
+	console.log(replyRemoveForm);
+	
+	if(confirm("정말 삭제하시겠습니까?")){
+		replyRemoveForm.submit();
+	}else{
+		
+	}
+}
+
+
+//댓글 채택 실행 함수
+	function submitChoice(target){
+		event.preventDefault();
+		var choiceForm = target.parentNode.nextElementSibling;
+		console.log(choiceForm);
+		if(confirm("정말 채택하시겠습니까?")){
+			choiceForm.submit();
+		}
+}
+
+//
+		
+	
+		
 	</script>
 
 </body>

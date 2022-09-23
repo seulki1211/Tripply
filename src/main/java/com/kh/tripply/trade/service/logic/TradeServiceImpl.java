@@ -1,5 +1,6 @@
 package com.kh.tripply.trade.service.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -84,6 +85,24 @@ public class TradeServiceImpl implements TradeService {
 	@Override
 	public int modifyTradeByNo(Trade trade) {
 		int result = tStore.updateTradeByNo(session, trade);
+		return result;
+	}
+
+	@Override
+	public int	modifyBuyer(HashMap<String,String> paramMap) {
+		int result = tStore.updateBuyer(session, paramMap);
+		return result;
+	}
+
+	@Override
+	public int modifyTradeReply(TradeReply tReply) {
+		int result = tStore.updateTradeReply(session, tReply);
+		return result;
+	}
+
+	@Override
+	public int removeTradeReply(TradeReply tReply) {
+		int result = tStore.deleteTradeReply(session, tReply);
 		return result;
 	}
 

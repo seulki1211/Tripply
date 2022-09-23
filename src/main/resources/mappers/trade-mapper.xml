@@ -88,6 +88,11 @@
   	VALUES(SEQ_BOARDNO.NEXTVAL,#{tradeTitle},#{tradeContents},#{tradeWriter},#{tLocationCode},#{tradeFileName},#{tradeFileReName},#{tradeFilePath},DEFAULT,DEFAULT,DEFAULT,DEFAULT,NULL,DEFAULT,#{thumbnailPath})
   </insert>
   
+  <update id="updateBuyer">
+	UPDATE TRADE_TBL SET BUYER_ID=#{buyer}
+	WHERE BOARD_NO=#{boardNo}
+  </update>
+  
   <update id="updateTrade">
   	UPDATE TRADE_TBL SET T_LOCATION_CODE=#{tLocationCode},TRADE_TITLE=#{tradeTitle},TRADE_CONTENTS=#{tradeContents},THUMBNAIL_PATH=#{thumbnailPath}
   	WHERE BOARD_NO=#{boardNo}

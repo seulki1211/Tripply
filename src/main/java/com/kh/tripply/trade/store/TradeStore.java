@@ -1,5 +1,6 @@
 package com.kh.tripply.trade.store;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -23,7 +24,12 @@ public interface TradeStore {
 	////////////////////댓글
 	public int insertTradeReply(SqlSessionTemplate session, TradeReply tReply);
 	public List<TradeReply> printTradeReplyByNo(SqlSessionTemplate session,int boardNo);
+	public int updateTradeReply(SqlSessionTemplate session,TradeReply tReply);
+	public int deleteTradeReply(SqlSessionTemplate session,TradeReply tReply);
 	
 	////////////////////조회수 카운트
 	public int tradeViewCount(SqlSessionTemplate session, int boardNo);
+	
+		/////////////////////거래
+	public int updateBuyer(SqlSessionTemplate session,HashMap<String,String> paramMap);
 }

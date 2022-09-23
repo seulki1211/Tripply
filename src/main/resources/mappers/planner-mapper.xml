@@ -31,8 +31,9 @@
    WHERE PLANNER_NO=#{boardNo}
    </select>
    
-   <select id="selectCount" resultType="_int"> <!-- 타입은 숫자 하나 가져올때만 씀 -->
-  	SELECT COUNT(*) FROM PLANNER_TBL 
+
+   <select id="selectCount" resultType="_int"> 
+
   	<where>
 			<if test="searchCondition.toString()=='title'">
 		 		PLANNER_TITLE LIKE '%'||#{searchValue}||'%'
