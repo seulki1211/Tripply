@@ -1,23 +1,29 @@
 package com.kh.tripply.plan.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.kh.tripply.member.domain.Member;
-import com.kh.tripply.party.domain.PartyReply;
 import com.kh.tripply.plan.domain.Plan;
 import com.kh.tripply.plan.domain.PlanList;
 import com.kh.tripply.plan.domain.Planner;
@@ -267,6 +273,7 @@ public class PlannerController {
 	public ModelAndView registPlan(
 			ModelAndView mv
 			, @ModelAttribute(value="PlanList") PlanList l) {
+		/* ( (List<String>) l).removeAll(Arrays.asList("", null)); */
 		int result = pService.registPlanner(l);
 		
 		System.out.println(l);
@@ -310,8 +317,9 @@ public class PlannerController {
 	public ModelAndView deleteInfo(
 			ModelAndView mv
 			,HttpSession session
+			,@RequestParam("boardNo")Integer boardNo
 			) {
-		int boardNo = (int)session.getAttribute("boardNo");
+		//int boardNo = (int)session.getAttribute("boardNo");
 		int result = pService.deletePlanner(boardNo);
 		
 		mv.setViewName("redirect:/plan/plan.kh");
@@ -422,6 +430,52 @@ public class PlannerController {
 			
 			return mv;
 		}
+		
+		@RequestMapping(value="/plan/modifyplan.kh", method=RequestMethod.POST)
+		public ModelAndView modifyPlan(
+				ModelAndView mv
+				,@RequestParam("boardNo")Integer boardNo
+				, @ModelAttribute(value="PlanList") PlanList l) {
+			/* ( (List<String>) l).removeAll(Arrays.asList("", null)); */
+			int delresult = pService.deletePlan(boardNo);
+			int result = pService.registPlanner(l);
+			
+			
+			
+			System.out.println(l);
+			mv.setViewName("redirect:/plan/plan.kh");
+			return mv;
+				
+				
+			
+		}
+		
+		@RequestMapping(value = "/plan/pdf.kh")
+		public String pdfCreate(HttpServletRequest req
+				, ModelMap modelMap
+				,@RequestParam("boardNo")Integer boardNo
+				
+				) throws Exception {
+				List<Plan>plan = pService.printAllPlan(boardNo);
+				
+				System.out.println(plan.get(1).getMemo().toString());
+				String fileName="";
+				String dir="C:/";
+				fileName = "sample.pdf";
+				File directory = new File(dir);
+				if(!directory.exists()) directory.mkdirs(); //파일경로 없으면 생성          
+				Document document = new Document();
+				PdfWriter.getInstance(document, new FileOutputStream(dir+"/"+fileName));
+				document.open();
+				PdfPTable table = new PdfPTable(4);
+				for(int i = 0; i < plan.size(); i++){
+					table.addCell("cellNumber:"+i);
+					table.addCell("plan.get("+1+").getMemo().toString()");
+				}document.add(table);
+					document.close();
+					return "redirect:/plan/plan.kh";
+					}
+		
 		
 		
 		

@@ -126,9 +126,9 @@
 			
 			</div>
 			<div clss="button">
-			<button onClick="plannerModify(${planner.boardNo},${page});">수정</button>
-			<button onClick="plannerRemove(${page});">삭제</button>
-			<button>pdf</button>
+			<button onclick="plannerModify(${planner.boardNo},${page});">수정</button>
+			<button onclick="plannerRemove(${page});">삭제</button>
+			<button onclick="location.href='/plan/pdf.kh?boardNo=${planner.boardNo }'">PDF</button>
 			<!-- 수정 삭제 pdf  -->
 			</div>
 		</div>

@@ -1,16 +1,17 @@
 package com.kh.tripply.plan.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlanList {
 	
-	private List<Plan> planList;
+	private ArrayList<Plan> planList;
 
-	public List<Plan> getPlanList() {
+	public ArrayList<Plan> getPlanList() {
 		return planList;
 	}
 
-	public void setPlanList(List<Plan> planList) {
+	public void setPlanList(ArrayList<Plan> planList) {
 		this.planList = planList;
 	}
 

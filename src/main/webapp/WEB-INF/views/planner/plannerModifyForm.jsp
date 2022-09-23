@@ -90,7 +90,7 @@
 		
 		<div class="resultButton">
 			<button  form="submitForm" type="submit" class="planSumbit" >저장</button>
-			<button class="planClose"onclick="plannerRemove()">닫기</button>
+			<button class="planClose"onclick="plannerRemove(${page})">닫기</button>
 		</div>
 		
 	</div>
@@ -109,7 +109,8 @@
 		</c:forEach> 
 		
 		</div>
-		<form action="/plan/registplan.kh" method="post" id="submitForm">
+		<form action="/plan/modifyplan.kh" method="post" id="submitForm">
+		<input type="text" name="boardNo" value="${planner.boardNo }">
 		<div class="plan-area">
 			<c:forEach items="${dayList }" var="day" varStatus="status">
 			<div class="planI-plansbox" data-date="${day}">
@@ -121,13 +122,13 @@
 	<!-- <table border="1"> -->
 	<c:forEach items="${planList }" var="plan" varStatus="i">
  	<c:if test= "${plan.day eq day}"> 
-	<input type="hidden" name="planList[${i.count}].boardNo" id="boardNo" value="${plan.boardNo}"/>		
-	<div class="planNum${i.count }">${i.count }
-	<input type="hidden" name="planList[${i.count}].day" id="planDate" value="${plan.day}"/>		
-	<input type="hidden" name="planList[${i.count}].Y" id="planY" value="${plan.y}"/>		
-	<input type="hidden" name="planList[${i.count}].X" id="planX" value="${plan.x}"/>		 
-	<input type="text" name="planList[${i.count}].address" id="planTitle" value="${plan.address}"/><br>		
-	<input type="text" name="planList[${i.count}].Memo" id="planMemo" value="${plan.memo}"/>
+	<div class="planNum${i.count-1 }">${i.count-1 }
+	<input type="hidden" name="planList[${i.count-1}].boardNo" id="boardNo" value="${plan.boardNo}"/>		
+	<input type="hidden" name="planList[${i.count-1}].day" id="planDate" value="${plan.day}"/>		
+	<input type="hidden" name="planList[${i.count-1}].Y" id="planY" value="${plan.y}"/>		
+	<input type="hidden" name="planList[${i.count-1}].X" id="planX" value="${plan.x}"/>		 
+	<input type="text" name="planList[${i.count-1}].address" id="planTitle" value="${plan.address}"/><br>		
+	<input type="text" name="planList[${i.count-1}].Memo" id="planMemo" value="${plan.memo}"/>
 	<button class="planDetailButton" onclick="planDelete(${i.count})">&times;</button></div>
 			
 			<%--  <tr>
@@ -187,6 +188,14 @@ function plannerRemove(page){
 		
 	}
 }
+/* function plannerSave(){
+	event.preventDefault();//하이퍼링크 이동 방지
+	if(confirm("게시물을 저장하겠습니까?")){
+		planList.removeAll(Arrays.asList("", null));
+		location.href="/plan/registplan.kh";
+	}
+	
+} */
 </script>
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55f8ef22507421de3927e33382a4c630&libraries=services,clusterer,drawing"></script>
@@ -446,7 +455,7 @@ var markers = [];
         var data_date = parent.attr('data-date');
         var boardNo=$('#boardNo').attr('value');
         var num = parent.after().length; // 하위 엘리먼트기에 일정 - 제목 (DAY) 부분도 포함됨
-        var i = parentss.children().length-parentss.length;
+        var i = parentss.children().length-$('.planI-plansboxtitle').length;
         if(num<10){ // 일정은 9개까지만 추가 가능
            parent.append(getHtml(place_name,place_y,place_x,num, data_date,i,boardNo));
        }else{
@@ -484,7 +493,7 @@ var markers = [];
 	   event.preventDefault();
 	   var parent =  $('.planI-plansbox[style*="display: block"]');
        var kid = parent.children().eq(num); // 일정 부분에 제목도 자식에 포함되기에 index +1
-       var next_kids = kid.nextAll();
+       var next_kids = parent.nextAll();
 
        kid.detach();
 

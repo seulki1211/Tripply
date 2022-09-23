@@ -89,8 +89,8 @@
 		<!-- 타이틀 시작 날짜 끝날짜 보더 넘버->히든 -->
 		
 		<div class="resultButton">
-			<button  form="submitForm" type="submit" class="planSumbit" >저장</button>
-			<button class="planClose"onclick="plannerRemove()">닫기</button>
+			<button  form="submitForm" type="submit" class="planSumbit"  >저장</button>
+			<button class="planClose"onclick="plannerRemove(${planner.boardNo},${page })">닫기</button>
 		</div>
 		
 	</div>
@@ -148,10 +148,10 @@
 	</div>
 	</body>
 <script type="text/javascript">
-function plannerRemove(page){
+function plannerRemove(boardNo,page){
 	event.preventDefault();//하이퍼링크 이동 방지
 	if(confirm("게시물작성을 취소하시겠습니까?")){
-		location.href="/plan/infoRremove.kh";
+		location.href="/plan/infoRremove.kh?boardNo="+boardNo+"&page="+page;
 		
 	}
 }
@@ -461,7 +461,7 @@ var markers = [];
 
            var btn = "planDelete(" + num + ")";
            $(this).find('button').attr("onclick", btn);
-           ++ num;
+           num++;
        }); 
    }
 
