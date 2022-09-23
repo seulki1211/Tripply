@@ -376,13 +376,23 @@ public class TradeController {
 		return mv;
 	}
 	
+	/**
+	 * 댓글 삭제
+	 * @param mv
+	 * @param tReply
+	 * @param currentPage
+	 * @return
+	 */
 	@RequestMapping(value="/trade/reply/remove.kh",method=RequestMethod.POST)
 	public ModelAndView tradeReplyRemove(ModelAndView mv,
 			@ModelAttribute TradeReply tReply,
 			@RequestParam("currentPage") Integer currentPage) {
 		
+		//1. UPDATE문을 이용하여 게시물의 내용과 상태를 변경한다.
 		int result = tService.removeTradeReply(tReply);
 		if(result>0) {
+			
+			//2.로직 성공 후 현재의 상세페이지로 리다이렉트한다.
 			int boardNo = tReply.getBoardNo();
 			mv.setViewName("redirect:/trade/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
 		}else {
@@ -401,17 +411,26 @@ public class TradeController {
 	public ModelAndView tradeReplyChoice(ModelAndView mv,
 			@RequestParam("buyer") String buyer,
 			@RequestParam("boardNo") String boardNo,
-			@RequestParam("currentPage") Integer currentPage) {
+			@RequestParam("currentPage") Integer currentPage,
+			@ModelAttribute TradeReply tReply) {
 		
+		//1. 채택된 구매희망자의 아이디와 게시물번호를 HashMap에 담는다.
 		HashMap<String,String> paramMap = new HashMap<>();
 		paramMap.put("boardNo", boardNo);
 		paramMap.put("buyer",buyer);
-		System.out.println(buyer);
+
+		//2.게시물에 buyerId를 UPDATE한다.
 		int result = tService.modifyBuyer(paramMap);
 		if(result>0) {
-			mv.setViewName("redirect:/trade/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
-		}else {
 			
+			//3.성공 시 해당 게시물의 최종 입찰 금액을 채택 댓글의 구매희망금액으로 UPDATE한다.
+			int updateResult = tService.modifyFinalBiddingPrice(tReply);
+			if(updateResult > 0) {
+				//4.로직 처리 후 현재 상세페이지로 리다이렉트한다.
+				mv.setViewName("redirect:/trade/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+			}else {
+			}
+		}else {
 		}
 		return mv;
 	}

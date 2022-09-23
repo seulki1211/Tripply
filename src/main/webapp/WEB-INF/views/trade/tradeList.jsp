@@ -36,7 +36,10 @@
 							<div align="center">
 								<span class="detail region">[${trade.tLocationName }]</span>
 								<a href="#" onclick="loginCheck('${loginUser.memberId}','/trade/detailView.kh?boardNo=${trade.boardNo }&currentPage=${paging.currentPage }');"  >
-									<span class="detail title"><b>${trade.tradeTitle }</b></span>
+									<span class="detail title">
+										<c:if test="${trade.soldOut eq 'Y' }">[판매완료]</c:if>
+										<b>${trade.tradeTitle }</b>
+									</span>
 								</a>
 								<div class="detail writer">${trade.tradeWriter }</div>
 								<div class="detail info-wrap">

@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.tripply.common.Paging;
 import com.kh.tripply.common.Search;
+import com.kh.tripply.member.domain.Member;
 import com.kh.tripply.trade.domain.Trade;
 import com.kh.tripply.trade.domain.TradeReply;
 
@@ -32,4 +33,6 @@ public interface TradeStore {
 	
 		/////////////////////거래
 	public int updateBuyer(SqlSessionTemplate session,HashMap<String,String> paramMap);
+	public int updateFinalBiddingPrice(SqlSessionTemplate session,TradeReply tReply);
+	public List<Trade> selectMyTrade(SqlSessionTemplate session,Member loginUser);
 }

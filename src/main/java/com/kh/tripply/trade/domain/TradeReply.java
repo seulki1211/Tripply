@@ -13,12 +13,14 @@ public class TradeReply {
 	private String trStatus;
 	private String reReplyYn;
 	private String trChoiced;
-
+	private int biddingPrice;
+	
 	public TradeReply() {
 	}
 
 	public TradeReply(int tReplyNo, int boardNo, int tRefReplyNo, String tReplyWriter, String tReplyContents,
-			Date trCreateDate, Date trUpdateDate, String trStatus, String reReplyYn, String trChoiced) {
+			Date trCreateDate, Date trUpdateDate, String trStatus, String reReplyYn, String trChoiced,
+			int biddingPrice) {
 		super();
 		this.tReplyNo = tReplyNo;
 		this.boardNo = boardNo;
@@ -30,14 +32,7 @@ public class TradeReply {
 		this.trStatus = trStatus;
 		this.reReplyYn = reReplyYn;
 		this.trChoiced = trChoiced;
-	}
-
-	@Override
-	public String toString() {
-		return "TradeReply [tReplyNo=" + tReplyNo + ", boardNo=" + boardNo + ", tRefReplyNo=" + tRefReplyNo
-				+ ", tReplyWriter=" + tReplyWriter + ", tReplyContents=" + tReplyContents + ", trCreateDate="
-				+ trCreateDate + ", trUpdateDate=" + trUpdateDate + ", trStatus=" + trStatus + ", reReplyYn="
-				+ reReplyYn + ", trChoiced=" + trChoiced + "]";
+		this.biddingPrice = biddingPrice;
 	}
 
 	public int gettReplyNo() {
@@ -119,5 +114,24 @@ public class TradeReply {
 	public void setTrChoiced(String trChoiced) {
 		this.trChoiced = trChoiced;
 	}
+
+	public int getBiddingPrice() {
+		return biddingPrice;
+	}
+
+	public void setBiddingPrice(int biddingPrice) {
+		this.biddingPrice = biddingPrice;
+	}
+
+	@Override
+	public String toString() {
+		return "TradeReply [tReplyNo=" + tReplyNo + ", boardNo=" + boardNo + ", tRefReplyNo=" + tRefReplyNo
+				+ ", tReplyWriter=" + tReplyWriter + ", tReplyContents=" + tReplyContents + ", trCreateDate="
+				+ trCreateDate + ", trUpdateDate=" + trUpdateDate + ", trStatus=" + trStatus + ", reReplyYn="
+				+ reReplyYn + ", trChoiced=" + trChoiced + ", biddingPrice=" + biddingPrice + "]";
+	}
+
+	
+	
 
 }

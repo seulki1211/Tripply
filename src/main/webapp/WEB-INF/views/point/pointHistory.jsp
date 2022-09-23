@@ -35,13 +35,14 @@
 		</div>
 <!-- 본 컨텐츠 -->
 		<div id="point-history-area" style="float:left">
-			<h1>포인트 내역확인</h1><hr>
+			<h1>포인트 내역확인</h1><hr><br>
+			현재 포인트 잔액 : ${loginUser.pointBalance }원
 			<div></div>
 			<table align="center" border="1px" width="500px">
 				<tr>
 					<th>날짜</th>
 					<th>금액</th>
-					<th>메시지</th>
+					<th>내용</th>
 				</tr>
 				<c:forEach items="${pList }" var="point" varStatus="n">
 					<tr>

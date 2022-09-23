@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.tripply.common.Paging;
 import com.kh.tripply.common.Search;
+import com.kh.tripply.member.domain.Member;
 import com.kh.tripply.trade.domain.Trade;
 import com.kh.tripply.trade.domain.TradeReply;
 import com.kh.tripply.trade.store.TradeStore;
@@ -102,6 +103,18 @@ public class TradeStoreLogic implements TradeStore{
 	public int deleteTradeReply(SqlSessionTemplate session, TradeReply tReply) {
 		int result = session.update("TradeReplyMapper.deleteTradeReply", tReply);
 		return result;
+	}
+
+	@Override
+	public int updateFinalBiddingPrice(SqlSessionTemplate session, TradeReply tReply) {
+		int result = session.update("TradeMapper.updateFinalBiddingPrice", tReply);
+		return result;
+	}
+
+	@Override
+	public List<Trade> selectMyTrade(SqlSessionTemplate session, Member loginUser) {
+		List<Trade> tList = session.selectList("TradeMapper.selectMyTrade", loginUser);
+		return tList;
 	}
 
 }

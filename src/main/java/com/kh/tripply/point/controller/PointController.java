@@ -16,11 +16,15 @@ import com.kh.tripply.common.Paging;
 import com.kh.tripply.member.domain.Member;
 import com.kh.tripply.point.domain.Point;
 import com.kh.tripply.point.service.PointService;
+import com.kh.tripply.trade.domain.Trade;
+import com.kh.tripply.trade.service.TradeService;
 
 @Controller
 public class PointController {
 	@Autowired
 	PointService pService;
+	@Autowired
+	TradeService tService;
 	
 	/**
 	 * 포인트 충전 페이지 이동
@@ -29,7 +33,6 @@ public class PointController {
 	 */
 	@RequestMapping(value="/point/chargeView.kh",method=RequestMethod.GET)
 	public ModelAndView pointChargeView(ModelAndView mv) {
-	
 		mv.setViewName("/point/pointCharge");
 		return mv;
 	}
@@ -80,9 +83,19 @@ public class PointController {
 	 * @return
 	 */
 	@RequestMapping(value="/point/send.kh",method=RequestMethod.GET)
-	public ModelAndView pointSendView(ModelAndView mv) {
+	public ModelAndView pointSendView(ModelAndView mv,
+			HttpSession session) {
 		
-		mv.setViewName("/point/pointSend1");
+		//1.세션에서 로그인유저의 객체를 가져온다.
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		//2.채택된 거래게시물의 목록을 가져온다.
+		List<Trade> tList = tService.printMyTrade(loginUser);
+		if(!tList.isEmpty()) {
+			mv.addObject("tList",tList)
+			.setViewName("/point/pointSend1");
+		}else {
+		}
 		return mv;
 	}
 	

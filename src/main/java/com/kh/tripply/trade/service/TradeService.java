@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.kh.tripply.common.Paging;
 import com.kh.tripply.common.Search;
+import com.kh.tripply.member.domain.Member;
 import com.kh.tripply.trade.domain.Trade;
 import com.kh.tripply.trade.domain.TradeReply;
 
@@ -25,11 +26,14 @@ public interface TradeService {
 	public List<TradeReply> printTradeReplyByNo(int boardNo);
 	public int modifyTradeReply(TradeReply tReply);
 	public int removeTradeReply(TradeReply tReply);
+
 	
 	////////////////////조회수 카운트
 	public int tradeViewCount(int boardNo);
 	
 	/////////////////////거래
 	public int modifyBuyer(HashMap<String,String> paramMap);
+	public int modifyFinalBiddingPrice(TradeReply tReply);
+	public List<Trade> printMyTrade(Member loginUser);
 	
 }

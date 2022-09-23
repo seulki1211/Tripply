@@ -19,13 +19,15 @@ public class Trade {
 	private String buyerId;
 	private String soldOut;
 	private String thumbnailPath;
+	private int finalBiddingPrice;
 
 	public Trade() {
 	}
 
 	public Trade(int boardNo, String tradeTitle, String tradeContents, String tradeWriter, String tLocationCode,
 			String tLocationName, String tradeFileName, String tradeFileReName, String tradeFilePath, int tradeCount,
-			Date tCreateDate, Date tUpdateDate, String tStatus, String buyerId, String soldOut, String thumbnailPath) {
+			Date tCreateDate, Date tUpdateDate, String tStatus, String buyerId, String soldOut, String thumbnailPath,
+			int finalBiddingPrice) {
 		super();
 		this.boardNo = boardNo;
 		this.tradeTitle = tradeTitle;
@@ -43,6 +45,7 @@ public class Trade {
 		this.buyerId = buyerId;
 		this.soldOut = soldOut;
 		this.thumbnailPath = thumbnailPath;
+		this.finalBiddingPrice = finalBiddingPrice;
 	}
 
 	public int getBoardNo() {
@@ -173,6 +176,14 @@ public class Trade {
 		this.thumbnailPath = thumbnailPath;
 	}
 
+	public int getFinalBiddingPrice() {
+		return finalBiddingPrice;
+	}
+
+	public void setFinalBiddingPrice(int finalBiddingPrice) {
+		this.finalBiddingPrice = finalBiddingPrice;
+	}
+
 	@Override
 	public String toString() {
 		return "Trade [boardNo=" + boardNo + ", tradeTitle=" + tradeTitle + ", tradeContents=" + tradeContents
@@ -180,7 +191,10 @@ public class Trade {
 				+ tLocationName + ", tradeFileName=" + tradeFileName + ", tradeFileReName=" + tradeFileReName
 				+ ", tradeFilePath=" + tradeFilePath + ", tradeCount=" + tradeCount + ", tCreateDate=" + tCreateDate
 				+ ", tUpdateDate=" + tUpdateDate + ", tStatus=" + tStatus + ", buyerId=" + buyerId + ", soldOut="
-				+ soldOut + ", thumbnailPath=" + thumbnailPath + "]";
+				+ soldOut + ", thumbnailPath=" + thumbnailPath + ", finalBiddingPrice=" + finalBiddingPrice + "]";
 	}
+
+	
+	
 
 }

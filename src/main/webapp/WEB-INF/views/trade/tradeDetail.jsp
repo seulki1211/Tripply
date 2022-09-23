@@ -48,7 +48,7 @@
 				<tr>
 					<td>${trade.boardNo }</td>
 					<td>제목</td>
-					<td>${trade.tradeTitle }</td>
+					<td><c:if test="${trade.soldOut eq 'Y' }">[판매완료]</c:if> ${trade.tradeTitle }</td>
 				</tr>
 				<tr>
 					<td colspan='3'>${trade.tradeWriter } <span
@@ -71,18 +71,35 @@
 		</div>
 <!-- 댓글 입력창 -->
  구매 채택된 사람 아이디: ${trade.buyerId }
-
-		<div id="reply-input" align="center">
+		<c:if test="${loginUser.memberId ne trade.tradeWriter }">
+		<div class="reply-input" align="center">
 			<form action="/trade/reply/write.kh" method="post">
 				<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
 				<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
 				<input type="hidden" name="tReplyWriter" value="${loginUser.memberId }">
 				<input type="hidden" name="reReplyYn" value="N"> 
-				<input type="hidden" name="tRefReplyNo" value="-1"> 
-				<input type="text" name="tReplyContents" value="" placeholder="댓글을 입력해보세요!">
+				<input type="hidden" name="tRefReplyNo" value="-1">
+				<c:if test="${trade.soldOut ne 'Y' }">
+					<input type="text" name="biddingPrice" placeholder="구매희망가격">
+				</c:if>
+				<input type="text" name="tReplyContents" value="" placeholder="댓글을 달아보세요!">
 				<button>등록</button>
 			</form>
 		</div>
+		</c:if>
+		<c:if test="${loginUser.memberId eq trade.tradeWriter }">
+		<div class="reply-input" align="center">
+			<form action="/trade/reply/write.kh" method="post">
+				<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
+				<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
+				<input type="hidden" name="tReplyWriter" value="${loginUser.memberId }">
+				<input type="hidden" name="reReplyYn" value="N"> 
+				<input type="hidden" name="tRefReplyNo" value="-1">
+				<input type="text" name="tReplyContents" value="" placeholder="댓글을 달아보세요!">
+				<button>등록</button>
+			</form>
+		</div>
+		</c:if>
 <!-- 댓글출력  -->
 		<table id="reply-view" align="center">
 			<c:forEach items="${tReplyList }" var="tReply" varStatus="n">
@@ -92,6 +109,8 @@
 							${tReply.tReplyWriter } ${tReply.trCreateDate }
 						</div>
 						<div id="replyContents">
+							<c:if test="${trade.tradeWriter eq tReply.tReplyWriter }"><b>[판매자]</b> </c:if>
+							<c:if test="${trade.tradeWriter ne tReply.tReplyWriter and tReply.biddingPrice ne 0 }"><b>[구매희망가: ${tReply.biddingPrice }원]</b></c:if>
 							${tReply.tReplyContents }
 <!-- 댓글메뉴버튼 -->
 							<span align="right" id="replyMenu">
@@ -130,6 +149,8 @@
 										<input type="hidden" name="currentPage" value="${sessionScope.currentPage }">
 										<input type="hidden" name="buyer" value="${tReply.tReplyWriter }">
 										<input type="hidden" name="boardNo" value="${trade.boardNo }">
+										<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
+										<input type="hidden" name="biddingPrice" value="${tReply.biddingPrice }">
 									</form>
 									<li><a href="/trade/reply/choiceCancel.kh">댓글 채택 취소</a></li>
 								</c:if>
@@ -217,7 +238,7 @@
 //댓글 채택 실행 함수
 	function submitChoice(target){
 		event.preventDefault();
-		var choiceForm = target.parentNote.nextElementSibling;
+		var choiceForm = target.parentNode.nextElementSibling;
 		console.log(choiceForm);
 		if(confirm("정말 채택하시겠습니까?")){
 			choiceForm.submit();

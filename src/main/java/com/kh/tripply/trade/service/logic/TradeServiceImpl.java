@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.tripply.common.Paging;
 import com.kh.tripply.common.Search;
+import com.kh.tripply.member.domain.Member;
 import com.kh.tripply.trade.domain.Trade;
 import com.kh.tripply.trade.domain.TradeReply;
 import com.kh.tripply.trade.service.TradeService;
@@ -104,6 +105,18 @@ public class TradeServiceImpl implements TradeService {
 	public int removeTradeReply(TradeReply tReply) {
 		int result = tStore.deleteTradeReply(session, tReply);
 		return result;
+	}
+
+	@Override
+	public int modifyFinalBiddingPrice(TradeReply tReply) {
+		int result = tStore.updateFinalBiddingPrice(session, tReply);
+		return result;
+	}
+
+	@Override
+	public List<Trade> printMyTrade(Member loginUser) {
+		List<Trade> tList = tStore.selectMyTrade(session, loginUser);
+		return tList;
 	}
 
 }

@@ -44,6 +44,8 @@
 			
 				<div class="pointCharge method ">
 					<br>
+					현재 포인트 잔액 : ${loginUser.pointBalance }원
+					<br>
 					<h2>충전 수단 선택</h2>
 					<labal  onclick="choiceBank();"> 은행 <input type="radio" name="chargeMethod" value="bank"></labal>
 					<label  onclick="choiceCard();"> 카드 <input type="radio" name="chargeMethod" value="card"></label>
@@ -121,7 +123,7 @@
 		var cardDisplay = cardInfo.style.display;
 	
 		
-		//3.은행 입력 요소를 토글한다.
+		//3.은행 입력 요소를 토글한다. (토글이 안되는 문제 발생)
 		if(bankDisplay == 'none'){
 			bankInfo.style.display = "block";
 		}else{

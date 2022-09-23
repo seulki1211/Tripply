@@ -35,7 +35,26 @@
 		</div>
 <!-- 본 컨텐츠 -->
 		<div id="contents-2"  style="float:left">
-						<h1>포인트 전송</h1><hr>
+			<h1>포인트 전송</h1><hr><br>
+			현재 포인트 잔액 : ${loginUser.pointBalance }원			
+			구매 채택 게시글
+			<table align="center" border="1px">
+				<tr>
+					<th>제목</th>
+					<th>판매자</th>
+					<th>상태</th>
+					<th>구매 채택 가격</th>
+				</tr>
+				<c:forEach items="${tList }" var="trade" >
+					<tr>
+						<td>${trade.tradeTitle }</td>
+						<td>${trade.tradeWriter}</td>
+						<td>${trade.soldOut }</td>
+						<td>${trade.finalBiddingPrice }</td>
+					</tr>
+				</c:forEach>
+			</table>					
+		
 		</div>
 	</div>
 <!-- 푸터 -->
