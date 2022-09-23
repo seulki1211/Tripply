@@ -34,37 +34,10 @@
 			</div>
 		</div>
 <!-- 본 컨텐츠 -->
-		<div id="point-history-area" style="float:left">
-			<h1>포인트 내역확인</h1><hr>
-			<div></div>
-			<table align="center" border="1px" width="500px">
-				<tr>
-					<th>날짜</th>
-					<th>금액</th>
-					<th>메시지</th>
-				</tr>
-				<c:forEach items="${pList }" var="point" varStatus="n">
-					<tr>
-						<td>${point.pCreateDate}</td>
-						<td>${point.pointAmount }</td>
-						<c:if test="${point.pointWorkType eq 'C' }">
-							<td>
-								포인트를 충전하였습니다.
-							</td>
-						</c:if>
-						<c:if test="${point.pointWorkType eq 'R' }">
-							<td>
-								${point.pointFromUser }님에게 포인트를 받았습니다.
-							</td>
-						</c:if>
-						<c:if test="${point.pointWorkType eq 'S' }">
-							<td>
-								${point.pointToUser }님에게 포인트를 보냈습니다.
-							</td>
-						</c:if>
-					</tr>
-				</c:forEach>
-			</table>
+		<div id="contents-2" style="float:left">
+			<h1>포인트 ${message }에 성공하였습니다.</h1><hr>
+			
+		
 		</div>
 	</div>
 <!-- 푸터 -->

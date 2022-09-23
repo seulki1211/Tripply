@@ -5,4 +5,37 @@
   
   <mapper namespace="PointMapper">
   
+  <resultMap type="Point" id="PointResultMap">
+	  	<id 	column="POINT_WORK_NO" property="pointWorkNo"/>
+		<result column="POINT_WORK_TYPE" property="pointWorkType"/>  
+		<result column="POINT_FROM_USER" property="pointFromUser"/>
+		<result column="POINT_TO_USER" property="pointToUser"/>
+		<result column="POINT_AMOUNT" property="pointAmount"/>
+		<result column="P_CREATE_DATE" property="pCreateDate"/>
+  </resultMap>
+  
+  <select id="selectAllPointHistory" resultMap="PointResultMap">
+  	SELECT *
+  	FROM POINT_HISTORY_TBL
+  	WHERE POINT_FROM_USER=#{loginUser} OR POINT_TO_USER=#{loginUser}
+  	ORDER BY P_CREATE_DATE DESC
+  </select>
+  
+  <select id="selectCountAllPointHistory" resultType="_int">
+   SELECT COUNT(*) FROM POINT_HISTORY_TBL
+   WHERE POINT_FROM_USER=#{loginUser} OR POINT_TO_USER=#{loginUser}
+  ORDER BY P_CREATE_DATE DESC
+  </select>
+  
+  <insert id="insertPointHistory">
+  	INSERT INTO POINT_HISTORY_TBL
+  	VALUES(SEQ_POINT_WORKNO.NEXTVAL,#{pointWorkType},#{pointFromUser},#{pointToUser},#{pointAmount},DEFAULT)
+  </insert>
+  
+  <update id="updateChargePoint">
+  	UPDATE MEMBER_TBL
+  	SET POINT_BALANCE = POINT_BALANCE + #{pointAmount}
+  	WHERE MEMBER_ID = #{pointToUser}
+  </update>
+  
   </mapper>
