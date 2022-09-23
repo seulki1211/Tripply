@@ -11,6 +11,28 @@ public class FreeReply {
 	private Date fUpdateDate;
 	private String fStatus;
 	
+		
+	public FreeReply() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
+	public FreeReply(int freeReplyNo, int boardNo, String freeReplyWriter, String freeReplyContents, Date fCreateDate,
+			Date fUpdateDate, String fStatus) {
+		super();
+		this.freeReplyNo = freeReplyNo;
+		this.boardNo = boardNo;
+		this.freeReplyWriter = freeReplyWriter;
+		this.freeReplyContents = freeReplyContents;
+		this.fCreateDate = fCreateDate;
+		this.fUpdateDate = fUpdateDate;
+		this.fStatus = fStatus;
+	}
+
+
+
 	// getter / setter
 	public int getFreeReplyNo() {
 		return freeReplyNo;

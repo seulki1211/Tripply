@@ -13,4 +13,6 @@ public interface MemberService {
 	public int removeMember(String memberId);
 	// 회원상세정보
 	public Member printMemberId(String memberId);
+	
+	public Member findMemberId(String memberEmail);
 }

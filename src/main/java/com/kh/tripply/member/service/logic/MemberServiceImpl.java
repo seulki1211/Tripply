@@ -44,5 +44,11 @@ public class MemberServiceImpl implements MemberService{
 		Member mOne = mStore.selectMemberId(session, memberId);
 		return mOne;
 	}
+	
+	@Override
+	public Member findMemberId(String memberEmail) {
+		Member mOne = mStore.selectMemberIdByEmail(session, memberEmail);
+		return mOne;
+	}
 
 }
