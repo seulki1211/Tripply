@@ -16,23 +16,27 @@
 	</div>
 <!-- 컨텐츠 -->
 	<div id="contents">
-		<div id="sideBar">
+<!-- 사이드바	 -->
+		<div id="sideBar"  style="float:left">
 			<div class="my-side">
 				<div class="my-side-bar" onclick="location.href='#';">회원정보수정</div>
 				<div class="my-side-bar" onclick="location.href='/free/list.kh';">작성글</div>
 				<div class="my-side-bar">북마크</div>
 				<div class="my-side-bar" onclick="pointNavi(this);">포인트관리</div>
-				<div id="point-navi" style="display:none;">
+<!-- 사이드바 아코디언			 -->
+				<div id="point-navi">
 					<ul>
-						<li class="point arcodian" onclick="location.href='/point/chargeView.kh';">포인트 충전</li>
-						<li class="point arcodian" onclick="location.href='/point/historyView.kh?';">포인트 내역확인</li>
-						<li class="point arcodian" onclick="location.href='/point/send.kh';">포인트 전송</li>
+						<li onclick="location.href='/point/chargeView.kh';">포인트 충전</li>
+						<li onclick="location.href='/point/historyView.kh';">포인트 내역확인</li>
+						<li onclick="location.href='/point/send.kh';">포인트 전송</li>
 					</ul>
 				</div>
 			</div>
 		</div>
-
-		<div id="contents-2"></div>
+<!-- 본 컨텐츠 -->
+		<div id="contents-2"  style="float:left">
+					<h1 align="center">포인트 충전</h1><hr>
+		</div>
 	</div>
 <!-- 푸터 -->
 	<div id="footer"></div>

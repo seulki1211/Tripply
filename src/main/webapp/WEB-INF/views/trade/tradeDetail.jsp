@@ -12,22 +12,27 @@
 
 <!-- css -->
 <style>
+/* 댓글아코디언메뉴 스타일 */
 	.modal{
 		background-color:white;
-		position:absolute;
-		display:flex;
+/* 		position:absolute; */
+		z-index: 100;
 	}
+/* 답글 스타일 */
 	.reReply{
 		background-color:gainsboro;
 		position:relative;
 		left:10px;
 		padding:10px;
+		z-index:40;		
 		
 	}
+/* 댓글 메뉴 버튼 스타일 */
 	.replyMenuBtn{
 		position:block;
 		right:10px;
 		padding:10px;
+		z-index:50;
 	}
 </style>
 <body>
@@ -90,8 +95,8 @@
 						</div>
 						<div id="replyContents">
 							${tReply.tReplyContents }
-							<span align="right" id="replyMenu">
 <!-- 댓글메뉴 -->
+							<span align="right" id="replyMenu">
 								<c:if test="${(loginUser.memberId eq tReply.tReplyWriter) || (loginUser.memberId eq trade.tradeWriter) }">
 									<a href="#" onclick="replyMenu(this);" class="replyMenuBtn"> ▤ </a>
 								</c:if>
@@ -212,7 +217,7 @@
 //댓글 채택 실행 함수
 	function submitChoice(target){
 		event.preventDefault();
-		var choiceForm = target.parentNote.nextElementSibling;
+		var choiceForm = target.parentNode.nextElementSibling;
 		console.log(choiceForm);
 		if(confirm("정말 채택하시겠습니까?")){
 			choiceForm.submit();
