@@ -26,10 +26,9 @@
 	<h1 align="center">동행자 구하기!</h1>
 	<br><br>
 		
-	<form action="/party/register.kh" method="post" enctype="multipart/form-data">
+	<form action="/party/register.kh" method="post" enctype="multipart/form-data" name='partyForm'>
 	
 		<table align="center" class="table col-10">
-		
 			<tr>
 			<td  class="col-2" scope="col" align='center'>썸네일 등록</td>
 			<td><input type="file" name="uploadFile"><br>*200px*200px을 권장합니다!</td>
@@ -52,27 +51,27 @@
 			<tr>
 			<td  class="col-2" scope="col" align='center'>여행 장소</td>
 			<td>
-					<select  name="partyLocation">
-							<option value="전국" label="전국"></option>
-							<option value="서울" label="서울"></option>
-							<option value="부산" label="부산"></option>
-							<option value="제주" label="제주"></option>
-							<option value="인천" label="인천"></option>
-							<option value="대전" label="대전"></option>
-							<option value="대구" label="대구"></option>
-							<option value="광주" label="광주"></option>
-							<option value="울산" label="울산"></option>
-							<option value="세종" label="세종"></option>
-							<option value="경기도" label="경기도"></option>
-							<option value="강원도" label="강원도"></option>
-							<option value="충청북도" label="충청북도"></option>
-							<option value="충청남도" label="충청남도"></option>
-							<option value="경상북도" label="경상북도"></option>
-							<option value="경상남도" label="경상남도"></option>
-							<option value="전라북도" label="전라북도"></option>
-							<option value="전라남도" label="전라남도"></option>
-						</select>
-						</td>
+				<select  name="partyLocation">
+						<option value="전국" label="전국"></option>
+						<option value="서울" label="서울"></option>
+						<option value="부산" label="부산"></option>
+						<option value="제주" label="제주"></option>
+						<option value="인천" label="인천"></option>
+						<option value="대전" label="대전"></option>
+						<option value="대구" label="대구"></option>
+						<option value="광주" label="광주"></option>
+						<option value="울산" label="울산"></option>
+						<option value="세종" label="세종"></option>
+						<option value="경기도" label="경기도"></option>
+						<option value="강원도" label="강원도"></option>
+						<option value="충청북도" label="충청북도"></option>
+						<option value="충청남도" label="충청남도"></option>
+						<option value="경상북도" label="경상북도"></option>
+						<option value="경상남도" label="경상남도"></option>
+						<option value="전라북도" label="전라북도"></option>
+						<option value="전라남도" label="전라남도"></option>
+					</select>
+					</td>
 			</tr>
 			<tr>
 			<td  class="col-2" scope="col" align='center'>내용</td>
@@ -80,9 +79,9 @@
 			</tr>
 			<tr>
 			<td colspan='2' align='right'>
-				<input type="submit" value="등록">
-				<input type="reset" value="취소">
-				<button type="button" onclick="location.href='/party/list.kh'">리스트로</button> 
+				<input onclick="partyCheck();" type="button" value="등록" class='btn btn-dark'>
+				<input type="reset" value="취소" class='btn btn-dark'>
+				<button type="button" onclick="location.href='/party/list.kh'" class='btn btn-dark'>리스트로</button> 
 				 
 			</td>
 			</tr>
@@ -93,9 +92,32 @@
 	
 		$('.summernote').summernote({
 			height : 300,
-			
 			lang : "ko-KR",
 		});
+		
+		function partyCheck() {
+			if(partyForm.partyTitle.value=="") { // document 를 생략해도 됨
+		        alert("제목을 입력하세요!");
+		        partyForm.partyTitle.focus();
+		    	return false;
+			}else if(partyForm.partyFirstDate.value==""){
+		        alert("일정 시작일을 입력하세요");
+		        partyForm.partyFirstDate.focus();
+		        return false;
+		    }else if(partyForm.partyLastDate.value==""){
+		        alert("일정 마지막일을 입력하세요");
+		        partyForm.partyLastDate.focus();
+		        return false;
+		    }else if(partyForm.partyContents.value==""){
+		        alert("내용을 입력하세요");
+		        partyForm.partyContents.focus();
+		        return false;
+
+		    }
+			return partyForm.submit();
+		 }
+			
+		
 	</script>
 
 </body>

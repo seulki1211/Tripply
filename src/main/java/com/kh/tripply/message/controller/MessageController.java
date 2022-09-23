@@ -30,29 +30,35 @@ public class MessageController {
 		return "message/messageWriteForm";
 	}
 	
-	
-	// 받는이 체크
-		@RequestMapping(value="/message/chkReciever.kh", method = RequestMethod.POST)
-		public ModelAndView chkMsgReciever(ModelAndView mv
-				, @RequestParam("msgReciever") String msgReciever) {
-			
-			try {
-				
-				int result = mService.chkMsgReciever(msgReciever);
-				mv.addObject("chkResult", result);
-				mv.addObject("msgReciever", msgReciever);
-				mv.setViewName("message/messageWriteForm");
+	// 답장 쓰기 뷰
+	@RequestMapping(value = "/message/replyView.kh", method = RequestMethod.GET)
+	public ModelAndView showMessageReply(ModelAndView mv, @RequestParam("msgReciever") String msgReciever) {
+		mv.addObject("msgReciever", msgReciever);
+		mv.setViewName("message/messageReplyForm");
 
-				
-			} catch (Exception e) {
-				mv.addObject("msg", e.getMessage());
-				mv.setViewName("common/errorPage");
-			}
-			
-			return mv;
-			
+		return mv;
+	}
+
+	// 받는이 체크
+	@RequestMapping(value = "/message/chkReciever.kh", method = RequestMethod.POST)
+	public ModelAndView chkMsgReciever(ModelAndView mv, @RequestParam("msgReciever") String msgReciever) {
+
+		try {
+
+			int result = mService.chkMsgReciever(msgReciever);
+			mv.addObject("chkResult", result);
+			mv.addObject("msgReciever", msgReciever);
+			mv.setViewName("message/messageWriteForm");
+
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/errorPage");
 		}
-	
+
+		return mv;
+
+	}
+
 	// 쪽지 보내기
 	@RequestMapping(value = "/message/send.kh", method = RequestMethod.POST)
 	public ModelAndView sendMessage(ModelAndView mv
@@ -161,110 +167,104 @@ public class MessageController {
 		return mv;
 	}
 	
-	
-	
 	// 쪽지 열람
 	@RequestMapping(value = "message/detail.kh", method = RequestMethod.GET)
-		public ModelAndView noticeDetailView(ModelAndView mv, @RequestParam("msgNo") int msgNo,
-				@RequestParam("page") Integer page, HttpSession session) {
+	public ModelAndView noticeDetailView(ModelAndView mv, @RequestParam("msgNo") int msgNo,
+			@RequestParam("page") Integer page, HttpSession session) {
 
-			try {
-				Message msg = mService.printOneNotice(msgNo);
-				mv.addObject("msg", msg);
-				mv.addObject("page", page);
+		try {
+			Message msg = mService.printOneNotice(msgNo);
+			mv.addObject("msg", msg);
+			mv.addObject("page", page);
 
-				mv.setViewName("message/messageDetailView");
-			} catch (Exception e) {
-				mv.addObject("msg", e.getMessage());
-				mv.setViewName("common/errorPage");
-			}
-
-			return mv;
-
+			mv.setViewName("message/messageDetailView");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/errorPage");
 		}
-	
-	//쪽지 검색 
-		@RequestMapping(value = "/message/search.kh", method = RequestMethod.GET)
-		public ModelAndView recvMsgList(ModelAndView mv
-				, @RequestParam("searchCondition") 	String searchCondition
-				, @RequestParam("searchArea") 		String searchArea
-				, @RequestParam("searchValue") 		String searchValue
-				, @RequestParam("loginUserNickname") String loginUserNickname
-				, @RequestParam(value = "page", required = false) Integer page 
-				) {
-			
-			try {
-				if(searchArea.equals("msgWriter")) {
-					MessageSearch mSearch = new MessageSearch(searchCondition,searchValue,loginUserNickname,"");
-					// 페이징
-					int currentPage = (page != null) ? page : 1;
-					int totalCount = mService.getTotalSendCount(mSearch);
-					int boardLimit = 10;
-					int naviLimit = 5;
-					int maxPage;
-					int startNavi;
-					int endNavi;
-					maxPage = (int) ((double) totalCount / boardLimit + 0.9);
-					startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
-					endNavi = startNavi + naviLimit - 1;
-					if (maxPage < endNavi) {
-						endNavi = maxPage;
-					}
-					mv.addObject("currentPage", currentPage);
-					mv.addObject("maxPage", maxPage);
-					mv.addObject("startNavi", startNavi);
-					mv.addObject("endNavi", endNavi);
-					mv.addObject("urlVal", "sendList");
-					// 페이징
-					
-					//검색 조건
-					mv.addObject("mSearch", mSearch);
-					
-					// 검색 결과
-					List<Message> sendList = mService.printSearchSendList(mSearch,currentPage,boardLimit);
 
-					mv.addObject("sendList", sendList);
-					mv.setViewName("message/messageSendListView");
-					
-				}else {
-					MessageSearch mSearch = new MessageSearch(searchCondition,searchValue,"",loginUserNickname);
-					// 페이징
-					int currentPage = (page != null) ? page : 1;
-					int totalCount = mService.getTotalRecvCount(mSearch);
-					int boardLimit = 10;
-					int naviLimit = 5;
-					int maxPage;
-					int startNavi;
-					int endNavi;
-					maxPage = (int) ((double) totalCount / boardLimit + 0.9);
-					startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
-					endNavi = startNavi + naviLimit - 1;
-					if (maxPage < endNavi) {
-						endNavi = maxPage;
-					}
-					mv.addObject("currentPage", currentPage);
-					mv.addObject("maxPage", maxPage);
-					mv.addObject("startNavi", startNavi);
-					mv.addObject("endNavi", endNavi);
-					mv.addObject("urlVal", "recvList");
-					// 페이징
-					
-					//검색 조건
-					mv.addObject("mSearch", mSearch);
-					
-					// 검색 결과
-					List<Message> recvList = mService.printSearchRecvList(mSearch,currentPage,boardLimit);
-					System.out.println(recvList.toString());
-					mv.addObject("recvList", recvList);
-					mv.setViewName("message/messageRecvListView");
+		return mv;
+
+	}
+
+	// 쪽지 검색
+	@RequestMapping(value = "/message/search.kh", method = RequestMethod.GET)
+	public ModelAndView recvMsgList(ModelAndView mv, @RequestParam("searchCondition") String searchCondition,
+			@RequestParam("searchArea") String searchArea, @RequestParam("searchValue") String searchValue,
+			@RequestParam("loginUserNickname") String loginUserNickname,
+			@RequestParam(value = "page", required = false) Integer page) {
+
+		try {
+			if (searchArea.equals("msgWriter")) {
+				MessageSearch mSearch = new MessageSearch(searchCondition, searchValue, loginUserNickname, "");
+				// 페이징
+				int currentPage = (page != null) ? page : 1;
+				int totalCount = mService.getTotalSendCount(mSearch);
+				int boardLimit = 10;
+				int naviLimit = 5;
+				int maxPage;
+				int startNavi;
+				int endNavi;
+				maxPage = (int) ((double) totalCount / boardLimit + 0.9);
+				startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+				endNavi = startNavi + naviLimit - 1;
+				if (maxPage < endNavi) {
+					endNavi = maxPage;
 				}
-				
-				
-			} catch (Exception e) {
-				mv.addObject("msg", e.getMessage());
-				mv.setViewName("common/errorPage");
+				mv.addObject("currentPage", currentPage);
+				mv.addObject("maxPage", maxPage);
+				mv.addObject("startNavi", startNavi);
+				mv.addObject("endNavi", endNavi);
+				mv.addObject("urlVal", "sendList");
+				// 페이징
+
+				// 검색 조건
+				mv.addObject("mSearch", mSearch);
+
+				// 검색 결과
+				List<Message> sendList = mService.printSearchSendList(mSearch, currentPage, boardLimit);
+
+				mv.addObject("sendList", sendList);
+				mv.setViewName("message/messageSendListView");
+
+			} else {
+				MessageSearch mSearch = new MessageSearch(searchCondition, searchValue, "", loginUserNickname);
+				// 페이징
+				int currentPage = (page != null) ? page : 1;
+				int totalCount = mService.getTotalRecvCount(mSearch);
+				int boardLimit = 10;
+				int naviLimit = 5;
+				int maxPage;
+				int startNavi;
+				int endNavi;
+				maxPage = (int) ((double) totalCount / boardLimit + 0.9);
+				startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+				endNavi = startNavi + naviLimit - 1;
+				if (maxPage < endNavi) {
+					endNavi = maxPage;
+				}
+				mv.addObject("currentPage", currentPage);
+				mv.addObject("maxPage", maxPage);
+				mv.addObject("startNavi", startNavi);
+				mv.addObject("endNavi", endNavi);
+				mv.addObject("urlVal", "recvList");
+				// 페이징
+
+				// 검색 조건
+				mv.addObject("mSearch", mSearch);
+
+				// 검색 결과
+				List<Message> recvList = mService.printSearchRecvList(mSearch, currentPage, boardLimit);
+				System.out.println(recvList.toString());
+				mv.addObject("recvList", recvList);
+				mv.setViewName("message/messageRecvListView");
 			}
-			return mv;
+
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/errorPage");
 		}
-	
+		return mv;
+	}
+
 }

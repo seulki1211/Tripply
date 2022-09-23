@@ -51,13 +51,13 @@
 						</form>
 						</div>
 						<br>
-			<table align="center" class="table col-10 table-borderless" width="100%">
+			<table align="center" class="table col-12 table-borderless" width="100%">
 				<tr id="detail-raw-wrap">
 					<c:forEach items="${pList }" var="party" varStatus="i">
 						<td id="detail-one-wrap" aligh="center" width="30%" height="30%">
 							<div class="detail title thumbnale-wrap" align="center">
 							<c:if test="${empty party.partyFileName }">
-								<img alt="기본이미지" src="/resources/image/basic.jpg" width='200px' height="200px">
+								<img alt="기본이미지" src="/resources/image/tripply-logo.png" width='200px' height="200px">
 								
 							</c:if>
 							<c:if test="${!empty party.partyFileName }">
@@ -105,7 +105,7 @@
 	</table>
 	
 				<!--  하단 페이지 목록 -->
-	<table align="center" class="table col-10 table-borderless" width="100%">
+	<table align="center" class="table col-12 table-borderless" width="100%">
 		<tr align='center' height="20">
 		<td   align='center'>
 		<ul class="pagination justify-content-center">

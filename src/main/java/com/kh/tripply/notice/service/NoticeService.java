@@ -10,6 +10,8 @@ public interface NoticeService {
 
 	public List<Notice> printAllNotice(int currentPage, int boardLimit);
 	
+	public List<Notice> printChoosedNotice();
+	
 	public int getTotalCount(String searchCondition, String searchValue);
 	
 	public Notice printOneNotice(int noticeNo);
@@ -18,5 +20,10 @@ public interface NoticeService {
 	
 	public int modifyNotice(Notice notice);
 
+	public int changeStatusN(int noticeNo);
+	
+	public int changeStatusY(int noticeNo);
+
+	public int countChoosedNotice();
 }
  

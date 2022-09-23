@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,7 +48,8 @@ public class NoticeController {
 	public ModelAndView noticeListView(ModelAndView mv
 			, @RequestParam(value = "page", required = false) Integer page,
 			HttpServletRequest request) {
-
+			int countResult = nService.countChoosedNotice();
+			mv.addObject("countResult", countResult);
 		try {
 			// 페이징
 			int currentPage = (page != null) ? page : 1;
@@ -103,7 +103,7 @@ public class NoticeController {
 		return mv;
 
 	}
-
+	
 	// 공지사항 삭제
 	@RequestMapping(value="/admin/notice/remove.kh", method = RequestMethod.GET)
 	public String noticeRemove(HttpSession session
@@ -163,5 +163,47 @@ public class NoticeController {
 		
 		return mv;
 		
+	}
+	
+	// 공지사항 노출 선택
+	@RequestMapping(value="/admin/notice/chooseNotice.kh", method = RequestMethod.GET)
+	public ModelAndView chooseNotice(ModelAndView mv
+						, @RequestParam("noticeNo") Integer noticeNo
+						, @RequestParam("nStatus") String nStatus
+						, @RequestParam("page") Integer page) {
+	
+		
+		try {
+			
+			
+			int countResult = nService.countChoosedNotice();
+			if (countResult > 4) {
+				mv.addObject("countResult", countResult);
+
+				if (nStatus.equals("Y")) { // n으로 업데이트
+					int result = nService.changeStatusN(noticeNo);
+					mv.setViewName("redirect:/admin/notice/list.kh?page=" + page);
+				} else { // y로 업데이트
+					mv.setViewName("redirect:/admin/notice/list.kh?page=" + page);
+				}
+				
+			} else { // 공지 노출이 5개 이하일때
+				mv.addObject("countResult", countResult);
+				
+				if (nStatus.equals("Y")) { // n으로 업데이트
+					int result = nService.changeStatusN(noticeNo);
+					mv.setViewName("redirect:/admin/notice/list.kh?page=" + page);
+
+				} else { // y로 업데이트
+					int result = nService.changeStatusY(noticeNo);
+					mv.setViewName("redirect:/admin/notice/list.kh?page=" + page);
+				}
+
+			}
+
+		} catch (Exception e) {
+			mv.setViewName("redirect:/admin/notice/list.kh?page=" + page);
+		}
+		return mv;
 	}
 }

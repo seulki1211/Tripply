@@ -225,6 +225,7 @@ public class PartyController {
 
 		return mv;
 	}
+	
 	// 동행자 게시판 검색
 	@RequestMapping(value = "party/search.kh", method = RequestMethod.GET)
 	public ModelAndView boardSearchList(ModelAndView mv
@@ -303,6 +304,7 @@ public class PartyController {
 		
 	}
 	
+	// 댓글 삭제
 	@RequestMapping(value = "/party/removeReply.kh", method = RequestMethod.GET)
 	public ModelAndView removeReply(ModelAndView mv
 			,@RequestParam("pReplyNo") Integer pReplyNo
@@ -329,8 +331,6 @@ public class PartyController {
 			, @RequestParam("page") Integer page
 			, HttpSession session) {
 		
-		System.out.println(pReply.toString());
-		System.out.println(page);
 		try {
 			int result = pService.modifyReply(pReply);
 			mv.setViewName("redirect:/party/detail.kh?partyNo="+pReply.getRefBoardNo()+"&page=" + page);
