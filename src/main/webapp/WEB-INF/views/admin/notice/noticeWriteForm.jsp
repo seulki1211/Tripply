@@ -29,17 +29,14 @@
 	<br><br>
 
 		
-	<form action="/admin/notice/register.kh" method="post">
-	
-	
+	<form action="/admin/notice/register.kh" method="post" name='noticeForm'>
 		<table align="center" class="table col-10">
-			
 			<tr>
 			<td  class="col-2" scope="col" align='center'>제목</td>
 			<td> <input type="text" class="form-control" id="exampleFormControlInput1" name="noticeTitle"></td>
 			<tr>
 			<td class="col-2" scope="col" align='center'>작성자</td>
-			<td><input type="text" class="form-control" id="exampleFormControlInput1"  name="noticeWriter" ></td>
+			<td><input type="text" class="form-control" id="exampleFormControlInput1"  name="noticeWriter" readonly value="${sessionScope.loginUser.memberNickname}"></td>
 			</tr>
 			<tr>
 			<td class="col-2" scope="col" align='center'>내용</td>
@@ -47,7 +44,7 @@
 			</tr>
 			<tr>
 			<td colspan='2' align='right'>
-				<input class="btn btn-primary"  type="submit" value="등록">
+				<input class="btn btn-primary"  type="button" value="등록" onclick='noticeChk();'>
 				<input  class="btn btn-danger" type="reset" value="취소">
 				<button type="button"  class="btn btn-dark"onclick="location.href='/admin/notice/list.kh'">리스트로</button> 
 				 
@@ -58,10 +55,25 @@
 </div>
 	<script>
 	
+	
 		$('.summernote').summernote({
 			height : 300,
 			lang : "ko-KR",
 		});
+
+		function noticeChk() {
+
+			if (noticeForm.noticeTitle.value == "") { // document 를 생략해도 됨
+				alert("제목을 입력하세요!");
+				noticeForm.noticeTitle.focus();
+				return false;
+			} else if (noticeForm.noticeContents.value == "") {
+				alert("내용을 입력하세요!");
+				noticeForm.noticeContents.focus();
+				return false;
+			}
+			return noticeForm.submit();
+		}
 	</script>
 
 </body>

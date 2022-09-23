@@ -15,7 +15,6 @@
 </resultMap>
 
 
-
 <insert id="insertMsg">
 INSERT INTO MESSAGE_TBL
 VALUES (

@@ -1,6 +1,5 @@
 package com.kh.tripply.party.store.logic;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -78,7 +77,6 @@ public class PartyStoreLogic implements PartyStore {
 	// 댓글 등록
 	@Override
 	public int insertPartyReply(PartyReply pReply, SqlSession session) {
-		
 		int result = session.insert("PartyMapper.insertPartyReply", pReply);
 		return result;
 	}

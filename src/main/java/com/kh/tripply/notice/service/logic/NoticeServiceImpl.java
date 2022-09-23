@@ -26,27 +26,6 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public List<Notice> printAllNotice(int currentPage, int boardLimit) {
-		List<Notice> nList = nStore.selectAllNotice(session, currentPage, boardLimit);
-		return nList;
-	}
-
-	@Override
-	public int getTotalCount(String searchCondition, String searchValue) {
-		int totalCount = nStore.selectTotalCount(session, searchCondition, searchValue);
-		return totalCount;
-	}
-
-	@Override
-	public Notice printOneNotice(int noticeNo) {
-		Notice notice = nStore.selectOneNotice(session, noticeNo);
-		if(notice != null) {
-			nStore.updateBoardCount(session, noticeNo);
-		}
-		return notice;
-	}
-
-	@Override
 	public int removeOneByNo(int noticeNo) {
 		int result = nStore.deleteNotice(session, noticeNo);
 		return result;
@@ -56,6 +35,51 @@ public class NoticeServiceImpl implements NoticeService{
 	public int modifyNotice(Notice notice) {
 		int result = nStore.updateNotice(session, notice);
 		return result;
+	}
+
+	@Override
+	public int getTotalCount(String searchCondition, String searchValue) {
+		int totalCount = nStore.selectTotalCount(session, searchCondition, searchValue);
+		return totalCount;
+	}
+
+	@Override
+	public List<Notice> printAllNotice(int currentPage, int boardLimit) {
+		List<Notice> nList = nStore.selectAllNotice(session, currentPage, boardLimit);
+		return nList;
+	}
+
+	@Override
+	public int countChoosedNotice() {
+		int result = nStore.countChoosedNotice(session);
+		return result;
+	}
+
+	@Override
+	public List<Notice> printChoosedNotice() {
+		 List<Notice> nList = nStore.selectChoosedNotice(session);
+		return nList;
+	}
+
+	@Override
+	public int changeStatusY(int noticeNo) {
+		int result = nStore.updateStatusY(session, noticeNo);
+		return result;
+	}
+
+	@Override
+	public int changeStatusN(int noticeNo) {
+		int result = nStore.updateStatusN(session, noticeNo);
+		return result;
+	}
+
+	@Override
+	public Notice printOneNotice(int noticeNo) {
+		Notice notice = nStore.selectOneNotice(session, noticeNo);
+		if(notice != null) {
+			nStore.updateBoardCount(session, noticeNo);
+		}
+		return notice;
 	}
 	
 }

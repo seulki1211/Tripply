@@ -13,22 +13,15 @@
 </head>
 <body>
 	<br><br>
-<h3 align="center">쪽지 보내기</h3>
-		<table align="center" class="table col-10">
-			<tr>
-			<td  class="col-2" scope="col" align='center'>수신자</td>
-			<c:if test="${(chkResult eq 0) or (chkeResult eq null) }">
-			<td  class="col-8" scope="col" align='center'><input type="text"  class="form-control" id="exampleFormControlInput1"  name="msgReciever" value="${msgReciever }" placeholder="닉네임으로 확인해주세요"></td>
-			<td  class="col-2" scope="col" align='center'><button type="button" class="btn btn-dark" onclick="chkReciever(this);"> 체크 </button><td>
-			</c:if>
-			</tr>
-			</table>
+<h3 align="center">답장 보내기</h3>
+		
 		
 			<form action="/message/send.kh" method="post" name='messageForm'>
 			<table align="center" class="table col-10">
-			<c:if test="${chkResult eq 1}">
-			<input type="hidden" name="msgReciever" value="${msgReciever }">
-
+			<tr>
+			<td  class="col-2" scope="col" align='center'>받는이</td>
+			<td><input type="text" name="msgReciever" class="form-control"  value="${msgReciever }" readonly></td>
+			</tr>
 			<tr>
 			<td  class="col-2" scope="col" align='center'>보낸이</td>
 			<td><input type="text" name="msgWriter"   class="form-control" value="${loginUser.memberNickname }" readonly></td>
@@ -50,7 +43,6 @@
 			</td>
 			
 			</tr>
-					</c:if>	
 			</table>
 			</form>
 			
@@ -66,11 +58,9 @@
 		$form.append("<input type='hidden' value='"+msgReciever+"' name='msgReciever'>")
 		$form.appendTo("body");
 		$form.submit(); // 전송
-		
 	}
-	
-	function messageChk() {
 
+	function messageChk() {
 		if(messageForm.msgTitle.value=="") { // document 를 생략해도 됨
 		        alert("제목을 입력하세요!");
 		        messageForm.msgTitle.focus();
@@ -83,7 +73,6 @@
 		    }
 			return messageForm.submit();
 	}
-	
 	</script>
 </body>
 </html>

@@ -8,17 +8,17 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 </head>
 <body>
-	<div id="header-logo">
-	
-	
-	<table>
+	<table align="center" class="table col-12 table-borderless">
 	<tr>
-	<td width='250px'><img alt="트리플리 로고" src="/resources/image/tripply-logo.png" width='100%'></td>
-	<td width='1200px'><h1 align="left">Tripply</h1></td>
-	<td><div class="login-area">
+	<td class="table col-2"><img alt="트리플리 로고" src="/resources/image/tripply-logo.png" width='50%'></td>
+	<td class="table col-7"><h1 align="left">Tripply</h1></td>
+	<td class="table col-3">
+	</td>
+	</tr></table>
+	<div class="login-area">
 		<c:if test="${empty loginUser }">
 			<form action="/member/login.kh" method="post">
-				<table align="right">
+				<table>
 					<tr>
 						<td>아이디:</td>
 						<td><input type="text" name="memberId"></td>
@@ -34,7 +34,6 @@
 						<td align="right"><a href="/member/joinView.kh">회원가입</a>
 						</td>
 					</tr>
-					
 				</table>
 			</form>
 		</c:if>
@@ -57,10 +56,7 @@
 				</tr>
 			</table>
 		</c:if>
-	</div></td>
-	</tr></table>
 	</div>
-	
 	<br>
 	<div class="nav-area">
 		<div class="menu" onclick="location.href='/plan/plan.kh';">여행 일정</div>

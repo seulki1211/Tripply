@@ -12,6 +12,8 @@ public interface NoticeStore {
 
 	public List<Notice> selectAllNotice(SqlSession session, int currentPage, int boardLimit);
 	
+	public List<Notice> selectChoosedNotice(SqlSession session);
+	
 	public int selectTotalCount(SqlSession session, String searchCondition, String searchValue);
 
 	public Notice selectOneNotice(SqlSession session, int noticeNo);
@@ -21,5 +23,12 @@ public interface NoticeStore {
 	public int updateNotice(SqlSession session, Notice notice);
 
 	public int updateBoardCount(SqlSession session, int noticeNo);
+	
+	public int updateStatusN(SqlSession session, int noticeNo);
+	
+	public int updateStatusY(SqlSession session, int noticeNo);
+	
+	public int countChoosedNotice(SqlSession session);
+
 
 }

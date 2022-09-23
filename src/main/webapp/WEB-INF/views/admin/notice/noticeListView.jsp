@@ -27,23 +27,31 @@
 
 	<table align="center" class="table table-hover col-10">
 	<tr>
-		<th class="col-1" scope="col">번호</th>
-		<th class="col-4" scope="col">제목</th>
+		<td colspan='10'>선택한 공지사항 갯수: ${countResult}<br> 공지는 5개만 선택 가능합니다! </td>
+		</tr>
+	<tr>
+		<th class="col-1" scope="col">#</th>
+		<th class="col-3" scope="col">제목</th>
 		<th class="col-2" scope="col">작성자</th>
 		<th class="col-1" scope="col">날짜</th>
-		<th class="col-1" scope="col">조회수</th>
+		<th class="col-1" scope="col">노출 상태</th>
+		
+<!-- 		<th class="col-1" scope="col">조회수</th> -->
 	</tr>
 	
 	<tbody class="table-group-divider"">
+		
+	
 		<c:forEach items="${nList }" var="notice" varStatus="i">
 			<tr>
 				<td scope="row">${i.count }</td>
-				
 				<td><a href='/admin/notice/detail.kh?noticeNo=${notice.noticeNo }&page=${currentPage }'>${notice.noticeTitle }</a></td>
 				<td>${notice.noticeWriter }</td>
 				<td>${notice.nUpdateDate }</td>
-				<td>${notice.noticeCount }</td>
+				<td> ${notice.nStatus }  
+				<button type="button" onclick="location.href='/admin/notice/chooseNotice.kh?noticeNo=${notice.noticeNo}&nStatus=${notice.nStatus}&page=${currentPage}'" class="btn btn-dark">보이기</button></td>
 				
+<%-- 				<td>${notice.noticeCount }</td> --%>
 			</tr>	
 		</c:forEach>
 		
@@ -106,9 +114,12 @@
 <!-- 			</td> -->
 <!-- 		</tr> -->
 	</table>
-	
-	
-	
 </div>
+
+<script type="text/javascript">
+	function chooseNotice(noticeNo,nStatus,currentPage) {
+		
+	}
+</script>
 </body>
 </html>
