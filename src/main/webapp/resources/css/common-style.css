@@ -18,7 +18,7 @@
 .my-side{
 	display:inline-block;
 	width:150px;
-	background-color:blue;
+	background-color:lightcyan;
 }
 .my-side-bar{
 	display:flex;

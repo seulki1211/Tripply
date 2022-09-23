@@ -120,33 +120,32 @@ public class MemberController {
 			, @RequestParam("post") String post
 			, @RequestParam("address1") String address1
 			, @RequestParam("address2") String address2
-			, @RequestParam(value="reloadFile", required=false) MultipartFile reloadFile
+			, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
 			, HttpServletRequest request) {
 		try {
 			member.setMemberAddr(post + "," + address1 + "," + address2);
-			int result = mService.modifyMember(member);
-			String memberFilename = reloadFile.getOriginalFilename();
-			if(reloadFile != null && !memberFilename.equals("")) {
+//			int result = mService.modifyMember(member);
+			String memberFilename = uploadFile.getOriginalFilename();
+			if(memberFilename != null && !memberFilename.equals("")) {
 				// 수정, 1. 대체(replace) / 2. 삭제 후 저장
 				// 파일삭제
 				String root = request.getSession().getServletContext().getRealPath("resources");
 				String savedPath = root + "\\buploadFiles";
-				//Board bOne = bService.printOneByNo(board.getBoardNo());
-				File file = new File(savedPath + "\\" + member.getMemberFileRename());
-				if(file.exists()) {
-					file.delete();
-				}
 				// 파일 다시 저장
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 				String memberFileRename = sdf.format(new Date(System.currentTimeMillis()))
 						+ "." + memberFilename.substring(memberFilename.lastIndexOf(".")+1);
-				String memberFilepath = savedPath + "\\" + memberFileRename;
-				reloadFile.transferTo(new File(memberFilepath));
-				member.setMemberFileName(memberFilename);
+				File file = new File(savedPath);
+				if(!file.exists()) {
+					file.mkdir();
+				}
+				String memberFilePath = savedPath + "\\" + memberFileRename;
+				uploadFile.transferTo(new File(savedPath+"\\"+memberFileRename));
+				member.setMemberFilename(memberFilename);
 				member.setMemberFileRename(memberFileRename);
-				member.setMemberFilePath(memberFilepath);
+				member.setMemberFilePath(memberFilePath);
 			}
-			int profile = mService.modifyMember(member);
+			int result = mService.modifyMember(member);
 			if(result > 0) {
 				mv.setViewName("redirect:/home.kh");
 			}else {
@@ -182,11 +181,11 @@ public class MemberController {
 	}
 	
 	// 회원ID찾기 기능
-//	@RequestMapping(value="member/findId.kh", method=RequestMethod.GET)
-//	public ModelAndView findMemberId(HttpServletRequest request
-//			, ModelAndView mv
-//			, @RequestParam("memberEmail")) {
-//		
-//		return mv;
-//	}
+	@RequestMapping(value="member/findId", method=RequestMethod.GET)
+	public ModelAndView findMemberId(HttpServletRequest request
+			, ModelAndView mv
+			, @RequestParam("memberEmail") String memberEmail) {
+		
+		return mv;
+	}
 }

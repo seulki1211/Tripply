@@ -87,7 +87,7 @@ public class FreeController {
 			Free free = fService.printOneByNo(boardNo);
 			mv.addObject("free", free);
 			mv.addObject("page", page);
-			mv.setViewName("free/modifyForm");
+			mv.setViewName("free/freeModifyForm");
 		} catch (Exception e) {
 			mv.addObject("msg", e.toString());
 			mv.setViewName("common/errorPage");
@@ -126,10 +126,11 @@ public class FreeController {
 				reloadFile.transferTo(new File(freeFilepath));
 				free.setFreeFilename(freeFilename);
 				free.setFreeFileRename(freeFileRename);
-				free.setFreeFilepath(freeFilepath);
 			}
 			int result = fService.modifyBoard(free);
-			mv.setViewName("redirect:/free/list.kh?page="+page);
+			mv.addObject("free", free);
+//			mv.setViewName("redirect:/free/detail.kh?boardNo=" + free.getBoardNo() + "&page=" + page);
+			mv.setViewName("redirect:/free/list.kh?page=" + page);
 		} catch (Exception e) {
 			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
 		}
@@ -219,7 +220,7 @@ public class FreeController {
 			mv.addObject("rList", rList);
 			mv.addObject("free", free);
 			mv.addObject("page", page);
-			mv.setViewName("free/detailView");
+			mv.setViewName("free/freeDetailView");
 		} catch (Exception e) {
 			mv.addObject("msg", e.toString());
 			mv.setViewName("common/errorPage");

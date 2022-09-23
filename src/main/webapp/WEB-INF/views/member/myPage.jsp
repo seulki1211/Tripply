@@ -16,18 +16,18 @@
 	<div class="wrapper-form">
 		<div class="my-side">
 			<div class="my-side-bar" onclick="location.href='#';">회원정보수정</div>
-			<div class="my-side-bar" onclick="location.href='/free/list.kh';">작성글</div>
+			<div class="my-side-bar" onclick="location.href='/free/detail.kh';">작성글</div>
 			<div class="my-side-bar">북마크</div>
 		</div>
 		<div class="profile-form">
 	<h1 align="center">회원정보수정</h1>
+				<form action="/member/modify.kh" method="post" name="modify_form" enctype="multipart/form-data">
 			<div class="wrapper">
 				<div class="profile-box">
-					<img class="profile" alt="본문이미지" src="/resources/buploadFiles/${member.memberFileRename }" >
+					<img class="profile" alt="본문이미지" src="/resources/buploadFiles/${member.memberFilename }" >
 				</div>
 			</div>
 			<div class="">
-				<form action="/member/modify.kh" method="post" name="modify_form">
 					<table align="center">
 						<tr>
 							<td colspan="2" align="center">

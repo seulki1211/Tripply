@@ -3,17 +3,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<!-- 서머노트를 위해 추가해야할 부분 -->
+	<script src="/resources/js/summernote-lite.js"></script>
+	<script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/resources/css/summernote-lite.css">
 <meta charset="UTF-8">
 <title>게시글 수정</title>
 </head>
 <body>
-	<h1 align="center">${board.boardNo }번 게시글 수정하기</h1>
+	<div>
+		<jsp:include page="../common/menuBar.jsp"></jsp:include>
+	</div>
 		<br>
 		<form action="/free/modify.kh" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="page" value="${page }">
 			<input type="hidden" name="freeNo" value="${free.boardNo }">
-			<input type="hidden" name="freeFilename" value="${free.boardFilename }">
-			<input type="hidden" name="freeFileRename" value="${free.boardFileRename }">
 			<table align="center" border="1">
 				<tr>
 					<td>제목</td>
@@ -25,22 +33,24 @@
 				</tr>
 				<tr>
 					<td>내용</td>
-					<td><textarea cols="30" rows="7" name="freeContents">${free.freeContents }</textarea></td>
+					<td> <textarea class="summernote" name="freeContents" value="${free.freeContents }"></textarea>  </td>
 				</tr>
 				<tr>
-					<td>첨부파일</td>
-					<td><input type="file" name="reloadFile">
-						<a href="#">${free.freeFilename }</a>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
+					<td colspan="2" align="right">
 						<input type="submit" value="수정">
-						<a href="/free/list.kh?page=${page }">목록으로</a>
-						<a href="javascript:history.go(-1);">이전 페이지로</a>
+						<button type="button" onclick="javascript:history.go(-1);">취소</button> 
+						<%-- <a href="/free/list.kh?page=${page }">목록으로</a>
+						<a href="javascript:history.go(-1);">이전 페이지로</a> --%>
 					</td>
 				</tr>
 			</table>
 		</form>
+		<script>
+			$('.summernote').summernote({
+			  height: 300,
+			  width:  700,
+			  lang: "ko-KR",
+	    	});
+		</script>
 </body>
 </html>

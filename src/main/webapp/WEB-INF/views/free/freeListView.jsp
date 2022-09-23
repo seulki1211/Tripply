@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- 게시글 역순 출력위한 라이브러리 태그 -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +27,7 @@
 		<c:if test="${!empty fList }">
 			<c:forEach items="${fList }" var="free" varStatus="i">
 				<tr>
-					<td>${i.count }</td>
+					<td>${fn:length(fList) - i.index}<!--${i.count } 얘는 게시글 순서대로 출력--></td>
 					<td><a href="/free/detail.kh?boardNo=${free.boardNo }&page=${currentPage }">${free.freeTitle }</a></td>
 					<td>${free.freeWriter }</td>
 					<td>${free.fCreateDate }</td>

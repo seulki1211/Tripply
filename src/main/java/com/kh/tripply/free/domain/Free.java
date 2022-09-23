@@ -9,7 +9,7 @@ public class Free {
 	private String freeWriter;
 	private String freeFilename;
 	private String freeFileRename;
-	private String freeFilepath;
+	private String freeFilePath;
 	private int freeCount;
 	private Date fCreateDate;
 	private Date fUpdateDate;
@@ -22,7 +22,7 @@ public class Free {
 	}
 	// 전체 매개변수 생성자
 	public Free(int boardNo, String freeTitle, String freeContents, String freeWriter, String freeFilename,
-			String freeFileRename, String freeFilepath, int freeCount, Date fCreateDate, Date fUpdateDate, String fStatus) {
+			String freeFileRename, String freeFilePath, int freeCount, Date fCreateDate, Date fUpdateDate, String fStatus) {
 		super();
 		this.boardNo = boardNo;
 		this.freeTitle = freeTitle;
@@ -30,7 +30,7 @@ public class Free {
 		this.freeWriter = freeWriter;
 		this.freeFilename = freeFilename;
 		this.freeFileRename = freeFileRename;
-		this.freeFilepath = freeFilepath;
+		this.freeFilePath = freeFilePath;
 		this.freeCount = freeCount;
 		this.fCreateDate = fCreateDate;
 		this.fUpdateDate = fUpdateDate;
@@ -87,11 +87,11 @@ public class Free {
 	}
 
 	public String getFreeFilepath() {
-		return freeFilepath;
+		return freeFilePath;
 	}
 
-	public void setFreeFilepath(String freeFilepath) {
-		this.freeFilepath = freeFilepath;
+	public void setFreeFilePath(String freeFilePath) {
+		this.freeFilePath = freeFilePath;
 	}
 
 	public int getFreeCount() {
@@ -130,7 +130,7 @@ public class Free {
 	public String toString() {
 		return "Free [boardNo=" + boardNo + ", freeTitle=" + freeTitle + ", freeContents=" + freeContents
 				+ ", freeWriter=" + freeWriter + ", freeFilename=" + freeFilename + ", freeFileRename=" + freeFileRename
-				+ ", freeFilepath=" + freeFilepath + ", freeCount=" + freeCount + ", fCreateDate=" + fCreateDate
+				+ ", freeFilePath=" + freeFilePath + ", freeCount=" + freeCount + ", fCreateDate=" + fCreateDate
 				+ ", fUpdateDate=" + fUpdateDate + ", fStatus=" + fStatus + "]";
 	}
 	

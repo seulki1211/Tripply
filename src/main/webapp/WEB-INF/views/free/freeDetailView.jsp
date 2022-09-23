@@ -7,11 +7,13 @@
 <title>게시글 상세 조회</title>
 </head>
 <body>
-<h1 align="center">${free.boardNo }번 게시글 상세 보기</h1>
+	<div>
+		<jsp:include page="../common/menuBar.jsp"></jsp:include>
+	</div>
 	<br><br>
 	<table align="center" width="500" border="1">
 		<tr>
-			<td>제목</td>
+			<td width="15%">제목</td>
 			<td>${free.freeTitle }</td>
 		</tr>
 		<tr>
@@ -24,24 +26,15 @@
 		</tr>
 		<tr>
 			<td>조회수</td>
-			<td>${free.foardCount }</td>
+			<td>${free.freeCount }</td>
 		</tr>
 		<tr height="300">
 			<td>내용</td>
-			<td>${free.freeContents }
-			<%-- <img alt="본문이미지" src="/resources/buploadFiles/${board.boardFileRename }"> --%>
-			</td>
-		</tr>
-		<tr>
-			<td>첨부파일</td>
-			<td>
-				<img alt="본문이미지" src="/resources/buploadFiles/${free.freeFileRename }" 
-				width="300" height="300">
-			</td>
+			<td>${free.freeContents }</td>
 		</tr>
 		<tr>
 			<td colspan="2" align="center">
-				<a href="/free/modifyView.kh?boardNo=${free.boardNo }&page=${page}">수정 페이지로 이동</a>
+				<a href="/free/modifyView.kh?boardNo=${free.boardNo }&page=${page}">글 수정</a>
 				<a href="#" onclick="freeRemove(${page});">삭제하기</a>
 			</td>
 		</tr>
@@ -62,7 +55,7 @@
 		</table>
 	</form>
 	<!-- 	댓글 목록 -->
-	<table align="center" width="500" border="1">
+	<%-- <table align="center" width="500" border="1">
 		<c:forEach items="${rList }" var="reply">
 			<tr>
 				<td width="100">${reply.replyWriter }</td>
@@ -71,12 +64,12 @@
 				<td><a href="#" onclick="modifyView(this, '${reply.replyContents}', ${reply.replyNo });">수정</a>
 				<a href="#" onclick="removeReply(${reply.replyNo});">삭제</a></td>
 			</tr>
-	<%-- 		<tr>
+			<tr>
 				<td colspan="3"><input type="text" size="50" value="${reply.replyContents }"></td>
 				<td><button>수정</button></td>
-			</tr> --%>
+			</tr>
 		</c:forEach>
-	</table>
+	</table> --%>
 	<script>
 		function freeRemove(value) {
 			event.preventDefault(); // 하이퍼링크 이동 방지
