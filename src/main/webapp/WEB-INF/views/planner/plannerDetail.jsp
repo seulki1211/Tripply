@@ -126,8 +126,8 @@
 			
 			</div>
 			<div clss="button">
-			<button onClick="location.href='/plan/mobify.kh'">수정</button>
-			<button onClick="plannerRemove(${page})">삭제</button>
+			<button onClick="plannerModify(${planner.boardNo},${page});">수정</button>
+			<button onClick="plannerRemove(${page});">삭제</button>
 			<button>pdf</button>
 			<!-- 수정 삭제 pdf  -->
 			</div>
@@ -153,7 +153,7 @@
 			<table class="r_table" align="center"width="500"border="1">
 		<c:forEach items="${rList }" var="reply"><!-- 갯수만큼 반복됨 -->
 			<tr>
-				<td >${reply.pReplyWriter }</td>
+				<td>${reply.pReplyWriter }</td>
 				<td>${reply.pReplyContents }</td>
 				<td>${reply.pRUpdateDate }</td>
 				<td>
@@ -178,6 +178,13 @@ function plannerRemove(page){
 	event.preventDefault();//하이퍼링크 이동 방지
 	if(confirm("게시물을 삭제하시겠습니까?")){
 		location.href="/plan/remove.kh?page="+page;
+		
+	}
+}
+function plannerModify(boardNo,page){
+	event.preventDefault();//하이퍼링크 이동 방지
+	if(confirm("게시물을 수정하시겠습니까?")){
+		location.href="/plan/mobify.kh?boardNo="+boardNo+"&page="+page;
 		
 	}
 }

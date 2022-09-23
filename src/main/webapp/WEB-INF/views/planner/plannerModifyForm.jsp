@@ -118,6 +118,38 @@
 					<fmt:parseDate value="${day}" var="stringday" pattern="yyyyMMdd" />
 					<fmt:formatDate value="${stringday}" pattern="MM.dd E요일" />
 				</div>
+	<!-- <table border="1"> -->
+	<c:forEach items="${planList }" var="plan" varStatus="i">
+ 	<c:if test= "${plan.day eq day}"> 
+	<input type="hidden" name="planList[${i.count}].boardNo" id="boardNo" value="${plan.boardNo}"/>		
+	<div class="planNum${i.count }">${i.count }
+	<input type="hidden" name="planList[${i.count}].day" id="planDate" value="${plan.day}"/>		
+	<input type="hidden" name="planList[${i.count}].Y" id="planY" value="${plan.y}"/>		
+	<input type="hidden" name="planList[${i.count}].X" id="planX" value="${plan.x}"/>		 
+	<input type="text" name="planList[${i.count}].address" id="planTitle" value="${plan.address}"/><br>		
+	<input type="text" name="planList[${i.count}].Memo" id="planMemo" value="${plan.memo}"/>
+	<button class="planDetailButton" onclick="planDelete(${i.count})">&times;</button></div>
+			
+			<%--  <tr>
+			<td>${i.count }</td>
+			<td>${plan.day }</td>
+			<td>${plan.address }</td>
+			<td>${plan.y }</td>
+			<td>${plan.x }</td>
+			<td>${plan.memo }</td>
+			<td><button class="planDetailButton" onclick="planDelete("${i.count }")">&times;</button></td>
+			</tr>  --%>
+			
+			</c:if> 
+			</c:forEach>
+			<!-- </table> -->
+   	<!-- <input type='hidden' name='planList["+i+"].boardNo' id='boardNo'value="+boardNo +" />"
+   	<input type='hidden' name='planList["+i+"].day' id='planDate'value="+data_date +" />"
+   	<input type='hidden' name='planList["+i+"].Y' id='planY'value="+place_y+" />"
+   	<input type='hidden' name='planList["+i+"].X' id='planX'value="+place_x +" />"
+   	<input type='text' name='planList["+i+"].address' id='planTitle'value="+place_name+" /><br>"
+   	<input type='text' name='planList["+i+"].Memo' id='planMemo'placeholder='20자 이내로 입력하세요'maxlength='20' />"
+    <button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\')\">&times;</button></div> </div>"; -->
 			</div>
 		</c:forEach>
 		
@@ -413,7 +445,7 @@ var markers = [];
         var parent =  $('.planI-plansbox[style*="display: block"]');
         var data_date = parent.attr('data-date');
         var boardNo=$('#boardNo').attr('value');
-        var num = parent.children().length; // 하위 엘리먼트기에 일정 - 제목 (DAY) 부분도 포함됨
+        var num = parent.after().length; // 하위 엘리먼트기에 일정 - 제목 (DAY) 부분도 포함됨
         var i = parentss.children().length-parentss.length;
         if(num<10){ // 일정은 9개까지만 추가 가능
            parent.append(getHtml(place_name,place_y,place_x,num, data_date,i,boardNo));
@@ -449,7 +481,8 @@ var markers = [];
   
    
    function planDelete(num,i){
-       var parent =  $('.planI-plansbox[style*="display: block"]');
+	   event.preventDefault();
+	   var parent =  $('.planI-plansbox[style*="display: block"]');
        var kid = parent.children().eq(num); // 일정 부분에 제목도 자식에 포함되기에 index +1
        var next_kids = kid.nextAll();
 
