@@ -66,7 +66,7 @@ public class PlannerController {
 				c1.add(Calendar.DATE,1);
 			}
 		
-			System.out.println(planList);
+			//System.out.println(planList);
 			
 			mv.addObject("rList",rList);
 			mv.addObject("dayList",dayList);
@@ -388,9 +388,43 @@ public class PlannerController {
 		}
 		
 		@RequestMapping(value = "/plan/mobify.kh", method = RequestMethod.GET)
-		public String modifyPlanner() {
-			return "planner/plannerModifyForm";
+		public ModelAndView modifyPlanner(
+				ModelAndView mv
+				,@RequestParam("boardNo")Integer boardNo
+				,@RequestParam("page")Integer page
+				) {
+			System.out.println(boardNo);
+			System.out.println(page);
+			//List<Plan>planList=pService.printAllPlan(plan.getBoardNo());
+			Planner planner=pService.printInfo(boardNo);
+			List<Plan>planList = pService.printAllPlan(boardNo);
+			
+			List<String> dayList = new ArrayList<String>();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			
+			
+			Date startDate = planner.getFirstDay();
+			Date lastDate = planner.getLastDay();
+			Calendar c1= Calendar.getInstance();
+			Calendar c2= Calendar.getInstance();
+			c1.setTime(startDate);
+			c2.setTime(lastDate);
+			
+			while(c1.compareTo(c2) !=1) {
+				dayList.add(sdf.format(c1.getTime()));
+				c1.add(Calendar.DATE,1);
+			}
+			
+			mv.addObject("planList",planList);
+			mv.addObject("dayList",dayList);
+			mv.addObject("planner",planner);
+			mv.setViewName("planner/plannerModifyForm");
+			
+			return mv;
 		}
+		
+		
+		
 	
 
 	
