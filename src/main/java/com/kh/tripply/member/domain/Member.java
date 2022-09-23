@@ -16,7 +16,7 @@ public class Member {
 	private Date updateDate;		// 정보수정일
 	private String mStatus;			// 탈퇴여부
 	private int pointBalance;		// 포인트
-	private String memberFileName;	// 프로필 파일이름
+	private String memberFilename;	// 프로필 파일이름
 	private String memberFileRename;// 파일변경이름
 	private String memberFilePath;	// 파일경로
 	
@@ -146,12 +146,12 @@ public class Member {
 		this.pointBalance = pointBalance;
 	}
 
-	public String getMemberFileName() {
-		return memberFileName;
+	public String getMemberFilename() {
+		return memberFilename;
 	}
 
-	public void setMemberFileName(String memberFileName) {
-		this.memberFileName = memberFileName;
+	public void setMemberFilename(String memberFilename) {
+		this.memberFilename = memberFilename;
 	}
 
 	public String getMemberFileRename() {
@@ -176,7 +176,7 @@ public class Member {
 				+ ", memberNickname=" + memberNickname + ", memberEmail=" + memberEmail + ", memberBirth=" + memberBirth
 				+ ", memberGender=" + memberGender + ", memberPhone=" + memberPhone + ", memberAddr=" + memberAddr
 				+ ", enrollDate=" + enrollDate + ", updateDate=" + updateDate + ", mStatus=" + mStatus
-				+ ", pointBalance=" + pointBalance + ", memberFileName=" + memberFileName + ", memberFileRename="
+				+ ", pointBalance=" + pointBalance + ", memberFilename=" + memberFilename + ", memberFileRename="
 				+ memberFileRename + ", memberFilePath=" + memberFilePath + "]";
 	}
 	

@@ -17,13 +17,11 @@
 		<result property="fStatus" 			column="F_STATUS" />
 	</resultMap>
 	<insert id="insertFree">
-		INSERT INTO FREE_TBL VALUES(SEQ_BOARDNO.NEXTVAL(), #{freeTitle}, #{freeContents}
+		INSERT INTO FREE_TBL VALUES(SEQ_BOARDNO.NEXTVAL, #{freeTitle}, #{freeContents}
 		, #{freeWriter}, #{freeFilename}, #{freeFileRename}, #{freeFilePath}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	<update id="updateFree">
-		UPDATE FREE_TBL SET FREE_TITLE = #{freeTitle}, FREE_CONTENTS = #{freeContents}, FREE_FILENAME = #{freeFilename}
-		, FREE_FILERENAME = #{freeFileRename}, FREE_FILEPATH = #{freeFilePath}, F_UPDATE_DATE = DEFAULT
-		WHERE BOARD_NO = #{boardNo}
+		UPDATE FREE_TBL SET FREE_TITLE = #{freeTitle}, FREE_CONTENTS = #{freeContents}, F_UPDATE_DATE = DEFAULT WHERE BOARD_NO = #{boardNo}
 	</update>
 	<delete id="deleteFree">
 		DELETE FROM FREE_TBL WHERE BOARD_NO = #{boardNo}

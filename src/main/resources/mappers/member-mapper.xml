@@ -17,7 +17,7 @@
 		<result property="updateDate" 			column="UPDATE_DATE"/>
 		<result property="mStatus" 				column="M_STATUS"/>	
 		<result property="pointBalance" 		column="POINT_BALANCE"/>	
-		<result property="memberFileName" 		column="MEMBERFILENAME"/>	
+		<result property="memberFilename" 		column="MEMBERFILENAME"/>	
 		<result property="memberFileRename" 	column="MEMBERFILERENAME"/>	
 		<result property="memberFilePath" 		column="MEMBERFILEPATH"/>	
 	</resultMap>
@@ -29,7 +29,8 @@
 	<update id="updateMember">
 		UPDATE MEMBER_TBL SET MEMBER_PWD = #{memberPwd}, MEMBER_EMAIL = #{memberEmail }
 		, MEMBER_BIRTH = #{memberBirth}, MEMBER_PHONE = #{memberPhone}
-		, MEMBER_ADDR = #{memberAddr } WHERE MEMBER_ID = #{memberId }
+		, MEMBER_ADDR = #{memberAddr }, MEMBERFILENAME = #{memberFilename }
+		, MEMBERFILERENAME = #{memberFileRename}, MEMBERFILEPATH = #{memberFilePath} WHERE MEMBER_ID = #{memberId }
 	</update>
 	<delete id="deleteMember">
 		DELETE FROM MEMBER_TBL WHERE MEMBER_ID = #{memberId}
