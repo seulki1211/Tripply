@@ -22,9 +22,7 @@
  <div class="right-side">
 
    <br><br>
-
 	<h1 align="center">공지사항</h1>
-	
    <br><br>
 
 	<table align="center" class="table table-hover col-10">
@@ -63,7 +61,6 @@
 					<!--  하단 페이지 목록 -->
 		<tr align='center' height="20" align='center'>
 		<td colspan='4'  align='center'>
-<!-- 		<nav aria-label="Page navigation example"> -->
 			<ul class="pagination justify-content-center">
 			<c:if test="${currentPage != 1 }">
 			<li class="page-item"><a class="page-link" href='/admin/notice/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>이전</a></li>
@@ -82,7 +79,6 @@
 			<li class="page-item"><a class="page-link" href='/admin/notice/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>다음</a></li>
 			</c:if>
 	 	  </ul>
-<!-- 	</nav> -->
 		</td>
 		<td>
 			<button type="button" onclick="location.href='/admin/notice/writeView.kh'" class="btn btn-dark">글 작성</button> 

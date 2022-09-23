@@ -4,20 +4,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <script>
 </script>
 <body>
-<div id="search-inputframe">
-					<select name="searchCondition">
+					<select class="form-select form-select-lg mb-3" name="searchCondition" >
+						<option <c:if test="${search.searchCondition eq 'all'}">selected</c:if> value="all">전체</option>
 						<option <c:if test="${search.searchCondition eq 'title'}">selected</c:if> value="title">제목</option>
 						<option <c:if test="${search.searchCondition eq 'writer'}">selected</c:if> value="writer">작성자</option>
-						<option <c:if test="${search.searchCondition eq 'all'}">selected</c:if> value="all">전체</option>
 						<option <c:if test="${search.searchCondition eq 'contents'}">selected</c:if> value="contents">내용</option>
 					</select>
-						<select name="searchRegion">
+						<select class="form-select form-select-lg mb-3" name="searchRegion" >
 							<option <c:if test="${search.searchRegion eq '전국'}">selected</c:if> value="전국" label="전국"></option>
 							<option <c:if test="${search.searchRegion eq '서울'}">selected</c:if> value="서울" label="서울"></option>
 							<option <c:if test="${search.searchRegion eq '부산'}">selected</c:if> value="부산" label="부산"></option>
@@ -39,7 +40,6 @@
 						</select>
 					<input type="text" name="searchValue" placeholder="검색" value="${search.searchValue }">
 					<input type="submit" value="검색">
-				</div>
 
 </body>
 </html>

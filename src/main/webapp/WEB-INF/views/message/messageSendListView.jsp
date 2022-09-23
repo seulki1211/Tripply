@@ -6,57 +6,55 @@
 <html>
 <head>
 <meta charset="UTF-8">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 <title>보낸 쪽지함</title>
 </head>
 <body>
-
-	<jsp:include page="../common/menuBar.jsp"></jsp:include>
-
-
-	<h1 align="center"> 보낸 쪽지함</h1>
-
-	<table align="center" class="table table-hover">
+<br><br>
+	<h3 align="center"> 보낸 쪽지함</h3>
+	<table align="center" class="table  col-10">
 	<tr>
-		<th scope="col">번호</th>
-		<th scope="col">제목</th>
-		<th scope="col">발신자</th>
-		<th scope="col">수신자</th>
-		<th scope="col">날짜</th>
+	<td colspan='10' align='right'><button type="button" class='btn btn-primary'onclick="location.href='/message/recvList.kh?msgReciever=${loginUser.memberNickname}'">받은 쪽지함</button></td>
+	</tr>
+	<tr>
+		<th class="col-1">#</th>
+		<th class="col-4">제목</th>
+		<th scope="col-3">수신자</th>
+		<th scope="col-2">날짜</th>
 	</tr>
 	
 	<tbody class="table-group-divider">
 		<c:forEach items="${sendList }" var="msg" varStatus="i">
 			<tr>
 				<td scope="row">${i.count }</td>
-				
 				<td><a href='/message/detail.kh?msgNo=${msg.msgNo }&page=${currentPage }'>${msg.msgTitle }</a></td>
-				<td scope="row">${msg.msgWriter }</td>
 				<td scope="row">${msg.msgReciever }</td>
 				<td scope="row">${msg.msgCreateDate }</td>
-				
 			</tr>	
 		</c:forEach>
+		
 <!-- 					 하단 페이지 목록 -->
 		<tr align='center' height="20">
-		<td colspan='5' scope="row">
+			<td colspan='4'  align='center'>
+			<ul class="pagination justify-content-center">
 	
 			<c:if test="${currentPage != 1 }">
-				<a href='/message/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${mSearch.searchCondition }&searchValue=${mSearch.searchValue }&msgWriter=${loginUser.memberNickname }&msgReciever=${mSearch.msgReciever }'>[이전]</a>
-			</c:if>
+				<li class="page-item"><a class="page-link"  href='/message/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${mSearch.searchCondition }&searchValue=${mSearch.searchValue }&msgWriter=${loginUser.memberNickname }&msgReciever=${mSearch.msgReciever }'>이전</a>
+			</li></c:if>
 			
 			<c:forEach var='p' begin="${startNavi }" end="${endNavi }">
 				<c:if test="${currentPage eq p}">
-					 <b>${p }</b>
+				<li class="page-item disabled"><a class="page-link" href='#' >${p }</a></li>
 				</c:if>
 				<c:if test="${currentPage ne p}">
-					<a href="/message/${urlVal }.kh?page=${p }&searchCondition=${mSearch.searchCondition }&searchValue=${mSearch.searchValue }&msgWriter=${loginUser.memberNickname }&msgReciever=${mSearch.msgReciever }">${p }</a>
-				</c:if>
+			<li class="page-item"><a class="page-link"   href="/message/${urlVal }.kh?page=${p }&searchCondition=${mSearch.searchCondition }&searchValue=${mSearch.searchValue }&msgWriter=${loginUser.memberNickname }&msgReciever=${mSearch.msgReciever }">${p }</a>
+				</li></c:if>
 			</c:forEach>
 			
 			<c:if test="${currentPage < maxPage }">
-				<a href='/message/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${mSearch.searchCondition }&searchValue=${mSearch.searchValue }&msgWriter=${loginUser.memberNickname }&msgReciever=${mSearch.msgReciever }'>[다음]</a>
-			</c:if>
-	
+			<li class="page-item"><a class="page-link"   href='/message/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${mSearch.searchCondition }&searchValue=${mSearch.searchValue }&msgWriter=${loginUser.memberNickname }&msgReciever=${mSearch.msgReciever }'>다음</a>
+			</li></c:if>
+	</ul>
 		</td>
 		</tr>
 
@@ -88,11 +86,11 @@
 			</td>
 			
 		</tr>
-		<tr>
-				<td>
-					<button type="button"
-						onclick="location.href='/message/writeView.kh'">쪽지 작성</button>
+			<tr>
+				<td colspan='10' align='center'>
+					<button type="button" class='btn btn-dark'onclick="location.href='/message/writeView.kh'">쪽지 보내기</button>
 				</td>
+				
 			</tr>
 		</tbody>
 	</table>

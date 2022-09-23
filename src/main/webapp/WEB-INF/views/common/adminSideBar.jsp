@@ -55,9 +55,7 @@ ul.admin-menu {
 	<div id="left-sidebar">
             <ul class="admin-menu">
             	<li class="service" > 관리자 페이지 </li>
-            	
                 <li class="admin-menu"  onclick="location.href='/home.kh';">서비스 페이지</li>
-                <li class="admin-menu" onclick="location.href='#';">회원 관리</li>
                 <li class="admin-menu" onclick="location.href='/admin/banner/list.kh';">배너 관리</li>
                 <li class="admin-menu" onclick="location.href='/admin/notice/list.kh';">공지사항 관리</li>
             </ul>

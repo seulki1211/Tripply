@@ -4,7 +4,7 @@
 <html>
 
 <head>
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -13,7 +13,6 @@
   <script src="/resources/js/summernote-lite.js"></script>
   <script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
   <link rel="stylesheet" href="/resources/css/summernote-lite.css">
-  <!--  -->
   
 <meta charset="UTF-8">
 <title>게시글작성</title>
@@ -23,38 +22,37 @@
 	<jsp:include page="../common/menuBar.jsp"></jsp:include>
 </div>
 
-	<h1 align="center">파티 등록 페이지</h1>
 	<br><br>
-
+	<h1 align="center">동행자 구하기!</h1>
+	<br><br>
 		
 	<form action="/party/register.kh" method="post" enctype="multipart/form-data">
 	
-	
-		<table border='1'  align="center">
+		<table align="center" class="table col-10">
 		
 			<tr>
-			<td>썸네일 등록</td>
-			<td><input type="file" name="uploadFile"></td>
+			<td  class="col-2" scope="col" align='center'>썸네일 등록</td>
+			<td><input type="file" name="uploadFile"><br>*200px*200px을 권장합니다!</td>
 			<tr>
 			<tr>
-			<td>제목</td>
-			<td><input type="text" name="partyTitle"></td>
+			<td  class="col-2" scope="col" align='center'>제목</td>
+			<td><input type="text" name="partyTitle" class="form-control" id="exampleFormControlInput1"></td>
 			<tr>
-			<td>작성자</td>
-			<td><input type="text" name="partyWriter" value = "${loginUser.memberNickname }" readonly></td>
+			<td  class="col-2" scope="col" align='center'>작성자</td>
+			<td><input type="text" name="partyWriter" class="form-control" id="exampleFormControlInput1" value = "${loginUser.memberNickname }" readonly></td>
 			</tr>
 			<tr>
-			<td>일정 시작일</td>
-			<td><input type="date" name="partyFirstDate" ></td>
+			<td  class="col-2" scope="col" align='center'>일정 시작일</td>
+			<td><input type="date" name="partyFirstDate"></td>
 			</tr>
 			<tr>
-			<td>일정 마지막일</td>
+			<td  class="col-2" scope="col" align='center'>일정 마지막일</td>
 			<td><input type="date" name="partyLastDate" ></td>
 			</tr>
 			<tr>
-			<td>여행 장소</td>
+			<td  class="col-2" scope="col" align='center'>여행 장소</td>
 			<td>
-					<select name="partyLocation">
+					<select  name="partyLocation">
 							<option value="전국" label="전국"></option>
 							<option value="서울" label="서울"></option>
 							<option value="부산" label="부산"></option>
@@ -77,7 +75,7 @@
 						</td>
 			</tr>
 			<tr>
-			<td>내용</td>
+			<td  class="col-2" scope="col" align='center'>내용</td>
 			<td> <textarea class="summernote" name="partyContents"></textarea>  </td>
 			</tr>
 			<tr>
@@ -95,7 +93,7 @@
 	
 		$('.summernote').summernote({
 			height : 300,
-			width : 700,
+			
 			lang : "ko-KR",
 		});
 	</script>

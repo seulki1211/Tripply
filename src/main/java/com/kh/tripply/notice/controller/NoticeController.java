@@ -154,7 +154,7 @@ public class NoticeController {
 		try {
 			int result = nService.modifyNotice(notice);
 			if(result > 0) {
-				mv.setViewName("redirect:/notice/list.kh?page=" + page);
+				mv.setViewName("redirect:/admin/notice/list.kh?page=" + page);
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());

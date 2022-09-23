@@ -8,45 +8,44 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="/resources/js/jquery-3.6.1.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 
 </head>
 <body>
-	<jsp:include page="../common/menuBar.jsp"></jsp:include>
-
-<h1 align="center">쪽지 보내기</h1>
 	<br><br>
-		<table border='1'  align="center">			
+<h3 align="center">쪽지 보내기</h3>
+		<table align="center" class="table col-10">
 			<tr>
-			<td>받는이</td>
+			<td  class="col-2" scope="col" align='center'>수신자</td>
 			<c:if test="${(chkResult eq 0) or (chkeResult eq null) }">
-			<td><input type="text" name="msgReciever" value="${msgReciever }" placeholder="받는이를 확인해주세요"></td>
-			<td><button type="button" onclick="chkReciever(this);"> 받는이 체크 </button><td>
+			<td  class="col-8" scope="col" align='center'><input type="text"  class="form-control" id="exampleFormControlInput1"  name="msgReciever" value="${msgReciever }" placeholder="닉네임으로 확인해주세요"></td>
+			<td  class="col-2" scope="col" align='center'><button type="button" class="btn btn-dark" onclick="chkReciever(this);"> 체크 </button><td>
 			</c:if>
 			</tr>
 			</table>
 		
 			<form action="/message/send.kh" method="post">
-					<table border='1'  align="center">			
+		<table align="center" class="table col-10">
 			<c:if test="${chkResult eq 1}">
 			<input type="hidden" name="msgReciever" value="${msgReciever }">
 
 			<tr>
-			<td>보낸이</td>
-			<td><input type="text" name="msgWriter" value="${loginUser.memberNickname }" readonly></td>
+			<td  class="col-2" scope="col" align='center'>보낸이</td>
+			<td><input type="text" name="msgWriter"   class="form-control" value="${loginUser.memberNickname }" readonly></td>
 			</tr>
 			<tr>
-			<td>제목</td>
-			<td><input type="text" name="msgTitle"></td>
+			<td  class="col-2" scope="col" align='center'>제목</td>
+			<td><input type="text" name="msgTitle"  class="form-control" ></td>
 			<tr>
-			<td>내용</td>
-			<td> <textarea name="msgContents"></textarea>  </td>
+			<td  class="col-2" scope="col" align='center'>내용</td>
+			<td> <textarea name="msgContents" class="form-control"></textarea>  </td>
 			</tr>
 	
 			<tr>
 			<td colspan='2' align='right'>
-				<input type="submit" value="전송">
-				<input type="reset" value="취소">
-				<button type="button" onclick="location.href='/message/sendList.kh?msgWriter=${loginUser.memberNickname }'">리스트로</button>
+				<input type="submit" value="전송" class="btn btn-primary">
+				<input type="reset" value="취소" class="btn btn-warning">
+				<button type="button" class="btn btn-dark" onclick="location.href='/message/sendList.kh?msgWriter=${loginUser.memberNickname }'">리스트로</button>
 				 
 			</td>
 			

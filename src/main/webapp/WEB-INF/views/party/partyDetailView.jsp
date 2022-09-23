@@ -1,4 +1,3 @@
-<%-- <%@ page session="false" %> 이거 있으면 세션스코프 동작 안함--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -13,49 +12,42 @@
 <body>
 	<jsp:include page="../common/menuBar.jsp"></jsp:include>
 
-
-	<h1 align='center'> ${party.partyNo }번 게시글 상세 보기</h1>
 	<br><br>
-	<table border='1'  align="center"  border="1">
+	<h1 align='center'> ${party.partyNo }번글 확인하기</h1>
+	<br><br>
+		<table align="center" class="table col-10">
 			<tr>
-			<td width = '80px' >제목</td>
-			<td>${party.partyTitle }</td>
-			</tr>
-			<tr>
-			<td>작성자</td>
+			<td  class="col-2" align='center'><b>작성자</b></td>
 			<td>${party.partyWriter }</td>
-			</tr>
 			<tr>
-			<td>작성날짜</td>
+			<tr>
+			<td  class="col-2" align='center'><b>작성날짜</b></td>
 			<td>${party.pUpdateDate }</td>
 			</tr>
 			<tr>
-			<td>조회수</td>
+			<td  class="col-2"  align='center'><b>조회수</b>></td>
 			<td>${party.partyCount }</td>
 			</tr>
-			<tr height="300" width='100'>
-			<td>내용</td>
+			
+			<tr>
+			<td class="col-2"   align='center'><b>제목</b></td>
+			<td class="col-8" >${party.partyTitle }</td>
+			</tr>
+			
+			<tr >
+			<td  class="col-2" align='center'><b>내용</b></td>
 			<td>${party.partyContents }
 			</tr>
 			
-<!-- 			<tr > -->
-<!-- 			<td>첨부파일</td> -->
-<!-- 				<td> -->
-<%-- 					<c:if test="${not empty party.boardFilename}"> --%>
-<%-- 						<img alt="본문이미지" src="/resources/buploadFiles/${board.boardFileRename }" width = '50%'> --%>
-<%-- 					</c:if> --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-			
 			<tr>
 				<td colspan='2' align='center'>
-				<button type="button" onclick="location.href='/party/list.kh?&page=${page }'">리스트로</button> 
+				<button type="button" class="btn btn-dark"  onclick="location.href='/party/list.kh?&page=${page }'">리스트로</button> 
 				
 					<c:if test="${party.partyWriter eq loginUser.memberNickname }">
-						<button type="button" onclick="location.href='/party/modifyView.kh?partyNo=${party.partyNo }&page=${page }'">수정하기</button>
+						<button type="button" class="btn btn-warning" onclick="location.href='/party/modifyView.kh?partyNo=${party.partyNo }&page=${page }'">수정하기</button>
 					</c:if> 	
 					<c:if test="${party.partyWriter eq loginUser.memberNickname }">
-						<button type="button" onclick="removeBoard(${party.partyNo}, ${page});">삭제하기</button> 
+						<button type="button" class="btn btn-danger"onclick="removeBoard(${party.partyNo}, ${page});">삭제하기</button> 
 					</c:if> 	
 				</td>
 			</tr>
@@ -63,34 +55,36 @@
 		
 <!-- 		댓글 등록 -->
 <form action="/party/addReply.kh" method="post">
-<input type="hidden" name="pReplyWriter" value = ${loginUser.memberNickname }>
-<input type="hidden" name="refBoardNo" value=${party.partyNo }>
-<input type="hidden" name="page" value=${page }>
+	<input type="hidden" name="pReplyWriter" value = ${loginUser.memberNickname }>
+	<input type="hidden" name="refBoardNo" value=${party.partyNo }>
+	<input type="hidden" name="page" value=${page }>
 
-		<table align='center' width = "500" border = "1">
+		<table align="center" class="table col-10">
+		<tr>
+		</tr>
 			<tr>
-				<td>
-					<textarea rows="3" cols="55" name="pReplyContents"></textarea>
+				<td  class="col-10" align='center' >
+					<textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" cols="70" name="pReplyContents"></textarea>
 				</td>
 				<td>
-				<input type="submit" value='등록하기'>
+				<input type="submit" value='댓글 달기' class="btn btn-primary">
 				</td>
 			</tr>
 		</table>
 </form>
 
 <!-- 		댓글 목록 -->
-		<table align='center' width='500' border='1'>
+		<table align="center" class="table col-10">
 			<c:forEach items="${prList }" var="pReply" varStatus="i">
 			<tr>
-				<td width='100'> ${pReply.pReplyWriter }</td>
-				<td>${pReply.pReplyContents }</td>
-				<td>${pReply.prUpdateDate }</td>
+				<td  class="col-2" align='center' > ${pReply.pReplyWriter }</td>
+				<td  class="col-4" align='center' >${pReply.pReplyContents }</td>
+				<td  class="col-4" align='center' >${pReply.prUpdateDate }</td>
 				<td>
 				<c:if test="${pReply.pReplyWriter eq loginUser.memberNickname }">
-				<button type="button" onclick="modifyView(this, '${pReply.pReplyContents }', ${page} ,${pReply.pReplyNo } ,${pReply.refBoardNo });"> 수정 </button></c:if>
+				<button type="button" onclick="modifyView(this, '${pReply.pReplyContents }', ${page} ,${pReply.pReplyNo } ,${pReply.refBoardNo });"  class="btn btn-warning"> 수정 </button></c:if>
 				<c:if test="${pReply.pReplyWriter eq loginUser.memberNickname }">
-				<button type="button" onclick="removeReply(${pReply.refBoardNo },${page},${pReply.pReplyNo });"> 삭제 </button></c:if>
+				<button type="button" onclick="removeReply(${pReply.refBoardNo },${page},${pReply.pReplyNo });" class="btn btn-danger"> 삭제 </button></c:if>
 				</td>
 					
 			</tr>
@@ -119,8 +113,8 @@ function removeBoard(partyNo,page) {
  	 	event.preventDefault();// 하이퍼링크 이동 방지
  	// alert("성공");
 		var $tr = $("<tr>");
-		$tr.append("<td colspan='3'><input type='text' size='50' value='"+pReplyContents+"' id='modifyInput'></td>");
-		$tr.append("<td colspan='3'><button type='button' onclick='modifyReply(this, "+page+", "+pReplyNo+", "+refBoardNo+");'> 수정 </button></td>");
+		$tr.append("<td colspan='3'><input type='text' size='50' value='"+pReplyContents+"' id='modifyInput'  class='form-control'></td>");
+		$tr.append("<td colspan='3'><button type='button' class='btn btn-warning'  onclick='modifyReply(this, "+page+", "+pReplyNo+", "+refBoardNo+");'> 수정 </button></td>");
 		console.log($tr[0]);
 		console.log(obj); //obj는 this를 통해 이벤트가 발생한 태그
 		$(obj).parent().parent().after($tr);
