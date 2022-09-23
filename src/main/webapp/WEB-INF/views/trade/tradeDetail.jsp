@@ -12,28 +12,26 @@
 
 <!-- css -->
 <style>
-/* 댓글아코디언메뉴 스타일 */
-	.modal{
-		background-color:white;
-/* 		position:absolute; */
-		z-index: 100;
-	}
-/* 답글 스타일 */
 	.reReply{
 		background-color:gainsboro;
 		position:relative;
 		left:10px;
 		padding:10px;
-		z-index:40;		
 		
 	}
-/* 댓글 메뉴 버튼 스타일 */
-	.replyMenuBtn{
-		position:block;
-		right:10px;
-		padding:10px;
-		z-index:50;
+	#reply-menu{
+		background-color:white;
+		border: 1px solid black;
 	}
+	
+	li{
+		text-decoration: none;
+	}
+	
+	table{
+		backgound-color:blue;
+	}
+	
 </style>
 <body>
 
@@ -95,15 +93,16 @@
 						</div>
 						<div id="replyContents">
 							${tReply.tReplyContents }
-<!-- 댓글메뉴 -->
+<!-- 댓글메뉴버튼 -->
 							<span align="right" id="replyMenu">
 								<c:if test="${(loginUser.memberId eq tReply.tReplyWriter) || (loginUser.memberId eq trade.tradeWriter) }">
 									<a href="#" onclick="replyMenu(this);" class="replyMenuBtn"> ▤ </a>
 								</c:if>
 							</span>
 						</div> 
-<!-- 댓글 수정 창 -->
-						<div id="replyMenu" class="modal" style="display:none">
+<!-- 댓글메뉴 -->
+  <!-- 댓글 수정 창 -->
+						<div id="reply-menu" style="display:none">
 							<ul>
 								<c:if test="${loginUser.memberId eq tReply.tReplyWriter }">
 									<li onclick="replyModify(this);" ><a href="#">댓글 수정</a></li>
@@ -112,11 +111,11 @@
 											<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
 											<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
 											<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
-											<input type="text" name="tReplyContents" value="" placeholder="${tReply.tReplyContents }">
+											<input type="text" name="tReplyContents" value="${tReply.tReplyContents }" >
 											<button>수정</button>
 										</form>
 									</div>
-<!-- 댓글삭제 -->
+  <!-- 댓글삭제 -->
 									<li><a href="#" onclick="replyRemove(this);">댓글 삭제</a></li>
 									<form action="/trade/reply/remove.kh" method="post">
 										<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
@@ -124,7 +123,7 @@
 										<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
 									</form>
 								</c:if>
-<!-- 댓글 채택		 -->
+  <!-- 댓글 채택		 -->
 								<c:if test="${(loginUser.memberId eq trade.tradeWriter) and (loginUser.memberId ne tReply.tReplyWriter) }">
 									<li><a href="#" onclick="submitChoice(this);">댓글 채택</a></li>
 									<form class="choiceForm" action="/trade/reply/choice.kh" method="post">
@@ -136,6 +135,7 @@
 								</c:if>
 							</ul>
 						</div>
+						
 <!-- 답글 버튼 -->
 						<c:if test="${tReply.reReplyYn ne 'Y' }">
 							<div onclick="arcodian(this);">
@@ -217,7 +217,7 @@
 //댓글 채택 실행 함수
 	function submitChoice(target){
 		event.preventDefault();
-		var choiceForm = target.parentNode.nextElementSibling;
+		var choiceForm = target.parentNote.nextElementSibling;
 		console.log(choiceForm);
 		if(confirm("정말 채택하시겠습니까?")){
 			choiceForm.submit();
