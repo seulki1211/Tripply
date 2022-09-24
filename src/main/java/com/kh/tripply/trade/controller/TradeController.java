@@ -150,7 +150,7 @@ public class TradeController {
 	 * @param currentPage
 	 * @return
 	 */
-	@RequestMapping(value="/trade/detailView.kh",method=RequestMethod.GET)
+	@RequestMapping(value="/trade/detail.kh",method=RequestMethod.GET)
 	public ModelAndView tradeDetailView(ModelAndView mv,
 			@RequestParam("boardNo") Integer boardNo,
 			@RequestParam("currentPage") Integer currentPage,
@@ -348,7 +348,7 @@ public class TradeController {
 			
 			//2.등록 성공 시 파라미터 값을 전달하면서 상세페이지로 리다이렉트한다.
 			int boardNo = tReply.getBoardNo();
-			mv.setViewName("redirect:/trade/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+			mv.setViewName("redirect:/trade/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
 		}else {
 			
 		}
@@ -373,7 +373,7 @@ public class TradeController {
 
 			//2.로직 성공 후 현재의 상세페이지로 리다이렉트한다.
 			int boardNo = tReply.getBoardNo();
-			mv.setViewName("redirect:/trade/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+			mv.setViewName("redirect:/trade/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
 		}else {
 			
 		}
@@ -398,7 +398,7 @@ public class TradeController {
 			
 			//2.로직 성공 후 현재의 상세페이지로 리다이렉트한다.
 			int boardNo = tReply.getBoardNo();
-			mv.setViewName("redirect:/trade/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+			mv.setViewName("redirect:/trade/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
 		}else {
 			
 		}
@@ -431,7 +431,7 @@ public class TradeController {
 			int updateResult = tService.modifyFinalBiddingPrice(tReply);
 			if(updateResult > 0) {
 				//4.로직 처리 후 현재 상세페이지로 리다이렉트한다.
-				mv.setViewName("redirect:/trade/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+				mv.setViewName("redirect:/trade/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
 			}else {
 			}
 		}else {

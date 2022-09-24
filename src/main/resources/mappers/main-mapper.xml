@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="MainMapper">
+  <resultMap type="Main" id="MainResultMap">
+	  	<id 	column="BOARD_NO" 	property="boardNo"/>
+	  	<result column="TITLE" 		property="title"/>
+	  	<result column="CDATE" 		property="cDate"/>
+	  	<result column="SORT" 		property="sort"/>
+  </resultMap>
+  
+  <select id="selectRecent" resultMap="MainResultMap">
+	  	SELECT BOARD_NO,FREE_TITLE AS TITLE,F_CREATE_DATE AS CDATE,'free' AS SORT
+		FROM FREE_TBL
+		WHERE FREE_WRITER = 'mbk1991'
+		UNION ALL
+		SELECT PLANNER_NO,PLANNER_TITLE,P_CREATE_DATE,'planner'
+		FROM PLANNER_TBL
+		WHERE PLANNER_WRITER = 'mbk1991'
+		UNION ALL
+		SELECT BOARD_NO,REVIEW_TITLE,R_CREATE_DATE,'review'
+		FROM REVIEW_TBL
+		WHERE REVIEW_WRITER ='mbk1991'
+		UNION ALL
+		SELECT BOARD_NO,TRADE_TITLE,T_CREATE_DATE,'trade'
+		FROM TRADE_TBL
+		WHERE TRADE_WRITER ='mbk1991'
+		UNION ALL
+		SELECT BOARD_NO,PARTY_TITLE,P_CREATE_DATE,'party'
+		FROM PARTY_TBL
+		WHERE PARTY_WRITER = 'mbk1991'
+		ORDER BY 3 DESC
+  </select>
+  
+  </mapper>

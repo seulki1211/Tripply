@@ -25,6 +25,7 @@
 		<typeAlias type="com.kh.tripply.trade.domain.Trade" 			alias="Trade"/>
 		<typeAlias type="com.kh.tripply.trade.domain.TradeReply" 		alias="TradeReply"/>
 		<typeAlias type="com.kh.tripply.message.domain.Message" 		alias="Message"/>
+		<typeAlias type="com.kh.tripply.main.domain.Main" 				alias="Main"/>
 	</typeAliases>
 
 	<mappers>
@@ -41,6 +42,7 @@
 		 <mapper resource="mappers/review-reply-mapper.xml" />
 		 <mapper resource="mappers/trade-mapper.xml"/>
 		 <mapper resource="mappers/trade-reply-mapper.xml"/>
+		  <mapper resource="mappers/main-mapper.xml"/>
 	</mappers>
 
 </configuration>

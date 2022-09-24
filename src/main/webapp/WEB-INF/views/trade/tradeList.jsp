@@ -31,7 +31,7 @@
 					<c:forEach items="${tList }" var="trade" varStatus="N">
 						<td id="detail-one-wrap" aligh="center" width="30%">
 							<div class="detail title thumbnale-wrap" align="center">
-								<img onclick="loginCheck('${loginUser.memberId}','/trade/detailView.kh?boardNo=${trade.boardNo }&currentPage=${paging.currentPage }');"  onerror="this.src='/resources/image/forest1.png';" src="${trade.thumbnailPath }" height="90%" width="90%">
+								<img onclick="loginCheck('${loginUser.memberId}','/trade/detail.kh?boardNo=${trade.boardNo }&currentPage=${paging.currentPage }');"  onerror="this.src='/resources/image/forest1.png';" src="${trade.thumbnailPath }" height="90%" width="90%">
 							</div>
 							<div align="center">
 								<div id="soldOut-area">
@@ -39,7 +39,7 @@
 									<c:if test="${trade.soldOut eq 'N' }">[판매중]</c:if>
 								</div>
 								<span class="detail region">[${trade.tLocationName }]</span>
-								<a href="#" onclick="loginCheck('${loginUser.memberId}','/trade/detailView.kh?boardNo=${trade.boardNo }&currentPage=${paging.currentPage }');"  >
+								<a href="#" onclick="loginCheck('${loginUser.memberId}','/trade/detail.kh?boardNo=${trade.boardNo }&currentPage=${paging.currentPage }');"  >
 									<span class="detail title">
 										<b>${trade.tradeTitle }</b>
 									</span>

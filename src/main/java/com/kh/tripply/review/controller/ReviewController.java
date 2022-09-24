@@ -146,7 +146,7 @@ public class ReviewController {
 	 * @param mv,boardNo
 	 * @return
 	 */
-	@RequestMapping(value = "/review/detailView.kh", method = RequestMethod.GET)
+	@RequestMapping(value = "/review/detail.kh", method = RequestMethod.GET)
 	public ModelAndView reviewDetailView(ModelAndView mv, 
 			@RequestParam("boardNo") Integer boardNo,
 			@RequestParam("currentPage") Integer currentPage,
@@ -354,7 +354,7 @@ public class ReviewController {
 			
 			//2.등록 성공 시 파라미터 값을 전달하면서 상세페이지로 리다이렉트한다.
 			int boardNo = rReply.getBoardNo();
-			mv.setViewName("redirect:/review/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+			mv.setViewName("redirect:/review/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
 		}else {
 		}
 		return mv;
@@ -379,7 +379,7 @@ public class ReviewController {
 			
 			//2.로직 성공 후 현재의 상세페이지로 리다이렉트한다.
 			int boardNo = rReply.getBoardNo();
-			mv.setViewName("redirect:/review/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+			mv.setViewName("redirect:/review/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
 		}else {
 			
 		}
@@ -403,7 +403,7 @@ public class ReviewController {
 			
 		//2.로직 성공 후 현재의 상세페이지로 리다이렉트한다.
 		int boardNo = rReply.getBoardNo();
-		mv.setViewName("redirect:/review/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+		mv.setViewName("redirect:/review/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
 		}else {
 			
 		}
