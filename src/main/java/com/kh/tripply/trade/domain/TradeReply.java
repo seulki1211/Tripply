@@ -1,6 +1,7 @@
 package com.kh.tripply.trade.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class TradeReply {
 	private int tReplyNo;
@@ -8,8 +9,8 @@ public class TradeReply {
 	private int tRefReplyNo;
 	private String tReplyWriter;
 	private String tReplyContents;
-	private Date trCreateDate;
-	private Date trUpdateDate;
+	private Timestamp trCreateDate;
+	private Timestamp trUpdateDate;
 	private String trStatus;
 	private String reReplyYn;
 	private String trChoiced;
@@ -19,7 +20,7 @@ public class TradeReply {
 	}
 
 	public TradeReply(int tReplyNo, int boardNo, int tRefReplyNo, String tReplyWriter, String tReplyContents,
-			Date trCreateDate, Date trUpdateDate, String trStatus, String reReplyYn, String trChoiced,
+			Timestamp trCreateDate, Timestamp trUpdateDate, String trStatus, String reReplyYn, String trChoiced,
 			int biddingPrice) {
 		super();
 		this.tReplyNo = tReplyNo;
@@ -75,19 +76,19 @@ public class TradeReply {
 		this.tReplyContents = tReplyContents;
 	}
 
-	public Date getTrCreateDate() {
+	public Timestamp getTrCreateDate() {
 		return trCreateDate;
 	}
 
-	public void setTrCreateDate(Date trCreateDate) {
+	public void setTrCreateDate(Timestamp trCreateDate) {
 		this.trCreateDate = trCreateDate;
 	}
 
-	public Date getTrUpdateDate() {
+	public Timestamp getTrUpdateDate() {
 		return trUpdateDate;
 	}
 
-	public void setTrUpdateDate(Date trUpdateDate) {
+	public void setTrUpdateDate(Timestamp trUpdateDate) {
 		this.trUpdateDate = trUpdateDate;
 	}
 
@@ -130,6 +131,9 @@ public class TradeReply {
 				+ trCreateDate + ", trUpdateDate=" + trUpdateDate + ", trStatus=" + trStatus + ", reReplyYn="
 				+ reReplyYn + ", trChoiced=" + trChoiced + ", biddingPrice=" + biddingPrice + "]";
 	}
+
+
+	
 
 	
 	

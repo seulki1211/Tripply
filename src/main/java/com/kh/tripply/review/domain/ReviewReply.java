@@ -1,6 +1,7 @@
 package com.kh.tripply.review.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ReviewReply {
    	private int rReplyNo;
@@ -8,18 +9,15 @@ public class ReviewReply {
 	private int rRefReplyNo;
 	private String rReplyWriter;
 	private String rReplyContents;
-	private Date rrCreateDate;
-	private Date rrUpdateDate;
+	private Timestamp rrCreateDate;
+	private Timestamp rrUpdateDate;
 	private String rrStatus;
 	private String reReplyYn;
 	
 	public ReviewReply() {}
-	
-	
-	
 
 	public ReviewReply(int rReplyNo, int boardNo, int rRefReplyNo, String rReplyWriter, String rReplyContents,
-			Date rrCreateDate, Date rrUpdateDate, String rrStatus, String reReplyYn) {
+			Timestamp rrCreateDate, Timestamp rrUpdateDate, String rrStatus, String reReplyYn) {
 		super();
 		this.rReplyNo = rReplyNo;
 		this.boardNo = boardNo;
@@ -31,9 +29,6 @@ public class ReviewReply {
 		this.rrStatus = rrStatus;
 		this.reReplyYn = reReplyYn;
 	}
-
-
-
 
 	public int getrReplyNo() {
 		return rReplyNo;
@@ -75,19 +70,19 @@ public class ReviewReply {
 		this.rReplyContents = rReplyContents;
 	}
 
-	public Date getRrCreateDate() {
+	public Timestamp getRrCreateDate() {
 		return rrCreateDate;
 	}
 
-	public void setRrCreateDate(Date rrCreateDate) {
+	public void setRrCreateDate(Timestamp rrCreateDate) {
 		this.rrCreateDate = rrCreateDate;
 	}
 
-	public Date getRrUpdateDate() {
+	public Timestamp getRrUpdateDate() {
 		return rrUpdateDate;
 	}
 
-	public void setRrUpdateDate(Date rrUpdateDate) {
+	public void setRrUpdateDate(Timestamp rrUpdateDate) {
 		this.rrUpdateDate = rrUpdateDate;
 	}
 
@@ -107,9 +102,6 @@ public class ReviewReply {
 		this.reReplyYn = reReplyYn;
 	}
 
-
-
-
 	@Override
 	public String toString() {
 		return "ReviewReply [rReplyNo=" + rReplyNo + ", boardNo=" + boardNo + ", rRefReplyNo=" + rRefReplyNo
@@ -120,5 +112,6 @@ public class ReviewReply {
 	
 	
 	
+
 	
 }

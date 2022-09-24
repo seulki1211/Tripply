@@ -51,11 +51,16 @@
 					<td><c:if test="${trade.soldOut eq 'Y' }">[판매완료]</c:if> ${trade.tradeTitle }</td>
 				</tr>
 				<tr>
-					<td colspan='3'>${trade.tradeWriter } <span
-						class="detail viewcount-wrap"> <img alt="눈모양 아이콘"
-							src="/resources/image/viewcount.jpg" width="25px" height="25px">
+					<td colspan='3'>
+						${trade.tradeWriter } 
+						<span class="detail viewcount-wrap"> 
+							<img alt="눈모양 아이콘" src="/resources/image/viewcount.jpg" width="25px" height="25px"> 
 							조회수 ${trade.tradeCount } &nbsp;
-					</span> <span class="detail date">${trade.tCreateDate }</span> <!-- 작성자인 경우에만 수정, 삭제버튼이 노출되도록 		 -->
+					    </span> 
+					    <span class="detail date">
+					    	${trade.tCreateDate }
+					    </span> 
+					    <!-- 작성자인 경우에만 수정, 삭제버튼이 노출되도록 		 -->
 						<c:if test="${loginUser.memberId eq trade.tradeWriter }">
 							<span class="detail btn"> <a
 								href="/trade/modifyView.kh?boardNo=${trade.boardNo }">수정</a> <a
@@ -69,33 +74,34 @@
 				</tr>
 			</table>
 		</div>
-<!-- 댓글 입력창 -->
+<!-- 댓글 입력창: 구매자 댓글-->
  구매 채택된 사람 아이디: ${trade.buyerId }
 		<c:if test="${loginUser.memberId ne trade.tradeWriter }">
 		<div class="reply-input" align="center">
-			<form action="/trade/reply/write.kh" method="post">
+			<form onsubmit="inputCheck(this); inputPriceCheck(this);" action="/trade/reply/write.kh" method="post">
+				<c:if test="${trade.soldOut ne 'Y' }">
+					<input type="text" name="biddingPrice" placeholder="구매희망가격">
+				</c:if>
+				<input type="text" name="tReplyContents" value="" required="required" placeholder="댓글을 달아보세요!">
 				<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
 				<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
 				<input type="hidden" name="tReplyWriter" value="${loginUser.memberId }">
 				<input type="hidden" name="reReplyYn" value="N"> 
 				<input type="hidden" name="tRefReplyNo" value="-1">
-				<c:if test="${trade.soldOut ne 'Y' }">
-					<input type="text" name="biddingPrice" placeholder="구매희망가격">
-				</c:if>
-				<input type="text" name="tReplyContents" value="" placeholder="댓글을 달아보세요!">
 				<button>등록</button>
 			</form>
 		</div>
 		</c:if>
+<!-- 댓글 입력창: 판매자 댓글-->
 		<c:if test="${loginUser.memberId eq trade.tradeWriter }">
 		<div class="reply-input" align="center">
-			<form action="/trade/reply/write.kh" method="post">
+			<form onsubmit="inputCheck(this)" action="/trade/reply/write.kh" method="post">
 				<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
+				<input type="text" name="tReplyContents" value="" required="required" placeholder="댓글을 달아보세요!">
 				<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
 				<input type="hidden" name="tReplyWriter" value="${loginUser.memberId }">
 				<input type="hidden" name="reReplyYn" value="N"> 
 				<input type="hidden" name="tRefReplyNo" value="-1">
-				<input type="text" name="tReplyContents" value="" placeholder="댓글을 달아보세요!">
 				<button>등록</button>
 			</form>
 		</div>
@@ -119,6 +125,7 @@
 								</c:if>
 							</span>
 						</div> 
+						
 <!-- 댓글메뉴 -->
   <!-- 댓글 수정 창 -->
 						<div id="reply-menu" style="display:none">
@@ -126,11 +133,11 @@
 								<c:if test="${loginUser.memberId eq tReply.tReplyWriter }">
 									<li onclick="replyModify(this);" ><a href="#">댓글 수정</a></li>
 									<div class="replyModify" style="display:none;">
-										<form action="/trade/reply/modify.kh" method="post">
+										<form onsubmit="inputCheck(this)" action="/trade/reply/modify.kh" method="post">
 											<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
+											<input type="text" name="tReplyContents" value="${tReply.tReplyContents }" >
 											<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
 											<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
-											<input type="text" name="tReplyContents" value="${tReply.tReplyContents }" >
 											<button>수정</button>
 										</form>
 									</div>
@@ -164,13 +171,13 @@
 							</div>
 <!-- 답글 입력창 -->
 							<div class="reReply-input" style="display: none">
-								<form action="/trade/reply/write.kh" method="post">
+								<form onsubmit="inputCheck(this)" action="/trade/reply/write.kh" method="post">
 										<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
+										<input type="text" name="tReplyContents" value="" placeholder="답글을 입력해보세요!">
 										<input type="hidden" name="boardNo" value="${trade.boardNo }">
 										<input type="hidden" name="tReplyWriter" value="${loginUser.memberId }"> 
 										<input type="hidden" name="reReplyYn" value="Y"> 
 										<input type="hidden" name="tRefReplyNo" value="${tReply.tReplyNo }"> 
-										<input type="text" name="tReplyContents" value="" placeholder="답글을 입력해보세요!">
 									<button>등록</button>
 								</form>
 							</div>
@@ -245,7 +252,27 @@
 		}
 }
 
-//
+//입력값 정규표현식 유효성 검사
+
+	//클린한 댓글문화 정착, form태그하위의 text input태그가 두번째여야함.
+	function inputCheck(thisForm){
+		var inputReplyContents  = thisForm.childNodes[3].value;
+		var regExpReplyContents = /시바견|아저씨발냄새|시바|씨발|씨1발|시1바|존나|존1나|존12나|졸라|쪼다|머저리 /;
+		if(regExpReplyContents.test(inputReplyContents)){
+			alert("클린한 댓글 문화를 위하여 비속어는 자제해주세요.");
+			event.preventDefault();
+		}
+}
+
+	//구매희망가격 숫자만 입력
+	function inputPriceCheck(thisForm){
+		var inputPrice = thisForm.childNodes[1].value;
+		var regExpPrice = /\d+/;
+		if(!regExpPrice.test(inputPrice)){
+			alert("가격을 숫자로 입력하세요.");
+			event.preventDefault();
+		}
+}
 		
 	
 		

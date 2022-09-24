@@ -34,10 +34,13 @@
 								<img onclick="loginCheck('${loginUser.memberId}','/trade/detailView.kh?boardNo=${trade.boardNo }&currentPage=${paging.currentPage }');"  onerror="this.src='/resources/image/forest1.png';" src="${trade.thumbnailPath }" height="90%" width="90%">
 							</div>
 							<div align="center">
+								<div id="soldOut-area">
+									<c:if test="${trade.soldOut eq 'Y' }">[판매완료]</c:if>
+									<c:if test="${trade.soldOut eq 'N' }">[판매중]</c:if>
+								</div>
 								<span class="detail region">[${trade.tLocationName }]</span>
 								<a href="#" onclick="loginCheck('${loginUser.memberId}','/trade/detailView.kh?boardNo=${trade.boardNo }&currentPage=${paging.currentPage }');"  >
 									<span class="detail title">
-										<c:if test="${trade.soldOut eq 'Y' }">[판매완료]</c:if>
 										<b>${trade.tradeTitle }</b>
 									</span>
 								</a>
