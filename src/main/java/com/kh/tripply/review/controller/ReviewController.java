@@ -361,5 +361,55 @@ public class ReviewController {
 	}
 	
 	
+	/**
+	 * 댓글 수정 기능
+	 * @param mv
+	 * @param tReply
+	 * @param currentPage
+	 * @return
+	 */
+	@RequestMapping(value="/review/reply/modify.kh",method=RequestMethod.POST)
+	public ModelAndView tradeReplyModify(ModelAndView mv,
+			@ModelAttribute ReviewReply rReply,
+			@RequestParam("currentPage") Integer currentPage) {
+		
+		//1. UPDATE문을 이용하여 게시물의 내용을 변경한다.
+		int result = rService.modifyReviewReply(rReply);
+		if(result>0) {
+			
+			//2.로직 성공 후 현재의 상세페이지로 리다이렉트한다.
+			int boardNo = rReply.getBoardNo();
+			mv.setViewName("redirect:/review/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+		}else {
+			
+		}
+		return mv;
+	}
+	
+	
+	/**
+	 * 댓글 삭제
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/review/reply/remove.kh",method=RequestMethod.POST)
+	public ModelAndView reviewReplyRemove(ModelAndView mv,
+			@ModelAttribute ReviewReply rReply,
+			@RequestParam("currentPage") Integer currentPage) {
+		
+		//1. UPDATE문을 이용하여 게시물의 내용과 상태를 변경한다.
+		int result = rService.removeReviewReply(rReply);
+		if(result>0) {
+			
+		//2.로직 성공 후 현재의 상세페이지로 리다이렉트한다.
+		int boardNo = rReply.getBoardNo();
+		mv.setViewName("redirect:/review/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+		}else {
+			
+		}
+		return mv;
+	}
+	
+	
 
 }

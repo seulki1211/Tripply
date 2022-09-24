@@ -82,4 +82,14 @@ public class ReviewStoreLogic implements ReviewStore{
 		return result;
 	}
 
+	@Override
+	public int deleteReviewReply(SqlSessionTemplate session, ReviewReply rReply) {
+		return session.update("ReviewReplyMapper.deleteReviewReply", rReply);
+	}
+
+	@Override
+	public int updateReviewReply(SqlSessionTemplate session, ReviewReply rReply) {
+		return session.update("ReviewReplyMapper.updateReviewReply",rReply);
+	}
+
 }

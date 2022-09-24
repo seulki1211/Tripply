@@ -32,5 +32,18 @@
 		FROM REVIEW_REPLY_TBL
 		WHERE BOARD_NO=#{boardNo}
 	</select>
+	
+	<update id="updateReviewReply">
+		UPDQTE REVIEW_REPLY_TBL
+		SET R_REPLY_CONTENTS = =#{rReplyContents}
+		WHERE R_REPLY_NO=#{rReplyNo} AND R_R_STATUS = 'Y'
+	</update>
+	
+	<update id="deleteReviewReply">
+		UPDATE REVIEW_REPLY_TBL
+		SET R_REPLY_CONTENTS = '작성자에 의해 삭제된 댓글입니다.',R_R_STATUS='N'
+		WHERE R_REPLY_NO=#{rReplyNo} AND R_R_STATUS = 'Y'
+	</update>
+	
 
 </mapper>

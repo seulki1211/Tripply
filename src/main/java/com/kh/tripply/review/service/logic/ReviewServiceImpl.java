@@ -74,5 +74,13 @@ public class ReviewServiceImpl implements ReviewService {
 		int result = rStore.reviewViewCount(session,boardNo);
 		return result;
 	}
+	@Override
+	public int removeReviewReply(ReviewReply rReply) {
+		return rStore.deleteReviewReply(session, rReply);
+	}
+	@Override
+	public int modifyReviewReply(ReviewReply rReply) {
+		return rStore.updateReviewReply(session, rReply);
+	}
 	
 }

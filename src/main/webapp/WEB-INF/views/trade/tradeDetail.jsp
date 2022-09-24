@@ -119,6 +119,7 @@
 							<c:if test="${trade.tradeWriter ne tReply.tReplyWriter and tReply.biddingPrice ne 0 }"><b>[구매희망가: ${tReply.biddingPrice }원]</b></c:if>
 							${tReply.tReplyContents }
 <!-- 댓글메뉴버튼 -->
+  						<c:if test="${tReply.trStatus ne 'N' }">
 							<span align="right" id="replyMenu">
 								<c:if test="${(loginUser.memberId eq tReply.tReplyWriter) || (loginUser.memberId eq trade.tradeWriter) }">
 									<a href="#" onclick="replyMenu(this);" class="replyMenuBtn"> ▤ </a>
@@ -128,44 +129,45 @@
 						
 <!-- 댓글메뉴 -->
   <!-- 댓글 수정 창 -->
-						<div id="reply-menu" style="display:none">
-							<ul>
-								<c:if test="${loginUser.memberId eq tReply.tReplyWriter }">
-									<li onclick="replyModify(this);" ><a href="#">댓글 수정</a></li>
-									<div class="replyModify" style="display:none;">
-										<form onsubmit="inputCheck(this)" action="/trade/reply/modify.kh" method="post">
+							<div id="reply-menu" style="display:none">
+								<ul>
+									<c:if test="${loginUser.memberId eq tReply.tReplyWriter }">
+										<li onclick="replyModify(this);" ><a href="#">댓글 수정</a></li>
+										<div class="replyModify" style="display:none;">
+											<form onsubmit="inputCheck(this)" action="/trade/reply/modify.kh" method="post">
+												<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
+												<input type="text" name="tReplyContents" value="${tReply.tReplyContents }" >
+												<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
+												<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
+												<button>수정</button>
+											</form>
+										</div>
+	  <!-- 댓글삭제 -->
+										<li><a href="#" onclick="replyRemove(this);">댓글 삭제</a></li>
+										<form action="/trade/reply/remove.kh" method="post">
 											<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
-											<input type="text" name="tReplyContents" value="${tReply.tReplyContents }" >
 											<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
 											<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
-											<button>수정</button>
 										</form>
-									</div>
-  <!-- 댓글삭제 -->
-									<li><a href="#" onclick="replyRemove(this);">댓글 삭제</a></li>
-									<form action="/trade/reply/remove.kh" method="post">
-										<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
-										<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
-										<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
-									</form>
-								</c:if>
-  <!-- 댓글 채택		 -->
-								<c:if test="${(loginUser.memberId eq trade.tradeWriter) and (loginUser.memberId ne tReply.tReplyWriter) }">
-									<li><a href="#" onclick="submitChoice(this);">댓글 채택</a></li>
-									<form class="choiceForm" action="/trade/reply/choice.kh" method="post">
-										<input type="hidden" name="currentPage" value="${sessionScope.currentPage }">
-										<input type="hidden" name="buyer" value="${tReply.tReplyWriter }">
-										<input type="hidden" name="boardNo" value="${trade.boardNo }">
-										<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
-										<input type="hidden" name="biddingPrice" value="${tReply.biddingPrice }">
-									</form>
-									<li><a href="/trade/reply/choiceCancel.kh">댓글 채택 취소</a></li>
-								</c:if>
-							</ul>
-						</div>
+									</c:if>
+	  <!-- 댓글 채택		 -->
+									<c:if test="${(loginUser.memberId eq trade.tradeWriter) and (loginUser.memberId ne tReply.tReplyWriter) }">
+										<li><a href="#" onclick="submitChoice(this);">댓글 채택</a></li>
+										<form class="choiceForm" action="/trade/reply/choice.kh" method="post">
+											<input type="hidden" name="currentPage" value="${sessionScope.currentPage }">
+											<input type="hidden" name="buyer" value="${tReply.tReplyWriter }">
+											<input type="hidden" name="boardNo" value="${trade.boardNo }">
+											<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
+											<input type="hidden" name="biddingPrice" value="${tReply.biddingPrice }">
+										</form>
+										<li><a href="/trade/reply/choiceCancel.kh">댓글 채택 취소</a></li>
+									</c:if>
+								</ul>
+							</div>
+  						</c:if>
 						
 <!-- 답글 버튼 -->
-						<c:if test="${tReply.reReplyYn ne 'Y' }">
+						<c:if test="${tReply.reReplyYn ne 'Y' and tReply.trStatus ne 'N' }">
 							<div onclick="arcodian(this);">
 								<a href="#">답글 달기</a>
 							</div>
@@ -257,7 +259,7 @@
 	//클린한 댓글문화 정착, form태그하위의 text input태그가 두번째여야함.
 	function inputCheck(thisForm){
 		var inputReplyContents  = thisForm.childNodes[3].value;
-		var regExpReplyContents = /시바견|아저씨발냄새|시바|씨발|씨1발|시1바|존나|존1나|존12나|졸라|쪼다|머저리 /;
+		var regExpReplyContents = /(시|씨)(발|바|빨|박|벌|붤|봘|뽤)|(조|존|졸)(라|나|)|(새|색|섹)(기|끼)|(병|빙|븅)(신|쉰|싄)/;
 		if(regExpReplyContents.test(inputReplyContents)){
 			alert("클린한 댓글 문화를 위하여 비속어는 자제해주세요.");
 			event.preventDefault();

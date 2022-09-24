@@ -366,8 +366,12 @@ public class TradeController {
 	public ModelAndView tradeReplyModify(ModelAndView mv,
 			@ModelAttribute TradeReply tReply,
 			@RequestParam("currentPage") Integer currentPage) {
+		
+		//1. UPDATE문을 이용하여 게시물의 내용을 변경한다.
 		int result = tService.modifyTradeReply(tReply);
 		if(result>0) {
+
+			//2.로직 성공 후 현재의 상세페이지로 리다이렉트한다.
 			int boardNo = tReply.getBoardNo();
 			mv.setViewName("redirect:/trade/detailView.kh?currentPage="+currentPage+"&boardNo="+boardNo);
 		}else {
