@@ -45,4 +45,11 @@
 	<select id="selectMemberIdByEmail" resultMap="memberResultMap">
 		SELECT MEMBER_ID FROM MEMBER_TBL WHERE MEMBER_EMAIL = #{memberEmail} AND M_STATUS = 'Y'
 	</select>
+	
+<!-- 포인트컨트롤러에서 사용, point잔액 갱신 용도. -->
+	<select id="getMemberPoint" resultMap="memberResultMap">
+		SELECT MEMBER_ID, MEMBER_NAME, MEMBER_NICKNAME, POINT_BALANCE
+		FROM MEMBER_TBL
+		WHERE MEMBER_ID=#{memberId} 
+	</select>
 </mapper>

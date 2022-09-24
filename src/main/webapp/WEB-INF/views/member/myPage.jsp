@@ -18,7 +18,7 @@
 			<div class="my-side-bar" onclick="location.href='#';">회원정보수정</div>
 			<div class="my-side-bar" onclick="location.href='/free/detail.kh';">작성글</div>
 			<div class="my-side-bar">북마크</div>
-			<div class="my-side-bar" onclick="location.href='/point/chargeView.kh';">포인트관리</div>
+			<div class="my-side-bar" onclick="location.href='/point/historyView.kh';">포인트관리</div>
 		</div>
 		<div class="profile-form">
 			<h1 align="center">회원정보수정</h1>

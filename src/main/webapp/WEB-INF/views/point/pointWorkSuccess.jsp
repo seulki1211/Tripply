@@ -26,9 +26,9 @@
 <!-- 사이드바 아코디언			 -->
 				<div id="point-navi" style="display:block;">
 					<ul>
+						<li onclick="location.href='/point/historyView.kh';">포인트 내역</li>
 						<li onclick="location.href='/point/chargeView.kh';">포인트 충전</li>
-						<li onclick="location.href='/point/historyView.kh';">포인트 내역확인</li>
-						<li onclick="location.href='/point/send.kh';">포인트 전송</li>
+						<li onclick="location.href='/point/sendView.kh';">채택된 상품 구매하기</li>
 					</ul>
 				</div>
 			</div>
@@ -36,6 +36,7 @@
 <!-- 본 컨텐츠 -->
 		<div id="contents-2" style="float:left">
 			<h1>포인트 ${message }에 성공하였습니다.</h1><hr>
+			
 			
 		
 		</div>
@@ -55,5 +56,10 @@
 			pointNaviDiv.style.display="none";
 		}
 	}
+	
+	window.onload=function(){
+		setTimeout("location.href='/point/historyView.kh'",1500);
+	}
+	
 </script>
 </html>

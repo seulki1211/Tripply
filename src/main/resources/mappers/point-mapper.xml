@@ -38,4 +38,16 @@
   	WHERE MEMBER_ID = #{pointToUser}
   </update>
   
+  <update id="updateSendPoint">
+  	UPDATE MEMBER_TBL
+  	SET POINT_BALANCE = POINT_BALANCE - #{pointAmount}
+  	WHERE MEMBER_ID = #{pointFromUser}
+  </update>
+  
+  <update id="updateGetPoint">
+  	UPDATE MEMBER_TBL
+  	SET POINT_BALANCE = POINT_BALANCE + #{pointAmount}
+  	WHERE MEMBER_ID = #{pointToUser}
+  </update>
+  
   </mapper>

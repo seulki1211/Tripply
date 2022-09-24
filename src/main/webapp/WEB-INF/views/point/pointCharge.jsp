@@ -26,9 +26,9 @@
 <!-- 사이드바 아코디언			 -->
 				<div id="point-navi">
 					<ul>
+						<li onclick="location.href='/point/historyView.kh';">포인트 내역</li>
 						<li onclick="location.href='/point/chargeView.kh';">포인트 충전</li>
-						<li onclick="location.href='/point/historyView.kh';">포인트 내역확인</li>
-						<li onclick="location.href='/point/send.kh';">포인트 전송</li>
+						<li onclick="location.href='/point/sendView.kh';">채택된 상품 구매하기</li>
 					</ul>
 				</div>
 			</div>

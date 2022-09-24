@@ -26,9 +26,9 @@
 <!-- 사이드바 아코디언			 -->
 				<div id="point-navi" style="display:block;">
 					<ul>
+						<li onclick="location.href='/point/historyView.kh';">포인트 내역</li>
 						<li onclick="location.href='/point/chargeView.kh';">포인트 충전</li>
-						<li onclick="location.href='/point/historyView.kh';">포인트 내역확인</li>
-						<li onclick="location.href='/point/send.kh';">포인트 전송</li>
+						<li onclick="location.href='/point/sendView.kh';">채택된 상품 구매하기</li>
 					</ul>
 				</div>
 			</div>
@@ -41,28 +41,26 @@
 			<table align="center" border="1px" width="500px">
 				<tr>
 					<th>날짜</th>
-					<th>금액</th>
+					<th>포인트</th>
 					<th>내용</th>
 				</tr>
 				<c:forEach items="${pList }" var="point" varStatus="n">
 					<tr>
 						<td>${point.pCreateDate}</td>
 						<td>${point.pointAmount }</td>
+						<td>
 						<c:if test="${point.pointWorkType eq 'C' }">
-							<td>
-								포인트를 충전하였습니다.
-							</td>
-						</c:if>
-						<c:if test="${point.pointWorkType eq 'R' }">
-							<td>
-								${point.pointFromUser }님에게 포인트를 받았습니다.
-							</td>
+								    포인트를 충전하였습니다.
 						</c:if>
 						<c:if test="${point.pointWorkType eq 'S' }">
-							<td>
+							<c:if test="${point.pointFromUser eq loginUser.memberId }">
 								${point.pointToUser }님에게 포인트를 보냈습니다.
-							</td>
+							</c:if>
+							<c:if test="${point.pointToUser eq loginUser.memberId }">
+									${point.pointFromUser }님에게 포인트를 받았습니다.
+							</c:if>
 						</c:if>
+						</td>
 					</tr>
 				</c:forEach>
 			</table>
