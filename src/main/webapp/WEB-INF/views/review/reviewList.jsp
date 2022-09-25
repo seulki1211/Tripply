@@ -24,18 +24,18 @@
 			</form>
 		</div>
 <!-- 게시물목록출력 -->
-	로그인 유저 체크 :${loginUser.memberId }
+	로그인 유저 체크 :${loginUser.memberNickname }
 		<div id="list-area">
 			<table align="center" width="100%">
 				<tr id="detail-raw-wrap">
 					<c:forEach items="${rList }" var="review" varStatus="N">
 						<td id="detail-one-wrap" aligh="center" width="30%">
 							<div class="detail title thumbnale-wrap" align="center">
-								<img onclick="loginCheck('${loginUser.memberId}','/review/detail.kh?boardNo=${review.boardNo }&currentPage=${paging.currentPage }');"  onerror="this.src='/resources/image/flower1.png';" src="${review.thumbnailPath }" height="90%" width="90%">
+								<img onclick="loginCheck('${loginUser.memberId}','/review/detail.kh?boardNo=${review.boardNo }&page=${paging.page }');"  onerror="this.src='/resources/image/flower1.png';" src="${review.thumbnailPath }" height="90%" width="90%">
 							</div>
 							<div align="center">
 								<span class="detail region">[${review.rLocationName }]</span>
-								<a href="#" onclick="loginCheck('${loginUser.memberId}','/review/detail.kh?boardNo=${review.boardNo }&currentPage=${paging.currentPage }');"  >
+								<a href="#" onclick="loginCheck('${loginUser.memberId}','/review/detail.kh?boardNo=${review.boardNo }&page=${paging.page }');"  >
 									<span class="detail title"><b>${review.reviewTitle }</b></span>
 								</a>
 								<div class="detail writer">${review.reviewWriter }</div>
@@ -57,13 +57,13 @@
 <!-- 페이징처리 -->
 			<div id="pageNavi">
 				<c:if test="${paging.startNavi > 1 }">
-					<a href="/review/${urlVal }.kh?currentPage=${paging.startNavi-1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[이전]</a>
+					<a href="/review/${urlVal }.kh?page=${paging.startNavi-1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[이전]</a>
 				</c:if>
 				<c:forEach begin="${paging.startNavi }" end="${paging.endNavi }" var="p" >
-					<a href="/review/${urlVal }.kh?currentPage=${p }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">${p }</a>
+					<a href="/review/${urlVal }.kh?page=${p }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">${p }</a>
 				</c:forEach>
 				<c:if test="${paging.endNavi < paging.endPage }">
-					<a href="/review/${urlVal }.kh?currentPage=${paging.endNavi+1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[다음]</a>
+					<a href="/review/${urlVal }.kh?page=${paging.endNavi+1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[다음]</a>
 				</c:if>
 			</div>
 <!-- 컨텐츠 하단 버튼	 -->
@@ -85,5 +85,7 @@
 				alert("로그인을 해주세요.")
 			}
 		}
+		
+
 </script>
 </html>

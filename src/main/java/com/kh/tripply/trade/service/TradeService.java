@@ -32,8 +32,9 @@ public interface TradeService {
 	public int tradeViewCount(int boardNo);
 	
 	/////////////////////거래
-	public int modifyBuyer(HashMap<String,String> paramMap);
+	public int modifyTradeChoice(Trade trade);
 	public int modifyFinalBiddingPrice(TradeReply tReply);
 	public List<Trade> printMyTrade(Member loginUser);
+	public int modifyTradeReplyChoiced(TradeReply tReply);
 	
 }

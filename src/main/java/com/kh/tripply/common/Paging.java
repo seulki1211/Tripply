@@ -9,7 +9,7 @@ public class Paging {
 	//1.게시물 개수, 2.현재페이지, 3.페이지당 게시물개수, 4.페이징네비사이즈
 	
 	private int totalCount;
-	private int currentPage;
+	private int page;
 	private int pageLimit;
 	private int startPage;
 	private int endPage;
@@ -18,27 +18,27 @@ public class Paging {
 	private int endNavi;
 	private int offset;
 	
-	public Paging(int totalCount, int currentPage, int pageLimit, int naviSize) {
+	public Paging(int totalCount, int page, int pageLimit, int naviSize) {
 		super();
 		this.totalCount = totalCount;
-		this.currentPage = currentPage;
+		this.page = page;
 		this.pageLimit = pageLimit;
 		this.naviSize = naviSize;
 
 		startPage = 1;
 		endPage = (int) ((double) totalCount / pageLimit + 0.9);
-		startNavi = ((currentPage - 1) / naviSize) * naviSize + 1;
+		startNavi = ((page - 1) / naviSize) * naviSize + 1;
 		endNavi = startNavi + naviSize - 1;
 		if (endNavi > endPage) {
 			endNavi = endPage;
 		}
-		if (currentPage < 1) {
-			currentPage = 1;
+		if (page < 1) {
+			page = 1;
 		}
-		if (currentPage > endPage) {
-			currentPage = endPage;
+		if (page > endPage) {
+			page = endPage;
 		}
-		offset = (currentPage - 1) * pageLimit;
+		offset = (page - 1) * pageLimit;
 	}
 
 	public int getTotalCount() {
@@ -49,12 +49,12 @@ public class Paging {
 		this.totalCount = totalCount;
 	}
 
-	public int getCurrentPage() {
-		return currentPage;
+	public int getpage() {
+		return page;
 	}
 
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
+	public void setpage(int page) {
+		this.page = page;
 	}
 
 	public int getPageLimit() {
@@ -115,7 +115,7 @@ public class Paging {
 
 	@Override
 	public String toString() {
-		return "Paging [totalCount=" + totalCount + ", currentPage=" + currentPage + ", pageLimit=" + pageLimit
+		return "Paging [totalCount=" + totalCount + ", page=" + page + ", pageLimit=" + pageLimit
 				+ ", startPage=" + startPage + ", endPage=" + endPage + ", naviSize=" + naviSize + ", startNavi="
 				+ startNavi + ", endNavi=" + endNavi + ", offset=" + offset + "]";
 	}

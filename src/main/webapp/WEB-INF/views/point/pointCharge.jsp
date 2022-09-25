@@ -46,10 +46,24 @@
 					<br>
 					현재 포인트 잔액 : ${loginUser.pointBalance }원
 					<br>
-					<h2>충전 수단 선택</h2>
-					<labal  onclick="choiceBank();"> 은행 <input type="radio" name="chargeMethod" value="bank"></labal>
-					<label  onclick="choiceCard();"> 카드 <input type="radio" name="chargeMethod" value="card"></label>
-					<label  onclick="choiceDeposit();"> 계좌 입금 <input type="radio" name="chargeMethod" value="deposit"></label>
+					<h2>충전 수단 선택</h2><br>
+					
+					<label>
+						  <div >
+							  은행 <input type="radio" name="chargeMethod" value="bank" onchange="choiceBank(this);">
+						  </div> 
+					</label>
+					
+					<label>
+						  <div >
+							  카드 <input type="radio" name="chargeMethod" value="card" onchange="choiceCard(this);">
+						  </div> 
+					</label>
+					<label>
+						  <div >
+							  계좌 입금 <input type="radio" name="chargeMethod" value="deposit" onchange="choiceDeposit(this);">
+						  </div>
+					</label>
 					
 					<div id="bank-info" style="display:none">
 						은행 선택:
@@ -59,7 +73,7 @@
 							<option value="sh" >신한</option>
 							<option value="kaka" >카카오</option>
 						</select><br>
-						<input id="bank-accountNo" name="bankAccNo" type="text" placeholder=" '-'없이 계좌번호를 입력해주세요."  style="width:300px">
+						<input onkeyup="inputNumberCheck(this);" id="bank-accountNo" name="bankAccNo" type="text" placeholder=" '-'없이 계좌번호를 입력해주세요."  style="width:300px">
 					</div>
 				
 					<div id="card-info" style="display:none">
@@ -70,9 +84,8 @@
 							<option value="hd">현대</option>
 							<option value="kaka">카카오</option>
 						</select><br>
-						<input id="card-no" name="cardNo" type="text" placeholder=" '-'없이 카드번호를 입력해주세요."  style="width:300px">
+						<input onkeyup="inputNumberCheck(this)" id="card-no" name="cardNo" type="text" placeholder=" '-'없이 카드번호를 입력해주세요."  style="width:300px">
 					</div>
-					<div id="card-info"></div>
 					
 					<hr><br>
 				</div>
@@ -114,24 +127,37 @@
 	
 //충전수단 선택 관련 함수
 
+	function choiceBank(thisCheck){
+	bankChecked = thisCheck.checked;
+	if(bankChecked){
+		document.querySelector("#bank-info").style.display = "block";
+		document.querySelector("#card-info").style.display = "none";
+	}
+}
+	function choiceCard(thisCheck){
+		cardChecked = thisCheck.checked;
+		if(cardChecked){
+			document.querySelector("#bank-info").style.display = "none";
+			document.querySelector("#card-info").style.display = "block";
+		}
+	}
+	function choiceDeposit(thisCheck){
+		depositChecked = thisCheck.checked;
+		if(depositChecked){
+			document.querySelector("#bank-info").style.display = "none";
+			document.querySelector("#card-info").style.display = "none";
+		}
+	}
 	
-	function choiceBank(){
-		//1.은행과 카드 입력 요소를 변수에 저장한다.
-		var bankInfo = document.querySelector("#bank-info");
-		var bankDisplay = bankInfo.style.display;
-		var cardInfo = document.querySelector("#card-info");
-		var cardDisplay = cardInfo.style.display;
-	
-		
-		//3.은행 입력 요소를 토글한다. (토글이 안되는 문제 발생)
-		if(bankDisplay == 'none'){
-			bankInfo.style.display = "block";
-		}else{
-			bankInfo.style.disiplay = "none";
+/////숫자입력 유효성검사
+
+	function inputNumberCheck(thisInput){
+		regExNumber = /^\d+$/;
+		if(!regExNumber.test(thisInput.value)){
+			thisInput.value = "";
 		}
 }
 
-	function choiceDeposit(){}
 
 </script>
 </html>

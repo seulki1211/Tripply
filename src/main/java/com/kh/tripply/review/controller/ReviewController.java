@@ -40,13 +40,13 @@ public class ReviewController {
 	 */
 	@RequestMapping(value = "/review/list.kh", method = RequestMethod.GET)
 	public ModelAndView reviewListView(ModelAndView mv,
-			@RequestParam(value = "currentPage", required = false) Integer page) {
+			@RequestParam(value = "page", required = false) Integer currentPage) {
 		
 		//1.page를 null체크한다.
-		int currentPage = (page != null) ? page : 1;
+		int page = (currentPage != null) ? currentPage : 1;
 		
 		//2.페이징에 필요한 Paging객체를 생성한다. Paging객체는 화면과 RowBounds에 필요한 값을 get할 수 있다.
-		Paging paging = new Paging(rService.getTotalCount(), currentPage, 9, 5);
+		Paging paging = new Paging(rService.getTotalCount(), page, 9, 5);
 		
 		try {
 			//3.후기게시판 목록 List를 SELECT 한다.
@@ -75,13 +75,13 @@ public class ReviewController {
 	@RequestMapping(value="/review/search.kh",method=RequestMethod.GET)
 	public ModelAndView reviewSearchView(ModelAndView mv,
 			@ModelAttribute Search search,
-			@RequestParam(value="currentPage",required=false)Integer page) {
+			@RequestParam(value="page",required=false)Integer currentPage) {
 		
 		//1.page null체크한다.
-		int currentPage = (page != null)? page : 1;
+		int page = (currentPage != null)? currentPage : 1;
 		
 		//2.페이징에 필요한 Paging객체를 생성한다. Paging객체는 화면과 RowBounds에 필요한 값을 get할 수 있다.
-		Paging paging = new Paging(rService.getSearchCount(search),currentPage,9,5);
+		Paging paging = new Paging(rService.getSearchCount(search),page,9,5);
 		
 		try {
 			//3.후기게시판 검색결과 List를 SELECT 한다.
@@ -149,7 +149,7 @@ public class ReviewController {
 	@RequestMapping(value = "/review/detail.kh", method = RequestMethod.GET)
 	public ModelAndView reviewDetailView(ModelAndView mv, 
 			@RequestParam("boardNo") Integer boardNo,
-			@RequestParam("currentPage") Integer currentPage,
+			@RequestParam("page") Integer page,
 			HttpSession session) {
 		
 		//1.로그인 여부를 확인하고 로그인하지 않은 경우 list로 리다이렉트한다.
@@ -160,8 +160,8 @@ public class ReviewController {
 		}
 		
 		try {
-			//2.수정이나 삭제 후 게시판의 원래 페이지로 돌아가기 위해 session에 currentPage를 저장한다.
-			session.setAttribute("currentPage", currentPage);
+			//2.수정이나 삭제 후 게시판의 원래 페이지로 돌아가기 위해 session에 page를 저장한다.
+			session.setAttribute("page", page);
 			
 			//3.세션을 이용하여 중복카운팅을 방지하며 조회수를 UPDATE한다.	
 			int dupleCheck;
@@ -232,11 +232,11 @@ public class ReviewController {
 		int result = rService.modifyReviewByNo(review);
 		if(result>0) {
 			
-			//2. 수정 후 원래의 페이지로 돌아가기 위해 세션에서 currentPage를 꺼낸다.
+			//2. 수정 후 원래의 페이지로 돌아가기 위해 세션에서 page를 꺼낸다.
 			//사용한 세션을 삭제해준다.
-			int currentPage = (int)session.getAttribute("currentPage");
-			mv.setViewName("redirect:/review/list.kh?currentPage="+currentPage);
-			session.removeAttribute("currentPage");
+			int page = (int)session.getAttribute("page");
+			mv.setViewName("redirect:/review/list.kh?page="+page);
+			session.removeAttribute("page");
 		}else {
 			
 		}
@@ -270,9 +270,9 @@ public class ReviewController {
 				
 				//3.삭제가 성공하면 세션에서 원래 페이지 값을 꺼내고 리다이렉트 시 전달값으로 사용한다.
 				//사용한 세션은 제거한다.
-				int currentPage = (int) session.getAttribute("currentPage");
-				mv.setViewName("redirect:/review/list.kh?currentPage="+currentPage);
-				session.removeAttribute("currentPage");
+				int page = (int) session.getAttribute("page");
+				mv.setViewName("redirect:/review/list.kh?page="+page);
+				session.removeAttribute("page");
 			} else {
 
 			}
@@ -339,13 +339,13 @@ public class ReviewController {
 	/**
 	 * 댓글 등록
 	 * @param mv
-	 * @param currentPage
+	 * @param page
 	 * @param rReply
 	 * @return
 	 */
 	@RequestMapping(value="/review/reply/write.kh",method=RequestMethod.POST)
 	public ModelAndView reviewReplyWrite(ModelAndView mv,
-			@RequestParam("currentPage") Integer currentPage,
+			@RequestParam("page") Integer page,
 			@ModelAttribute ReviewReply rReply) {
 
 		//1.댓글작성form에서 가져온 rReply를 INSERT해준다.
@@ -354,7 +354,7 @@ public class ReviewController {
 			
 			//2.등록 성공 시 파라미터 값을 전달하면서 상세페이지로 리다이렉트한다.
 			int boardNo = rReply.getBoardNo();
-			mv.setViewName("redirect:/review/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+			mv.setViewName("redirect:/review/detail.kh?page="+page+"&boardNo="+boardNo);
 		}else {
 		}
 		return mv;
@@ -365,13 +365,13 @@ public class ReviewController {
 	 * 댓글 수정 기능
 	 * @param mv
 	 * @param tReply
-	 * @param currentPage
+	 * @param page
 	 * @return
 	 */
 	@RequestMapping(value="/review/reply/modify.kh",method=RequestMethod.POST)
 	public ModelAndView tradeReplyModify(ModelAndView mv,
 			@ModelAttribute ReviewReply rReply,
-			@RequestParam("currentPage") Integer currentPage) {
+			@RequestParam("page") Integer page) {
 		
 		//1. UPDATE문을 이용하여 게시물의 내용을 변경한다.
 		int result = rService.modifyReviewReply(rReply);
@@ -379,7 +379,7 @@ public class ReviewController {
 			
 			//2.로직 성공 후 현재의 상세페이지로 리다이렉트한다.
 			int boardNo = rReply.getBoardNo();
-			mv.setViewName("redirect:/review/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+			mv.setViewName("redirect:/review/detail.kh?page="+page+"&boardNo="+boardNo);
 		}else {
 			
 		}
@@ -395,7 +395,7 @@ public class ReviewController {
 	@RequestMapping(value="/review/reply/remove.kh",method=RequestMethod.POST)
 	public ModelAndView reviewReplyRemove(ModelAndView mv,
 			@ModelAttribute ReviewReply rReply,
-			@RequestParam("currentPage") Integer currentPage) {
+			@RequestParam("page") Integer page) {
 		
 		//1. UPDATE문을 이용하여 게시물의 내용과 상태를 변경한다.
 		int result = rService.removeReviewReply(rReply);
@@ -403,7 +403,7 @@ public class ReviewController {
 			
 		//2.로직 성공 후 현재의 상세페이지로 리다이렉트한다.
 		int boardNo = rReply.getBoardNo();
-		mv.setViewName("redirect:/review/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+		mv.setViewName("redirect:/review/detail.kh?page="+page+"&boardNo="+boardNo);
 		}else {
 			
 		}

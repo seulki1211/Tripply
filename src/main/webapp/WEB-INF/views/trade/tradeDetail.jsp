@@ -32,6 +32,10 @@
 		backgound-color:blue;
 	}
 	
+	.choicedReply{
+		border: 3px solid yellow;
+	}
+	
 </style>
 <body>
 
@@ -82,12 +86,12 @@
 				<c:if test="${trade.soldOut ne 'Y' }">
 					<input type="text" name="biddingPrice" placeholder="구매희망가격">
 				</c:if>
-				<input type="text" name="tReplyContents" value="" required="required" placeholder="댓글을 달아보세요!">
-				<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
-				<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
-				<input type="hidden" name="tReplyWriter" value="${loginUser.memberId }">
-				<input type="hidden" name="reReplyYn" value="N"> 
-				<input type="hidden" name="tRefReplyNo" value="-1">
+				<input type="text"   name="tReplyContents" value="" 	required="required" placeholder="댓글을 달아보세요!">
+				<input type="hidden" name="page"		   value="${sessionScope.page }"> 
+				<input type="hidden" name="boardNo" 	   value="${trade.boardNo }"> 
+				<input type="hidden" name="tReplyWriter"   value="${loginUser.memberId }">
+				<input type="hidden" name="reReplyYn" 	   value="N"> 
+				<input type="hidden" name="tRefReplyNo"    value="-1">
 				<button>등록</button>
 			</form>
 		</div>
@@ -96,12 +100,12 @@
 		<c:if test="${loginUser.memberId eq trade.tradeWriter }">
 		<div class="reply-input" align="center">
 			<form onsubmit="inputCheck(this)" action="/trade/reply/write.kh" method="post">
-				<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
-				<input type="text" name="tReplyContents" value="" required="required" placeholder="댓글을 달아보세요!">
-				<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
-				<input type="hidden" name="tReplyWriter" value="${loginUser.memberId }">
-				<input type="hidden" name="reReplyYn" value="N"> 
-				<input type="hidden" name="tRefReplyNo" value="-1">
+				<input type="hidden" name="page" 		   value="${sessionScope.page }"> 
+				<input type="text"   name="tReplyContents" value="" 	required="required" placeholder="댓글을 달아보세요!">
+				<input type="hidden" name="boardNo" 	   value="${trade.boardNo }"> 
+				<input type="hidden" name="tReplyWriter"   value="${loginUser.memberId }">
+				<input type="hidden" name="reReplyYn" 	   value="N"> 
+				<input type="hidden" name="tRefReplyNo"	   value="-1">
 				<button>등록</button>
 			</form>
 		</div>
@@ -109,7 +113,7 @@
 <!-- 댓글출력  -->
 		<table id="reply-view" align="center">
 			<c:forEach items="${tReplyList }" var="tReply" varStatus="n">
-				<tr id="one-reply-area">
+				<tr id="one-reply-area" <c:if test="${tReply.trChoiced eq 'Y' }">class="choicedReply"</c:if> >
 					<td <c:if test="${tReply.reReplyYn eq 'Y' }">   class="reReply" </c:if> >
 						<div id="replyInfo">
 							${tReply.tReplyWriter } ${tReply.trCreateDate }
@@ -135,32 +139,45 @@
 										<li onclick="replyModify(this);" ><a href="#">댓글 수정</a></li>
 										<div class="replyModify" style="display:none;">
 											<form onsubmit="inputCheck(this)" action="/trade/reply/modify.kh" method="post">
-												<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
-												<input type="text" name="tReplyContents" value="${tReply.tReplyContents }" >
-												<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
-												<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
+												<input type="hidden" name="page" 		   value="${sessionScope.page }"> 
+												<input type="text"   name="tReplyContents" value="${tReply.tReplyContents }" >
+												<input type="hidden" name="boardNo" 	   value="${trade.boardNo }"> 
+												<input type="hidden" name="tReplyNo" 	   value="${tReply.tReplyNo }">
 												<button>수정</button>
 											</form>
 										</div>
 	  <!-- 댓글삭제 -->
 										<li><a href="#" onclick="replyRemove(this);">댓글 삭제</a></li>
 										<form action="/trade/reply/remove.kh" method="post">
-											<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
-											<input type="hidden" name="boardNo" value="${trade.boardNo }"> 
+											<input type="hidden" name="page" 	 value="${sessionScope.page }"> 
+											<input type="hidden" name="boardNo"  value="${trade.boardNo }"> 
 											<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
 										</form>
 									</c:if>
 	  <!-- 댓글 채택		 -->
 									<c:if test="${(loginUser.memberId eq trade.tradeWriter) and (loginUser.memberId ne tReply.tReplyWriter) }">
-										<li><a href="#" onclick="submitChoice(this);">댓글 채택</a></li>
-										<form class="choiceForm" action="/trade/reply/choice.kh" method="post">
-											<input type="hidden" name="currentPage" value="${sessionScope.currentPage }">
-											<input type="hidden" name="buyer" value="${tReply.tReplyWriter }">
-											<input type="hidden" name="boardNo" value="${trade.boardNo }">
-											<input type="hidden" name="tReplyNo" value="${tReply.tReplyNo }">
-											<input type="hidden" name="biddingPrice" value="${tReply.biddingPrice }">
-										</form>
-										<li><a href="/trade/reply/choiceCancel.kh">댓글 채택 취소</a></li>
+										<c:if test="${tReply.tReplyWriter ne trade.buyerId }">
+											<li><a href="#" onclick="submitChoice(this);">댓글 채택</a></li>
+											<form  action="/trade/reply/choice.kh" method="post">
+												<input type="hidden" name="page" 		 value="${sessionScope.page }">
+												<input type="hidden" name="boardNo" 	 value="${trade.boardNo }">
+												<input type="hidden" name="buyerId" 		 value="${tReply.tReplyWriter }">
+												<input type="hidden" name="finalBiddingPrice" value="${tReply.biddingPrice }">
+												<input type="hidden" name="tReplyNo" 	 value="${tReply.tReplyNo }">
+												<input type="hidden" name="trChoiced" 	 value="Y">
+											</form>
+										</c:if>
+										<c:if test="${tReply.tReplyWriter eq trade.buyerId }">
+											<li><a href="#" onclick="submitChoiceCancel(this);">댓글 채택 취소</a></li>
+											<form action="/trade/reply/choiceCancel.kh" method="post">
+												<input type="hidden" name="page" 		 value="${sessionScope.page }">
+												<input type="hidden" name="boardNo" 	 value="${trade.boardNo }">
+												<input type="hidden" name="buyerId" 		 value="">
+												<input type="hidden" name="finalBiddingPrice" value="0">
+												<input type="hidden" name="tReplyNo" 	 value="${tReply.tReplyNo }">
+												<input type="hidden" name="trChoiced" 	 value="N">
+											</form>
+										</c:if>
 									</c:if>
 								</ul>
 							</div>
@@ -174,12 +191,12 @@
 <!-- 답글 입력창 -->
 							<div class="reReply-input" style="display: none">
 								<form onsubmit="inputCheck(this)" action="/trade/reply/write.kh" method="post">
-										<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
-										<input type="text" name="tReplyContents" value="" placeholder="답글을 입력해보세요!">
-										<input type="hidden" name="boardNo" value="${trade.boardNo }">
-										<input type="hidden" name="tReplyWriter" value="${loginUser.memberId }"> 
-										<input type="hidden" name="reReplyYn" value="Y"> 
-										<input type="hidden" name="tRefReplyNo" value="${tReply.tReplyNo }"> 
+										<input type="hidden" name="page" 		   value="${sessionScope.page }"> 
+										<input type="text"   name="tReplyContents" value="" placeholder="답글을 입력해보세요!">
+										<input type="hidden" name="boardNo" 	   value="${trade.boardNo }">
+										<input type="hidden" name="tReplyWriter"   value="${loginUser.memberId }"> 
+										<input type="hidden" name="reReplyYn" 	   value="Y"> 
+										<input type="hidden" name="tRefReplyNo"    value="${tReply.tReplyNo }"> 
 									<button>등록</button>
 								</form>
 							</div>
@@ -250,6 +267,15 @@
 		var choiceForm = target.parentNode.nextElementSibling;
 		console.log(choiceForm);
 		if(confirm("정말 채택하시겠습니까?")){
+			choiceForm.submit();
+		}
+}
+
+//댓글 채택 취소 실행 함수
+	function submitChoiceCancel(target){
+		event.preventDefault();
+		var choiceForm = target.parentNode.nextElementSibling;
+		if(confirm("정말 취소하시겠습니까?")){
 			choiceForm.submit();
 		}
 }

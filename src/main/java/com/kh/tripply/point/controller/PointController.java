@@ -90,6 +90,8 @@ public class PointController {
 			mv.addObject("tList",tList)
 			.setViewName("/point/pointSend1");
 		}else {
+			mv.addObject("tList",null)
+			.setViewName("/point/pointSend1");
 		}
 		return mv;
 	}

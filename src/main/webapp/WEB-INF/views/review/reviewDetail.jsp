@@ -73,7 +73,7 @@
 <!-- 댓글 입력창 -->
 		<div id="reply-input" align="center">
 			<form onsubmit="inputCheck(this);" action="/review/reply/write.kh" method="post">
-				<input type="hidden" name="currentPage" value="${sessionScope.currentPage }">
+				<input type="hidden" name="page" value="${sessionScope.page }">
 				<input type="text" name="rReplyContents" value="" placeholder="댓글을 입력해보세요!">
 				<input type="hidden" name="boardNo" value="${review.boardNo }">
 				<input type="hidden" name="rReplyWriter" value="${loginUser.memberId }">
@@ -109,7 +109,7 @@
 										<li onclick="replyModify(this);" ><a href="#">댓글 수정</a></li>
 										<div class="replyModify" style="display:none;">
 											<form onsubmit="inputCheck(this)" action="/review/reply/modify.kh" method="post">
-												<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
+												<input type="hidden" name="page" value="${sessionScope.page }"> 
 												<input type="text" name="rReplyContents" value="${rReply.rReplyContents }" >
 												<input type="hidden" name="boardNo" value="${review.boardNo }"> 
 												<input type="hidden" name="rReplyNo" value="${rReply.rReplyNo }">
@@ -119,7 +119,7 @@
 	  <!-- 댓글삭제 -->
 										<li><a href="#" onclick="replyRemove(this);">댓글 삭제</a></li>
 										<form action="/review/reply/remove.kh" method="post">
-											<input type="hidden" name="currentPage" value="${sessionScope.currentPage }"> 
+											<input type="hidden" name="page" value="${sessionScope.page }"> 
 											<input type="hidden" name="boardNo" value="${review.boardNo }"> 
 											<input type="hidden" name="rReplyNo" value="${rReply.rReplyNo }">
 										</form>
@@ -136,7 +136,7 @@
 						<!-- 답글 입력창 -->
 							<div class="reReply-input" style="display:none" >
 								<form onsubmit="inputCheck(this);" action="/review/reply/write.kh" method="post">
-									<input type="hidden" name="currentPage" value="${sessionScope.currentPage }">
+									<input type="hidden" name="page" value="${sessionScope.page }">
 									<input type="text" name="rReplyContents" value="" placeholder="답글을 입력해보세요!">
 									<input type="hidden" name="boardNo" value="${review.boardNo }">
 									<input type="hidden" name="rReplyWriter" value="${loginUser.memberId }">

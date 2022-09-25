@@ -31,7 +31,7 @@
 					<c:forEach items="${tList }" var="trade" varStatus="N">
 						<td id="detail-one-wrap" aligh="center" width="30%">
 							<div class="detail title thumbnale-wrap" align="center">
-								<img onclick="loginCheck('${loginUser.memberId}','/trade/detail.kh?boardNo=${trade.boardNo }&currentPage=${paging.currentPage }');"  onerror="this.src='/resources/image/forest1.png';" src="${trade.thumbnailPath }" height="90%" width="90%">
+								<img onclick="loginCheck('${loginUser.memberId}','/trade/detail.kh?boardNo=${trade.boardNo }&page=${paging.page }');"  onerror="this.src='/resources/image/forest1.png';" src="${trade.thumbnailPath }" height="90%" width="90%">
 							</div>
 							<div align="center">
 								<div id="soldOut-area">
@@ -39,7 +39,7 @@
 									<c:if test="${trade.soldOut eq 'N' }">[판매중]</c:if>
 								</div>
 								<span class="detail region">[${trade.tLocationName }]</span>
-								<a href="#" onclick="loginCheck('${loginUser.memberId}','/trade/detail.kh?boardNo=${trade.boardNo }&currentPage=${paging.currentPage }');"  >
+								<a href="#" onclick="loginCheck('${loginUser.memberId}','/trade/detail.kh?boardNo=${trade.boardNo }&page=${paging.page }');"  >
 									<span class="detail title">
 										<b>${trade.tradeTitle }</b>
 									</span>
@@ -63,13 +63,13 @@
 <!-- 페이징처리 -->
 			<div id="pageNavi">
 				<c:if test="${paging.startNavi > 1 }">
-					<a href="/trade/${urlVal }.kh?currentPage=${paging.startNavi-1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[이전]</a>
+					<a href="/trade/${urlVal }.kh?page=${paging.startNavi-1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[이전]</a>
 				</c:if>
 				<c:forEach begin="${paging.startNavi }" end="${paging.endNavi }" var="p" >
-					<a href="/trade/${urlVal }.kh?currentPage=${p }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">${p }</a>
+					<a href="/trade/${urlVal }.kh?page=${p }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">${p }</a>
 				</c:forEach>
 				<c:if test="${paging.endNavi < paging.endPage }">
-					<a href="/trade/${urlVal }.kh?currentPage=${paging.endNavi+1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[다음]</a>
+					<a href="/trade/${urlVal }.kh?page=${paging.endNavi+1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[다음]</a>
 				</c:if>
 			</div>
 <!-- 컨텐츠 하단 버튼	 -->

@@ -41,13 +41,13 @@ public class TradeController {
 	 */
 	@RequestMapping(value="/trade/list.kh",method=RequestMethod.GET)
 	public ModelAndView tradeListView(ModelAndView mv,
-			@RequestParam(value="currentPage",required=false) Integer page) {
+			@RequestParam(value="page",required=false) Integer currentPage) {
 
 		//1.page를 null체크한다.
-		int currentPage = (page!=null)?page : 1;
+		int page = (currentPage!=null)?currentPage : 1;
 		
 		//2.페이징에 필요한 Paging객체를 생성한다. Paging객체는 화면과 RowBounds에 필요한 값을 get할 수 있다.
-		Paging paging = new Paging(tService.getTotalCount(), currentPage,9,5);
+		Paging paging = new Paging(tService.getTotalCount(), page,9,5);
 		
 		try {
 			//3.거래게시판 목록 List를 SELECT 한다.
@@ -76,13 +76,13 @@ public class TradeController {
 	@RequestMapping(value="/trade/search.kh",method=RequestMethod.GET)
 	public ModelAndView tradeSearchView(ModelAndView mv,
 			@ModelAttribute Search search,
-			@RequestParam(value="currentPage",required=false)Integer page) {
+			@RequestParam(value="page",required=false)Integer currentPage) {
 
 		//1.page null체크한다.
-		int currentPage = (page!=null)?page : 1;
+		int page = (currentPage!=null)?currentPage : 1;
 		
 		//2.페이징에 필요한 Paging객체를 생성한다. Paging객체는 화면과 RowBounds에 필요한 값을 get할 수 있다.
-		Paging paging = new Paging(tService.getTotalCount(), currentPage,9,5);
+		Paging paging = new Paging(tService.getTotalCount(), page,9,5);
 		
 		try {
 			//3.거래게시판 검색결과 List를 SELECT한다.
@@ -134,7 +134,7 @@ public class TradeController {
 			//1. 작성페이지에서 전달받은 trade로 INSERT한다.	
 			int result = tService.registerTrade(trade);
 			if(result>0) {
-				mv.setViewName("redirect:/trade/list.kh?currentPage=1");
+				mv.setViewName("redirect:/trade/list.kh?page=1");
 			}else {
 				
 			}
@@ -147,13 +147,13 @@ public class TradeController {
 	 * 거래 게시물 상세조회
 	 * @param mv
 	 * @param boardNo
-	 * @param currentPage
+	 * @param page
 	 * @return
 	 */
 	@RequestMapping(value="/trade/detail.kh",method=RequestMethod.GET)
 	public ModelAndView tradeDetailView(ModelAndView mv,
 			@RequestParam("boardNo") Integer boardNo,
-			@RequestParam("currentPage") Integer currentPage,
+			@RequestParam("page") Integer page,
 			HttpSession session) {
 		
 		//1.로그인 여부를 확인하고 로그인하지 않은 경우 list로 리다이렉트한다.
@@ -163,8 +163,8 @@ public class TradeController {
 			return mv;
 		}
 		try {
-			//2.수정이나 삭제 후 게시판의 원래 페이지로 돌아가기 위해 session에 currentPage를 저장한다.
-			session.setAttribute("currentPage", currentPage);
+			//2.수정이나 삭제 후 게시판의 원래 페이지로 돌아가기 위해 session에 page를 저장한다.
+			session.setAttribute("page", page);
 			
 			//3.세션을 이용하여 중복카운팅을 방지하며 조회수를 UPDATE한다.
 			int dupleCheck;
@@ -231,11 +231,11 @@ public class TradeController {
 		int result = tService.modifyTradeByNo(trade);
 		if(result>0) {
 			
-			//2. 수정 후 원래의 페이지로 돌아가기 위해 세션에서 currentPage를 꺼낸다.
+			//2. 수정 후 원래의 페이지로 돌아가기 위해 세션에서 page를 꺼낸다.
 			//사용한 세션을 삭제해준다.
-			int currentPage = (int)session.getAttribute("currentPage");
-			mv.setViewName("redirect:/trade/list.kh?currentPage="+currentPage);
-			session.removeAttribute("currentPage");
+			int page = (int)session.getAttribute("page");
+			mv.setViewName("redirect:/trade/list.kh?page="+page);
+			session.removeAttribute("page");
 		}else {
 			
 		}
@@ -268,9 +268,9 @@ public class TradeController {
 				
 				//3.삭제가 성공하면 세션에서 원래 페이지 값을 꺼내고 리다이렉트 시 전달값으로 사용한다.
 				//사용한 세션은 제거한다.
-				int currentPage = (int)session.getAttribute("currentPage");
-				mv.setViewName("redirect:/trade/list.kh?currentPage="+currentPage);
-				session.removeAttribute("currentPage");
+				int page = (int)session.getAttribute("page");
+				mv.setViewName("redirect:/trade/list.kh?page="+page);
+				session.removeAttribute("page");
 			}
 		
 		} catch (Exception e) {
@@ -339,7 +339,7 @@ public class TradeController {
 	 */
 	@RequestMapping(value="/trade/reply/write.kh",method=RequestMethod.POST)
 	public ModelAndView tradeReplyWrite(ModelAndView mv,
-			@RequestParam("currentPage") Integer currentPage,
+			@RequestParam("page") Integer page,
 			@ModelAttribute TradeReply tReply) {
 		
 		//1.댓글작성form에서 가져온 rReply를 INSERT해준다.
@@ -348,7 +348,7 @@ public class TradeController {
 			
 			//2.등록 성공 시 파라미터 값을 전달하면서 상세페이지로 리다이렉트한다.
 			int boardNo = tReply.getBoardNo();
-			mv.setViewName("redirect:/trade/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+			mv.setViewName("redirect:/trade/detail.kh?page="+page+"&boardNo="+boardNo);
 		}else {
 			
 		}
@@ -359,13 +359,13 @@ public class TradeController {
 	 * 댓글 수정 기능
 	 * @param mv
 	 * @param tReply
-	 * @param currentPage
+	 * @param page
 	 * @return
 	 */
 	@RequestMapping(value="/trade/reply/modify.kh",method=RequestMethod.POST)
 	public ModelAndView tradeReplyModify(ModelAndView mv,
 			@ModelAttribute TradeReply tReply,
-			@RequestParam("currentPage") Integer currentPage) {
+			@RequestParam("page") Integer page) {
 		
 		//1. UPDATE문을 이용하여 게시물의 내용을 변경한다.
 		int result = tService.modifyTradeReply(tReply);
@@ -373,7 +373,7 @@ public class TradeController {
 
 			//2.로직 성공 후 현재의 상세페이지로 리다이렉트한다.
 			int boardNo = tReply.getBoardNo();
-			mv.setViewName("redirect:/trade/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+			mv.setViewName("redirect:/trade/detail.kh?page="+page+"&boardNo="+boardNo);
 		}else {
 			
 		}
@@ -384,13 +384,13 @@ public class TradeController {
 	 * 댓글 삭제
 	 * @param mv
 	 * @param tReply
-	 * @param currentPage
+	 * @param page
 	 * @return
 	 */
 	@RequestMapping(value="/trade/reply/remove.kh",method=RequestMethod.POST)
 	public ModelAndView tradeReplyRemove(ModelAndView mv,
 			@ModelAttribute TradeReply tReply,
-			@RequestParam("currentPage") Integer currentPage) {
+			@RequestParam("page") Integer page) {
 		
 		//1. UPDATE문을 이용하여 게시물의 내용과 상태를 변경한다.
 		int result = tService.removeTradeReply(tReply);
@@ -398,7 +398,7 @@ public class TradeController {
 			
 			//2.로직 성공 후 현재의 상세페이지로 리다이렉트한다.
 			int boardNo = tReply.getBoardNo();
-			mv.setViewName("redirect:/trade/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
+			mv.setViewName("redirect:/trade/detail.kh?page="+page+"&boardNo="+boardNo);
 		}else {
 			
 		}
@@ -413,27 +413,23 @@ public class TradeController {
 	 */
 	@RequestMapping(value="/trade/reply/choice.kh", method= RequestMethod.POST)
 	public ModelAndView tradeReplyChoice(ModelAndView mv,
-			@RequestParam("buyer") String buyer,
-			@RequestParam("boardNo") String boardNo,
-			@RequestParam("currentPage") Integer currentPage,
-			@ModelAttribute TradeReply tReply) {
+			@RequestParam("page") Integer page,
+			@ModelAttribute Trade trade,
+			@ModelAttribute TradeReply tReply
+			) {
 		
-		//1. 채택된 구매희망자의 아이디와 게시물번호를 HashMap에 담는다.
-		HashMap<String,String> paramMap = new HashMap<>();
-		paramMap.put("boardNo", boardNo);
-		paramMap.put("buyer",buyer);
-
-		//2.게시물에 buyerId를 UPDATE한다.
-		int result = tService.modifyBuyer(paramMap);
+		//1. Trade객체(게시물번호,채택된 댓글작성자,입찰가격)를 파라미터로 거래 게시물을 UPDATE한다.
+		// buyerId = 댓글작성자, finalBiddingPrice = 입찰가격
+		int result = tService.modifyTradeChoice(trade);
 		if(result>0) {
-			
-			//3.성공 시 해당 게시물의 최종 입찰 금액을 채택 댓글의 구매희망금액으로 UPDATE한다.
-			int updateResult = tService.modifyFinalBiddingPrice(tReply);
-			if(updateResult > 0) {
-				//4.로직 처리 후 현재 상세페이지로 리다이렉트한다.
-				mv.setViewName("redirect:/trade/detail.kh?currentPage="+currentPage+"&boardNo="+boardNo);
-			}else {
-			}
+				
+				//2.채택된 댓글의 trChoiced를 'Y'로 UPDATE한다.
+				int choicedResult = tService.modifyTradeReplyChoiced(tReply);
+				if(choicedResult > 0) {
+					//3.로직 처리 후 현재 상세페이지로 리다이렉트한다.
+					int boardNo = trade.getBoardNo();
+					mv.setViewName("redirect:/trade/detail.kh?page="+page+"&boardNo="+boardNo);
+				}
 		}else {
 		}
 		return mv;
@@ -446,7 +442,25 @@ public class TradeController {
 	 */
 	@RequestMapping(value="/trade/reply/choiceCancel.kh",method=RequestMethod.POST)
 	public ModelAndView tradeReplyChoiceCancel(ModelAndView mv,
-			@RequestParam("choicedId") String choicedId) {
+			@RequestParam("page") Integer page,
+			@ModelAttribute Trade trade,
+			@ModelAttribute TradeReply tReply) {
+		
+				//1. Trade객체(게시물번호,채택된 댓글작성자,입찰가격)를 파라미터로 거래 게시물을 UPDATE한다.
+				// buyerId = 댓글작성자, finalBiddingPrice = 입찰가격
+				int result = tService.modifyTradeChoice(trade);
+				if(result>0) {
+						
+				//2.채택된 댓글의 trChoiced를 'Y'로 UPDATE한다.
+				int choicedResult = tService.modifyTradeReplyChoiced(tReply);
+				if(choicedResult > 0) {
+					//3.로직 처리 후 현재 상세페이지로 리다이렉트한다.
+					int boardNo = trade.getBoardNo();
+					mv.setViewName("redirect:/trade/detail.kh?page="+page+"&boardNo="+boardNo);
+				}
+		}else {
+		}
+
 		
 		
 		return mv;

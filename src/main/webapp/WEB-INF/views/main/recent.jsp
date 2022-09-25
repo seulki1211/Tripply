@@ -30,7 +30,7 @@
 					<tr>
 						<td>${recent.boardNo }</td>
 						<td>
-							<a href="/${recent.sort }/detail.kh?currentPage=1&boardNo=${recent.boardNo}">
+							<a href="/${recent.sort }/detail.kh?page=1&boardNo=${recent.boardNo}">
 								${recent.title }
 							</a>
 						</td>

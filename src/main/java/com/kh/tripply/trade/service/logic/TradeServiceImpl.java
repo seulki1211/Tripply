@@ -67,13 +67,13 @@ public class TradeServiceImpl implements TradeService {
 
 	@Override
 	public int registerTradeReply(TradeReply tReply) {
-		int result = tStore.insertTradeReply(session,tReply);
+		int result = tStore.insertTradeReply(session, tReply);
 		return result;
 	}
 
 	@Override
 	public List<TradeReply> printTradeReplyByNo(int boardNo) {
-		List<TradeReply> tReplyList = tStore.printTradeReplyByNo(session,boardNo);
+		List<TradeReply> tReplyList = tStore.printTradeReplyByNo(session, boardNo);
 		return tReplyList;
 	}
 
@@ -86,12 +86,6 @@ public class TradeServiceImpl implements TradeService {
 	@Override
 	public int modifyTradeByNo(Trade trade) {
 		int result = tStore.updateTradeByNo(session, trade);
-		return result;
-	}
-
-	@Override
-	public int	modifyBuyer(HashMap<String,String> paramMap) {
-		int result = tStore.updateBuyer(session, paramMap);
 		return result;
 	}
 
@@ -117,6 +111,16 @@ public class TradeServiceImpl implements TradeService {
 	public List<Trade> printMyTrade(Member loginUser) {
 		List<Trade> tList = tStore.selectMyTrade(session, loginUser);
 		return tList;
+	}
+
+	@Override
+	public int modifyTradeChoice(Trade trade) {
+		return tStore.updateTradeChoice(session,trade);
+	}
+
+	@Override
+	public int modifyTradeReplyChoiced(TradeReply tReply) {
+		return tStore.updateTradeReplyChoiced(session, tReply);
 	}
 
 }

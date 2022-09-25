@@ -32,7 +32,8 @@ public interface TradeStore {
 	public int tradeViewCount(SqlSessionTemplate session, int boardNo);
 	
 		/////////////////////거래
-	public int updateBuyer(SqlSessionTemplate session,HashMap<String,String> paramMap);
+	public int updateTradeChoice(SqlSessionTemplate session, Trade trade);
 	public int updateFinalBiddingPrice(SqlSessionTemplate session,TradeReply tReply);
 	public List<Trade> selectMyTrade(SqlSessionTemplate session,Member loginUser);
+	public int updateTradeReplyChoiced(SqlSessionTemplate session,TradeReply tReply);
 }

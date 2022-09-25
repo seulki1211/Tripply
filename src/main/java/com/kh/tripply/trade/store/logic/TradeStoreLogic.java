@@ -15,7 +15,7 @@ import com.kh.tripply.trade.domain.TradeReply;
 import com.kh.tripply.trade.store.TradeStore;
 
 @Repository
-public class TradeStoreLogic implements TradeStore{
+public class TradeStoreLogic implements TradeStore {
 
 	@Override
 	public int insertTrade(SqlSessionTemplate session, Trade trade) {
@@ -25,17 +25,16 @@ public class TradeStoreLogic implements TradeStore{
 
 	@Override
 	public Trade selectOneTradeByNo(SqlSessionTemplate session, int boardNo) {
-		Trade trade = session.selectOne("TradeMapper.selectOneTrade",boardNo);
+		Trade trade = session.selectOne("TradeMapper.selectOneTrade", boardNo);
 		return trade;
 	}
-	
+
 	@Override
 	public List<Trade> selectAllTrade(SqlSessionTemplate session, Paging paging) {
 		RowBounds rowBounds = new RowBounds(paging.getOffset(), paging.getPageLimit());
-		List<Trade> tList = session.selectList("TradeMapper.selectAllTrade",null,rowBounds);
+		List<Trade> tList = session.selectList("TradeMapper.selectAllTrade", null, rowBounds);
 		return tList;
 	}
-
 
 	@Override
 	public int getTotalCount(SqlSessionTemplate session) {
@@ -45,7 +44,8 @@ public class TradeStoreLogic implements TradeStore{
 
 	@Override
 	public List<Trade> selectSearchTrade(SqlSessionTemplate session, Search search, Paging paging) {
-		List<Trade> tList = session.selectList("TradeMapper.selectSearchTrade", search, new RowBounds(paging.getOffset(), paging.getPageLimit()));
+		List<Trade> tList = session.selectList("TradeMapper.selectSearchTrade", search,
+				new RowBounds(paging.getOffset(), paging.getPageLimit()));
 		return tList;
 	}
 
@@ -62,13 +62,13 @@ public class TradeStoreLogic implements TradeStore{
 	}
 
 	@Override
-	public int insertTradeReply(SqlSessionTemplate session,TradeReply tReply) {
+	public int insertTradeReply(SqlSessionTemplate session, TradeReply tReply) {
 		int result = session.insert("TradeReplyMapper.insertTradeReply", tReply);
 		return result;
 	}
 
 	@Override
-	public List<TradeReply> printTradeReplyByNo(SqlSessionTemplate session,int boardNo) {
+	public List<TradeReply> printTradeReplyByNo(SqlSessionTemplate session, int boardNo) {
 		List<TradeReply> tReplyList = session.selectList("TradeReplyMapper.selectTradeReply", boardNo);
 		return tReplyList;
 	}
@@ -82,14 +82,6 @@ public class TradeStoreLogic implements TradeStore{
 	@Override
 	public int updateTradeByNo(SqlSessionTemplate session, Trade trade) {
 		int result = session.update("TradeMapper.updateTrade", trade);
-		return result;
-	}
-
-	@Override
-	public int updateBuyer(SqlSessionTemplate session,HashMap<String,String> paramMap) {
-		
-		
-		int result = session.update("TradeMapper.updateBuyer", paramMap);
 		return result;
 	}
 
@@ -115,6 +107,16 @@ public class TradeStoreLogic implements TradeStore{
 	public List<Trade> selectMyTrade(SqlSessionTemplate session, Member loginUser) {
 		List<Trade> tList = session.selectList("TradeMapper.selectMyTrade", loginUser);
 		return tList;
+	}
+
+	@Override
+	public int updateTradeChoice(SqlSessionTemplate session, Trade trade) {
+		return session.update("TradeMapper.updateTradeChoice", trade);
+	}
+
+	@Override
+	public int updateTradeReplyChoiced(SqlSessionTemplate session, TradeReply tReply) {
+		return session.update("TradeReplyMapper.updateTradeReplyChoiced", tReply);
 	}
 
 }

@@ -46,24 +46,29 @@
 					<th>구매 채택 가격</th>
 					<th>구매하기</th>
 				</tr>
-				<c:forEach items="${tList }" var="trade" >
-					<tr>
-						<td>${trade.tradeTitle }</td>
-						<td>${trade.tradeWriter}</td>
-						<td>${trade.soldOut }</td>
-						<td>${trade.finalBiddingPrice }</td>
-						<td onclick="sendPoint(this,'${trade.tradeWriter}','${trade.soldOut }',${loginUser.pointBalance },${trade.finalBiddingPrice });">
-							<a href="#">포인트전송>></a>
-						</td>
-						<form action="/point/send.kh" method="post">
-							<input type="hidden" name="pointWorkType" value="S">
-							<input type="hidden" name="pointFromUser" value="${loginUser.memberId }">
-							<input type="hidden" name="pointToUser" value="${trade.tradeWriter }">
-							<input type="hidden" name="pointAmount" value="${trade.finalBiddingPrice }">
-							<input type="hidden" name="boardNo" value="${trade.boardNo }">
-						</form>
-					</tr>
-				</c:forEach>
+				<c:if test="${!empty tList }">
+					<c:forEach items="${tList }" var="trade" >
+						<tr>
+							<td>${trade.tradeTitle }</td>
+							<td>${trade.tradeWriter}</td>
+							<td>${trade.soldOut }</td>
+							<td>${trade.finalBiddingPrice }</td>
+							<td onclick="sendPoint(this,'${trade.tradeWriter}','${trade.soldOut }',${loginUser.pointBalance },${trade.finalBiddingPrice });">
+								<a href="#">포인트전송>></a>
+							</td>
+							<form action="/point/send.kh" method="post">
+								<input type="hidden" name="pointWorkType" value="S">
+								<input type="hidden" name="pointFromUser" value="${loginUser.memberId }">
+								<input type="hidden" name="pointToUser" value="${trade.tradeWriter }">
+								<input type="hidden" name="pointAmount" value="${trade.finalBiddingPrice }">
+								<input type="hidden" name="boardNo" value="${trade.boardNo }">
+							</form>
+						</tr>
+					</c:forEach>
+				</c:if>
+				<c:if test="${empty tList }">
+					<h3>[!!판매 게시물에 채택된 이력이 없습니다!!]</h3>
+				</c:if>
 			</table>					
 		
 		</div>

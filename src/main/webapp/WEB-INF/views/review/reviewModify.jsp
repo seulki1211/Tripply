@@ -113,7 +113,8 @@
 						${review.reviewContents }
 					</textarea>
 <!-- 썸네일 선택-->
-						썸네일 선택
+						
+						<span onclick="clickThumbnailAppend();" id="test"><button type="button">썸네일 새로고침</button></span>
 						<select id="thumbnailPath" name="thumbnailPath" value="${review.thumbnailPath }">
 						</select>
 						<button>저장</button>
@@ -124,4 +125,27 @@
 <!-- 푸터 -->
 	<div id="footer"></div>
 </body>
+
+<script>
+function clickThumbnailAppend(){
+	
+	//1.셀렉트 박스 하위 옵션을 먼저 모두 지워준다.
+	$("#thumbnailPath").empty();
+	
+	//2.썸머노트의 컨텐츠 HTML을 가져와서 큰따옴표로 분리한다.
+	var contentsHtml = $(".note-editable").html();
+	var regExSplit = /[\"]/;
+	var contentsHtmlArr = contentsHtml.split(regExSplit);
+	
+	//3.분리한 요소 중 이미지 저장 경로를 포함하고 있는 것을 이미지의 경로로 판단하고
+	//  이를 반복문을 사용하여 셀렉트박스의 옵션값으로 추가한다.
+	var index = 1;
+	for(var i=0; i<contentsHtmlArr.length; i++){
+		if(contentsHtmlArr[i].includes("/resources/image/")){
+			$("#thumbnailPath").append("<option value="+contentsHtmlArr[i]+">"+index+"번째 이미지"+"</option>");
+			index++;
+		}
+	}
+}
+</script>
 </html>

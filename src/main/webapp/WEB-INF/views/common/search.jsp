@@ -12,9 +12,9 @@
 <body>
 <div id="search-inputframe">
 					<select name="searchCondition">
+						<option <c:if test="${search.searchCondition eq 'all'}">selected</c:if> value="all">전체</option>
 						<option <c:if test="${search.searchCondition eq 'title'}">selected</c:if> value="title">제목</option>
 						<option <c:if test="${search.searchCondition eq 'writer'}">selected</c:if> value="writer">작성자</option>
-						<option <c:if test="${search.searchCondition eq 'all'}">selected</c:if> value="all">전체</option>
 						<option <c:if test="${search.searchCondition eq 'contents'}">selected</c:if> value="contents">내용</option>
 					</select>
 						<select name="searchRegion">

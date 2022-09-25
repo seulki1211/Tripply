@@ -22,7 +22,8 @@
   </select>
   
   <select id="selectCountAllPointHistory" resultType="_int">
-   SELECT COUNT(*) FROM POINT_HISTORY_TBL
+   SELECT COUNT(*) 
+   FROM POINT_HISTORY_TBL
    WHERE POINT_FROM_USER=#{loginUser} OR POINT_TO_USER=#{loginUser}
   ORDER BY P_CREATE_DATE DESC
   </select>
