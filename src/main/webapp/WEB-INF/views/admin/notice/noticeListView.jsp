@@ -49,7 +49,7 @@
 				<td>${notice.noticeWriter }</td>
 				<td>${notice.nUpdateDate }</td>
 				<td> ${notice.nStatus }  
-				<button type="button" onclick="location.href='/admin/notice/chooseNotice.kh?noticeNo=${notice.noticeNo}&nStatus=${notice.nStatus}&page=${currentPage}'" class="btn btn-dark">보이기</button></td>
+				<button type="button" onclick="location.href='/admin/notice/chooseNotice.kh?noticeNo=${notice.noticeNo}&nStatus=${notice.nStatus}&page=${currentPage}'" class="btn btn-dark">변경</button></td>
 				
 <%-- 				<td>${notice.noticeCount }</td> --%>
 			</tr>	
@@ -59,6 +59,7 @@
 		
 		<c:if test="${empty nList }">
 		<tr>			
+		
 			<td colspan='5' align = 'center' scope="row"> <b>검색 결과가 없습니다.</b>
 			</td>
 		</tr>
@@ -117,9 +118,6 @@
 </div>
 
 <script type="text/javascript">
-	function chooseNotice(noticeNo,nStatus,currentPage) {
-		
-	}
 </script>
 </body>
 </html>

@@ -62,7 +62,7 @@ public class MessageServiceImpl implements MessageService {
 	// 받은쪽지 카운트
 	@Override
 	public int getTotalRecvCount(MessageSearch mSearch) {
-		int result = mStore.selectTotalSendCount(mSearch, session);
+		int result = mStore.selectTotalRecvCount(mSearch, session);
 		return result;
 	}
 	

@@ -1,6 +1,7 @@
 package com.kh.tripply;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -40,20 +41,18 @@ public class HomeController {
 	
 	@RequestMapping(value = "/home.kh", method = RequestMethod.GET)
 	public ModelAndView home(Locale locale
-			, ModelAndView mv
-			
-			) {
-		// 배너 출력
-		List<Banner> bList = bService.printAllBanner();
-		if (!bList.isEmpty()) {
-			mv.addObject("bList", bList);
-			mv.setViewName("home");
-		} else if (bList.isEmpty()) {
-			mv.setViewName("home");
-		} else {
-			mv.addObject("msg", "실패");
-			mv.setViewName("common/errorPage");
+			, ModelAndView mv) {
+		
+		// 실재하는 배너만 출력
+		ArrayList<Banner> bList = new ArrayList<Banner>();
+		for(int i = 1; i < 6; i++) {
+			Banner oneBanner = bService.printOneBanenr(i);
+			if(!oneBanner.toString().contains("null")) {
+				bList.add(oneBanner);
+			}
 		}
+		mv.addObject("bList", bList);
+		mv.setViewName("home");
 		
 		// 공지사항 출력
 		try {

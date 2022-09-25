@@ -174,12 +174,9 @@ public class NoticeController {
 	
 		
 		try {
-			
-			
 			int countResult = nService.countChoosedNotice();
 			if (countResult > 4) {
 				mv.addObject("countResult", countResult);
-
 				if (nStatus.equals("Y")) { // n으로 업데이트
 					int result = nService.changeStatusN(noticeNo);
 					mv.setViewName("redirect:/admin/notice/list.kh?page=" + page);
@@ -187,7 +184,7 @@ public class NoticeController {
 					mv.setViewName("redirect:/admin/notice/list.kh?page=" + page);
 				}
 				
-			} else { // 공지 노출이 5개 이하일때
+			} else { // 공지 노출이 4개 이하일때
 				mv.addObject("countResult", countResult);
 				
 				if (nStatus.equals("Y")) { // n으로 업데이트

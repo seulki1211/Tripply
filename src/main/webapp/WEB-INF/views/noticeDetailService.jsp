@@ -14,7 +14,7 @@
 </head>
 <body>
 	<br><br>
-	<h1 align='center'> ${notice.noticeNo }번 공지</h1>
+	<h1 align='center'> ${notice.noticeTitle }</h1>
 	<br><br>
 	
 	<table align="center" class="table table-hover col-10">

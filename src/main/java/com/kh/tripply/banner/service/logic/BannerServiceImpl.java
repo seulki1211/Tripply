@@ -50,6 +50,13 @@ public class BannerServiceImpl implements BannerService{
 		int result = bStore.updateBanner(session, banner);
 		return result;
 	}
+
+	@Override
+	public Banner printOneBanenr(int bannerNo) {
+		Banner oneBanner = bStore.selectOneBanenr(session, bannerNo);
+		return oneBanner;
+	}
+
 	
 	
 	

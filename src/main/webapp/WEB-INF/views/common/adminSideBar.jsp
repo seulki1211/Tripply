@@ -34,7 +34,7 @@ ul.admin-menu {
     color: #000;
   }
   
-  li.service {
+  li.admin {
    margin-top : 10px;
    background: rgb(190, 189, 229);
    padding: 10px;
@@ -54,13 +54,22 @@ ul.admin-menu {
 <body>
 	<div id="left-sidebar">
             <ul class="admin-menu">
-            	<li class="service" > 관리자 페이지 </li>
-                <li class="admin-menu"  onclick="location.href='/home.kh';">서비스 페이지</li>
+            	<li class="admin" > 관리자 페이지 </li>
+                <li class="admin-menu" onclick="goToServicePage();">서비스 페이지</li>
                 <li class="admin-menu" onclick="location.href='/admin/banner/list.kh';">배너 관리</li>
-                <li class="admin-menu" onclick="location.href='/admin/notice/list.kh';">공지사항 관리</li>
+                <li class="admin-menu" onclick="location.href='/admin/notice/list.kh'">공지사항 관리</li>
             </ul>
         </div>
         
+        
+        <script type="text/javascript">
+        function goToServicePage() {
+         	event.preventDefault();// 하이퍼링크 이동 방지
+			if(confirm("서비스페이지로 이동하시겠습니까?")){
+				location.href='/home.kh';
+			}
+		}
+        </script>
        
 </body>
 </html>

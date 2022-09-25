@@ -41,6 +41,7 @@
 				<button type="button" onclick="location.href='/message/recvList.kh?msgReciever=${loginUser.memberNickname }'" class='btn btn-dark'>받은 쪽지함</button>
 				<button type="button" onclick="location.href='/message/sendList.kh?msgWriter=${loginUser.memberNickname }'" class='btn btn-dark'>보낸 쪽지함</button>
 				<button type="button" onclick="location.href='/message/replyView.kh?msgReciever=${msg.msgWriter}'" class='btn btn-dark'>답장 보내기</button>
+				<button type="button" onclick="location.href= 'javascript:history.go(-1);'" class="btn btn-dark">이전페이지로</button> 
 				
 			</td>
 			

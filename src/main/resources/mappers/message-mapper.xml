@@ -67,6 +67,7 @@ SELECT COUNT(*) FROM MESSAGE_TBL
 <select id="selectTotalRecvCount" resultType="_int">
 SELECT COUNT(*) FROM MESSAGE_TBL
 <where>
+	
 	<if test="searchCondition.toString()=='title'">
 	MSG_TITLE LIKE '%'||#{searchValue}||'%'
 	</if>
@@ -74,7 +75,7 @@ SELECT COUNT(*) FROM MESSAGE_TBL
 	MSG_CONTENTS LIKE '%'||#{searchValue}||'%'
 	</if>
 	<if test="searchCondition.toString()=='writer'">
-	MSG_RECEIVER LIKE '%'||#{searchValue}||'%'
+	MSG_WRITER LIKE '%'||#{searchValue}||'%'
 	</if>
 	<if test="searchCondition.toString()=='all'">
 		MSG_TITLE LIKE '%'||#{searchValue}||'%'
@@ -95,14 +96,14 @@ SELECT * FROM MESSAGE_TBL
 	MSG_CONTENTS LIKE '%'||#{searchValue}||'%'
 	</if>
 	<if test="searchCondition.toString()=='writer'">
-	MSG_WRITER LIKE '%'||#{searchValue}||'%'
+	MSG_RECEIVER LIKE '%'||#{searchValue}||'%'
 	</if>
 	<if test="searchCondition.toString()=='all'">
 		MSG_TITLE LIKE '%'||#{searchValue}||'%'
 	OR	MSG_CONTENTS LIKE '%'||#{searchValue}||'%'
-	OR	MSG_WRITER LIKE '%'||#{searchValue}||'%'
+	OR	MSG_RECEIVER LIKE '%'||#{searchValue}||'%'
 	</if>
-	AND MSG_RECEIVER = #{msgWriter}
+	AND MSG_WRITER = #{msgWriter}
 </where>
 </select>
 
@@ -117,14 +118,14 @@ SELECT * FROM MESSAGE_TBL
 	MSG_CONTENTS LIKE '%'||#{searchValue}||'%'
 	</if>
 	<if test="searchCondition.toString()=='writer'">
-	MSG_RECEIVER LIKE '%'||#{searchValue}||'%'
+	MSG_WRITER LIKE '%'||#{searchValue}||'%'
 	</if>
 	<if test="searchCondition.toString()=='all'">
 		MSG_TITLE LIKE '%'||#{searchValue}||'%'
 	OR	MSG_CONTENTS LIKE '%'||#{searchValue}||'%'
-	OR	MSG_RECEIVER LIKE '%'||#{searchValue}||'%'
+	OR	MSG_WRITER LIKE '%'||#{searchValue}||'%'
 	</if>
-	AND MSG_WRITER = #{msgReciever}
+	AND MSG_RECEIVER = #{msgReciever}
 </where>
 </select>
 

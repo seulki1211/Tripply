@@ -40,7 +40,13 @@ public class BannerStoreLogic implements BannerStore {
 		int result = session.update("bannerMapper.updateBanner", banner);
 		return result;
 	}
-	
+
+	@Override
+	public Banner selectOneBanenr(SqlSession session, int bannerNo) {
+		Banner oneBanner = session.selectOne("bannerMapper.selectOneBanner", bannerNo);
+		return oneBanner;
+	}
+
 	
 
 }

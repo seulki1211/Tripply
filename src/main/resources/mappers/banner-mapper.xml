@@ -29,6 +29,7 @@
 
 <select id="selectAllBanner" resultMap="bannerResultMap">
 	SELECT * FROM BANNER_TBL
+<!-- 	WHERE BANNER_RENAME IS NOT NULL -->
 	ORDER BY 1
 </select>
 
@@ -38,7 +39,11 @@
 </select>
 
 
-
+<select id="selectOneBanner" resultMap="bannerResultMap" >
+    SELECT * FROM BANNER_TBL
+	WHERE BANNER_NO = #{bannerNo}
+	
+</select>
 
 
 </mapper>
