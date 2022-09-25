@@ -38,9 +38,6 @@
 							}
 						}
 					},
-// 					onChange: function(contents, $editable) {
-// 					      console.log(contents, $editable);
-// 					    }
 				}
 			});
 // 섬머노트에디터 이미지 업로드 시 동작			
