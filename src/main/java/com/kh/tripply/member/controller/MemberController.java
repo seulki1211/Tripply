@@ -125,8 +125,8 @@ public class MemberController {
 		try {
 			member.setMemberAddr(post + "," + address1 + "," + address2);
 //			int result = mService.modifyMember(member);
-			String memberFilename = uploadFile.getOriginalFilename();
-			if(!memberFilename.equals("")) {
+			if(!uploadFile.equals("")) {
+				String memberFilename = uploadFile.getOriginalFilename();
 				// 수정, 1. 대체(replace) / 2. 삭제 후 저장
 				// 파일삭제
 				String root = request.getSession().getServletContext().getRealPath("resources");

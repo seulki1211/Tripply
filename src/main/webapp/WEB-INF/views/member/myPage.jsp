@@ -16,7 +16,7 @@
 	<div class="wrapper-form">
 		<div class="my-side">
 			<div class="my-side-bar" onclick="location.href='#';">회원정보수정</div>
-			<div class="my-side-bar" onclick="location.href='/free/detail.kh';">작성글</div>
+			<div class="my-side-bar" onclick="location.href='/free/myList.kh';">작성글</div>
 			<div class="my-side-bar">북마크</div>
 			<div class="my-side-bar" onclick="location.href='/point/historyView.kh';">포인트관리</div>
 		</div>

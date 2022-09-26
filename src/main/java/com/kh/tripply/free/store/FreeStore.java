@@ -25,6 +25,10 @@ public interface FreeStore {
 	
 	public List<Free> selectAllByValue(SqlSession session, String searchCondition, String searchValue, int currentPage, int boardLimit);
 	public int insertFreeReply(SqlSession session, FreeReply fReply);
+	public int deleteFreeReply(SqlSession session, Integer freeReplyNo);
+	// 내가 쓴 게시글
+	public int selectEveryTotalCount(SqlSession session, String searchCondition, String searchValue);
+	public List<Free> selectAllTbl(SqlSession session, int currentPage, int boardLimit);
 	
 
 
