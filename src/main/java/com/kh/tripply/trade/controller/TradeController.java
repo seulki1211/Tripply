@@ -56,6 +56,9 @@ public class TradeController {
 				mv.addObject("tList",tList).addObject("paging",paging)
 				.setViewName("trade/tradeList");
 			}else {
+				//4. 검색결과가 존재하지 않으면 tList를 null로 보내준다.
+				mv.addObject("rList",null).addObject("paging",null)
+				.setViewName("trade/tradeList");
 			}
 			
 		} catch (Exception e) {
@@ -91,7 +94,9 @@ public class TradeController {
 				mv.addObject("tList",tList).addObject("search",search).addObject("paging",paging)
 				.setViewName("trade/tradeList");
 			}else {
-				
+				//4. 검색결과가 존재하지 않으면 tList를 null로 보내준다.
+				mv.addObject("rList",null).addObject("paging",null)
+				.setViewName("trade/tradeList");
 			}
 		} catch (Exception e) {
 		}

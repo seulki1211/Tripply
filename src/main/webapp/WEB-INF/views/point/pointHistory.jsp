@@ -39,6 +39,7 @@
 			현재 포인트 잔액 : ${loginUser.pointBalance }원
 			<div></div>
 			<table align="center" border="1px" width="500px">
+				<c:if test="${!empty pList }">
 				<tr>
 					<th>날짜</th>
 					<th>내용</th>
@@ -61,6 +62,14 @@
 						</td>
 					</tr>
 				</c:forEach>
+				</c:if>
+				<c:if test="${empty pList }">
+					<tr>
+						<td colspan="2">
+							<span>결과가 존재하지 않습니다.</span>
+						</td>
+					</tr>
+				</c:if>
 			</table>
 		</div>
 	</div>

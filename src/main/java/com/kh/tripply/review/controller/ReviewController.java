@@ -55,7 +55,10 @@ public class ReviewController {
 				mv.addObject("rList", rList).addObject("paging", paging)
 				.setViewName("review/reviewList");
 			} else {
-
+				
+				//4. 검색결과가 존재하지 않으면  null로 보내준다.
+				mv.addObject("rList",null).addObject("paging",null)
+				.setViewName("review/reviewList");
 			}
 		} catch (Exception e) {
 		}
@@ -90,7 +93,10 @@ public class ReviewController {
 				mv.addObject("rList",rList).addObject("search",search).addObject("paging",paging)
 				.setViewName("review/reviewList");
 			}else {
-				
+
+				//4. 검색결과가 존재하지 않으면  null로 보내준다.
+				mv.addObject("rList",null).addObject("paging",null)
+				.setViewName("review/reviewList");
 			}
 		} catch (Exception e) {
 		}

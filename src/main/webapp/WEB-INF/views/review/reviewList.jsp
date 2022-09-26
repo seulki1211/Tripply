@@ -7,7 +7,16 @@
 <meta charset="UTF-8">
 <title>트리플리,Tripply</title>
 <!-- 화면 뼈대 설정용 css -->
-<link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css">
+<!-- <link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css"> -->
+
+<style>
+	.detail-one-wrap{
+		cursor:pointer;
+	}
+	
+	
+</style>
+
 </head>
 <body>
 <!-- 헤더-메뉴바 -->
@@ -27,11 +36,12 @@
 	로그인 유저 체크 :${loginUser.memberNickname }
 		<div id="list-area">
 			<table align="center" width="100%">
+				<c:if test="${!empty rList }">
 				<tr id="detail-raw-wrap">
 					<c:forEach items="${rList }" var="review" varStatus="N">
 						<td id="detail-one-wrap" aligh="center" width="30%">
-							<div class="detail title thumbnale-wrap" align="center">
-								<img onclick="loginCheck('${loginUser.memberId}','/review/detail.kh?boardNo=${review.boardNo }&page=${paging.page }');"  onerror="this.src='/resources/image/flower1.png';" src="${review.thumbnailPath }" height="90%" width="90%">
+							<div class="detail title thumbnale-wrap" align="center" style="cursor:pointer">
+								<img class="listImage" onclick="loginCheck('${loginUser.memberId}','/review/detail.kh?boardNo=${review.boardNo }&page=${paging.page }');"  onerror="this.src='/resources/image/flower1.png';" src="${review.thumbnailPath }" height="90%" width="90%">
 							</div>
 							<div align="center">
 								<span class="detail region">[${review.rLocationName }]</span>
@@ -53,8 +63,17 @@
 						</c:if>			
 					</c:forEach>
 				</tr>
+				</c:if>
+				<c:if test="${empty rList }">
+					<tr>
+						<td colspan="3">
+							<span>결과가 존재하지 않습니다.</span>
+						</td>
+					</tr>
+				</c:if>
 			</table>
 <!-- 페이징처리 -->
+			<c:if test="${paging ne null }">
 			<div id="pageNavi">
 				<c:if test="${paging.startNavi > 1 }">
 					<a href="/review/${urlVal }.kh?page=${paging.startNavi-1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[이전]</a>
@@ -66,6 +85,7 @@
 					<a href="/review/${urlVal }.kh?page=${paging.endNavi+1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[다음]</a>
 				</c:if>
 			</div>
+			</c:if>
 <!-- 컨텐츠 하단 버튼	 -->
 			<div id="button">
 				<button onclick="loginCheck('${loginUser.memberId}','/review/writeView.kh');">글 작성</button>
@@ -85,7 +105,5 @@
 				alert("로그인을 해주세요.")
 			}
 		}
-		
-
 </script>
 </html>

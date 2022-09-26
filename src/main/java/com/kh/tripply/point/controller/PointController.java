@@ -67,7 +67,10 @@ public class PointController {
 			.addObject("loginUserInfo",loginUserInfo)
 			.setViewName("/point/pointHistory");
 		}else {
-			
+			mv.addObject("pList",null)
+			.addObject("paging",paging)
+			.addObject("loginUserInfo",loginUserInfo)
+			.setViewName("/point/pointHistory");
 		}
 		return mv;
 	}

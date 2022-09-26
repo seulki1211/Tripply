@@ -27,6 +27,7 @@
 	로그인 유저 체크 :${loginUser.memberId }
 		<div id="list-area">
 			<table align="center" width="100%">
+			<c:if test="${!empty tList }">
 				<tr id="detail-raw-wrap">
 					<c:forEach items="${tList }" var="trade" varStatus="N">
 						<td id="detail-one-wrap" aligh="center" width="30%">
@@ -59,8 +60,17 @@
 						</c:if>			
 					</c:forEach>
 				</tr>
+				</c:if>
+			<c:if test="${empty tList }">
+				<tr>
+					<td colspan="3">
+						<span>결과가 존재하지 않습니다.</span>
+					</td>
+				</tr>
+			</c:if>
 			</table>
 <!-- 페이징처리 -->
+			<c:if test="${paging ne null }">
 			<div id="pageNavi">
 				<c:if test="${paging.startNavi > 1 }">
 					<a href="/trade/${urlVal }.kh?page=${paging.startNavi-1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[이전]</a>
@@ -72,6 +82,7 @@
 					<a href="/trade/${urlVal }.kh?page=${paging.endNavi+1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[다음]</a>
 				</c:if>
 			</div>
+			</c:if>
 <!-- 컨텐츠 하단 버튼	 -->
 			<div id="button">
 				<button onclick="loginCheck('${loginUser.memberId}','/trade/writeView.kh');">글 작성</button>
