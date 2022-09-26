@@ -41,18 +41,18 @@
 		ON R.R_LOCATION_CODE = L.LOCATION_CODE
 		<where>
 			<if test='searchCondition.toString()=="all"'>
-				(REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})OR
-				(REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})OR
-				(REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})
+				(REVIEW_TITLE LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND R_LOCATION_CODE=#{searchRegion}</if>)OR
+				(REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND R_LOCATION_CODE=#{searchRegion}</if>)OR
+				(REVIEW_WRITER LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND R_LOCATION_CODE=#{searchRegion}</if>)
 			</if> 
 			<if test='searchCondition.toString()=="title"'>
-				REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+				REVIEW_TITLE LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND R_LOCATION_CODE=#{searchRegion}</if>
 			</if>
 			<if test='searchCondition.toString()=="writer"'>
-				REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+				REVIEW_WRITER LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND R_LOCATION_CODE=#{searchRegion}</if>
 			</if>
 			<if test='searchCondition.toString()=="contents"'>
-				REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+				REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND R_LOCATION_CODE=#{searchRegion}</if>
 			</if>
 		</where>
 		ORDER BY R_CREATE_DATE DESC
@@ -63,18 +63,18 @@
 	  	FROM REVIEW_TBL
 			<where>
 				<if test='searchCondition.toString()=="all"'>
-					(REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})OR
-					(REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion} )OR
-					(REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion})
+					(REVIEW_TITLE LIKE '%'||#{searchValue}||'%'<if test='searchRegion.toString()!="00"'>AND R_LOCATION_CODE=#{searchRegion}</if>)OR
+					(REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND R_LOCATION_CODE=#{searchRegion}</if>)OR
+					(REVIEW_WRITER LIKE '%'||#{searchValue}||'%'<if test='searchRegion.toString()!="00"'>AND R_LOCATION_CODE=#{searchRegion}</if>)
 				</if> 
 				<if test='searchCondition.toString()=="title"'>
-					REVIEW_TITLE LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+					REVIEW_TITLE LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND R_LOCATION_CODE=#{searchRegion}</if>
 				</if>
 				<if test='searchCondition.toString()=="writer"'>
-					REVIEW_WRITER LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+					REVIEW_WRITER LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND R_LOCATION_CODE=#{searchRegion}</if>
 				</if>
 				<if test='searchCondition.toString()=="contents"'>
-					REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' AND R_LOCATION_CODE=#{searchRegion}
+					REVIEW_CONTENTS LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND R_LOCATION_CODE=#{searchRegion}</if>
 				</if>
 			</where>
   	</select>

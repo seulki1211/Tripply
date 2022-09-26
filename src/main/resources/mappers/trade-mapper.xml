@@ -46,18 +46,18 @@
   	ON T.T_LOCATION_CODE = L.LOCATION_CODE
   	<where>
   		<if test='searchCondition.toString()=="all"'>
-				(TRADE_TITLE LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})OR
-				(TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})OR
-				(TRADE_WRITER LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})
+				(TRADE_TITLE LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND T_LOCATION_CODE=#{searchRegion}</if>)OR
+				(TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND T_LOCATION_CODE=#{searchRegion}</if>)OR
+				(TRADE_WRITER LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND T_LOCATION_CODE=#{searchRegion}</if>)
 		</if> 
 		<if test='searchCondition.toString()=="title"'>
-				TRADE_TITLE LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+				TRADE_TITLE LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND T_LOCATION_CODE=#{searchRegion}</if>
 		</if>
 		<if test='searchCondition.toString()=="writer"'>
-				TRADE_WRITER LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+				TRADE_WRITER LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND T_LOCATION_CODE=#{searchRegion}</if>
 		</if>
 		<if test='searchCondition.toString()=="contents"'>
-				TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+				TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND T_LOCATION_CODE=#{searchRegion}</if>
 		</if>
   	</where>
   	ORDER BY T_CREATE_DATE DESC
@@ -68,18 +68,18 @@
   	FROM TRADE_TBL
   		<where>
 			<if test='searchCondition.toString()=="all"'>
-				(TRADE_TITLE LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})OR
-				(TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion} )OR
-				(TRADE_WRITER LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion})
+				(TRADE_TITLE LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND T_LOCATION_CODE=#{searchRegion}</if>)OR
+				(TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND T_LOCATION_CODE=#{searchRegion}</if> )OR
+				(TRADE_WRITER LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND T_LOCATION_CODE=#{searchRegion}</if>)
 			</if> 
 			<if test='searchCondition.toString()=="title"'>
-				TRADE_TITLE LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+				TRADE_TITLE LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND T_LOCATION_CODE=#{searchRegion}</if>
 			</if>
 			<if test='searchCondition.toString()=="writer"'>
-				TRADE_WRITER LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+				TRADE_WRITER LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND T_LOCATION_CODE=#{searchRegion}</if>
 			</if>
 			<if test='searchCondition.toString()=="contents"'>
-				TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' AND T_LOCATION_CODE=#{searchRegion}
+				TRADE_CONTENTS LIKE '%'||#{searchValue}||'%' <if test='searchRegion.toString()!="00"'>AND T_LOCATION_CODE=#{searchRegion}</if>
 			</if>
   		</where>
   </select>

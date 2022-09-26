@@ -9,12 +9,13 @@
 </head>
 <body>
 	<table align="center" class="table col-12 table-borderless">
-	<tr>
-	<td class="table col-2"><img alt="트리플리 로고" src="/resources/image/tripply-logo.png" width='50%'></td>
-	<td class="table col-7"><h1 align="left">Tripply</h1></td>
-	<td class="table col-3">
-	</td>
-	</tr></table>
+		<tr>
+			<td class="table col-2"><a href="/home.kh"><img alt="트리플리 로고" src="/resources/image/tripply-logo.png" width='50%'></a></td>
+			<td class="table col-7"><h1 align="left">Tripply</h1></td>
+			<td class="table col-3">
+		</td>
+		</tr>
+	</table>
 	<div class="login-area">
 		<c:if test="${empty loginUser }">
 			<form action="/member/login.kh" method="post">

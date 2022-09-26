@@ -1,8 +1,6 @@
 package com.kh.tripply;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -10,15 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.tripply.banner.controller.BannerController;
 import com.kh.tripply.banner.domain.Banner;
 import com.kh.tripply.banner.service.BannerService;
+import com.kh.tripply.main.domain.Main;
+import com.kh.tripply.main.service.MainService;
 import com.kh.tripply.notice.domain.Notice;
 import com.kh.tripply.notice.service.NoticeService;
 
@@ -38,6 +36,8 @@ public class HomeController {
 	private BannerService bService;
 	@Autowired
 	private NoticeService nService;
+	@Autowired
+	private MainService mainService;
 	
 	@RequestMapping(value = "/home.kh", method = RequestMethod.GET)
 	public ModelAndView home(Locale locale
@@ -64,6 +64,18 @@ public class HomeController {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("common/errorPage");
 		}
+		
+		// 최근글 출력 (mbk)
+		List<Main> mainList = mainService.printAllRecent();
+		if(!mainList.isEmpty()) {
+			mv.addObject("mainList",mainList).
+			setViewName("home");
+		}else {
+			mv.addObject("mainList",null).
+			setViewName("home");
+		}
+		
+		
 		
 		return mv;
 	}

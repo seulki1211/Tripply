@@ -17,12 +17,20 @@ public class MainController {
 	@Autowired
 	MainService mainService;
 	
+	/**
+	 * 최신 게시물 5개 출력
+	 * @param mv
+	 * @return
+	 */
 	@RequestMapping(value="/main/recent.kh",method=RequestMethod.GET)
 	public ModelAndView mainRecent(ModelAndView mv) {
 		
 		List<Main> mainList = mainService.printAllRecent();
 		if(!mainList.isEmpty()) {
 			mv.addObject("mainList",mainList).
+			setViewName("/main/recent");
+		}else {
+			mv.addObject("mainList",null).
 			setViewName("/main/recent");
 		}
 		
