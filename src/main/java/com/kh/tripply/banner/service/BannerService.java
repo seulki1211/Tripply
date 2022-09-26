@@ -15,4 +15,6 @@ public interface BannerService {
 	public int chkBanner(int bannerNo);
 	
 	public int renewBanner(Banner banner);
+	
+	public Banner printOneBanenr(int bannerNo);
 }

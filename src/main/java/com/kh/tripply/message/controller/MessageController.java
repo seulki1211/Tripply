@@ -44,7 +44,6 @@ public class MessageController {
 	public ModelAndView chkMsgReciever(ModelAndView mv, @RequestParam("msgReciever") String msgReciever) {
 
 		try {
-
 			int result = mService.chkMsgReciever(msgReciever);
 			mv.addObject("chkResult", result);
 			mv.addObject("msgReciever", msgReciever);
@@ -63,7 +62,6 @@ public class MessageController {
 	@RequestMapping(value = "/message/send.kh", method = RequestMethod.POST)
 	public ModelAndView sendMessage(ModelAndView mv
 									, @ModelAttribute Message msg) {
-		
 		try {
 			int result = mService.sendMessage(msg);
 			mv.addObject("msgWriter", msg.getMsgWriter());
@@ -83,8 +81,8 @@ public class MessageController {
 			,HttpServletRequest request) {
 		
 		try {
-			MessageSearch mSearch = new MessageSearch("","",msgWriter,"");
 			// 페이징
+			MessageSearch mSearch = new MessageSearch("","",msgWriter,"");
 			int currentPage = (page != null) ? page : 1;
 			int totalCount = mService.getTotalSendCount(mSearch);
 			int boardLimit = 10;
@@ -129,7 +127,7 @@ public class MessageController {
 			, @RequestParam("msgReciever") 		String msgReciever) {
 		
 		try {
-			
+
 			// 페이징
 			MessageSearch mSearch = new MessageSearch("","","",msgReciever);
 			int currentPage = (page != null) ? page : 1;
@@ -149,7 +147,7 @@ public class MessageController {
 			mv.addObject("maxPage", maxPage);
 			mv.addObject("startNavi", startNavi);
 			mv.addObject("endNavi", endNavi);
-			mv.addObject("urlVal", "sendList");
+			mv.addObject("urlVal", "recvList");
 			// 페이징
 			
 			//검색 조건
@@ -188,15 +186,17 @@ public class MessageController {
 	}
 
 	// 쪽지 검색
-	@RequestMapping(value = "/message/search.kh", method = RequestMethod.GET)
+	@RequestMapping(value = "/message/search.kh", method = RequestMethod.POST)
 	public ModelAndView recvMsgList(ModelAndView mv, @RequestParam("searchCondition") String searchCondition,
 			@RequestParam("searchArea") String searchArea, @RequestParam("searchValue") String searchValue,
 			@RequestParam("loginUserNickname") String loginUserNickname,
 			@RequestParam(value = "page", required = false) Integer page) {
 
 		try {
-			if (searchArea.equals("msgWriter")) {
-				MessageSearch mSearch = new MessageSearch(searchCondition, searchValue, loginUserNickname, "");
+			if (searchArea.equals("sendList")) { // 보낸 편지 검색 // 보낸사람이 user 받는사람이 value 
+				// 검색 조건 담기
+				MessageSearch mSearch = new MessageSearch(searchCondition, searchValue, loginUserNickname ,"");
+				
 				// 페이징
 				int currentPage = (page != null) ? page : 1;
 				int totalCount = mService.getTotalSendCount(mSearch);
@@ -218,7 +218,7 @@ public class MessageController {
 				mv.addObject("urlVal", "sendList");
 				// 페이징
 
-				// 검색 조건
+				// 검색 조건 남기기
 				mv.addObject("mSearch", mSearch);
 
 				// 검색 결과
@@ -227,7 +227,7 @@ public class MessageController {
 				mv.addObject("sendList", sendList);
 				mv.setViewName("message/messageSendListView");
 
-			} else {
+			} else if(searchArea.equals("recvList")) { // 받은 편지에서 검색
 				MessageSearch mSearch = new MessageSearch(searchCondition, searchValue, "", loginUserNickname);
 				// 페이징
 				int currentPage = (page != null) ? page : 1;
@@ -255,7 +255,6 @@ public class MessageController {
 
 				// 검색 결과
 				List<Message> recvList = mService.printSearchRecvList(mSearch, currentPage, boardLimit);
-				System.out.println(recvList.toString());
 				mv.addObject("recvList", recvList);
 				mv.setViewName("message/messageRecvListView");
 			}

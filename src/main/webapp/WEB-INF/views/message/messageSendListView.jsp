@@ -68,20 +68,17 @@
 	
 	<tr>
 		<td colspan='5' align='center' >
-			<form action="/message/search.kh" method="get">
-				<select name="searchArea">
-					<option value='msgWriter' <c:if test="${searchArea eq 'msgWriter' } ">selected</c:if>>보낸쪽지함</option>
-					<option value='msgReciever' <c:if test="${searchArea eq 'msgReciever' } ">selected</c:if>>받은쪽지함</option>
-				</select>
+			<form action="/message/search.kh" method="post" name="searchForm">
 				<select name="searchCondition">
 					<option value='all' <c:if test="${searchCondition eq 'all' } ">selected</c:if>>전체</option>
-					<option value='writer' <c:if test="${searchCondition eq 'writer' } ">selected</c:if>>상대방</option>
+					<option value='writer' <c:if test="${searchCondition eq 'writer' } ">selected</c:if>>수신자</option>
 					<option value='title' <c:if test="${searchCondition eq 'title' } ">selected</c:if>>제목</option>
 					<option value='contents'<c:if test="${searchCondition eq 'contents' } ">selected</c:if>>내용</option>
 				</select>
 				<input type="hidden" name ="loginUserNickname" value="${loginUser.memberNickname }" >
+				<input type="hidden" name ="searchArea" value="sendList">
 				<input type="text" name ='searchValue' value="${searchValue }">
-				<input type="submit" value='검색'>			
+				<input type="button" value='검색' onclick ="valueChk();" >			
 			</form>
 			</td>
 			
@@ -95,5 +92,18 @@
 		</tbody>
 	</table>
 	<br><br><br>
+	
+	<script type="text/javascript">
+	
+	function valueChk() {
+		if(searchForm.searchValue.value=="") { // document 를 생략해도 됨
+	        alert("검색어를 입력하세요!");
+	        searchForm.searchValue.focus();
+	    	return false;
+	    }
+		return searchForm.submit();	
+		
+	}
+	</script>
 </body>
 </html>

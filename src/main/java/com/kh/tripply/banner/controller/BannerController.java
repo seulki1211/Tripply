@@ -1,7 +1,9 @@
 package com.kh.tripply.banner.controller;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -141,22 +143,7 @@ public class BannerController {
 		
 	}
 	
-	@RequestMapping(value="/banner/test.kh", method=RequestMethod.GET)
-	public ModelAndView showBanner(ModelAndView mv) {
-		
-		List<Banner> bList = bService.printAllBanner();
-		if (!bList.isEmpty()) {
-			mv.addObject("bList", bList);
-			mv.setViewName("common/banner");
-		} else if (bList.isEmpty()) {
-			mv.setViewName("common/banner");
-		} else {
-			mv.addObject("msg", "실패");
-			mv.setViewName("common/errorPage");
-		}
-		
-		return mv;
-	}
+
 	
 
 
