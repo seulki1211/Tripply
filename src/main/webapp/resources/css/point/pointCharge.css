@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+body{
+}
+#header{
+}
+#contents{
+	
+}
+#sideBar{
+	position:relative;
+	display:block;
+	float: left;
+	height:800px;
+	width:150px;
+	background-color:lightcyan;
+	font-weight: bold;
+}
+	#point-navi{
+	
+		font-whight: normal;
+		background-color:lavender;
+	}
+		li{
+			list-style: none;
+		}
+		.li{
+			width:100%;
+		}
+		.li:hover{
+			background-color:gold;
+		}
+		

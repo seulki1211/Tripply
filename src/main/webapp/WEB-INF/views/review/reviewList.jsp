@@ -8,14 +8,7 @@
 <title>트리플리,Tripply</title>
 <!-- 화면 뼈대 설정용 css -->
 <!-- <link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css"> -->
-
-<style>
-	.detail-one-wrap{
-		cursor:pointer;
-	}
-	
-	
-</style>
+<link rel="stylesheet" href="/resources/css/review/reviewList.css">
 
 </head>
 <body>
@@ -23,9 +16,11 @@
 	<div id="header">
 		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
 	</div>
+	<br><br>
+	<h1 align="center" style="font-weight:bolder"> 여행 후기 공유해요</h1>
+	<br>
 <!-- 컨텐츠	 -->
 	<div id="contents" width="90%">
-		<div id="sideBar"></div>
 <!-- 검색		 -->
 		<div id="search-area">
 			<form action="/review/search.kh" method="get">
@@ -33,20 +28,22 @@
 			</form>
 		</div>
 <!-- 게시물목록출력 -->
-	로그인 유저 체크 :${loginUser.memberNickname }
 		<div id="list-area">
-			<table align="center" width="100%">
+			<table id="list-table">
 				<c:if test="${!empty rList }">
-				<tr id="detail-raw-wrap">
+				<tr>
 					<c:forEach items="${rList }" var="review" varStatus="N">
-						<td id="detail-one-wrap" aligh="center" width="30%">
-							<div class="detail title thumbnale-wrap" align="center" style="cursor:pointer">
+						<td class="detail-one-wrap">
+						<div class="td-wrap">
+							<div class="thumbnale-wrap">
 								<img class="listImage" onclick="loginCheck('${loginUser.memberId}','/review/detail.kh?boardNo=${review.boardNo }&page=${paging.page }');"  onerror="this.src='/resources/image/flower1.png';" src="${review.thumbnailPath }" height="90%" width="90%">
 							</div>
-							<div align="center">
-								<span class="detail region">[${review.rLocationName }]</span>
+							<div>
+								<div class="detail region">[${review.rLocationName }]</div >
 								<a href="#" onclick="loginCheck('${loginUser.memberId}','/review/detail.kh?boardNo=${review.boardNo }&page=${paging.page }');"  >
-									<span class="detail title"><b>${review.reviewTitle }</b></span>
+									<div  class="detail title-wrap">
+										<p class="title"><b>${review.reviewTitle }</b></p>
+									</div >
 								</a>
 								<div class="detail writer">${review.reviewWriter }</div>
 								<div class="detail info-wrap">
@@ -57,6 +54,7 @@
 									<div  class="detail date">${review.rCreateDate }</div>
 								</div>
 							</div>
+						</div>
 						</td>
 						<c:if test="${N.count % 3 == 0 }">
 							</tr><tr>
@@ -76,19 +74,19 @@
 			<c:if test="${paging ne null }">
 			<div id="pageNavi">
 				<c:if test="${paging.startNavi > 1 }">
-					<a href="/review/${urlVal }.kh?page=${paging.startNavi-1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[이전]</a>
+					<a href="/review/${urlVal }.kh?page=${paging.startNavi-1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}"><p class="naviBtn">[이전]</p></a>
 				</c:if>
 				<c:forEach begin="${paging.startNavi }" end="${paging.endNavi }" var="p" >
-					<a href="/review/${urlVal }.kh?page=${p }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">${p }</a>
+					<a href="/review/${urlVal }.kh?page=${p }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}"><p class="naviBtn">${p }</p></a>
 				</c:forEach>
 				<c:if test="${paging.endNavi < paging.endPage }">
-					<a href="/review/${urlVal }.kh?page=${paging.endNavi+1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[다음]</a>
+					<a href="/review/${urlVal }.kh?page=${paging.endNavi+1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}"><p class="naviBtn">[다음]</p></a>
 				</c:if>
 			</div>
 			</c:if>
 <!-- 컨텐츠 하단 버튼	 -->
-			<div id="button">
-				<button onclick="loginCheck('${loginUser.memberId}','/review/writeView.kh');">글 작성</button>
+			<div id="write-wrap">
+				<button class="writeBtn"onclick="loginCheck('${loginUser.memberId}','/review/writeView.kh');">글 작성</button>
 			</div>
 			
 		</div>

@@ -11,6 +11,7 @@ public class Main {
 	public Main() {}
 	
 	
+	
 
 	public Main(int boardNo, String title, String writer, String cDate, String sort, int count) {
 		super();

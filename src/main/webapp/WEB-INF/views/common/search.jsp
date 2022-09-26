@@ -11,13 +11,14 @@
 </script>
 <body>
 <div id="search-inputframe">
-					<select name="searchCondition">
+					<div class="search-wrap">
+					<select class="searchCon" name="searchCondition">
 						<option <c:if test="${search.searchCondition eq 'all'}">selected</c:if> value="all">전체</option>
 						<option <c:if test="${search.searchCondition eq 'title'}">selected</c:if> value="title">제목</option>
 						<option <c:if test="${search.searchCondition eq 'writer'}">selected</c:if> value="writer">작성자</option>
 						<option <c:if test="${search.searchCondition eq 'contents'}">selected</c:if> value="contents">내용</option>
 					</select>
-						<select name="searchRegion">
+						<select class="searchRegion" name="searchRegion">
 							<option <c:if test="${search.searchRegion eq '00'}">selected</c:if> value="00" label="전국"></option>
 							<option <c:if test="${search.searchRegion eq '11'}">selected</c:if> value="11" label="서울"></option>
 							<option <c:if test="${search.searchRegion eq '21'}">selected</c:if> value="21" label="부산"></option>
@@ -37,8 +38,9 @@
 							<option <c:if test="${search.searchRegion eq '35'}">selected</c:if> value="35" label="전라북도"></option>
 							<option <c:if test="${search.searchRegion eq '36'}">selected</c:if> value="36" label="전라남도"></option>
 						</select>
-					<input type="text" name="searchValue" placeholder="검색" value="${search.searchValue }">
-					<input type="submit" value="검색">
+					<input class="searchText" type="text" name="searchValue" placeholder="검색" value="${search.searchValue }">
+					<input class="searchBtn" type="submit" value="검색">
+					</div>
 				</div>
 
 </body>

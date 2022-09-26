@@ -8,6 +8,7 @@
 <title>트리플리,Tripply</title>
 <!-- 화면 뼈대 설정용 css -->
 <link rel="stylesheet" href="/resources/css/common-style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/point/pointCharge.css">
 </head>
 <body>
 <!-- 헤더-메뉴바 -->
@@ -26,22 +27,19 @@
 <!-- 사이드바 아코디언			 -->
 				<div id="point-navi">
 					<ul>
-						<li onclick="location.href='/point/historyView.kh';">포인트 내역</li>
-						<li onclick="location.href='/point/chargeView.kh';">포인트 충전</li>
-						<li onclick="location.href='/point/sendView.kh';">채택된 상품 구매하기</li>
+						<li class="navi li" onclick="location.href='/point/historyView.kh';">포인트 내역</li>
+						<li class="navi li" onclick="location.href='/point/chargeView.kh';">포인트 충전</li>
+						<li class="navi li" onclick="location.href='/point/sendView.kh';">채택된 상품 구매하기</li>
 					</ul>
 				</div>
 			</div>
 		</div>
 <!-- 본 컨텐츠 -->
-		<div id="pointCharge-input"  style="float:left">
-			<div id="pointCharge-title">
-			</div>
+		<div id="charge-area"  style="float:left">
+			<div id="charge-title"></div>
 			<form id="pointCharge-form" action="/point/charge.kh" method="post">
 				<input type="hidden" name="pointWorkType" value="C">
 				<input type="hidden" name="pointToUser" value="${loginUser.memberId }">
-			
-			
 				<div class="pointCharge method ">
 					<br>
 					현재 포인트 잔액 : ${loginUser.pointBalance }원

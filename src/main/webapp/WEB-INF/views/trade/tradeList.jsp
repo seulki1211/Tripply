@@ -8,12 +8,16 @@
 <title>트리플리,Tripply</title>
 <!-- 화면 뼈대 설정용 css -->
 <link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css">
+<link rel="stylesheet" href="/resources/css/trade/tradeList.css">
 </head>
 <body>
 <!-- 헤더-메뉴바 -->
 	<div id="header">
 		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
 	</div>
+	<br><br>
+	<h1 align="center" style="font-weight:bolder"> 여행 상품 사고 팔아요</h1>
+	<br>
 <!-- 컨텐츠	 -->
 	<div id="contents" width="90%">
 		<div id="sideBar"></div>
@@ -24,26 +28,26 @@
 			</form>
 		</div>
 <!-- 게시물목록출력 -->
-	로그인 유저 체크 :${loginUser.memberId }
 		<div id="list-area">
-			<table align="center" width="100%">
+			<table id="list-table">
 			<c:if test="${!empty tList }">
-				<tr id="detail-raw-wrap">
+				<tr>
 					<c:forEach items="${tList }" var="trade" varStatus="N">
-						<td id="detail-one-wrap" aligh="center" width="30%">
-							<div class="detail title thumbnale-wrap" align="center">
-								<img onclick="loginCheck('${loginUser.memberId}','/trade/detail.kh?boardNo=${trade.boardNo }&page=${paging.page }');"  onerror="this.src='/resources/image/forest1.png';" src="${trade.thumbnailPath }" height="90%" width="90%">
+						<td class="detail-one-wrap">
+						<div class="td-wrap">
+							<div class="thumbnale-wrap">
+								<img class="listImage" onclick="loginCheck('${loginUser.memberId}','/trade/detail.kh?boardNo=${trade.boardNo }&page=${paging.page }');"  onerror="this.src='/resources/image/forest1.png';" src="${trade.thumbnailPath }" height="90%" width="90%">
 							</div>
-							<div align="center">
-								<div id="soldOut-area">
+							<div>
+								<div class="detail region">[${trade.tLocationName }]</div>
+								<span id="soldOut-area">
 									<c:if test="${trade.soldOut eq 'Y' }">[판매완료]</c:if>
 									<c:if test="${trade.soldOut eq 'N' }">[판매중]</c:if>
-								</div>
-								<span class="detail region">[${trade.tLocationName }]</span>
+								</span>
 								<a href="#" onclick="loginCheck('${loginUser.memberId}','/trade/detail.kh?boardNo=${trade.boardNo }&page=${paging.page }');"  >
-									<span class="detail title">
-										<b>${trade.tradeTitle }</b>
-									</span>
+									<div class="detail title-wrap">
+										<p class="title"><b>${trade.tradeTitle }</b></p>
+									</div>
 								</a>
 								<div class="detail writer">${trade.tradeWriter }</div>
 								<div class="detail info-wrap">
@@ -54,6 +58,7 @@
 									<div  class="detail date">${trade.tCreateDate }</div>
 								</div>
 							</div>
+						</div>
 						</td>
 						<c:if test="${N.count % 3 == 0 }">
 							</tr><tr>
@@ -73,19 +78,19 @@
 			<c:if test="${paging ne null }">
 			<div id="pageNavi">
 				<c:if test="${paging.startNavi > 1 }">
-					<a href="/trade/${urlVal }.kh?page=${paging.startNavi-1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[이전]</a>
+					<a href="/trade/${urlVal }.kh?page=${paging.startNavi-1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}"><p class="naviBtn">이전</p></a>
 				</c:if>
 				<c:forEach begin="${paging.startNavi }" end="${paging.endNavi }" var="p" >
-					<a href="/trade/${urlVal }.kh?page=${p }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">${p }</a>
+					<a href="/trade/${urlVal }.kh?page=${p }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}"><p class="naviBtn">${p }</p></a>
 				</c:forEach>
 				<c:if test="${paging.endNavi < paging.endPage }">
-					<a href="/trade/${urlVal }.kh?page=${paging.endNavi+1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}">[다음]</a>
+					<a href="/trade/${urlVal }.kh?page=${paging.endNavi+1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}"><p class="naviBtn">다음</p></a>
 				</c:if>
 			</div>
 			</c:if>
 <!-- 컨텐츠 하단 버튼	 -->
-			<div id="button">
-				<button onclick="loginCheck('${loginUser.memberId}','/trade/writeView.kh');">글 작성</button>
+			<div id="write-wrap">
+				<button class="writeBtn" onclick="loginCheck('${loginUser.memberId}','/trade/writeView.kh');">글 작성</button>
 			</div>
 			
 		</div>

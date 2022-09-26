@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+body{
+}
+#header{
+}
+#contents{
+	
+}
+#sideBar{
+	position:relative;
+	display:block;
+	float: left;
+	height:800px;
+	width:150px;
+	background-color:lightcyan;
+	font-weight: bold;
+}
+	#point-navi{
+	
+		font-whight: normal;
+		background-color:lavender;
+	}
+		li{
+			list-style: none;
+		}
+		.li{
+			width:100%;
+		}
+		.li:hover{
+			background-color:gold;
+		}
+		
+#history-area{
+}
+	#history-title{
+		position:relative;
+		left: 25%;
+		
+	}
+		#title{
+
+		}
+	#history-table{
+			margin:0 auto;
+	}
+	#history-table td,#history-table tr{
+		border-bottom: 1px solid black;
+		padding:10px;
+	}
+	
+	
+	
+	#send-title{
+		position:relative;
+		left: 25%;
+		
+	}
+	
+	#send-table{
+			margin:0 auto;
+	}
+	#send-table td,#send tr{
+		border-bottom: 1px solid black;
+		padding:10px;
+	}
+

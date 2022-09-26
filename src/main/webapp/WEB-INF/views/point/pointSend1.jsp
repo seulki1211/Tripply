@@ -8,6 +8,7 @@
 <title>트리플리,Tripply</title>
 <!-- 화면 뼈대 설정용 css -->
 <link rel="stylesheet" href="/resources/css/common-style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/point/pointSend.css">
 </head>
 <body>
 <!-- 헤더-메뉴바 -->
@@ -34,11 +35,12 @@
 			</div>
 		</div>
 <!-- 본 컨텐츠 -->
-		<div id="contents-2"  style="float:left">
-			<h1>포인트 전송</h1><hr><br>
-			현재 포인트 잔액 : ${loginUser.pointBalance }원			
-			구매 채택 게시글
-			<table align="center" border="1px">
+		<div id="send-area">
+			<div id="send-title">
+				<h1>포인트 전송</h1><hr><br>
+				현재 포인트 잔액 : ${loginUser.pointBalance }원			
+			</div>
+			<table id="send-table">
 				<tr>
 					<th>제목</th>
 					<th>판매자</th>
