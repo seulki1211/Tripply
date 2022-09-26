@@ -84,4 +84,28 @@ public class FreeStoreLogic implements FreeStore{
 		return result;
 	}
 
+	@Override
+	public int deleteFreeReply(SqlSession session, Integer freeReplyNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	// 내가 쓴 게시글
+	@Override
+	public int selectEveryTotalCount(SqlSession session, String searchCondition, String searchValue) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchCondition", searchCondition);
+		paramMap.put("searchValue", searchValue);
+		int everyTotalCount = session.selectOne("FreeMapper.selectEveryTotalCount", paramMap);
+		return everyTotalCount;
+	}
+
+	@Override
+	public List<Free> selectAllTbl(SqlSession session, int currentPage, int boardLimit) {
+		int offset = (currentPage-1)*boardLimit;
+		RowBounds rowBounds = new RowBounds(offset, boardLimit);
+		List<Free> fList = session.selectList("FreeMapper.selectAllTbl", null, rowBounds);
+		return fList;
+	}
+
 }

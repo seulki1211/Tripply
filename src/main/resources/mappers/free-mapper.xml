@@ -49,7 +49,7 @@
 				OR FREE_CONTENTS LIKE '%'||#{searchValue}||'%'
 				OR FREE_WRITER LIKE '%'||#{searchValue}||'%'
 			</if>
-			AND F_STATUS = 'Y'
+			AND F_STATUS = 'Y' 
 		</where>
 	</select>
 	<select id="selectOneByNo" resultMap="freeResultMap">
@@ -74,5 +74,19 @@
 			</if>
 			AND F_STATUS = 'Y'
 		</where> 		
+	</select>
+	<!-- 내가 쓴 게시글 출력 -->
+	<select id="selectEveryTotalCount" resultType="_int">
+		SELECT SUM(CNT) FROM (
+		SELECT COUNT(*) AS CNT FROM FREE_TBL
+		UNION ALL
+		SELECT COUNT(*) AS CNT FROM PARTY_TBL
+		UNION ALL
+		SELECT COUNT(*) AS CNT FROM REVIEW_TBL)
+	</select>
+	<select id="selectAllTbl" resultMap="freeResultMap">
+		SELECT BOARD_NO, FREE_TITLE, FREE_WRITER, FREE_COUNT, F_CREATE_DATE FROM FREE_TBL WHERE F_STATUS = 'Y'
+		UNION ALL SELECT BOARD_NO, PARTY_TITLE, PARTY_WRITER, PARTY_COUNT, P_CREATE_DATE FROM PARTY_TBL WHERE P_STATUS = 'Y'
+		UNION ALL SELECT BOARD_NO, REVIEW_TITLE, REVIEW_WRITER, REVIEW_COUNT, R_CREATE_DATE FROM REVIEW_TBL WHERE R_STATUS = 'Y' ORDER BY BOARD_NO DESC
 	</select>
 </mapper>

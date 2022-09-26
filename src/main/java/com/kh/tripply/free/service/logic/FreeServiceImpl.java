@@ -75,6 +75,22 @@ public class FreeServiceImpl implements FreeService{
 		int result = fStore.insertFreeReply(session, fReply);
 		return result;
 	}
+	@Override
+	public int deleteReply(Integer freeReplyNo) {
+		int result = fStore.deleteFreeReply(session, freeReplyNo);
+		return result;
+	}
+	// 내가 쓴 게시글
+	@Override
+	public int getEveryTotalCount(String searchCondition, String searchValue) {
+		int everyTotalCount = fStore.selectEveryTotalCount(session, searchCondition, searchValue);
+		return everyTotalCount;
+	}
+	@Override
+	public List<Free> printEveryTbl(int currentPage, int boardLimit) {
+		List<Free> fList = fStore.selectAllTbl(session, currentPage, boardLimit);
+		return fList;
+	}
 
 
 

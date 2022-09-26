@@ -23,7 +23,7 @@
 }
 .my-side-bar{
 	display:flex;
-	height:10%;
+	height:80px;
 	background-color:lightcyan;
 	justify-content:center;
 	align-items:center;

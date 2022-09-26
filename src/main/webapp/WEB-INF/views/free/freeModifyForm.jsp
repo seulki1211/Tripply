@@ -21,7 +21,7 @@
 		<br>
 		<form action="/free/modify.kh" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="page" value="${page }">
-			<input type="hidden" name="freeNo" value="${free.boardNo }">
+			<input type="hidden" name="boardNo" value="${free.boardNo }">
 			<table align="center" border="1">
 				<tr>
 					<td>제목</td>

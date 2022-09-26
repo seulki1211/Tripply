@@ -25,5 +25,9 @@ public interface FreeService {
 	
 	
 	public int registerReply(FreeReply fReply);
+	public int deleteReply(Integer freeReplyNo);
+	// 내가 쓴 게시글
+	public int getEveryTotalCount(String searchCondition, String searchValue);
+	public List<Free> printEveryTbl(int currentPage, int boardLimit);
 	
 }
