@@ -1,29 +1,90 @@
 @charset "UTF-8";
 
-.login-area {
-	height : 100px;
+/* .login-area { */
+/* 	height : 100px; */
+/* } */
+/* .btn-login { */
+/* 	height : 50px; */
+/* } */
+/* .nav-area { */
+/* 	background : gray; */
+/* 	height : 50px; */
+/* } */
+/* .menu { */
+/* 	display : flex; */
+/* 	width : 20%; */
+/* 	height : 50px; */
+/* 	text-align : center; */
+/* 	vertical-align : middle; */
+/* 	font-size : 20px; */
+/* 	background : lightblue; */
+/* 	color : black; */
+/* 	justify-content:space-around; */
+/* 	float:left; */
+/* 	align-items:center; */
+/* } */
+/* .menu:hover { */
+/* 	background : lightsteelblue; */
+/* 	cursor : pointer; */
+/* } */
+
+.header{
+    display : block;
 }
-.btn-login {
-	height : 50px;
+    
+    /* gallary */
+	.gallary {position: relative; width: 1920; height: 400; top: 0px;  margin:0 auto; padding:0; overflow: hidden; }
+	.gallary ul {position: absolute; margin: 0px; padding: 0px; list-style: none;  }
+	.gallary ul li {float: left; width: 1920; height: 500; margin:0; padding:0; }
+    .gallary ul li img{   margin: 0; padding: 0%;}
+
+    /* logo */
+   .logo{
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    margin: 0;
+    padding: 0%;
+   }
+
+ /* nav */
+ 
+.nav{
+    background-color: rgba(0, 0, 0, 0.9);
+    height: 70px;
 }
-.nav-area {
-	background : gray;
-	height : 50px;
-}
-.menu {
-	display : flex;
-	width : 20%;
+
+ .nav-bar-menu{
+    position: relative;
+    margin-top: -25px;
+    display : flex;
+	width : 200px;
 	height : 50px;
 	text-align : center;
 	vertical-align : middle;
-	font-size : 20px;
-	background : lightblue;
-	color : black;
-	justify-content:space-around;
+	font-size : 30px;
+	background : black;
+	color : white;
+	justify-content:center;
 	float:left;
 	align-items:center;
-}
-.menu:hover {
-	background : lightsteelblue;
+    list-style: none;
+    font-family: 'Jua', sans-serif;
+
+   }
+   #menu1{
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+   }
+
+ 
+   #menu3{
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+   }
+
+   .nav-bar-menu:hover{
+    background : purple;
 	cursor : pointer;
-}
+   }  
+

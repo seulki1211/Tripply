@@ -52,7 +52,7 @@ ul.admin-menu {
 </head>
 
 <body>
-	<div id="left-sidebar">
+	<div id="left-sidebar" >
             <ul class="admin-menu">
             	<li class="admin" > 관리자 페이지 </li>
                 <li class="admin-menu" onclick="goToServicePage();">서비스 페이지</li>
