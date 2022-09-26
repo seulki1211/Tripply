@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.itextpdf.text.Document;
@@ -73,7 +74,7 @@ public class PlannerController {
 			}
 		
 			//System.out.println(planList);
-			
+			System.out.println(planner);
 			mv.addObject("rList",rList);
 			mv.addObject("dayList",dayList);
 			mv.addObject("page",page);
@@ -91,6 +92,7 @@ public class PlannerController {
 	
 	/**
 	 *  여행 제목,일정 등록
+	 *  썸네일(첨부파일 등록)
 	 * 
 	 * @param planner
 	 * @param mv
@@ -99,17 +101,51 @@ public class PlannerController {
 	 */
 	@RequestMapping(value="/plan/regist.kh", method=RequestMethod.POST)
 	public ModelAndView addPlanner(
-			@ModelAttribute Planner planner
-			,ModelAndView mv
-			,HttpSession session) {
-		
+			ModelAndView mv
+			,@ModelAttribute Planner planner
+			,@RequestParam(value="uploadFile",required=false)MultipartFile uploadFile
+			,HttpServletRequest request
+			,HttpSession session
+			) {
+		 try { 
+
+			 String boardFilename = uploadFile.getOriginalFilename();
+			
+			if(!uploadFile.getOriginalFilename().equals("")) {//파일있는지 없는지 확인
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root+"\\planneruploadFiles";//파일 이름까지 저장하고 싶다
+			File file = new File(savePath);
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String boardFileRename = sdf.format(new Date(System.currentTimeMillis()))+"."
+					+boardFilename.substring(boardFilename.lastIndexOf(".")+1);//오늘 날짜 시분초+확장자명 붙임
+			//1.png, img.png
+			if(!file.exists()) {
+				file.mkdir();
+			}
+			/////////////////////////////////////////////////////////////////////////////////////파일 여러개는??for문 
+			uploadFile.transferTo(new File(savePath+"\\"+boardFileRename));
+			String boardFilepath= savePath+"\\"+boardFileRename;
+			planner.setPlannerFileName(boardFilename);
+			planner.setPlannerFileRename(boardFileRename);
+			planner.setPlannerFilePath(boardFilepath);
+		}
 		 Member member = (Member)session.getAttribute("loginUser");
-		 planner.setPlanWriter(member.getMemberId());
+		 planner.setPlanWriter(member.getMemberNickname());
 		 
+			
 		int result=pService.registPlanner(planner);
 		int boardNo=planner.getBoardNo();
+		System.out.println(boardNo);
 		mv.addObject("boardNo",boardNo);
 		mv.setViewName("redirect:/plan/addplanView.kh"); 
+		}catch (Exception e) {
+			e.printStackTrace();
+			mv.addObject("msg",e.getMessage()); 
+			mv.setViewName("common/errorPage");
+			 
+			//mv.setViewName("redirect:/plan/addplanView.kh"); 
+		}
 		
 		return mv;
 		
@@ -127,7 +163,7 @@ public class PlannerController {
 			ModelAndView mv
 			,@RequestParam(value="page", required=false) Integer page) {
 		int currentPage=(page !=null) ? page : 1;
-		int totalCount = pService.getTotalCount("","");//현재 페이지 값과 전체 게시물 갯수 가져옴
+		int totalCount = pService.getTotalCount("","","");//현재 페이지 값과 전체 게시물 갯수 가져옴
 		int boardLimit=10;
 		int naviLimit=5;
 		int maxPage;
@@ -171,16 +207,18 @@ public class PlannerController {
 				ModelAndView mv
 				, @RequestParam("searchCondition")String searchCondition
 				, @RequestParam("searchValue")String searchValue
+				, @RequestParam("searchRegion")String searchRegion
 				,@RequestParam(value="page", required=false) Integer page) {
+		try{
 			int currentPage=(page !=null) ? page : 1;
-			int totalCount = pService.getTotalCount(searchCondition,searchValue);//현재 페이지 값과 전체 게시물 갯수 가져옴
+			int totalCount = pService.getTotalCount(searchCondition,searchValue,searchRegion);//현재 페이지 값과 전체 게시물 갯수 가져옴
 			int boardLimit=10;
 			int naviLimit=5;
 			int maxPage;
 			int startNavi;
 			int endNavi;
 			
-			try{
+			
 			maxPage = (int)((double)totalCount/boardLimit +0.9);
 			startNavi = ((int)((double)currentPage/naviLimit+0.9)-1)*naviLimit+1;
 			endNavi = startNavi+naviLimit -1;//for문 돌리면 중간값 나옴
@@ -189,7 +227,7 @@ public class PlannerController {
 			}
 			
 				List<Planner> pList = pService.printAllValue(
-						searchCondition,searchValue,currentPage, boardLimit);
+						searchCondition,searchValue,searchRegion,currentPage, boardLimit);
 
 				if(!pList.isEmpty()) {
 					
@@ -200,8 +238,9 @@ public class PlannerController {
 				mv.addObject("urlVal","search");
 				mv.addObject("searchCondition",searchCondition);
 				mv.addObject("searchValue",searchValue);
+				mv.addObject("searchRegion",searchRegion);
 				mv.addObject("maxPage",maxPage);
-				mv.addObject("currentPage",currentPage);// boardlistview에 값을 보내줘야한다
+				mv.addObject("currentPage",currentPage);  // boardlistview에 값을 보내줘야한다
 				mv.addObject("startNavi",startNavi);
 				mv.addObject("endNavi",endNavi);
 				mv.setViewName("/planner/plannerList");
@@ -345,7 +384,7 @@ public class PlannerController {
 			,@RequestParam("page")Integer page
 			,HttpSession session) {
 		Member member = (Member)session.getAttribute("loginUser");
-		PlannerReply.setpReplyWriter(member.getMemberId());
+		PlannerReply.setpReplyWriter(member.getMemberNickname());
 		PlannerReply.setBoardNo(boardNo);
 		
 		int result = pService.addReply(PlannerReply);

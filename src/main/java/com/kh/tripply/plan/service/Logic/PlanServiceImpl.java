@@ -33,12 +33,12 @@ public class PlanServiceImpl implements PlanService{
 		return planner;
 	}
 
-	
 	@Override
-	public int getTotalCount(String searchCondition, String searchValue) {
-		int totalCount = pStore.selectTotalCount(session,searchCondition,searchValue);
+	public int getTotalCount(String searchCondition, String searchValue, String searchRegion) {
+		int totalCount = pStore.selectTotalCount(session,searchCondition,searchValue,searchRegion);
 		return totalCount;
 	}
+	
 	//플래너 리스트 불러오기
 	@Override
 	public List<Planner> printAllPlanner(int currentPage, int limit) {
@@ -47,10 +47,12 @@ public class PlanServiceImpl implements PlanService{
 	}
 	//플래너 리스트에서 검색
 	@Override
-	public List<Planner> printAllValue(String searchCondition, String searchValue, int currentPage, int boardLimit) {
-		List<Planner>pList = pStore.selectAllByValue(session, searchCondition, searchValue,currentPage, boardLimit);
+	public List<Planner> printAllValue(String searchCondition, String searchValue, String searchRegion, int currentPage,
+			int boardLimit) {
+		List<Planner>pList = pStore.selectAllByValue(session, searchCondition, searchValue,searchRegion,currentPage, boardLimit);
 		return pList;
 	}
+
    //플랜 등록(좌표,주소)
 	@Override
 	public int registPlanner(PlanList l) {
@@ -111,6 +113,10 @@ public class PlanServiceImpl implements PlanService{
 		int result = pStore.updateReply(session,plannerReply);
 		return result;
 	}
+
+	
+
+
 
 
 	

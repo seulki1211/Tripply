@@ -13,15 +13,19 @@
 	.wrap{
 		width: 100%;
 		height: 100%;
-	box-sizing: border-box;
+		box-sizing: border-box;
 	}
 	.header {
+		
 		width: 100%;
 		height: 10%;
 		border: 1px solid;
 		box-sizing: border-box;
 	}
 	.info{
+		margin-left:60px;
+		margin-top:20px;
+		margin-bottom:20px;
 		width:100%;
 		height:70%;
 		box-sizing: border-box;
@@ -39,7 +43,9 @@
 		box-sizing: border-box;
 		
 	}
-	.planDetail{
+	.planDetailWrap{
+		
+		text-align:center;
 		width:80%;
 		height:100%;
 		border: 1px solid;
@@ -47,6 +53,9 @@
 		float:left;
 		
 		
+	}
+	.planDetail{
+		display: inline-block;
 	}
 	.button{
 		width:20%;
@@ -68,6 +77,12 @@
 		width:80%;
 		height:100%;
 	}
+	.table-title{
+		font-weight:bold;
+	}
+	.pList-width{
+		width:500px;
+	}
 	</style>
 	<script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
@@ -84,48 +99,63 @@
 			<div class="info">
 			<input type="hidden" name="boardNo" value="${planner.boardNo} "/>	
 			<input type="hidden" name="page" value="${page} "/>	
-			<input type="text" name="title" value="${planner.planTitle} "/>	
-			<input type="text" name="firstDay" value="${planner.firstDay} "/>	
-			<input type="text" name="lastDay" value="${planner.lastDay} "/>	
+			<span>[${planner.plannerLocation}]</span>	
+			<h2>${planner.planTitle}</h2>	
+			<input type="text" name="firstDay" value="${planner.firstDay} "readonly/>
+			-	
+			<input type="text" name="lastDay" value="${planner.lastDay} "readonly/>	
 			<!-- 여행 제목 날짜 -->
 			</div>
 			<div class="writeInfo">
-			<input type="text" name="planWriter" value="${planner.planWriter} "/>	
-			<input type="text" name="pCreateDate" value="${planner.pCreateDate} "/>	
-			<input type="text" name="plannerCount" value="${planner.plannerCount} "/>	
+			<table>
+			<tr>
+			<td class="table-title"> 작성자 : </td>
+			<td name="planWriter">${planner.planWriter }</td>
+			<td class="table-title"> 작성일 : </td>
+			<td name="pCreateDate">${planner.pCreateDate }</td>
+			<td class="table-title"> 조회수 : </td>
+			<td name="plannerCount">${planner.plannerCount }</td>
 			<!--작성자/등록일자 조회수  -->
+			</tr>
+			</table>
 			</div>
 		</div>
 		<div class="planerContents">
+			<div class="planDetailWrap">
 			<div class="planDetail">
 			<!-- 장소 메모 지도마커표시 보이기 foreach -->
 			<table  border="1">
 			<c:forEach items="${dayList}" var="day" varStatus="status">
 				<tr> 
-				<td colspan="6" align="center"> 
+				<td style="border-right: none; font-weight:bold;">Day${status.count }</td>
+				<td colspan="3" align="center"style="border-left: none; font-weight:bold;">
 				<fmt:parseDate value="${day}" var="stringday" pattern="yyyyMMdd" /> 
 				 <fmt:formatDate value="${stringday}" pattern="YY.MM.dd (E)" />
 				 </td>
 				 </tr>
 		<c:forEach items="${planList }" var="plan" varStatus="i">
-		<c:if test= "${plan.day eq day}">  
-			 <tr>
-			<td>${i.count }</td>
-			<td>${plan.day }</td>
-			<td>${plan.address }</td>
-			<td>${plan.y }</td>
-			<td>${plan.x }</td>
-			<td>${plan.memo }</td>
-			<td><div id="map${i.count }" style="width:100px;height:100px;"></div></td>
-			</tr> 
+		<c:if test="${plan.day eq day}">  
+			<tr>
+			<td rowspan="2">${i.count }</td>
+			<%-- <td>${plan.day }</td> --%>
+			<td class="pList-width">${plan.address }</td>
+			<%-- <td>${plan.y }</td>
+			<td>${plan.x }</td> --%>
+			<td rowspan="2"><div id="map${i.count }" style="width:200px; height:200px;"></div></td></tr>
+			<tr>
+			
+			<td class="pList-width"  style="text-align:left";><textarea cols="60px" rows="5px" readonly >${plan.memo }</textarea></td>
+			
+			</tr>
+			 
 			
 				</c:if>
 			</c:forEach>
 		</c:forEach> 
 		</table>
-			
+		</div>
 			</div>
-			<div clss="button">
+			<div class="button">
 			<button onclick="plannerModify(${planner.boardNo},${page});">수정</button>
 			<button onclick="plannerRemove(${page});">삭제</button>
 			<button onclick="location.href='/plan/pdf.kh?boardNo=${planner.boardNo }'">PDF</button>

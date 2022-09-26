@@ -19,9 +19,8 @@ position:relative;
 .planL-popupcontainer {
     position: absolute;
     z-index: 2;
- 
-    top: 20px;
-  	left: 20px;
+    top: -30px;
+  	left: 500px;
     width: 100;
     height: 100;
     display: none;
@@ -30,7 +29,7 @@ position:relative;
 
 .planL-popbox {
     width: 700px;
-    height: 450px;
+    height: 550px;
     position: relative;
     z-index: 2;
     background: white;
@@ -41,7 +40,7 @@ position:relative;
 }
 
 .planL-popheadbox {
-    width: 693px;
+    width: 700px;
     height: 80px;
     border: 4px solid #abb2c7;
     position: relative;
@@ -62,8 +61,8 @@ position:relative;
     right: 20px;
     width: 120px;
     height: 45px;
-    background-color: #5882fa;
-    color: white;
+    background-color: lightblue;
+    color: black;
     border: none;
     border-radius: 5px;
     font-size: 20px;
@@ -72,8 +71,8 @@ position:relative;
 }
 
 .planL-popcontentbox {
-    height: 360px;
-    width: 693px;
+    height: 450px;
+    width: 700px;
     border-left: 4px solid #abb2c7;
     border-right: 4px solid #abb2c7;
     border-bottom: 4px solid #abb2c7;
@@ -112,6 +111,15 @@ position:relative;
     border: 2.5px solid #dadce0;
     font-size: 16px;
 }
+.planL-popdetailbox__input {
+    position: absolute;
+    top: 36px;
+    right: 100px;
+    width: 350px;
+    height: 30px;
+    border: 2.5px solid #dadce0;
+    font-size: 16px;
+}
 
 .planL-popdetailbox__input--date {
     width: 150px;
@@ -126,8 +134,8 @@ position:relative;
 .planL-popbtnbox__input--blue {
     width: 200px;
     height: 50px;
-    background-color: #1b3067;
-    color: white;
+    background-color: lightsteelblue;
+    color: black;
     border: none;
     border-radius: 7px;
     font-size: 20px;
@@ -168,11 +176,31 @@ height:100%;
 			<form action="/plan/search.kh" method="get">
 			
 				<select name = "searchCondition" >
-					<option value="all" <c:if test="${searchCondition eq 'all' }">selected</c:if>>전체</option>
-					<option value="writer" <c:if test="${searchCondition eq 'writer' }">selected</c:if>>작성자</option>
-					<option value="title"<c:if test="${searchCondition eq 'title'}">selected</c:if>>제목</option>
+					<option value="all" <c:if test="${search.searchCondition eq 'all' }">selected</c:if>>전체</option>
+					<option value="writer" <c:if test="${search.searchCondition eq 'writer' }">selected</c:if>>작성자</option>
+					<option value="title"<c:if test="${search.searchCondition eq 'title'}">selected</c:if>>제목</option>
 				</select>
-				<input type="text" name="searchValue" value="${searchValue }">
+				<select class="form-select" name="searchRegion" >
+							<option <c:if test="${search.searchRegion eq '전국'}">selected</c:if> value="전국" label="전국"></option>
+							<option <c:if test="${search.searchRegion eq '서울'}">selected</c:if> value="서울" label="서울"></option>
+							<option <c:if test="${search.searchRegion eq '부산'}">selected</c:if> value="부산" label="부산"></option>
+							<option <c:if test="${search.searchRegion eq '제주'}">selected</c:if> value="제주" label="제주"></option>
+							<option <c:if test="${search.searchRegion eq '인천'}">selected</c:if> value="인천" label="인천"></option>
+							<option <c:if test="${search.searchRegion eq '대전'}">selected</c:if> value="대전" label="대전"></option>
+							<option <c:if test="${search.searchRegion eq '대구'}">selected</c:if> value="대구" label="대구"></option>
+							<option <c:if test="${search.searchRegion eq '광주'}">selected</c:if> value="광주" label="광주"></option>
+							<option <c:if test="${search.searchRegion eq '울산'}">selected</c:if> value="울산" label="울산"></option>
+							<option <c:if test="${search.searchRegion eq '세종'}">selected</c:if> value="세종" label="세종"></option>
+							<option <c:if test="${search.searchRegion eq '경기도'}">selected</c:if> value="경기도" label="경기도"></option>
+							<option <c:if test="${search.searchRegion eq '강원도'}">selected</c:if> value="강원도" label="강원도"></option>
+							<option <c:if test="${search.searchRegion eq '충청북도'}">selected</c:if> value="충청북도" label="충청북도"></option>
+							<option <c:if test="${search.searchRegion eq '충청남도'}">selected</c:if> value="충청남도" label="충청남도"></option>
+							<option <c:if test="${search.searchRegion eq '경상북도'}">selected</c:if> value="경상북도" label="경상북도"></option>
+							<option <c:if test="${search.searchRegion eq '경상남도'}">selected</c:if> value="경상남도" label="경상남도"></option>
+							<option <c:if test="${search.searchRegion eq '전라북도'}">selected</c:if> value="전라북도" label="전라북도"></option>
+							<option <c:if test="${search.searchRegion eq '전라남도'}">selected</c:if> value="전라남도" label="전라남도"></option>
+						</select>
+				<input type="text" name="searchValue" value="${search.searchValue }">
 				<input type="submit" value="검색">
 			</form>
 				</td> 
@@ -193,7 +221,7 @@ height:100%;
 
         <!-- 플래너 팝업창 입력 부분 -->
         <div class="planL-popcontentbox">
-            <form action="/plan/regist.kh" method="post"> <!-- name="popupFrm" onsubmit="return popupCheck()" -->
+            <form action="/plan/regist.kh" method="post" enctype="multipart/form-data"> <!-- name="popupFrm" onsubmit="return popupCheck()" -->
 			<%-- <input type="hidden" name=boardNo value="${planner.boardNo}"> --%>
 			<%-- <input type="text" name=memberId value="${planner.memberId}"> --%>
                 <div class="planL-popdetailbox">
@@ -207,16 +235,36 @@ height:100%;
                     <span class="planL-popdetailbox__span--small">~</span>
                     <input type="date" name="lastDay" class="planL-popdetailbox__input--date" required>
                 </div>
-
-               <!--  <div class="planL-popdetailbox">
-                    <span class="planL-popdetailbox__span--big">설명</span>
-                    <input type="text" name="intro" placeholder="30자 내로 입력해주세요" maxlength="30" class="planL-popdetailbox__input--gray" value="">
-                </div> -->
-
+                <div class="planL-popdetailbox">
+                <span class="planL-popdetailbox__span--big">썸네일</span>
+                <input type = "file" name="uploadFile" class="planL-popdetailbox__input--gray">
+                </div>
+                <div class="planL-popdetailbox">
+                <span class="planL-popdetailbox__span--big">여행장소</span>
+                <select name="plannerLocation" class="planL-popdetailbox__input">
+						<option value="전국" label="전국"></option>
+						<option value="서울" label="서울"></option>
+						<option value="부산" label="부산"></option>
+						<option value="제주" label="제주"></option>
+						<option value="인천" label="인천"></option>
+						<option value="대전" label="대전"></option>
+						<option value="대구" label="대구"></option>
+						<option value="광주" label="광주"></option>
+						<option value="울산" label="울산"></option>
+						<option value="세종" label="세종"></option>
+						<option value="경기도" label="경기도"></option>
+						<option value="강원도" label="강원도"></option>
+						<option value="충청북도" label="충청북도"></option>
+						<option value="충청남도" label="충청남도"></option>
+						<option value="경상북도" label="경상북도"></option>
+						<option value="경상남도" label="경상남도"></option>
+						<option value="전라북도" label="전라북도"></option>
+						<option value="전라남도" label="전라남도"></option>
+					</select>
+                </div>
                 <div class="planL-popbtnbox">
                     <input type="submit" class="planL-popbtnbox__input--blue" value="플래너 만들기">
                 </div>
-
             </form>
         </div>
         <!-- // 플래너 팝업창 입력 부분 -->
@@ -234,8 +282,18 @@ height:100%;
 		<c:forEach items ="${pList }" var="planner" varStatus = "i">
 		<!--var는 여기서 사용하는 변수명을 적음  -->
 		<tr>
+			<td><div class="detail title thumbnale-wrap" align="center">
+			<c:if test="${empty planner.plannerFileName }">
+				<img alt="기본이미지" src="/resources/image/basic.jpg" width='200px' height="200px">
+				
+			</c:if>
+			<c:if test="${!empty planner.plannerFileName }">
+				<img alt="유저이미지" src="/resources/planneruploadFiles/${planner.plannerFileRename}" width='200px' height="200px">
+			</c:if>
+			</div></td>
 				<td>${i.count }</td>
-				<td><a href="/planner/planerDetail.kh?boardNo=${planner.boardNo }&page=${currentPage}#"> ${planner.planTitle }</td>
+				<td>${planner.plannerLocation }</td>
+				<td><a href="/planner/planerDetail.kh?boardNo=${planner.boardNo }&page=${currentPage}#"> ${planner.planTitle }</a></td>
 				<td>${planner.planWriter }</td>
 				<td>${planner.firstDay}-${planner.lastDay }</td>
 				<td>${planner.plannerCount }</td>

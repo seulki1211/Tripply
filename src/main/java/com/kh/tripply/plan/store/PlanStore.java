@@ -16,12 +16,12 @@ public interface PlanStore {
 
 	public Planner selectInfo(SqlSession session,Integer boardNo);
 
-	public int selectTotalCount(SqlSession session, String searchCondition, String searchValue);
+	public int selectTotalCount(SqlSession session, String searchCondition, String searchValue, String searchRegion);
 
 	public List<Planner> selectPlanner(SqlSession session, int currentPage, int limit);
 
-	public List<Planner> selectAllByValue(SqlSession session, String searchCondition, String searchValue,
-			int currentPage, int boardLimit);
+	public List<Planner> selectAllByValue(SqlSession session, String searchCondition, String searchValue, String searchRegion,int boardLimit,
+			int currentPage);
 
 	public int insertPlan(SqlSession session, PlanList l);
 

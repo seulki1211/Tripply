@@ -64,6 +64,12 @@
 	border: 1px solid;
 	box-sizing: border-box;
 }
+#plan{
+border:1px solid;
+}
+.planNum{
+border:1px solid;
+}
 </style>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
@@ -121,14 +127,16 @@
 				</div>
 	<!-- <table border="1"> -->
 	<c:forEach items="${planList }" var="plan" varStatus="i">
- 	<c:if test= "${plan.day eq day}"> 
-	<div class="planNum${i.count-1 }">${i.count-1 }
+ 	<c:if test= "${plan.day eq day}">
+ 	
+	<div id="plan" class="planNum${i.count-1 }">${i.count-1 }
 	<input type="hidden" name="planList[${i.count-1}].boardNo" id="boardNo" value="${plan.boardNo}"/>		
 	<input type="hidden" name="planList[${i.count-1}].day" id="planDate" value="${plan.day}"/>		
 	<input type="hidden" name="planList[${i.count-1}].Y" id="planY" value="${plan.y}"/>		
 	<input type="hidden" name="planList[${i.count-1}].X" id="planX" value="${plan.x}"/>		 
 	<input type="text" name="planList[${i.count-1}].address" id="planTitle" value="${plan.address}"/><br>		
-	<input type="text" name="planList[${i.count-1}].Memo" id="planMemo" value="${plan.memo}"/>
+	<div>Memo</div>	
+	<textarea cols="30px" rows="3px" name="planList[${i.count-1}].Memo" id="planMemo">${plan.memo} </textarea>
 	<button class="planDetailButton" onclick="planDelete(${i.count})">&times;</button></div>
 			
 			<%--  <tr>
@@ -482,8 +490,9 @@ var markers = [];
    	div +="<input type='hidden' name='planList["+i+"].Y' id='planY'value="+place_y+" />"
    	div +="<input type='hidden' name='planList["+i+"].X' id='planX'value="+place_x +" />"
    	div +="<input type='text' name='planList["+i+"].address' id='planTitle'value="+place_name+" /><br>"
-   	div +="<input type='text' name='planList["+i+"].Memo' id='planMemo'placeholder='20자 이내로 입력하세요'maxlength='20' />"
-    div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\')\">&times;</button></div> </div>";
+   	div +="<div>Memo</div>"
+   	div +="<textarea cols='30px'rows='3px' name='planList["+i+"].Memo' id='planTitle' > </textarea><br>"
+    div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\')\">&times;</button></div>";
    
     return div;
    }
