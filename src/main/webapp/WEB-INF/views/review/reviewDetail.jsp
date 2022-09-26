@@ -22,7 +22,7 @@
 		<div id="detail-area">
 			<table id="detail-table">
 				<tr>
-					<td id="detail-title">${review.reviewTitle }</td>
+					<td id="detail-title"><h2>${review.reviewTitle }<h2></h3></td>
 				</tr>
 			   	<tr>
 					<td id="detail-info">
@@ -32,7 +32,9 @@
 							<img alt="눈모양 아이콘" src="/resources/image/viewcount.jpg" width="25px" height="25px">
 							조회수: ${review.reviewCount } &nbsp;
 						</span>
-						<span  class="detail date">날짜: ${review.rCreateDate }</span>
+						<span  class="detail date">
+							날짜: ${review.rCreateDate }
+						</span>
 						<!-- 작성자인 경우에만 수정, 삭제버튼이 노출되도록 		 -->
 						<c:if test="${loginUser.memberId eq review.reviewWriter }">
 							<span class="detail btn">
@@ -50,33 +52,33 @@
 			</table>
 		</div>
 <!-- 댓글 입력창 -->
-		<div id="reply-input" align="center">
+		<div class="reply-input">
 			<form onsubmit="inputCheck(this);" action="/review/reply/write.kh" method="post">
 				<input type="hidden" name="page" value="${sessionScope.page }">
-				<input type="text" name="rReplyContents" value="" placeholder="댓글을 입력해보세요!">
+				<input class="reText" type="text" name="rReplyContents" value="" placeholder="댓글을 입력해보세요!">
 				<input type="hidden" name="boardNo" value="${review.boardNo }">
 				<input type="hidden" name="rReplyWriter" value="${loginUser.memberId }">
 				<input type="hidden" name="reReplyYn" value="N">
 				<input type="hidden" name ="rRefReplyNo" value="-1">
-				<button>등록</button>
+				<button class="reBtn">등록</button>
 			</form>
 		</div>
 <!-- 댓글출력  -->
 	<div id="reply-wrap">
 		<table id="reply-table">
 			<c:forEach items="${rReplyList }" var="rReply" varStatus="n">
-				<tr id="one-reply-area">
+				<tr class="one-reply-area">
 					<td   >
 						<div id="oneReply"  <c:if test="${rReply.reReplyYn eq 'Y' }"> class="reReply" </c:if>>
 							<div id="replyInfo-wrap">
-								<p class="replyInfo">${rReply.rReplyWriter }</p>
-								<p class="replyInfo">${rReply.rrCreateDate }</p>
+								<p id="reWriter" class="replyInfo">${rReply.rReplyWriter }</p>
+								<p id= "reDate" class="replyInfo">${rReply.rrCreateDate }</p>
 							</div>
 							<div id="replyContents">
 								${rReply.rReplyContents }
 	<!-- 댓글메뉴버튼 -->
 	 						<c:if test="${rReply.rrStatus ne 'N' }">
-								<div align="right" id="replyMenu">
+								<div id="replyMenuBtn-area">
 									<c:if test="${(loginUser.memberId eq rReply.rReplyWriter) || (loginUser.memberId eq review.reviewWriter) }">
 										<a href="#" onclick="replyMenu(this);" class="replyMenuBtn"> ▤ </a>
 									</c:if>

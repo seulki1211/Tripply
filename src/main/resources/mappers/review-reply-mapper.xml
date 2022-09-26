@@ -34,8 +34,8 @@
 	</select>
 	
 	<update id="updateReviewReply">
-		UPDQTE REVIEW_REPLY_TBL
-		SET R_REPLY_CONTENTS = =#{rReplyContents}
+		UPDATE REVIEW_REPLY_TBL
+		SET R_REPLY_CONTENTS =#{rReplyContents}
 		WHERE R_REPLY_NO=#{rReplyNo} AND R_R_STATUS = 'Y'
 	</update>
 	

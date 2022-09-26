@@ -83,6 +83,7 @@ div{
 				}	
 				
 	#pageNavi{
+		margin-top:10px;
 		text-align:center;
 	}
 		.naviBtn{
@@ -90,6 +91,7 @@ div{
 			width:50px;
 			height:40px;
 			border:1px solid rgb(210,210,210) ;
+			border-radius: 3px;
 			padding-top:5px;
 			margin: -2px;
 		}

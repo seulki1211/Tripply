@@ -11,33 +11,6 @@
 <link rel="stylesheet" href="/resources/css/trade/tradeDetail.css">
 </head>
 
-<!-- css -->
-<style>
-	.reReply{
-		background-color:gainsboro;
-		position:relative;
-		left:10px;
-		padding:10px;
-		
-	}
-	#reply-menu{
-		background-color:white;
-		border: 1px solid black;
-	}
-	
-	li{
-		text-decoration: none;
-	}
-	
-	table{
-		backgound-color:blue;
-	}
-	
-	.choicedReply{
-		border: 3px solid yellow;
-	}
-	
-</style>
 <body>
 
 <!-- 헤더-메뉴바 -->
@@ -48,22 +21,27 @@
 	<div id="contents">
 		<div id="sideBar"></div>
 <!-- 게시물 출력 -->
-		<div id="contents-1">
-			<table align="center" border="1px">
+		<div id="detail-area">
+			<table id="detail-table" >
 				<tr>
-					<td>${trade.boardNo }</td>
-					<td>제목</td>
-					<td><c:if test="${trade.soldOut eq 'Y' }">[판매완료]</c:if> ${trade.tradeTitle }</td>
+					<td id="detail-info">
+						<h2>
+							<c:if test="${trade.soldOut eq 'Y' }">[판매완료]</c:if>
+							<c:if test="${trade.soldOut ne 'Y' }">[판매중]</c:if> 
+							${trade.tradeTitle }
+						</h2>
+					</td>
 				</tr>
 				<tr>
-					<td colspan='3'>
-						${trade.tradeWriter } 
+					<td id="detail-info">
+						글번호: ${trade.boardNo }
+						작성자: ${trade.tradeWriter } 
 						<span class="detail viewcount-wrap"> 
 							<img alt="눈모양 아이콘" src="/resources/image/viewcount.jpg" width="25px" height="25px"> 
 							조회수 ${trade.tradeCount } &nbsp;
 					    </span> 
 					    <span class="detail date">
-					    	${trade.tCreateDate }
+					    	날짜: ${trade.tCreateDate }
 					    </span> 
 					    <!-- 작성자인 경우에만 수정, 삭제버튼이 노출되도록 		 -->
 						<c:if test="${loginUser.memberId eq trade.tradeWriter }">
@@ -75,66 +53,70 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">${trade.tradeContents }</td>
+					<td id="detail-contents">
+						${trade.tradeContents }
+					</td>
 				</tr>
 			</table>
 		</div>
 <!-- 댓글 입력창: 구매자 댓글-->
- 구매 채택된 사람 아이디: ${trade.buyerId }
 		<c:if test="${loginUser.memberId ne trade.tradeWriter }">
 		<div class="reply-input" align="center">
 			<form onsubmit="inputCheck(this); inputPriceCheck(this);" action="/trade/reply/write.kh" method="post">
 				<c:if test="${trade.soldOut ne 'Y' }">
-					<input type="text" name="biddingPrice" placeholder="구매희망가격">
+					<input id="biddingInput" type="text" name="biddingPrice" placeholder="구매희망가격">
 				</c:if>
-				<input type="text"   name="tReplyContents" value="" 	required="required" placeholder="댓글을 달아보세요!">
+				<input class="reText" type="text"   name="tReplyContents" value="" 	required="required" placeholder="댓글을 달아보세요!">
 				<input type="hidden" name="page"		   value="${sessionScope.page }"> 
 				<input type="hidden" name="boardNo" 	   value="${trade.boardNo }"> 
 				<input type="hidden" name="tReplyWriter"   value="${loginUser.memberId }">
 				<input type="hidden" name="reReplyYn" 	   value="N"> 
 				<input type="hidden" name="tRefReplyNo"    value="-1">
-				<button>등록</button>
+				<button class="reBtn">등록</button>
 			</form>
 		</div>
 		</c:if>
 <!-- 댓글 입력창: 판매자 댓글-->
 		<c:if test="${loginUser.memberId eq trade.tradeWriter }">
-		<div class="reply-input" align="center">
+		<div class="reply-input">
 			<form onsubmit="inputCheck(this)" action="/trade/reply/write.kh" method="post">
 				<input type="hidden" name="page" 		   value="${sessionScope.page }"> 
-				<input type="text"   name="tReplyContents" value="" 	required="required" placeholder="댓글을 달아보세요!">
+				<input class="reText" type="text"   name="tReplyContents" value="" 	required="required" placeholder="댓글을 달아보세요!">
 				<input type="hidden" name="boardNo" 	   value="${trade.boardNo }"> 
 				<input type="hidden" name="tReplyWriter"   value="${loginUser.memberId }">
 				<input type="hidden" name="reReplyYn" 	   value="N"> 
 				<input type="hidden" name="tRefReplyNo"	   value="-1">
-				<button>등록</button>
+				<button class="reBtn">등록</button>
 			</form>
 		</div>
 		</c:if>
 <!-- 댓글출력  -->
-		<table id="reply-view" align="center">
+	<div id="reply-wrap">
+		<table id="reply-table">
 			<c:forEach items="${tReplyList }" var="tReply" varStatus="n">
-				<tr id="one-reply-area" <c:if test="${tReply.trChoiced eq 'Y' }">class="choicedReply"</c:if> >
-					<td <c:if test="${tReply.reReplyYn eq 'Y' }">   class="reReply" </c:if> >
-						<div id="replyInfo">
-							${tReply.tReplyWriter } ${tReply.trCreateDate }
-						</div>
-						<div id="replyContents">
-							<c:if test="${trade.tradeWriter eq tReply.tReplyWriter }"><b>[판매자]</b> </c:if>
-							<c:if test="${trade.tradeWriter ne tReply.tReplyWriter and tReply.biddingPrice ne 0 }"><b>[구매희망가: ${tReply.biddingPrice }원]</b></c:if>
-							${tReply.tReplyContents }
-<!-- 댓글메뉴버튼 -->
-  						<c:if test="${tReply.trStatus ne 'N' }">
-							<span align="right" id="replyMenu">
-								<c:if test="${(loginUser.memberId eq tReply.tReplyWriter) || (loginUser.memberId eq trade.tradeWriter) }">
-									<a href="#" onclick="replyMenu(this);" class="replyMenuBtn"> ▤ </a>
-								</c:if>
-							</span>
-						</div> 
+				<tr class="one-reply-area" <c:if test="${tReply.trChoiced eq 'Y' }">class="choicedReply"</c:if> >
+					<td >
+						<div id="oneReply" <c:if test="${tReply.reReplyYn eq 'Y' }">   class="reReply" </c:if>>
+							<div id="replyInfo-wrap">
+								<p id="reWriter" class="replyInfo"> ${tReply.tReplyWriter }</p> 
+							  	<p id="reDate" class="replyInfo">${tReply.trCreateDate }</p>
+							</div>
+							<div id="replyContents">
+								<c:if test="${trade.tradeWriter eq tReply.tReplyWriter }"><p id="sellor"><b>[판매자]</b></p> </c:if>
+								<c:if test="${trade.tradeWriter ne tReply.tReplyWriter and tReply.biddingPrice ne 0 }"><p id="bidPrice"><b>[구매희망가: ${tReply.biddingPrice }원]</b></p></c:if>
+								${tReply.tReplyContents }
+	<!-- 댓글메뉴버튼 -->
+	  						<c:if test="${tReply.trStatus ne 'N' }">
+								<span  id="replyMenuBtn-area">
+									<c:if test="${(loginUser.memberId eq tReply.tReplyWriter) || (loginUser.memberId eq trade.tradeWriter) }">
+										<a href="#" onclick="replyMenu(this);" class="replyMenuBtn"> ▤ </a>
+									</c:if>
+								</span>
+							</div> 
 						
 <!-- 댓글메뉴 -->
   <!-- 댓글 수정 창 -->
-							<div id="reply-menu" style="display:none">
+							<div id="reply-menu">
 								<ul>
 									<c:if test="${loginUser.memberId eq tReply.tReplyWriter }">
 										<li onclick="replyModify(this);" ><a href="#">댓글 수정</a></li>
@@ -202,10 +184,12 @@
 								</form>
 							</div>
 						</c:if>
+						</div>
 					</td>
 				</tr>
 			</c:forEach>
 		</table>
+	</div>
 	</div>
 <!-- 푸터 -->
 	<div id="footer"></div>
