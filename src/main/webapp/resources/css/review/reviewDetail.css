@@ -1,0 +1,112 @@
+@charset "UTF-8";
+
+body{
+		min-width: 600px;
+}
+li{
+	text-decoration: none;
+}
+div{
+/* 	border: 1px solid black; */
+}
+
+#detail-area{
+	margin:10px auto;
+	padding: 10px;
+}
+
+	#detail-table{
+		text-align:center;
+		margin: 0 auto;
+		width:500px;
+		border: 1px solid black;
+	}
+	
+		#detail-title{
+			height: 60px;
+			font-weight:bold;
+			border-bottom: 1px solid rgb(210,210,210);
+		}
+		#detail-info{
+			height: 40px;
+			font-size: small;
+			border-bottom: 1px solid rgb(210,210,210);
+		}
+		#detail-contents{
+			padding: 20px;
+			height:500px;
+			text-align: left;
+			vertical-align:top;
+			overflow: scroll;
+		}
+		 #detail-contents img{
+		 	display:block;
+		 }
+
+
+#reply-wrap{
+	margin:10px auto;
+	padding: 10px;
+}
+	#reply-table{
+		text-align:center;
+		margin: 0 auto;
+		width:400px;
+/* 		border: 1px solid black; */
+	}
+		#one-reply-area{
+		}
+		
+		#oneReply{
+			border: 1px solid  rgb(170,170,170);
+			padding: 10px;
+			border-radius: 10px;
+		}
+		
+			#replyInfo-wrap{
+				height:35px;
+				text-align:left;
+				padding:4px;
+				border-bottom: 1px solid rgb(210,210,210);
+				
+			}
+				.replyInfo{
+					margin: -3px 0px;
+					font-size:small;
+				}
+		#replyContents{
+			margin-top:3px;
+			text-align:left;
+			
+		}
+			.reReply{
+				background-color:gainsboro;
+				position:relative;
+				left:20px;
+				padding:10px;
+				top: -10px;
+				border-radius: 10px;
+				border: 2px solid  rgb(100,100,100);
+			}
+	#reply-menu{
+		position:absoulte;
+		background-color:white;
+		display:none;
+		margin: -100px;
+		float:right;
+		border-radius: 10px;
+		
+	}
+		#reply-menu li{
+			list-style:none;
+		}
+	
+
+
+
+#footer{
+	margin-top: 10px;
+	height: 80px;
+	border-top : 2px solid rgb(210,210,210);
+	background-color:lavender;
+}

@@ -74,24 +74,25 @@
 				</tr>
 			</c:if>
 			</table>
+<!-- 컨텐츠 하단 버튼	 -->
+			<div id="write-wrap">
+				<button class="writeBtn" onclick="loginCheck('${loginUser.memberId}','/trade/writeView.kh');">글 작성</button>
+			</div>
 <!-- 페이징처리 -->
 			<c:if test="${paging ne null }">
 			<div id="pageNavi">
 				<c:if test="${paging.startNavi > 1 }">
-					<a href="/trade/${urlVal }.kh?page=${paging.startNavi-1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}"><p class="naviBtn">이전</p></a>
+					<a href="/trade/${urlVal }.kh?page=${paging.startNavi-1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}"><p class="naviBtn"> < </p></a>
 				</c:if>
 				<c:forEach begin="${paging.startNavi }" end="${paging.endNavi }" var="p" >
 					<a href="/trade/${urlVal }.kh?page=${p }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}"><p class="naviBtn">${p }</p></a>
 				</c:forEach>
 				<c:if test="${paging.endNavi < paging.endPage }">
-					<a href="/trade/${urlVal }.kh?page=${paging.endNavi+1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}"><p class="naviBtn">다음</p></a>
+					<a href="/trade/${urlVal }.kh?page=${paging.endNavi+1 }&searchCondition=${search.searchCondition }&searchRegion=${search.searchRegion }&searchValue=${search.searchValue}"><p class="naviBtn"> > </p></a>
 				</c:if>
 			</div>
 			</c:if>
-<!-- 컨텐츠 하단 버튼	 -->
-			<div id="write-wrap">
-				<button class="writeBtn" onclick="loginCheck('${loginUser.memberId}','/trade/writeView.kh');">글 작성</button>
-			</div>
+
 			
 		</div>
 	</div>

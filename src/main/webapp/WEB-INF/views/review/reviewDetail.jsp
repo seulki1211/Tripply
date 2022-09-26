@@ -8,30 +8,9 @@
 <title>트리플리,Tripply</title>
 <!-- 화면 뼈대 설정용 css -->
 <link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css">
+<link rel="stylesheet" href="/resources/css/review/reviewDetail.css">
 </head>
 
-<!-- css -->
-<style>
-	.reReply{
-		background-color:gainsboro;
-		position:relative;
-		left:10px;
-		padding:10px;
-		
-	}
-	#reply-menu{
-		background-color:white;
-		border: 1px solid black;
-	}
-	
-	li{
-		text-decoration: none;
-	}
-	
-	table{
-		backgound-color:blue;
-	}
-</style>
 <body>
 <!-- 헤더-메뉴바 -->
 	<div id="header">
@@ -39,23 +18,21 @@
 	</div>
 <!-- 컨텐츠 -->
 	<div id="contents">
-		<div id="sideBar"></div>
 <!-- 게시물 출력 -->
-		<div id="contents-1">
-			<table align="center" border="1px">
+		<div id="detail-area">
+			<table id="detail-table">
 				<tr>
-					<td>${review.boardNo }</td>
-					<td>제목</td>
-					<td>${review.reviewTitle }</td>
+					<td id="detail-title">${review.reviewTitle }</td>
 				</tr>
 			   	<tr>
-					<td colspan='3'>
-						${review.reviewWriter }
+					<td id="detail-info">
+						글번호: ${review.boardNo }
+						작성자: ${review.reviewWriter }
 						<span class="detail viewcount-wrap">
 							<img alt="눈모양 아이콘" src="/resources/image/viewcount.jpg" width="25px" height="25px">
-							조회수 ${review.reviewCount } &nbsp;
+							조회수: ${review.reviewCount } &nbsp;
 						</span>
-						<span  class="detail date">${review.rCreateDate }</span>
+						<span  class="detail date">날짜: ${review.rCreateDate }</span>
 						<!-- 작성자인 경우에만 수정, 삭제버튼이 노출되도록 		 -->
 						<c:if test="${loginUser.memberId eq review.reviewWriter }">
 							<span class="detail btn">
@@ -66,7 +43,9 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">${review.reviewContents }</td>
+					<td id="detail-contents">
+							${review.reviewContents }
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -83,75 +62,86 @@
 			</form>
 		</div>
 <!-- 댓글출력  -->
-		<table id="reply-view" align="center">
+	<div id="reply-wrap">
+		<table id="reply-table">
 			<c:forEach items="${rReplyList }" var="rReply" varStatus="n">
 				<tr id="one-reply-area">
-					<td  <c:if test="${rReply.reReplyYn eq 'Y' }"> class="reReply" </c:if> >
-						<div id="replyInfo">
-							${rReply.rReplyWriter } ${rReply.rrCreateDate }
-						</div>
-						<div id="replyContents">
-							${rReply.rReplyContents }
-<!-- 댓글메뉴버튼 -->
- 						<c:if test="${rReply.rrStatus ne 'N' }">
-							<span align="right" id="replyMenu">
-								<c:if test="${(loginUser.memberId eq rReply.rReplyWriter) || (loginUser.memberId eq review.reviewWriter) }">
-									<a href="#" onclick="replyMenu(this);" class="replyMenuBtn"> ▤ </a>
-								</c:if>
-							</span>
-						</div>
-						
-<!-- 댓글메뉴 -->
- <!-- 댓글 수정 창 -->
-							<div id="reply-menu" style="display:none">
-								<ul>
-									<c:if test="${loginUser.memberId eq rReply.rReplyWriter }">
-										<li onclick="replyModify(this);" ><a href="#">댓글 수정</a></li>
-										<div class="replyModify" style="display:none;">
-											<form onsubmit="inputCheck(this)" action="/review/reply/modify.kh" method="post">
+					<td   >
+						<div id="oneReply"  <c:if test="${rReply.reReplyYn eq 'Y' }"> class="reReply" </c:if>>
+							<div id="replyInfo-wrap">
+								<p class="replyInfo">${rReply.rReplyWriter }</p>
+								<p class="replyInfo">${rReply.rrCreateDate }</p>
+							</div>
+							<div id="replyContents">
+								${rReply.rReplyContents }
+	<!-- 댓글메뉴버튼 -->
+	 						<c:if test="${rReply.rrStatus ne 'N' }">
+								<div align="right" id="replyMenu">
+									<c:if test="${(loginUser.memberId eq rReply.rReplyWriter) || (loginUser.memberId eq review.reviewWriter) }">
+										<a href="#" onclick="replyMenu(this);" class="replyMenuBtn"> ▤ </a>
+									</c:if>
+								</div>
+							</div>
+							
+	<!-- 댓글메뉴 -->
+	 <!-- 댓글 수정 창 -->
+								<div id="reply-menu">
+									<ul>
+										<c:if test="${loginUser.memberId eq rReply.rReplyWriter }">
+											<li onclick="replyModify(this);" ><a href="#">댓글 수정</a></li>
+											<div class="replyModify" style="display:none;">
+												<form onsubmit="inputCheck(this)" action="/review/reply/modify.kh" method="post">
+													<input type="hidden" name="page" value="${sessionScope.page }"> 
+													<input type="text" name="rReplyContents" value="${rReply.rReplyContents }" >
+													<input type="hidden" name="boardNo" value="${review.boardNo }"> 
+													<input type="hidden" name="rReplyNo" value="${rReply.rReplyNo }">
+													<button>수정</button>
+												</form>
+											</div>
+		  <!-- 댓글삭제 -->
+											<li><a href="#" onclick="replyRemove(this);">댓글 삭제</a></li>
+											<form action="/review/reply/remove.kh" method="post">
 												<input type="hidden" name="page" value="${sessionScope.page }"> 
-												<input type="text" name="rReplyContents" value="${rReply.rReplyContents }" >
 												<input type="hidden" name="boardNo" value="${review.boardNo }"> 
 												<input type="hidden" name="rReplyNo" value="${rReply.rReplyNo }">
-												<button>수정</button>
 											</form>
-										</div>
-	  <!-- 댓글삭제 -->
-										<li><a href="#" onclick="replyRemove(this);">댓글 삭제</a></li>
-										<form action="/review/reply/remove.kh" method="post">
-											<input type="hidden" name="page" value="${sessionScope.page }"> 
-											<input type="hidden" name="boardNo" value="${review.boardNo }"> 
-											<input type="hidden" name="rReplyNo" value="${rReply.rReplyNo }">
-										</form>
-									</c:if>
-							</div>
- 						</c:if>
-						
-<!-- 답글 버튼 -->
-						<c:if test="${rReply.reReplyYn ne 'Y' and rReply.rrStatus ne 'N'}">
-							<div onclick="arcodian(this);">
-								<a href="#">답글 달기</a>
-							</div>
-						
-						<!-- 답글 입력창 -->
-							<div class="reReply-input" style="display:none" >
-								<form onsubmit="inputCheck(this);" action="/review/reply/write.kh" method="post">
-									<input type="hidden" name="page" value="${sessionScope.page }">
-									<input type="text" name="rReplyContents" value="" placeholder="답글을 입력해보세요!">
-									<input type="hidden" name="boardNo" value="${review.boardNo }">
-									<input type="hidden" name="rReplyWriter" value="${loginUser.memberId }">
-									<input type="hidden" name="reReplyYn" value="Y">
-									<input type="hidden" name ="rRefReplyNo" value="${rReply.rReplyNo }">
-									<button>등록</button>
-								</form>
-							</div>
-						</c:if>
+										</c:if>
+								</div>
+	 						</c:if>
+							
+	<!-- 답글 버튼 -->
+							<c:if test="${rReply.reReplyYn ne 'Y' and rReply.rrStatus ne 'N'}">
+								<div onclick="arcodian(this);">
+									<a href="#">답글 달기</a>
+								</div>
+							
+							<!-- 답글 입력창 -->
+								<div class="reReply-input" style="display:none" >
+									<form onsubmit="inputCheck(this);" action="/review/reply/write.kh" method="post">
+										<input type="hidden" name="page" value="${sessionScope.page }">
+										<input type="text" name="rReplyContents" value="" placeholder="답글을 입력해보세요!">
+										<input type="hidden" name="boardNo" value="${review.boardNo }">
+										<input type="hidden" name="rReplyWriter" value="${loginUser.memberId }">
+										<input type="hidden" name="reReplyYn" value="Y">
+										<input type="hidden" name ="rRefReplyNo" value="${rReply.rReplyNo }">
+										<button>등록</button>
+									</form>
+								</div>
+							</c:if>
+						</div>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
+	</div>
+	
+	
 <!-- 푸터 -->
-	<div id="footer"></div>
+	<div id="footer">
+	</div>
+	
+	
 	<script>
 //답글 아코디언 함수
 		function arcodian(reReply){

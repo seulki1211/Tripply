@@ -106,3 +106,9 @@ div{
 				margin: 3px auto;
 	}	
 			
+#footer{
+	margin-top: 10px;
+	height: 80px;
+	border-top : 2px solid rgb(210,210,210);
+	background-color:lavender;
+}
