@@ -64,6 +64,9 @@
 	border: 1px solid;
 	box-sizing: border-box;
 }
+.planNum{
+border:1px solid;
+}
 </style>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
@@ -84,6 +87,7 @@
 			<input type="text" name="title" id="planTitle"value="${planner.planTitle }" />
 			<input type="text" name="firstDay" id="firstDay"value="<fmt:formatDate value="${planner.firstDay}" pattern="yyyy-MM-dd" />" />
 			<input type="text" name="lastDate" id="lastDay"value="<fmt:formatDate value="${planner.lastDay}" pattern="yyyy-MM-dd" />" /> 
+			<input type="text" name="plannerLocation" id="plannerLocation" value="${planner.plannerLocation }" />
 		
 		</div>
 		<!-- 타이틀 시작 날짜 끝날짜 보더 넘버->히든 -->
@@ -441,9 +445,10 @@ var markers = [];
    	div +="<input type='hidden' name='planList["+i+"].Y' id='planY'value="+place_y+" />"
    	div +="<input type='hidden' name='planList["+i+"].X' id='planX'value="+place_x +" />"
    	div +="<input type='text' name='planList["+i+"].address' id='planTitle'value="+place_name+" /><br>"
-   	div +="<input type='text' name='planList["+i+"].Memo' id='planMemo'placeholder='20자 이내로 입력하세요'maxlength='20' />"
-    div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\')\">&times;</button></div> </div>";
-   
+   	div +="<div>Memo</div>"
+   	div +="<textarea cols='20'rows='3' name='planList["+i+"].Memo' id='planTitle' > </textarea><br>"
+    div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\')\">&times;</button></div>";
+
     return div;
    }
   

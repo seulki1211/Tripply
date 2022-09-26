@@ -14,12 +14,17 @@
    <result property="plannerCount" column="PLANNER_COUNT"/>
    <result property="pCreateDate" column="P_CREATE_DATE"/>
    <result property="pStatus" column="P_STATUS"/>
+   <result property="plannerFileName" column="PLANNER_FILENAME"/>
+   <result property="plannerFileRename" column="PLANNER_FILERENAME"/>
+   <result property="plannerFilePath" column="PLANNER_PATH"/>
+   <result property="plannerLocation" column="PLANNER_LOCATION"/>
+   
    
    </resultMap>
    
    <insert id="insertPlanner" useGeneratedKeys="true" keyColumn="PLANNER_NO"  keyProperty="boardNo" >
    INSERT INTO PLANNER_TBL
-   	VALUES(SEQ_BOARDNO.NEXTVAL,#{planWriter},#{planTitle},#{firstDay},#{lastDay},DEFAULT,DEFAULT,DEFAULT)
+   	VALUES(SEQ_BOARDNO.NEXTVAL,#{planWriter},#{planTitle},#{firstDay},#{lastDay},DEFAULT,DEFAULT,DEFAULT,#{plannerFileName},#{plannerFileRename},#{plannerFilePath},#{plannerLocation})
    </insert> 
    
      <update id="updateCount">
@@ -35,17 +40,18 @@
   	SELECT COUNT(*) FROM PLANNER_TBL 
   	<where>
 			<if test="searchCondition.toString()=='title'">
-		 		PLANNER_TITLE LIKE '%'||#{searchValue}||'%'
+		 		PLANNER_TITLE LIKE '%'||#{searchValue}||'%'AND PLANNER_LOCATION=#{searchRegion}
 			</if>
 			
 			<if test="searchCondition.toString()=='writer'">
-		 		PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
+		 		PLANNER_WRITER LIKE '%'||#{searchValue}||'%'AND PLANNER_LOCATION=#{searchRegion}
 			</if>
 			<if test="searchCondition.toString()=='all'">
-		 		PLANNER_TITLE LIKE '%'||#{searchValue}||'%'
-		 		OR PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
+		 		(PLANNER_TITLE LIKE '%'||#{searchValue}||'%'AND PLANNER_LOCATION=#{searchRegion})
+		 		OR (PLANNER_WRITER LIKE '%'||#{searchValue}||'%'AND PLANNER_LOCATION=#{searchRegion})
 			</if>
-					
+			
+			AND P_STATUS = 'Y' 		
 		</where>
   	</select>
   	<select id="selectAllPlanner" resultMap="plannerResultMap">
@@ -55,16 +61,41 @@
   	<select id="selectByValue" resultMap="plannerResultMap">
   	SELECT *FROM PLANNER_TBL 
 		<where>
+		<if test="searchRegion.toString()=='전국'">
 			<if test="searchCondition.toString()=='title'">
 		 		PLANNER_TITLE LIKE '%'||#{searchValue}||'%'
 			</if>
+		</if>
+		<if test="searchRegion.toString()!='전국'">
+			<if test="searchCondition.toString()=='title'">
+		 		PLANNER_TITLE LIKE '%'||#{searchValue}||'%'
+		 		AND PLANNER_LOCATION=#{searchRegion}
+			</if>
+		</if>
+		<if test="searchRegion.toString()=='전국'">
 			<if test="searchCondition.toString()=='writer'">
 		 		PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
 			</if>
-			<if test="searchCondition.toString()=='all'">
-				PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
-		 		OR PLANNER_TITLE LIKE '%'||#{searchValue}||'%'
+		</if>
+		<if test="searchRegion.toString()!='전국'">
+			<if test="searchCondition.toString()=='writer'">
+		 		PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
+		 		AND PLANNER_LOCATION=#{searchRegion}
 			</if>
+		</if>
+		<if test="searchRegion.toString()=='전국'">
+			<if test="searchCondition.toString()=='all'">
+				(PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
+		 		OR PLANNER_TITLE LIKE '%'||#{searchValue}||'%')
+			</if>
+		</if>
+		<if test="searchRegion.toString()!='전국'">
+			<if test="searchCondition.toString()=='all'">
+				(PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
+		 		OR PLANNER_TITLE LIKE '%'||#{searchValue}||'%')
+		 		AND PLANNER_LOCATION=#{searchRegion}
+			</if>
+		</if>
 				AND P_STATUS='Y'			
 		</where>
   	</select>

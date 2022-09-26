@@ -14,11 +14,11 @@ public interface PlanService {
 
 		public Planner printInfo(Integer boardNo);
 
-		public int getTotalCount(String searchCondition, String searchValue);
+		public int getTotalCount(String searchCondition, String searchValue, String searchRegion);
 
 	public List<Planner> printAllPlanner(int offset, int limit);
 
-	public List<Planner> printAllValue(String searchCondition, String searchValue, int currentPage, int boardLimit);
+	public List<Planner> printAllValue(String searchCondition, String searchValue, String searchRegion, int currentPage, int boardLimit);
 
 	public int registPlanner(PlanList l);
 

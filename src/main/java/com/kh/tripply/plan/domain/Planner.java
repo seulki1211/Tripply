@@ -11,6 +11,10 @@ public class Planner {
 	private int plannerCount;
 	private Date pCreateDate;
 	private String pStatus;
+	private String plannerFileName;
+	private String plannerFileRename;
+	private String plannerFilePath;
+	private String plannerLocation;
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -59,12 +63,40 @@ public class Planner {
 	public void setpStatus(String pStatus) {
 		this.pStatus = pStatus;
 	}
+	public String getPlannerFileName() {
+		return plannerFileName;
+	}
+	public void setPlannerFileName(String plannerFileName) {
+		this.plannerFileName = plannerFileName;
+	}
+	public String getPlannerFileRename() {
+		return plannerFileRename;
+	}
+	public void setPlannerFileRename(String plannerFileRename) {
+		this.plannerFileRename = plannerFileRename;
+	}
+	public String getPlannerFilePath() {
+		return plannerFilePath;
+	}
+	public void setPlannerFilePath(String plannerFilePath) {
+		this.plannerFilePath = plannerFilePath;
+	}
+	public String getPlannerLocation() {
+		return plannerLocation;
+	}
+	public void setPlannerLocation(String plannerLocation) {
+		this.plannerLocation = plannerLocation;
+	}
 	@Override
 	public String toString() {
 		return "Planner [boardNo=" + boardNo + ", planWriter=" + planWriter + ", planTitle=" + planTitle + ", firstDay="
 				+ firstDay + ", lastDay=" + lastDay + ", plannerCount=" + plannerCount + ", pCreateDate=" + pCreateDate
-				+ ", pStatus=" + pStatus + "]";
+				+ ", pStatus=" + pStatus + ", plannerFileName=" + plannerFileName + ", plannerFileRename="
+				+ plannerFileRename + ", plannerFilePath=" + plannerFilePath + ", plannerLocation=" + plannerLocation
+				+ "]";
 	}
-
-
+	
+	
+	
+	
 }
