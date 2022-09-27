@@ -5,30 +5,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <title>트리플리,Tripply</title>
-<!-- 화면 뼈대 설정용 css -->
-<!-- <link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css"> -->
-
-<!-- 부트스트랩,jQuery -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </head>
 <body>
 	<div id="header">
 		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
-		<jsp:include page="/WEB-INF/views/common/banner.jsp"></jsp:include>
-		
+		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
-
-		
-		
-		<div id="sideBar"></div>
+ <div class="right-side">
 		<div id="contents-1">
-		
-		
 		<!-- 최신글 5개 조회	mbk	 -->
 				<br><br>
 				<h3 align="center">최신글</h3>
@@ -73,18 +60,9 @@
 					</tr>
 				</c:if>
 			</table>
-		
-		
 		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
+			<br><br>
+		<br><br>
 		<br><br>
 		<h3 align="center">공지사항</h3>
 	 	<br><br>
@@ -97,19 +75,24 @@
 				<th class="col-1" scope="col">조회수</th>
 			</tr>
 			
-			<tbody class="table-group-divider"">
+			<tbody class="table-group-divider">
 				<c:forEach items="${nList }" var="notice" varStatus="i">
 					<tr>
-						<td scope="row">${i.count }</td>
+						<td>${i.count }</td>
 						<td><a href="#" onclick="noticeView(${notice.noticeNo });">${notice.noticeTitle }</a></td>
 						<td>${notice.noticeWriter }</td>
 						<td>${notice.nUpdateDate }</td>
 						<td>${notice.noticeCount }</td>
 					</tr>	
 				</c:forEach>
+			</tbody>
 			</table>
-
+		</div>
+		<jsp:include page="/WEB-INF/views/common/banner.jsp"></jsp:include>
+		
+		</div>
 		<div id="contents-2"></div>
+		
 	<div id="footer"></div>
 </body>
 

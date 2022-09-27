@@ -5,20 +5,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>동행자 게시판</title>
 </head>
 <body>
-	<div>
-	<jsp:include page="../common/menuBar.jsp"></jsp:include>
+	<div id="header">
+		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
+	
+	 <div class="right-side">
 	<br><br>
 	<h1 align="center"> 우리 함께 여행가요!</h1>
 	<br><br>
 	<div class="row justify-content-center">
 		<form action="/party/search.kh" method="get" >
 		
-			<select class="form-select" name="searchCondition" >
+					<select class="form-select" name="searchCondition" >
 						<option <c:if test="${search.searchCondition eq 'all'}">selected</c:if> value="all">전체</option>
 						<option <c:if test="${search.searchCondition eq 'title'}">selected</c:if> value="title">제목</option>
 						<option <c:if test="${search.searchCondition eq 'writer'}">selected</c:if> value="writer">작성자</option>
@@ -48,21 +53,22 @@
 
 					<input type="text" name="searchValue" placeholder="검색"  value="${search.searchValue }">
 					<input type="submit" value="검색" class="btn btn-dark">
-						</form>
-						</div>
+			</form>
+		</div>
 						<br>
-			<table align="center" class="table col-12 table-borderless" width="100%">
-				<tr id="detail-raw-wrap">
-					<c:forEach items="${pList }" var="party" varStatus="i">
-						<td id="detail-one-wrap" aligh="center" width="30%" height="30%">
-							<div class="detail title thumbnale-wrap" align="center">
+			<div id="list-area">
+			<table align="center" width="100%">
+				<c:if test="${!empty pList }">
+				<tr id="detail-raw-wrap" >
+				<c:forEach items="${pList }" var="party" varStatus="i">
+						<td id="detail-one-wrap" aligh="center" width="30%">
+							<div class="detail title thumbnale-wrap" align="center" style="cursor:pointer" >
 							<c:if test="${empty party.partyFileName }">
-								<img alt="기본이미지" src="/resources/image/tripply-logo.png" width='200px' height="200px">
-								
+								<img alt="기본이미지" src="/resources/image/tripply-logo.png" width='80%' height='80%'>
 							</c:if>
 							<c:if test="${!empty party.partyFileName }">
-								<img alt="유저이미지" src="/resources/partyuploadFiles/${party.partyFileRename}" width='200px' height="200px">
-							</c:if>
+								<img alt="유저이미지" src="/resources/partyuploadFiles/${party.partyFileRename}" width='80%' height='80%'>
+							</c:if>							
 							</div>
 							<div align="center">
 								<span class="detail region">[${party.partyLocation }]</span>
@@ -89,20 +95,20 @@
 								</div>
 							</div>
 						</td>
+						
 						<c:if test="${i.count % 3 == 0 }">
-							</tr><td><br><br></td><tr>
-						</c:if>				
+						<tr></tr>
+						</c:if>			
 					</c:forEach>
-				</tr>
-		
-		
-		<c:if test="${empty pList }">
-		<tr>			
-			<td colspan='6' align = 'center' scope="row"> <b>검색 결과가 없습니다.</b>
-			</td>
 		</tr>
-		</c:if>
-	</table>
+						</c:if>
+			<c:if test="${empty pList }">
+			<tr>			
+				<td colspan='6' align = 'center' scope="row"> <b>검색 결과가 없습니다.</b></td>
+			</tr>
+			</c:if>
+			</table>
+		</div>
 	
 				<!--  하단 페이지 목록 -->
 	<table align="center" class="table col-12 table-borderless" width="100%">
@@ -147,8 +153,6 @@
 		</tbody>
 	</table>
 	
-	
-		
-	<br><br><br>
+</div>
 </body>
 </html>

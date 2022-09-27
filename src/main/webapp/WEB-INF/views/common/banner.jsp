@@ -7,7 +7,7 @@
 <head>
 <style type="text/css">	
 	/* banner */
-	.banner {position: relative; width: 1000px; height: 210px; top: 50px;  margin:0 auto; padding:0; overflow: hidden;}
+	.banner {position: relative; width: 1000px; height: 210px; top: 120px;  margin:0 auto; padding:0; overflow: hidden;}
 	.banner ul {position: absolute; margin: 0px; padding:0; list-style: none; }
 	.banner ul li {float: left; width: 1000px; height: 210px; margin:0; padding:0;}
 
@@ -25,7 +25,7 @@
 		var rollingId;
 
 		//정해진 초마다 함수 실행
-		rollingId = setInterval(function() { rollingStart(); }, 3000);//다음 이미지로 롤링 애니메이션 할 시간차
+		rollingId = setInterval(function() { rollingStart(); }, 7000);//다음 이미지로 롤링 애니메이션 할 시간차
     
 		function rollingStart() {
 			$banner.css("width", $bannerWidth * $length + "px");
