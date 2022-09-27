@@ -34,8 +34,8 @@ public class PlanServiceImpl implements PlanService{
 	}
 
 	@Override
-	public int getTotalCount(String searchCondition, String searchValue, String searchRegion) {
-		int totalCount = pStore.selectTotalCount(session,searchCondition,searchValue,searchRegion);
+	public int getTotalCount(String searchCondition, String searchRegion, String searchValue ) {
+		int totalCount = pStore.selectTotalCount(session,searchCondition,searchRegion,searchValue);
 		return totalCount;
 	}
 	
@@ -47,9 +47,8 @@ public class PlanServiceImpl implements PlanService{
 	}
 	//플래너 리스트에서 검색
 	@Override
-	public List<Planner> printAllValue(String searchCondition, String searchValue, String searchRegion, int currentPage,
-			int boardLimit) {
-		List<Planner>pList = pStore.selectAllByValue(session, searchCondition, searchValue,searchRegion,currentPage, boardLimit);
+	public List<Planner> printAllValue(String searchCondition,String searchRegion, String searchValue,  int currentPage,int boardLimit) {
+		List<Planner>pList = pStore.selectAllByValue(session, searchCondition, searchRegion,searchValue,currentPage, boardLimit);
 		return pList;
 	}
 

@@ -40,15 +40,15 @@
   	SELECT COUNT(*) FROM PLANNER_TBL 
   	<where>
 			<if test="searchCondition.toString()=='title'">
-		 		PLANNER_TITLE LIKE '%'||#{searchValue}||'%'AND PLANNER_LOCATION=#{searchRegion}
+		 		PLANNER_TITLE LIKE '%'||#{searchRegion}||'%'AND PLANNER_LOCATION=#{searchValue}
 			</if>
 			
 			<if test="searchCondition.toString()=='writer'">
-		 		PLANNER_WRITER LIKE '%'||#{searchValue}||'%'AND PLANNER_LOCATION=#{searchRegion}
+		 		PLANNER_WRITER LIKE '%'||#{searchRegion}||'%'AND PLANNER_LOCATION=#{searchValue}
 			</if>
 			<if test="searchCondition.toString()=='all'">
-		 		(PLANNER_TITLE LIKE '%'||#{searchValue}||'%'AND PLANNER_LOCATION=#{searchRegion})
-		 		OR (PLANNER_WRITER LIKE '%'||#{searchValue}||'%'AND PLANNER_LOCATION=#{searchRegion})
+		 		(PLANNER_TITLE LIKE '%'||#{searchRegion}||'%'AND PLANNER_LOCATION=#{searchValue})
+		 		OR (PLANNER_WRITER LIKE '%'||#{searchRegion}||'%'AND PLANNER_LOCATION=#{searchValue})
 			</if>
 			
 			AND P_STATUS = 'Y' 		
@@ -59,41 +59,41 @@
   	</select> 
   	
   	<select id="selectByValue" resultMap="plannerResultMap">
-  	SELECT *FROM PLANNER_TBL 
+  	SELECT * FROM PLANNER_TBL 
 		<where>
-		<if test="searchRegion.toString()=='전국'">
+		<if test="searchValue.toString()=='전국'">
 			<if test="searchCondition.toString()=='title'">
-		 		PLANNER_TITLE LIKE '%'||#{searchValue}||'%'
+		 		PLANNER_TITLE LIKE '%'||#{searchRegion}||'%'
 			</if>
 		</if>
-		<if test="searchRegion.toString()!='전국'">
+		<if test="searchValue.toString()!='전국'">
 			<if test="searchCondition.toString()=='title'">
-		 		PLANNER_TITLE LIKE '%'||#{searchValue}||'%'
-		 		AND PLANNER_LOCATION=#{searchRegion}
+		 		PLANNER_TITLE LIKE '%'||#{searchRegion}||'%'
+		 		AND PLANNER_LOCATION=#{searchValue}
 			</if>
 		</if>
-		<if test="searchRegion.toString()=='전국'">
+		<if test="searchValue.toString()=='전국'">
 			<if test="searchCondition.toString()=='writer'">
-		 		PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
+		 		PLANNER_WRITER LIKE '%'||#{searchRegion}||'%'
 			</if>
 		</if>
-		<if test="searchRegion.toString()!='전국'">
+		<if test="searchValue.toString()!='전국'">
 			<if test="searchCondition.toString()=='writer'">
-		 		PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
-		 		AND PLANNER_LOCATION=#{searchRegion}
+		 		PLANNER_WRITER LIKE '%'||#{searchRegion}||'%'
+		 		AND PLANNER_LOCATION=#{searchValue}
 			</if>
 		</if>
-		<if test="searchRegion.toString()=='전국'">
+		<if test="searchValue.toString()=='전국'">
 			<if test="searchCondition.toString()=='all'">
-				(PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
-		 		OR PLANNER_TITLE LIKE '%'||#{searchValue}||'%')
+				(PLANNER_WRITER LIKE '%'||#{searchRegion}||'%'
+		 		OR PLANNER_TITLE LIKE '%'||#{searchRegion}||'%')
 			</if>
 		</if>
-		<if test="searchRegion.toString()!='전국'">
+		<if test="searchValue.toString()!='전국'">
 			<if test="searchCondition.toString()=='all'">
-				(PLANNER_WRITER LIKE '%'||#{searchValue}||'%'
-		 		OR PLANNER_TITLE LIKE '%'||#{searchValue}||'%')
-		 		AND PLANNER_LOCATION=#{searchRegion}
+				(PLANNER_WRITER LIKE '%'||#{searchRegion}||'%'
+		 		OR PLANNER_TITLE LIKE '%'||#{searchRegion}||'%')
+		 		AND PLANNER_LOCATION=#{searchValue}
 			</if>
 		</if>
 				AND P_STATUS='Y'			

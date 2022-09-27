@@ -164,7 +164,7 @@ public class PlannerController {
 			,@RequestParam(value="page", required=false) Integer page) {
 		int currentPage=(page !=null) ? page : 1;
 		int totalCount = pService.getTotalCount("","","");//현재 페이지 값과 전체 게시물 갯수 가져옴
-		int boardLimit=10;
+		int boardLimit=9;
 		int naviLimit=5;
 		int maxPage;
 		int startNavi;
@@ -206,13 +206,13 @@ public class PlannerController {
 		public ModelAndView searchPlaner(
 				ModelAndView mv
 				, @RequestParam("searchCondition")String searchCondition
-				, @RequestParam("searchValue")String searchValue
 				, @RequestParam("searchRegion")String searchRegion
+				, @RequestParam("searchValue")String searchValue
 				,@RequestParam(value="page", required=false) Integer page) {
 		try{
 			int currentPage=(page !=null) ? page : 1;
-			int totalCount = pService.getTotalCount(searchCondition,searchValue,searchRegion);//현재 페이지 값과 전체 게시물 갯수 가져옴
-			int boardLimit=10;
+			int totalCount = pService.getTotalCount(searchCondition,searchRegion,searchValue);//현재 페이지 값과 전체 게시물 갯수 가져옴
+			int boardLimit=9;
 			int naviLimit=5;
 			int maxPage;
 			int startNavi;
@@ -226,8 +226,7 @@ public class PlannerController {
 				endNavi=maxPage;
 			}
 			
-				List<Planner> pList = pService.printAllValue(
-						searchCondition,searchValue,searchRegion,currentPage, boardLimit);
+				List<Planner> pList = pService.printAllValue(searchCondition,searchRegion,searchValue,currentPage, boardLimit);
 
 				if(!pList.isEmpty()) {
 					
@@ -235,6 +234,12 @@ public class PlannerController {
 				}else {
 					mv.addObject("pList",null);
 				}
+				System.out.println(searchCondition);
+				System.out.println(searchRegion);
+				System.out.println(searchValue);
+				System.out.println(totalCount);
+				System.out.println(pList);
+				
 				mv.addObject("urlVal","search");
 				mv.addObject("searchCondition",searchCondition);
 				mv.addObject("searchValue",searchValue);
@@ -312,9 +317,10 @@ public class PlannerController {
 	public ModelAndView registPlan(
 			ModelAndView mv
 			, @ModelAttribute(value="PlanList") PlanList l) {
-		/* ( (List<String>) l).removeAll(Arrays.asList("", null)); */
-		int result = pService.registPlanner(l);
 		
+		/* ( (List<String>) l).removeAll(Arrays.asList("", null)); */
+		
+		int result = pService.registPlanner(l);
 		System.out.println(l);
 		mv.setViewName("redirect:/plan/plan.kh");
 		return mv;

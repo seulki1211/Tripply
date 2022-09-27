@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 <title>수정페이지</title>
 <link href="../../resources/css/map.css" rel="stylesheet">
 </head>
@@ -18,19 +18,25 @@
 	box-sizing: border-box;
 }
 
-.info {
-	width: 60%;
+.readinfo {
+	text-align:center;
+	width: 30%;
 	height: 100%;
-	border: 1px solid;
 	float: left;
 	box-sizing: border-box;
 }
-
-.resultButton {
-	width: 40%;
-	height: 100%;
+.dayInfo{
+	margin-top:30px;
+	width: 30%;
+	height: 50%;
 	float: left;
-	border: 1px solid;
+	box-sizing: border-box;
+}
+.resultButton {
+	margin-top:30px;
+	width: 30%;
+	height: 50%;
+	float: left;
 	float: left;
 	box-sizing: border-box;
 }
@@ -84,33 +90,41 @@ border:1px solid;
 <div class="wrap">
 	
 	<div class="header">
-		<div class="info">
+		<div class="readinfo">
 			<input type="hidden" name="page" id="page"value="${page }" />
 			<input type="hidden" name="boardNo" id="boardNo"value="${planner.boardNo }" />
-			<input type="text" name="title" id="planTitle"value="${planner.planTitle }" />
+			<%-- <input type="text" name="title" id="planTitle"value="${planner.planTitle }" />
 			<input type="text" name="firstDay" id="firstDay"value="<fmt:formatDate value="${planner.firstDay}" pattern="yyyy-MM-dd" />" />
-			<input type="text" name="lastDate" id="lastDay"value="<fmt:formatDate value="${planner.lastDay}" pattern="yyyy-MM-dd" />" /> 
+			<input type="text" name="lastDate" id="lastDay"value="<fmt:formatDate value="${planner.lastDay}" pattern="yyyy-MM-dd" />" />  --%>
 		
+		<span>[${planner.plannerLocation}]</span>	
+			<h2>${planner.planTitle}</h2>
 		</div>
+		<div class="dayInfo">
+			<input type="text" name="firstDay" value="${planner.firstDay} "readonly/>
+			-	
+			<input type="text" name="lastDay" value="${planner.lastDay} "readonly/>	
+		</div>	
 		<!-- 타이틀 시작 날짜 끝날짜 보더 넘버->히든 -->
 		
 		<div class="resultButton">
-			<button  form="submitForm" type="submit" class="planSumbit" >저장</button>
-			<button class="planClose"onclick="plannerRemove(${page})">닫기</button>
+			<button  form="submitForm" type="submit" class="btn btn-outline-info" >저장</button>
+			<button class="btn btn-outline-danger" onclick="plannerRemove(${page})">닫기</button>
 		</div>
 		
 	</div>
 
 	<div class="plan-container">
 		<div class="day-area">
-			<div class="planI-daysboxtitle">일정</div>
+			<div class="planI-daysboxtitle"><span class="list-group-item list-group-item-dark">일정</span></div>
 			
 			
 			<c:forEach items="${dayList}" var="day" varStatus="status">
 			<div class="planI-daybox" onclick="plansChange(${status.count})">
+				<span class="list-group-item list-group-item-light">
 				<span class="planI-day">DAY${status.count}</span> <span class="planI-date">
 				 <fmt:parseDate value="${day}" var="stringday" pattern="yyyyMMdd" /> 
-				 <fmt:formatDate value="${stringday}" pattern="MM.dd (E)" /></span>
+				 <fmt:formatDate value="${stringday}" pattern="MM.dd (E)" /></span></span>
 			</div>
 		</c:forEach> 
 		
@@ -121,9 +135,11 @@ border:1px solid;
 			<c:forEach items="${dayList }" var="day" varStatus="status">
 			<div class="planI-plansbox" data-date="${day}">
 				<div class="planI-plansboxtitle">
+				<span class="list-group-item list-group-item-light">
 					DAY${status.count} |
 					<fmt:parseDate value="${day}" var="stringday" pattern="yyyyMMdd" />
 					<fmt:formatDate value="${stringday}" pattern="MM.dd E요일" />
+					</span>
 				</div>
 	<!-- <table border="1"> -->
 	<c:forEach items="${planList }" var="plan" varStatus="i">
@@ -484,14 +500,14 @@ var markers = [];
    } */
    function getHtml(place_name,place_y,place_x,num, data_date,i,boardNo){
 	
-	var div="<div class=\"planNum\""+num+">"+num+"";
+	var div="<div class=\"planNum\""+num+"><span class='badge badge-secondary'>"+num+"</span>";
    	div +="<input type='hidden' name='planList["+i+"].boardNo' id='boardNo'value="+boardNo +" />"
    	div +="<input type='hidden' name='planList["+i+"].day' id='planDate'value="+data_date +" />"
    	div +="<input type='hidden' name='planList["+i+"].Y' id='planY'value="+place_y+" />"
    	div +="<input type='hidden' name='planList["+i+"].X' id='planX'value="+place_x +" />"
-   	div +="<input type='text' name='planList["+i+"].address' id='planTitle'value="+place_name+" /><br>"
+   	div +="<input class='form-control' type='text' name='planList["+i+"].address' id='planTitle'value="+place_name+" /><br>"
    	div +="<div>Memo</div>"
-   	div +="<textarea cols='30px'rows='3px' name='planList["+i+"].Memo' id='planTitle' > </textarea><br>"
+   	div +="<textarea cols='40'rows='3' name='planList["+i+"].Memo' id='planTitle' > </textarea>"
     div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\')\">&times;</button></div>";
    
     return div;
