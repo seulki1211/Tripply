@@ -17,6 +17,7 @@
 <body>
 	<div>
 		<jsp:include page="../common/menuBar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
 		<br>
 		<form action="/free/modify.kh" method="post" enctype="multipart/form-data">

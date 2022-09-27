@@ -16,6 +16,7 @@ div{
 /* 	border: 1px solid black; */
 }
 
+
 /* 사이드바 */
 #sideBar{
 	position:relative;
@@ -45,29 +46,3 @@ div{
 		text-align:center;
 		border-bottom: 2px solid rgb(210,210,210);
 	}
-		.point-li:hover{
-			background-color:rgb(180,180,180);
-		}
-	
-		#side-send{
-				background-color:rgb(180,180,180);
-			}
-		
-	
-/* 전송	 */
-#send-area{
-	margin: 30px auto;
-	width:600px;
-}
-	#send-title{
-		text-align:center;
-	}
-	
-	#send-table{
-			margin:0 auto;
-	}
-	#send-table td,#send tr{
-		border-bottom: 1px solid black;
-		padding:15px;
-	}
-

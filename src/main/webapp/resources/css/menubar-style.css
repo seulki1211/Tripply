@@ -43,8 +43,11 @@
     display: flex;
     position: absolute;
     justify-content: center;
-    margin: 0;
+    margin: 0 auto;
     padding: 0%;
+   }
+   #logo-img{
+   	border:1px solid black;
    }
 
  /* nav */

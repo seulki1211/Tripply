@@ -13,14 +13,10 @@
 <!-- 헤더-메뉴바 -->
 	<div id="header">
 		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
 	<div class="wrapper-form">
-		<div class="my-side">
-			<div class="my-side-bar" onclick="location.href='/member/myPage.kh';">회원정보수정</div>
-			<div class="my-side-bar" onclick="location.href='#';">작성글</div>
-			<div class="my-side-bar" onclick="seeyoulater()">북마크</div>
-			<div class="my-side-bar" onclick="location.href='/point/chargeView.kh';">포인트관리</div>
-		</div>
+			<jsp:include page="/WEB-INF/views/common/myside.jsp"></jsp:include>
 		<div class="profile-form">
 	<h1 align="center">작성글</h1>
 			<div class="wrapper">

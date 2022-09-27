@@ -12,6 +12,7 @@
 <body>
 	<div>
 		<jsp:include page="../common/menuBar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
 	<h1 align="center">게시글 목록</h1>
 	<br><br>

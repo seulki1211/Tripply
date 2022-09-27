@@ -167,6 +167,7 @@ height:100%;
 <body>
 <div id="header">
 		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 </div>
 <div class="wrap">
  <h1 align="center">일정 목록</h1>

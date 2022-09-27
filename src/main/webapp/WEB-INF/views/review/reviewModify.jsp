@@ -76,6 +76,7 @@
 <!-- 헤더-메뉴바 -->
 	<div id="header">
 		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
 <!-- 컨텐츠 -->
 	<div id="contents">

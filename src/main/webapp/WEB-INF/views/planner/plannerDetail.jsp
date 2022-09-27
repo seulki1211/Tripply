@@ -95,6 +95,7 @@
 	<div class="wrap">
 	<div id="head">
 		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
 		<div class=header>
 			<div class="info">

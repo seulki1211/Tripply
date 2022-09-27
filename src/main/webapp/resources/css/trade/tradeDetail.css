@@ -37,7 +37,9 @@ div{
 			height:500px;
 			text-align: left;
 			vertical-align:top;
-			overflow: scroll;
+/* 			overflow: scroll; */
+			border-bottom: 1px solid rgb(210,210,210);
+			
 		}
 		 #detail-contents img{
 		 	display:block;
