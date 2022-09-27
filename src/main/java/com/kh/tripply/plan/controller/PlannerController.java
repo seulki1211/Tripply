@@ -302,7 +302,7 @@ public class PlannerController {
 		mv.addObject("dayList",dayList);
 		mv.addObject("planner",planner);
 		mv.addObject("boardNo",boardNo);
-		mv.setViewName("map/map");
+		mv.setViewName("planner/plannerWriteForm");
 		return mv;
 		
 	}
@@ -321,6 +321,7 @@ public class PlannerController {
 		/* ( (List<String>) l).removeAll(Arrays.asList("", null)); */
 		
 		int result = pService.registPlanner(l);
+		int rseult2= pService.organizePlan();
 		System.out.println(l);
 		mv.setViewName("redirect:/plan/plan.kh");
 		return mv;
@@ -484,6 +485,7 @@ public class PlannerController {
 			/* ( (List<String>) l).removeAll(Arrays.asList("", null)); */
 			int delresult = pService.deletePlan(boardNo);
 			int result = pService.registPlanner(l);
+			int rseult2= pService.organizePlan();
 			
 			
 			

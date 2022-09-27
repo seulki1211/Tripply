@@ -120,6 +120,10 @@
  	#{item.boardNo} AS PLANNER_NO ,#{item.day} AS PLAN_DAY,#{item.y} AS Y,#{item.x} AS X,#{item.address} AS ADDRESS ,#{item.memo} AS MEMO FROM DUAL
  	</foreach>)A
   </insert> 
+  <delete id="organizePlan">
+  DELETE FROM PLAN_TBL
+  WHERE ADDRESS IS NULL
+  </delete>
    
    
    

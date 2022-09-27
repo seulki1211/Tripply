@@ -478,18 +478,20 @@ var markers = [];
    	div +="<input class='form-control' type='text' name='planList["+i+"].address' id='planTitle'value="+place_name+" readonly/>"
    	div +="<div>Memo</div>"
    	div +="<textarea cols='40'rows='3' name='planList["+i+"].Memo' id='memo' > </textarea>"
-    div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\','"+i+"')\">&times;</button></div>";
+    div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\','"+i+"','"+boardNo+"','"+data_date+"','"+place_y+"','"+place_x+"','"+place_name+"')\">&times;</button></div>";
 
     return div;
    } 
   
    
-   function planDelete(num,i){
+   function planDelete(num,i,boardNo,data_date,place_y,place_x){
        var parent =  $('.planI-plansbox[style*="display: block"]');
        var kid = parent.children().eq(num); // 일정 부분에 제목도 자식에 포함되기에 index +1
        var next_kids = kid.nextAll();
 
        kid.detach();
+       parent.append(getdelHtml(num,i,boardNo,data_date,place_y,place_x));
+       
 
         next_kids.each(function (index, element){
       /*      var url = "_image/plan/num/number" + num + ".png";
@@ -500,39 +502,15 @@ var markers = [];
            num++;
        }); 
    }
+   function getdelHtml(num,i,boardNo,data_date,place_y,place_x){
+	  var div="<div class=\"planNum\""+i+"><span class='badge badge-secondary'>"+i+"</span>";
+		div +="<input type='text' name='planList["+i+"].boardNo' id='boardNo'value="+boardNo +" />"
+	   	div +="<input type='hidden' name='planList["+i+"].day' id='planDate'value="+data_date +" />"
+	    div +="<input type='hidden' name='planList["+i+"].Y' id='planY'value="+place_y+" />"
+	   	div +="<input type='hidden' name='planList["+i+"].X' id='planX'value="+place_x +" />" 
+	  return div;
+   }
    
-   /* $("#submitForm").on("submit",function(){
-	   
-	      
-	  var boardNo=[];
-	  var day=[];
-	  var X=[];
-	  var Y=[];
-	  var address=[];
-	  var Memo=[];
-	  
-	 boardNo.push($("#boardNo").val());
-	 day.push($("#planDate").val());
-	 Y.push($("#planY").val());
-	 X.push($("#planX").val());
-	 address.push($("#planTitle").val());
-	 Memo.push($("#memo").val());
-      
-      for(var i = 0; i < day.length; i++) {
-		   planList[i].push(boardNo[i]);
-		   planList[i].push(day[i]);
-		   planList[i].push(X[i]);
-		   planList[i].push(Y[i]);
-		   planList[i].push(address[i]);
-		   planList[i].push(Memo[i]);
-		   
-		 }
-      
-      return planList;
-      
-	  
-   }) */
-
 	 
 	 </script>	
 

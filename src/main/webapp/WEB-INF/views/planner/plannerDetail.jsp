@@ -159,7 +159,7 @@
 			<div class="button">
 			<button class="btn btn-outline-info" onclick="plannerModify(${planner.boardNo},${page});">수정</button><br><br>
 			<button class="btn btn-outline-danger" onclick="plannerRemove(${page});">삭제</button><br><br>
-			<button class="btn btn-outline-success" onclick="location.href='/plan/pdf.kh?boardNo=${planner.boardNo }'">PDF</button>
+			<button class="btn btn-outline-success" onclick="location.href='/planner/plannerList?page=${page}'">리스트</button>
 			<!-- 수정 삭제 pdf  -->
 			</div>
 		</div>

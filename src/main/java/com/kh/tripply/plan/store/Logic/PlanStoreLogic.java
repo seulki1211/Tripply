@@ -125,6 +125,12 @@ public class PlanStoreLogic implements PlanStore{
 		return result;
 	}
 
+	@Override
+	public int organizePlan(SqlSession session) {
+		int result2 = session.delete("PlannerMapper.organizePlan");
+		return result2;
+	}
+
 
 
 

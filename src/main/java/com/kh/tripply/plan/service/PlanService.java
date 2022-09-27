@@ -36,4 +36,6 @@ public interface PlanService {
 
 	public int modifyReply(PlannerReply plannerReply);
 
+	public int organizePlan();
+
 }

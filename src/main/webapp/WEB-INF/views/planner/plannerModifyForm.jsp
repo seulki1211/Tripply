@@ -145,15 +145,15 @@ border:1px solid;
 	<c:forEach items="${planList }" var="plan" varStatus="i">
  	<c:if test= "${plan.day eq day}">
  	
-	<div id="plan" class="planNum${i.count-1 }">${i.count-1 }
+	<div id="plan" class="planNum${i.count }"><span class="badge badge-secondary">${i.count }</span>
 	<input type="hidden" name="planList[${i.count-1}].boardNo" id="boardNo" value="${plan.boardNo}"/>		
 	<input type="hidden" name="planList[${i.count-1}].day" id="planDate" value="${plan.day}"/>		
 	<input type="hidden" name="planList[${i.count-1}].Y" id="planY" value="${plan.y}"/>		
 	<input type="hidden" name="planList[${i.count-1}].X" id="planX" value="${plan.x}"/>		 
-	<input type="text" name="planList[${i.count-1}].address" id="planTitle" value="${plan.address}"/><br>		
+	<input type="text"  name="planList[${i.count-1}].address" id="planTitle" class="form-control"value="${plan.address}"readonly/>		
 	<div>Memo</div>	
-	<textarea cols="30px" rows="3px" name="planList[${i.count-1}].Memo" id="planMemo">${plan.memo} </textarea>
-	<button class="planDetailButton" onclick="planDelete(${i.count})">&times;</button></div>
+	<textarea cols="40" rows="3" name="planList[${i.count-1}].Memo" id="planMemo">${plan.memo} </textarea>
+	<button class="planDetailButton" onclick="planDelete(${i.count},${i.count-1},${plan.boardNo},${plan.day},${plan.y},${plan.x})">&times;</button></div>
 			
 			<%--  <tr>
 			<td>${i.count }</td>
@@ -508,20 +508,20 @@ var markers = [];
    	div +="<input class='form-control' type='text' name='planList["+i+"].address' id='planTitle'value="+place_name+" /><br>"
    	div +="<div>Memo</div>"
    	div +="<textarea cols='40'rows='3' name='planList["+i+"].Memo' id='planTitle' > </textarea>"
-    div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\')\">&times;</button></div>";
+    div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\','"+i+"','"+boardNo+"','"+data_date+"','"+place_y+"','"+place_x+"','"+place_name+"')\">&times;</button></div>";
    
     return div;
    }
   
    
-   function planDelete(num,i){
+   function planDelete(num,i,boardNo,data_date,place_y,place_x){
 	   event.preventDefault();
 	   var parent =  $('.planI-plansbox[style*="display: block"]');
        var kid = parent.children().eq(num); // 일정 부분에 제목도 자식에 포함되기에 index +1
        var next_kids = parent.nextAll();
 
        kid.detach();
-
+       parent.append(getdelHtml(num,i,boardNo,data_date,place_y,place_x));
         next_kids.each(function (index, element){
       /*      var url = "_image/plan/num/number" + num + ".png";
            $(this).find('img').attr("src", url); */
@@ -531,6 +531,14 @@ var markers = [];
            ++ num;
        }); 
    }
+   function getdelHtml(num,i,boardNo,data_date,place_y,place_x){
+		  var div="<div class=\"planNum\""+i+"><span class='badge badge-secondary'>"+i+"</span>";
+		div +="<input type='text' name='planList["+i+"].boardNo' id='boardNo'value='"+boardNo +"'/>"
+	   	div +="<input type='hidden' name='planList["+i+"].day' id='planDate'value='"+data_date +"' />"
+	    div +="<input type='hidden' name='planList["+i+"].Y' id='planY'value='"+place_y+"'/>"
+	  	div +="<input type='hidden' name='planList["+i+"].X' id='planX' value='"+place_x+"'/>"
+	    return div;
+	   }
 
 	 
 	 </script>	
