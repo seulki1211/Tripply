@@ -5,8 +5,8 @@
 <configuration>
 
 	<settings>
-		<!-- <setting name="jdbcTypeForNull" value="NULL"/> -->
-		<setting name="jdbcTypeForNull" value="VARCHAR"/> 
+		<setting name="jdbcTypeForNull" value="NULL"/>
+
 	</settings>
 <!-- 사전순으로 배치 -->
 	<typeAliases>

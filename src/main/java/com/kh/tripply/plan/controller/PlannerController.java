@@ -317,7 +317,9 @@ public class PlannerController {
 	public ModelAndView registPlan(
 			ModelAndView mv
 			, @ModelAttribute(value="PlanList") PlanList l) {
+		
 		/* ( (List<String>) l).removeAll(Arrays.asList("", null)); */
+		
 		int result = pService.registPlanner(l);
 		System.out.println(l);
 		mv.setViewName("redirect:/plan/plan.kh");
