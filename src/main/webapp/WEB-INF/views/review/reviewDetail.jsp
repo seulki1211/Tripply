@@ -30,7 +30,7 @@
 						작성자: ${review.reviewWriter }
 						<span class="detail viewcount-wrap">
 							<img alt="눈모양 아이콘" src="/resources/image/viewcount.jpg" width="25px" height="25px">
-							조회수: ${review.reviewCount } &nbsp;
+							${review.reviewCount } &nbsp;
 						</span>
 						<span  class="detail date">
 							날짜: ${review.rCreateDate }

@@ -51,6 +51,14 @@ div{
 	border-radius: 5px;	
 	
 }
+	#biddingInput{
+		width: 300px;
+		border-style:none;
+		margin-left:10px;
+		float:left;
+		backgound-color:rgb(240,240,240);
+		
+	}
 	.reText{
 		width: 315px;
 		border-style:none;

@@ -38,7 +38,7 @@
 						작성자: ${trade.tradeWriter } 
 						<span class="detail viewcount-wrap"> 
 							<img alt="눈모양 아이콘" src="/resources/image/viewcount.jpg" width="25px" height="25px"> 
-							조회수 ${trade.tradeCount } &nbsp;
+							${trade.tradeCount } &nbsp;
 					    </span> 
 					    <span class="detail date">
 					    	날짜: ${trade.tCreateDate }
@@ -64,7 +64,7 @@
 		<div class="reply-input" align="center">
 			<form onsubmit="inputCheck(this); inputPriceCheck(this);" action="/trade/reply/write.kh" method="post">
 				<c:if test="${trade.soldOut ne 'Y' }">
-					<input id="biddingInput" type="text" name="biddingPrice" placeholder="구매희망가격">
+					<input id="biddingInput" type="text" name="biddingPrice" placeholder="구매희망가격을 입력하세요!">
 				</c:if>
 				<input class="reText" type="text"   name="tReplyContents" value="" 	required="required" placeholder="댓글을 달아보세요!">
 				<input type="hidden" name="page"		   value="${sessionScope.page }"> 

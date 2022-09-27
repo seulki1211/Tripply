@@ -17,12 +17,13 @@
   <script src="/resources/js/summernote-lite.js"></script>
   <script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
   <link rel="stylesheet" href="/resources/css/summernote-lite.css">
+  <link rel="stylesheet" href="/resources/css/trade/tradeWrite.css">
 </head>
 <!-- 스크립트태그-썸머노트설정 -->
 <script>
 		$(document).ready(function(){
 			$('#summernote').summernote({
-				height : 300,
+				height : 500,
 				width : 700,
 				lang : "ko-KR",
 				callbacks:{
@@ -76,11 +77,10 @@
 	</div>
 <!-- 컨텐츠 -->
 	<div id="contents">
-		<div id="sideBar"></div>
-		<div id="contents-1">
+		<div id="write-area">
 			<form action="/trade/write.kh" method="post">
 					<input type="hidden" name="tradeWriter" value="${loginUser.memberId }">
-					<select name="tLocationCode">
+					<select id="select-location" name="tLocationCode">
 							<option value="00" label="전국"></option>
 							<option value="11" label="서울"></option>
 							<option value="21" label="부산"></option>
@@ -101,12 +101,14 @@
 							<option value="36" label="전라남도"></option>
 						</select>
 						<input type="text" id="inputTitle" name="tradeTitle" placeholder="제목을 입력하세요" required="required"><br>
-						<textarea id="summernote" name="tradeContents"></textarea>
+						<textarea class="textarea-summer" id="summernote" name="tradeContents"></textarea>
 <!-- 썸네일 선택-->
-						<span onclick="clickThumbnailAppend();" id="test"><button type="button">썸네일 새로고침</button></span>
-						<select id="thumbnailPath" name="thumbnailPath">
-						</select>
-						<button>저장</button>
+						<div id="btn-wrap">
+							<span onclick="clickThumbnailAppend();" id="test"><button class="writeBtn" type="button">썸네일 새로고침</button></span>
+							<select id="thumbnailPath" name="thumbnailPath">
+							</select>
+							<button class="writeBtn">저장</button>
+						</div>
 			</form>
 		</div>
 		<div id="contents-2"></div>
