@@ -40,6 +40,31 @@ public class Member {
 		this.memberPhone = memberPhone;
 		this.memberAddr = memberAddr;
 	}
+	
+	
+
+	public Member(String memberId, String memberPwd, String memberName, String memberNickname, String memberEmail,
+			String memberBirth, String memberGender, String memberPhone, String memberAddr, Date enrollDate,
+			Date updateDate, String mStatus, int pointBalance, String memberFilename, String memberFileRename,
+			String memberFilePath) {
+		super();
+		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+		this.memberName = memberName;
+		this.memberNickname = memberNickname;
+		this.memberEmail = memberEmail;
+		this.memberBirth = memberBirth;
+		this.memberGender = memberGender;
+		this.memberPhone = memberPhone;
+		this.memberAddr = memberAddr;
+		this.enrollDate = enrollDate;
+		this.updateDate = updateDate;
+		this.mStatus = mStatus;
+		this.pointBalance = pointBalance;
+		this.memberFilename = memberFilename;
+		this.memberFileRename = memberFileRename;
+		this.memberFilePath = memberFilePath;
+	}
 
 	// getter / setter
 	public String getMemberId() {

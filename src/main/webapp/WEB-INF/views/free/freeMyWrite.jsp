@@ -18,14 +18,14 @@
 		<div class="my-side">
 			<div class="my-side-bar" onclick="location.href='/member/myPage.kh';">회원정보수정</div>
 			<div class="my-side-bar" onclick="location.href='#';">작성글</div>
-			<div class="my-side-bar">북마크</div>
+			<div class="my-side-bar" onclick="seeyoulater()">북마크</div>
 			<div class="my-side-bar" onclick="location.href='/point/chargeView.kh';">포인트관리</div>
 		</div>
 		<div class="profile-form">
 	<h1 align="center">작성글</h1>
 			<div class="wrapper">
 				<div class="profile-box">
-					<img class="profile" alt="본문이미지" src="/resources/buploadFiles/20220922193622.JPG" >
+					<img class="profile" alt="본문이미지" src="/resources/buploadFiles/${member.memberFileRename }" >
 				</div>
 			</div>
 			<div class="">
@@ -33,17 +33,19 @@
 					<table align="center">
 						<tr>
 							<td colspan="2" align="center">
-								<input type="file" name="reloadFile">
+							<th>${member.memberFilePath }님</th>
+								<!-- <input type="file" name="reloadFile"> -->
 								<!-- <button type="button" id="memberProfile" value="">프로필 사진 변경</button> -->
 							</td>
 						</tr>
-						<table align="center" border="1">
+					<table align="center" border="1">
 		<tr>
 			<th>번호</th>
 			<th colspan="2">제목</th>
 			<th>작성자</th>
 			<th>날짜</th>
 			<th>조회수</th>
+			<th>게시판</th>
 		</tr>
 		<c:if test="${!empty fList }">
 			<c:forEach items="${fList }" var="free" varStatus="i">
@@ -53,10 +55,11 @@
 					<td>${free.freeWriter }</td>
 					<td>${free.fCreateDate }</td>
 					<td>${free.freeCount }</td>
+					<td>${free.category }</td>
 				</tr>
 			</c:forEach>
 			<tr align="center" height="20">
-			<td colspan="6">
+			<td colspan="7">
 				<c:if test="${currentPage != 1 }">
 					<a href="/free/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
 				</c:if>
@@ -76,30 +79,19 @@
 		</c:if>
 		<c:if test="${empty fList }">
 			<tr>
-				<td colspan="6" align="center"><b>데이터가 존재하지 않습니다.</b></td>
+				<td colspan="7" align="center"><b>데이터가 존재하지 않습니다.</b></td>
 			</tr>
 		</c:if>
-		<%-- <tr>
-			<td colspan="5" align="center">
-				<form action="/free/search.kh" method="get">
-					<select name="searchCondition">
-						<option value="all" <c:if test="${searchCondition eq 'all' }">selected</c:if>>전체</option>
-						<option value="writer" <c:if test="${searchCondition eq 'writer' }">selected</c:if>>작성자</option>
-						<option value="title" <c:if test="${searchCondition eq 'title' }">selected</c:if>>제목</option>
-						<option value="contents" <c:if test="${searchCondition eq 'contents' }">selected</c:if>>내용</option>
-					</select>
-					<input type="text" name="searchValue" value="${searchValue }">
-					<input type="submit" value="검색">
-				</form>
-			</td>
-			<td>
-				<button onclick="loginCheck('${loginUser.memberId}','/free/writeView.kh')";>글쓰기</button>
-			</td>
-		</tr> --%>
+		
 					</table>
 				</form>
 			</div>
 		</div>
 	</div>
+	<script>
+		function seeyoulater() {
+			alert("추후 업데이트 예정입니다.");
+		}
+	</script>
 </body>
 </html>

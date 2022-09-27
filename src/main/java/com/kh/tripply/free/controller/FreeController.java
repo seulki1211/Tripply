@@ -253,10 +253,45 @@ public class FreeController {
 	 * @param mv
 	 * @param page
 	 * @return
+	 *//*
+		 * @RequestMapping(value = "/free/myList.kh", method = RequestMethod.GET) public
+		 * ModelAndView freeMyList(ModelAndView mv,
+		 * 
+		 * @RequestParam(value = "page", required = false) Integer page) {
+		 * ///////////////////////////////////////////////////////////////////////// int
+		 * currentPage = (page != null) ? page : 1; int totalCount =
+		 * fService.getEveryTotalCount("", ""); int boardLimit = 10; int naviLimit = 5;
+		 * int maxPage; int startNavi; int endNavi; // 23/5 = 4.8 + 0.9 = 5(.7) maxPage
+		 * = (int) ((double) totalCount / boardLimit + 0.9); startNavi = ((int)
+		 * ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1; endNavi =
+		 * startNavi + naviLimit - 1; if (maxPage < endNavi) { endNavi = maxPage; }
+		 * ////////////////////////////////////////////////////////////////////////// //
+		 * /board/list.kh?page=${currentPage } List<Free> fList =
+		 * fService.printEveryTbl(currentPage, boardLimit); if (!fList.isEmpty()) {
+		 * mv.addObject("urlVal", "myList"); mv.addObject("maxPage", maxPage);
+		 * mv.addObject("currentPage", currentPage); mv.addObject("startNavi",
+		 * startNavi); mv.addObject("endNavi", endNavi); mv.addObject("fList", fList); }
+		 * mv.setViewName("free/freeMyWrite"); return mv; }
+		 */
+
+	/**
+	 * 내가 쓴 게시글 조회
+	 * 
+	 * @param mv
+	 * @param page
+	 * @return
 	 */
 	@RequestMapping(value = "/free/myList.kh", method = RequestMethod.GET)
-	public ModelAndView freeMyList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) {
+	public ModelAndView freeMyList(ModelAndView mv 
+			, @RequestParam(value = "page", required = false) Integer page
+			, HttpSession session
+			, @RequestParam(value="uploadFile", required=false) MultipartFile uploadFile) {
 		/////////////////////////////////////////////////////////////////////////
+		Member member = (Member) session.getAttribute("loginUser");
+		// session에 저장된 로그인정보를 getAttribute를 통해 불러옴.
+		// Member객체에 담아서 사용하기 위해 Object타입을 Member로 형변환해주고 member 변수에 담음.
+		String memberNickname = member.getMemberNickname();
+		// 로그인유저의 닉네임을 getter메소드로 불러와서 mapper에서 ${memberNickname}으로 호출해서 사용.
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = fService.getEveryTotalCount("", "");
 		int boardLimit = 10;
@@ -273,7 +308,7 @@ public class FreeController {
 		}
 		//////////////////////////////////////////////////////////////////////////
 		// /board/list.kh?page=${currentPage }
-		List<Free> fList = fService.printEveryTbl(currentPage, boardLimit);
+		List<Free> fList = fService.printEveryTbl(currentPage, boardLimit, memberNickname);
 		if (!fList.isEmpty()) {
 			mv.addObject("urlVal", "myList");
 			mv.addObject("maxPage", maxPage);
@@ -285,7 +320,7 @@ public class FreeController {
 		mv.setViewName("free/freeMyWrite");
 		return mv;
 	}
-
+	
 	// 댓글 관리
 	/**
 	 * 댓글 등록
@@ -306,6 +341,16 @@ public class FreeController {
 		return mv;
 	}
 
+	@RequestMapping(value="/free/modifyReply.kh", method=RequestMethod.POST)
+	public String modifyBoardReply(
+			//@RequestParam("replyNo") Integer replyNo
+			//, @RequestParam("replyContents") String replyContents
+			@ModelAttribute FreeReply fReply) {
+		int result = fService.modifyReply(fReply);
+//		return "redirect:/board/detail.kh?boardNo=";
+		return "redirect:/free/list.kh";
+	}
+	
 	@RequestMapping(value = "/free/removeReply.kh", method = RequestMethod.POST)
 	public String removeBoardReply(@RequestParam("freeReplyNo") Integer freeReplyNo) {
 		int result = fService.deleteReply(freeReplyNo);

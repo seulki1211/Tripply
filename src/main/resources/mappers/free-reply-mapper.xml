@@ -10,10 +10,19 @@
 		<result property="freeReplyContents" 	column="F_REPLY_CONTENTS"/>
 		<result property="fCreateDate" 			column="F_CREATE_DATE"/>
 		<result property="fUpdateDate"			column="F_UPDATE_DATE"/>
-		<result property="fStatus" 				column="F_STATUS"/>
+		<result property="fReplyStatus" 		column="F_REPLY_STATUS"/>
 	</resultMap>
 	<insert id="insertFreeReply">
 		INSERT INTO FREE_REPLY_TBL VALUES(SEQ_REPLYNO.NEXTVAL, #{boardNo}, #{freeReplyWriter}, 
 	#{freeReplyContents}, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
+	<update id="modifyFreeReply">
+		UPDATE FREE_REPLY_TBL SET F_REPLY_CONTENTS = #{freeReplyContents}
+	</update>
+	<delete id="deleteFreeReply">
+		DELETE FROM FREE_REPLY_TBL WHERE F_REPLY_NO = #{freeReplyNo}
+	</delete>
+	<select id="selectAllReply" resultMap="freeReplyResultMap">
+		SELECT * FROM FREE_REPLY_TBL WHERE BOARD_NO = #{boardNo} AND F_REPLY_STATUS = 'Y'
+	</select>
 </mapper>

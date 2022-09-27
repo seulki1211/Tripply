@@ -22,13 +22,15 @@ public interface FreeStore {
 	public int selectTotalCount(SqlSession session, String searchCondition, String searchValue);
 	// 게시글 번호로 검색
 	public Free selectOneByNo(SqlSession session, Integer boardNo);
-	
 	public List<Free> selectAllByValue(SqlSession session, String searchCondition, String searchValue, int currentPage, int boardLimit);
+	// 댓글 관리
+	public List<FreeReply> selectAllReply(SqlSession session, int boardNo);
 	public int insertFreeReply(SqlSession session, FreeReply fReply);
+	public int updateFreeReply(SqlSession session, FreeReply fReply);
 	public int deleteFreeReply(SqlSession session, Integer freeReplyNo);
 	// 내가 쓴 게시글
 	public int selectEveryTotalCount(SqlSession session, String searchCondition, String searchValue);
-	public List<Free> selectAllTbl(SqlSession session, int currentPage, int boardLimit);
+	public List<Free> selectAllTbl(SqlSession session, int currentPage, int boardLimit, String memberNickname);
 	
 
 
