@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 <title>플래너 상세</title>
 <link href="../../resources/css/map.css" rel="stylesheet">
 </head>
@@ -127,8 +128,8 @@
 			<table  border="1">
 			<c:forEach items="${dayList}" var="day" varStatus="status">
 				<tr> 
-				<td style="border-right: none; font-weight:bold;">Day${status.count }</td>
-				<td colspan="3" align="center"style="border-left: none; font-weight:bold;">
+				<td style="border-right: none; font-weight:bold; background-color:#0067a3; color:white">Day${status.count }</td>
+				<td colspan="3" align="center"style="border-left: none; font-weight:bold;"class="list-group-item list-group-item-info">
 				<fmt:parseDate value="${day}" var="stringday" pattern="yyyyMMdd" /> 
 				 <fmt:formatDate value="${stringday}" pattern="YY.MM.dd (E)" />
 				 </td>
@@ -136,9 +137,9 @@
 		<c:forEach items="${planList }" var="plan" varStatus="i">
 		<c:if test="${plan.day eq day}">  
 			<tr>
-			<td rowspan="2">${i.count }</td>
+			<td rowspan="2"><span class="badge badge-secondary">${i.count }</span></td>
 			<%-- <td>${plan.day }</td> --%>
-			<td class="pList-width">${plan.address }</td>
+			<td id="pList-width" class='form-control'>${plan.address }</td>
 			<%-- <td>${plan.y }</td>
 			<td>${plan.x }</td> --%>
 			<td rowspan="2"><div id="map${i.count }" style="width:200px; height:200px;"></div></td></tr>
@@ -156,9 +157,9 @@
 		</div>
 			</div>
 			<div class="button">
-			<button onclick="plannerModify(${planner.boardNo},${page});">수정</button>
-			<button onclick="plannerRemove(${page});">삭제</button>
-			<button onclick="location.href='/plan/pdf.kh?boardNo=${planner.boardNo }'">PDF</button>
+			<button class="btn btn-outline-info" onclick="plannerModify(${planner.boardNo},${page});">수정</button><br><br>
+			<button class="btn btn-outline-danger" onclick="plannerRemove(${page});">삭제</button><br><br>
+			<button class="btn btn-outline-success" onclick="location.href='/plan/pdf.kh?boardNo=${planner.boardNo }'">PDF</button>
 			<!-- 수정 삭제 pdf  -->
 			</div>
 		</div>
@@ -167,13 +168,13 @@
 		 <input type ="hidden" name="page" value="${page}"> 
 		<input type="hidden"name = "boardNo" value="${planner.boardNo }">
 			<table class="r_table" align="center" width="500" border="1">
-			<tr><td colspan="2">댓글</td></tr>
+			<tr><td colspan="2"class="list-group-item list-group-item-dark">댓글</td></tr>
 			<tr>
 				<td>
 					<textarea row="100%" cols="100%" name="pReplyContents"></textarea>
 				</td>
 				<td>
-					<input type="submit" value="등록하기">
+					<input type="submit" class="btn btn-outline-dark" value="등록하기">
 				</td>
 				
 			</tr>
@@ -187,8 +188,8 @@
 				<td>${reply.pReplyContents }</td>
 				<td>${reply.pRUpdateDate }</td>
 				<td>
-				<button type="button"onclick="modifyView(this,'${reply.pReplyContents}',${reply.pReplyNo },${reply.boardNo },${page});">수정</button>
-				<button type="button" onclick="removeReply(${reply.boardNo },${page},${reply.pReplyNo });"> 삭제 </button></td>
+				<button type="button"class="btn btn-outline-info"onclick="modifyView(this,'${reply.pReplyContents}',${reply.pReplyNo },${reply.boardNo },${page});">수정</button>
+				<button type="button" class="btn btn-outline-danger" onclick="removeReply(${reply.boardNo },${page},${reply.pReplyNo });"> 삭제 </button></td>
 			</tr>
 			
 			</c:forEach>
@@ -229,7 +230,7 @@ function plannerModify(boardNo,page){
 		event.preventDefault();// 하이퍼링크 이동 방지
 			var $tr = $("<tr>");
 			$tr.append("<td colspan='3'><input type='text' size='50' value='"+rContents+"' id='modifyInput'></td>");
-			$tr.append("<td colspan='3'><button type='button' onclick='modifyReply(this, "+replyNo+", "+boardNo+", "+page+");'> 수정 </button></td>");
+			$tr.append("<td colspan='3'><button type='button'class='btn btn-outline-info' onclick='modifyReply(this, "+replyNo+", "+boardNo+", "+page+");'> 수정 </button></td>");
 			$(obj).parent().parent().after($tr); 
 	};
 	

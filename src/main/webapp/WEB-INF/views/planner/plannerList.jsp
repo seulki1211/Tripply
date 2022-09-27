@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 <title>플래너 리스트</title>
 <style type="text/css">
 .wrap{
@@ -168,45 +169,45 @@ height:100%;
 		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
 </div>
 <div class="wrap">
- <h1 align="center">게시글 목록</h1>
+ <h1 align="center">일정 목록</h1>
 	<br><br>
-	<table class="p_table" border="1">
+	<table class="p_table" >
 				<tr>
 			<td colspan="5"align="center">
 			<form action="/plan/search.kh" method="get">
 			
 				<select name = "searchCondition" >
-					<option value="all" <c:if test="${search.searchCondition eq 'all' }">selected</c:if>>전체</option>
-					<option value="writer" <c:if test="${search.searchCondition eq 'writer' }">selected</c:if>>작성자</option>
-					<option value="title"<c:if test="${search.searchCondition eq 'title'}">selected</c:if>>제목</option>
+					<option value="all" <c:if test="${searchCondition eq 'all' }">selected</c:if>>전체</option>
+					<option value="writer" <c:if test="${searchCondition eq 'writer' }">selected</c:if>>작성자</option>
+					<option value="title"<c:if test="${searchCondition eq 'title'}">selected</c:if>>제목</option>
 				</select>
 				<select class="form-select" name="searchRegion" >
-							<option <c:if test="${search.searchRegion eq '전국'}">selected</c:if> value="전국" label="전국"></option>
-							<option <c:if test="${search.searchRegion eq '서울'}">selected</c:if> value="서울" label="서울"></option>
-							<option <c:if test="${search.searchRegion eq '부산'}">selected</c:if> value="부산" label="부산"></option>
-							<option <c:if test="${search.searchRegion eq '제주'}">selected</c:if> value="제주" label="제주"></option>
-							<option <c:if test="${search.searchRegion eq '인천'}">selected</c:if> value="인천" label="인천"></option>
-							<option <c:if test="${search.searchRegion eq '대전'}">selected</c:if> value="대전" label="대전"></option>
-							<option <c:if test="${search.searchRegion eq '대구'}">selected</c:if> value="대구" label="대구"></option>
-							<option <c:if test="${search.searchRegion eq '광주'}">selected</c:if> value="광주" label="광주"></option>
-							<option <c:if test="${search.searchRegion eq '울산'}">selected</c:if> value="울산" label="울산"></option>
-							<option <c:if test="${search.searchRegion eq '세종'}">selected</c:if> value="세종" label="세종"></option>
-							<option <c:if test="${search.searchRegion eq '경기도'}">selected</c:if> value="경기도" label="경기도"></option>
-							<option <c:if test="${search.searchRegion eq '강원도'}">selected</c:if> value="강원도" label="강원도"></option>
-							<option <c:if test="${search.searchRegion eq '충청북도'}">selected</c:if> value="충청북도" label="충청북도"></option>
-							<option <c:if test="${search.searchRegion eq '충청남도'}">selected</c:if> value="충청남도" label="충청남도"></option>
-							<option <c:if test="${search.searchRegion eq '경상북도'}">selected</c:if> value="경상북도" label="경상북도"></option>
-							<option <c:if test="${search.searchRegion eq '경상남도'}">selected</c:if> value="경상남도" label="경상남도"></option>
-							<option <c:if test="${search.searchRegion eq '전라북도'}">selected</c:if> value="전라북도" label="전라북도"></option>
-							<option <c:if test="${search.searchRegion eq '전라남도'}">selected</c:if> value="전라남도" label="전라남도"></option>
+							<option <c:if test="${searchRegion eq '전국'}">selected</c:if> value="전국" label="전국"></option>
+							<option <c:if test="${searchRegion eq '서울'}">selected</c:if> value="서울" label="서울"></option>
+							<option <c:if test="${searchRegion eq '부산'}">selected</c:if> value="부산" label="부산"></option>
+							<option <c:if test="${searchRegion eq '제주'}">selected</c:if> value="제주" label="제주"></option>
+							<option <c:if test="${searchRegion eq '인천'}">selected</c:if> value="인천" label="인천"></option>
+							<option <c:if test="${searchRegion eq '대전'}">selected</c:if> value="대전" label="대전"></option>
+							<option <c:if test="${searchRegion eq '대구'}">selected</c:if> value="대구" label="대구"></option>
+							<option <c:if test="${searchRegion eq '광주'}">selected</c:if> value="광주" label="광주"></option>
+							<option <c:if test="${searchRegion eq '울산'}">selected</c:if> value="울산" label="울산"></option>
+							<option <c:if test="${searchRegion eq '세종'}">selected</c:if> value="세종" label="세종"></option>
+							<option <c:if test="${searchRegion eq '경기도'}">selected</c:if> value="경기도" label="경기도"></option>
+							<option <c:if test="${searchRegion eq '강원도'}">selected</c:if> value="강원도" label="강원도"></option>
+							<option <c:if test="${searchRegion eq '충청북도'}">selected</c:if> value="충청북도" label="충청북도"></option>
+							<option <c:if test="${searchRegion eq '충청남도'}">selected</c:if> value="충청남도" label="충청남도"></option>
+							<option <c:if test="${searchRegion eq '경상북도'}">selected</c:if> value="경상북도" label="경상북도"></option>
+							<option <c:if test="${searchRegion eq '경상남도'}">selected</c:if> value="경상남도" label="경상남도"></option>
+							<option <c:if test="${searchRegion eq '전라북도'}">selected</c:if> value="전라북도" label="전라북도"></option>
+							<option <c:if test="${searchRegion eq '전라남도'}">selected</c:if> value="전라남도" label="전라남도"></option>
 						</select>
-				<input type="text" name="searchValue" value="${search.searchValue }">
-				<input type="submit" value="검색">
+				<input type="text" name="searchValue" value="${searchValue }">
+				<input type="submit" class="btn btn-dark" value="검색">
 			</form>
 				</td> 
 				<td align="center">
 					<div>
- <button class="planL-titlebox--button__blue" id="btn">플래너 작성</button>
+ <button class="btn btn-dark" id="btn">플래너 작성</button>
 </div>
 <div class="planL-popupcontainer" id="popup">
 
@@ -271,37 +272,42 @@ height:100%;
 
     </div>
 </div>
-		 <tr>
-			<td>번호</td>
-			<td>제목</td>
-			<td>작성자</td>
-			<td>여행날짜</td>
-			<td>조회수</td>
-		</tr>
+
 		<c:if test="${!empty pList }">
+		<tr>
 		<c:forEach items ="${pList }" var="planner" varStatus = "i">
 		<!--var는 여기서 사용하는 변수명을 적음  -->
-		<tr>
-			<td><div class="detail title thumbnale-wrap" align="center">
+			<td>
+			<div class="detail title thumbnale-wrap" align="center">
 			<c:if test="${empty planner.plannerFileName }">
-				<img alt="기본이미지" src="/resources/image/basic.jpg" width='200px' height="200px">
+				<img alt="기본이미지" src="/resources/image/basic.jpg" width='300px' height="200px">
 				
 			</c:if>
 			<c:if test="${!empty planner.plannerFileName }">
-				<img alt="유저이미지" src="/resources/planneruploadFiles/${planner.plannerFileRename}" width='200px' height="200px">
+				<img alt="유저이미지" src="/resources/planneruploadFiles/${planner.plannerFileRename}" width='300px' height="200px">
 			</c:if>
-			</div></td>
-				<td>${i.count }</td>
-				<td>${planner.plannerLocation }</td>
-				<td><a href="/planner/planerDetail.kh?boardNo=${planner.boardNo }&page=${currentPage}#"> ${planner.planTitle }</a></td>
-				<td>${planner.planWriter }</td>
-				<td>${planner.firstDay}-${planner.lastDay }</td>
-				<td>${planner.plannerCount }</td>
-			</tr>
-		
+			</div>
+			<div align="center">
+			<span class="title">[${planner.plannerLocation }]</span>
+			<a href="/planner/planerDetail.kh?boardNo=${planner.boardNo }&page=${currentPage}#"> ${planner.planTitle }</a>
+			<div>${planner.planWriter }</div>
+			<div>${planner.firstDay}-${planner.lastDay }</div>
+			<div>
+			<img alt="눈모양 아이콘" src="/resources/image/viewcount.jpg" width="25px" height="25px">
+			${planner.plannerCount }
+			</div>
+			</div>
+			</td>
+
+			<c:if test="${i.count % 3 == 0 }">
+			</tr><tr>
+			</c:if>
 		</c:forEach>
+		
+			</tr>
 		<tr align="center" height="20">
 			<td colspan="6">
+			
 				<c:if test="${currentPage != 1}">
 					<a href="/plan/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
 				</c:if>

@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import com.kh.tripply.party.common.Search;
+import com.kh.tripply.common.Search;
 import com.kh.tripply.plan.domain.Plan;
 import com.kh.tripply.plan.domain.PlanList;
 import com.kh.tripply.plan.domain.Planner;
@@ -31,12 +31,14 @@ public class PlanStoreLogic implements PlanStore{
 
 	@Override
 	public int selectTotalCount(SqlSession session, String searchCondition, String searchValue, String searchRegion) {
-		//HashMap<String,String,String> paramMap = new HashMap<String,String,String>();
-//		paramMap.put("searchCondition",searchCondition);
-//		paramMap.put("searchValue",searchValue);
-//		paramMap.put("searchRegion",searchRegion);
-		Search search = new Search(searchCondition, searchRegion, searchValue);
-		int totalCount = session.selectOne("PlannerMapper.selectCount",search);
+		HashMap<String,String> paramMap = new HashMap<String,String>();
+		paramMap.put("searchCondition",searchCondition);
+		paramMap.put("searchRegion",searchRegion);
+		paramMap.put("searchValue",searchValue);
+		//Search search = new Search(searchCondition,searchValue, searchRegion );
+		System.out.println(paramMap);
+		int totalCount = session.selectOne("PlannerMapper.selectCount",paramMap);
+		System.out.println(totalCount);
 		return totalCount;
 	}
 	
@@ -52,14 +54,18 @@ public class PlanStoreLogic implements PlanStore{
 	@Override
 	public List<Planner> selectAllByValue(SqlSession session, String searchCondition, String searchValue,
 			String searchRegion, int boardLimit, int currentPage) {
-		Search search = new Search(searchCondition, searchRegion, searchValue);
+//		Search search = new Search(searchCondition, searchValue, searchRegion);
 		int offset = (currentPage-1)*boardLimit;
 		RowBounds rowBounds = new RowBounds(offset,boardLimit);
-//		HashMap<String,String> paramMap = new HashMap<String,String>();
-//		paramMap.put("searchCondition",searchCondition);
-//		paramMap.put("searchValue",searchValue);
-		List<Planner>pList = session.selectList("PlannerMapper.selectByValue",search,rowBounds);//마이바티스할때 두개값을 넘겨줄 수 있는가?
+		HashMap<String,String> paramMap = new HashMap<String,String>();
+		paramMap.put("searchCondition",searchCondition);
+		paramMap.put("searchRegion",searchRegion);
+		paramMap.put("searchValue",searchValue);
+		System.out.println(paramMap);
+		List<Planner>pList = session.selectList("PlannerMapper.selectByValue",paramMap);//마이바티스할때 두개값을 넘겨줄 수 있는가?
 		//클래스 만들거나 HashMap사용하면 두개의 객체를 한번에 넘길 수 있다==>클래스로 한번 해보기
+		System.out.println(pList);
+		System.out.println(rowBounds);
 		return pList;
 	}
 
