@@ -22,12 +22,12 @@ public interface FreeService {
 			String searchCondition, String searchValue
 			, int currentPage, int boardLimit);
 	public List<FreeReply> printAllReply(int boardNo);
-	
-	
+	// 댓글 관리
 	public int registerReply(FreeReply fReply);
+	public int modifyReply(FreeReply fReply);
 	public int deleteReply(Integer freeReplyNo);
 	// 내가 쓴 게시글
 	public int getEveryTotalCount(String searchCondition, String searchValue);
-	public List<Free> printEveryTbl(int currentPage, int boardLimit);
+	public List<Free> printEveryTbl(int currentPage, int boardLimit, String memberNickname);
 	
 }

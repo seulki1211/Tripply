@@ -15,6 +15,10 @@
 		<result property="fCreateDate" 		column="F_CREATE_DATE" />
 		<result property="fUpdateDate" 		column="F_UPDATE_DATE" />
 		<result property="fStatus" 			column="F_STATUS" />
+		<result property="category" 		column="CATEGORY" />
+		<!-- 작성글 불러올 때 게시판별로 구별하기 위해 category 컬럼을 resultMap에 추가해주었음.
+		테이블에는 따로 category가 없기 때문에 쿼리에서 새로운 값을 주고 AS로 CATEGORY라고 명칭을 붙임.
+		property는 domain에서 getter 메소드를 통해 불러오기 때문에 domain에도 category 변수를 추가해줌. -->
 	</resultMap>
 	<insert id="insertFree">
 		INSERT INTO FREE_TBL VALUES(SEQ_BOARDNO.NEXTVAL, #{freeTitle}, #{freeContents}
@@ -85,8 +89,8 @@
 		SELECT COUNT(*) AS CNT FROM REVIEW_TBL)
 	</select>
 	<select id="selectAllTbl" resultMap="freeResultMap">
-		SELECT BOARD_NO, FREE_TITLE, FREE_WRITER, FREE_COUNT, F_CREATE_DATE FROM FREE_TBL WHERE F_STATUS = 'Y'
-		UNION ALL SELECT BOARD_NO, PARTY_TITLE, PARTY_WRITER, PARTY_COUNT, P_CREATE_DATE FROM PARTY_TBL WHERE P_STATUS = 'Y'
-		UNION ALL SELECT BOARD_NO, REVIEW_TITLE, REVIEW_WRITER, REVIEW_COUNT, R_CREATE_DATE FROM REVIEW_TBL WHERE R_STATUS = 'Y' ORDER BY BOARD_NO DESC
+		SELECT BOARD_NO, FREE_TITLE, FREE_WRITER, FREE_COUNT, F_CREATE_DATE, '자유롭게' AS CATEGORY FROM FREE_TBL WHERE F_STATUS = 'Y' AND FREE_WRITER = #{memberNickname}
+		UNION ALL SELECT BOARD_NO, PARTY_TITLE, PARTY_WRITER, PARTY_COUNT, P_CREATE_DATE, '우리 함께' FROM PARTY_TBL WHERE P_STATUS = 'Y' AND PARTY_WRITER = #{memberNickname}
+		UNION ALL SELECT BOARD_NO, REVIEW_TITLE, REVIEW_WRITER, REVIEW_COUNT, R_CREATE_DATE, '여행 후기' FROM REVIEW_TBL WHERE R_STATUS = 'Y' AND REVIEW_WRITER = #{memberNickname} ORDER BY BOARD_NO DESC
 	</select>
 </mapper>

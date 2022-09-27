@@ -77,17 +77,28 @@ public class FreeStoreLogic implements FreeStore{
 		return fList;
 	}
 
+	@Override
+	public List<FreeReply> selectAllReply(SqlSession session, int boardNo) {
+		List<FreeReply> fRList = session.selectList("FreeReplyMapper.selectAllReply", boardNo);
+		return fRList;
+	}
 	
 	@Override
 	public int insertFreeReply(SqlSession session, FreeReply fReply) {
 		int result = session.insert("FreeReplyMapper.insertFreeReply", fReply);
 		return result;
 	}
+	
+	@Override
+	public int updateFreeReply(SqlSession session, FreeReply fReply) {
+		int result = session.update("FreeReplyMapper.updateReply", fReply);
+		return result;
+	}
 
 	@Override
 	public int deleteFreeReply(SqlSession session, Integer freeReplyNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.delete("FreeReplyMapper.deleteFreeReply", freeReplyNo);
+		return result;
 	}
 
 	// 내가 쓴 게시글
@@ -101,11 +112,12 @@ public class FreeStoreLogic implements FreeStore{
 	}
 
 	@Override
-	public List<Free> selectAllTbl(SqlSession session, int currentPage, int boardLimit) {
+	public List<Free> selectAllTbl(SqlSession session, int currentPage, int boardLimit, String memberNickname) {
 		int offset = (currentPage-1)*boardLimit;
 		RowBounds rowBounds = new RowBounds(offset, boardLimit);
-		List<Free> fList = session.selectList("FreeMapper.selectAllTbl", null, rowBounds);
+		List<Free> fList = session.selectList("FreeMapper.selectAllTbl", memberNickname, rowBounds);
 		return fList;
 	}
+
 
 }

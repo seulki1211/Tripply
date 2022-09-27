@@ -60,7 +60,7 @@
 	</form>
 	<!-- 	댓글 목록 -->
 	<table align="center" width="500" border="1">
-		<c:forEach items="${frList }" var="freeReply" >
+		<c:forEach items="${fRList }" var="freeReply" >
 			<tr>
 				<td width="100">${freeReply.freeReplyWriter }</td>
 				<td>${freeReply.freeReplyContents }</td>

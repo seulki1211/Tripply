@@ -65,10 +65,11 @@ public class FreeServiceImpl implements FreeService{
 		= fStore.selectAllByValue(session, searchCondition, searchValue, currentPage, boardLimit);
 		return fList;
 	}
+	// 댓글관리
 	@Override
 	public List<FreeReply> printAllReply(int boardNo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<FreeReply> fRList = fStore.selectAllReply(session, boardNo);
+		return fRList;
 	}
 	@Override
 	public int registerReply(FreeReply fReply) {
@@ -80,6 +81,11 @@ public class FreeServiceImpl implements FreeService{
 		int result = fStore.deleteFreeReply(session, freeReplyNo);
 		return result;
 	}
+	@Override
+	public int modifyReply(FreeReply fReply) {
+		int result = fStore.updateFreeReply(session, fReply);
+		return result;
+	}
 	// 내가 쓴 게시글
 	@Override
 	public int getEveryTotalCount(String searchCondition, String searchValue) {
@@ -87,8 +93,8 @@ public class FreeServiceImpl implements FreeService{
 		return everyTotalCount;
 	}
 	@Override
-	public List<Free> printEveryTbl(int currentPage, int boardLimit) {
-		List<Free> fList = fStore.selectAllTbl(session, currentPage, boardLimit);
+	public List<Free> printEveryTbl(int currentPage, int boardLimit, String memberNickname) {
+		List<Free> fList = fStore.selectAllTbl(session, currentPage, boardLimit, memberNickname);
 		return fList;
 	}
 

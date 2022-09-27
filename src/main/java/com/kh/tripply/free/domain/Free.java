@@ -14,15 +14,17 @@ public class Free {
 	private Date fCreateDate;
 	private Date fUpdateDate;
 	private String fStatus;
+	private String category;
 	
 	// 기본생성자
 	public Free() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	// 전체 매개변수 생성자
+
 	public Free(int boardNo, String freeTitle, String freeContents, String freeWriter, String freeFilename,
-			String freeFileRename, String freeFilePath, int freeCount, Date fCreateDate, Date fUpdateDate, String fStatus) {
+			String freeFileRename, String freeFilePath, int freeCount, Date fCreateDate, Date fUpdateDate,
+			String fStatus, String category) {
 		super();
 		this.boardNo = boardNo;
 		this.freeTitle = freeTitle;
@@ -35,13 +37,13 @@ public class Free {
 		this.fCreateDate = fCreateDate;
 		this.fUpdateDate = fUpdateDate;
 		this.fStatus = fStatus;
+		this.category = category;
 	}
-	
-	// getter / setter
+
 	public int getBoardNo() {
 		return boardNo;
 	}
-	
+
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
 	}
@@ -86,7 +88,7 @@ public class Free {
 		this.freeFileRename = freeFileRename;
 	}
 
-	public String getFreeFilepath() {
+	public String getFreeFilePath() {
 		return freeFilePath;
 	}
 
@@ -117,21 +119,32 @@ public class Free {
 	public void setfUpdateDate(Date fUpdateDate) {
 		this.fUpdateDate = fUpdateDate;
 	}
-	
+
 	public String getfStatus() {
 		return fStatus;
 	}
+
 	public void setfStatus(String fStatus) {
 		this.fStatus = fStatus;
 	}
-	
-	// toString
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
 		return "Free [boardNo=" + boardNo + ", freeTitle=" + freeTitle + ", freeContents=" + freeContents
 				+ ", freeWriter=" + freeWriter + ", freeFilename=" + freeFilename + ", freeFileRename=" + freeFileRename
 				+ ", freeFilePath=" + freeFilePath + ", freeCount=" + freeCount + ", fCreateDate=" + fCreateDate
-				+ ", fUpdateDate=" + fUpdateDate + ", fStatus=" + fStatus + "]";
+				+ ", fUpdateDate=" + fUpdateDate + ", fStatus=" + fStatus + ", category=" + category + "]";
 	}
+	
+	
+	
 	
 }

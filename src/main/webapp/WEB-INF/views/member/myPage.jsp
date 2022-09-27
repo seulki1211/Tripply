@@ -17,7 +17,7 @@
 		<div class="my-side">
 			<div class="my-side-bar" onclick="location.href='#';">회원정보수정</div>
 			<div class="my-side-bar" onclick="location.href='/free/myList.kh';">작성글</div>
-			<div class="my-side-bar">북마크</div>
+			<div class="my-side-bar" onclick="seeyoulater()">북마크</div>
 			<div class="my-side-bar" onclick="location.href='/point/historyView.kh';">포인트관리</div>
 		</div>
 		<div class="profile-form">
@@ -25,15 +25,15 @@
 			<form action="/member/modify.kh" method="post" name="modify_form" enctype="multipart/form-data">
 			<div class="wrapper">
 				<div class="profile-box">
-					<img class="profile" alt="본문이미지" src="/resources/buploadFiles/20220922193622.JPG" >
+					<img class="profile" alt="본문이미지" src="/resources/buploadFiles/${member.memberFileRename }" >
 				</div>
 			</div>
 			<div class="">
 					<table align="center">
 						<tr>
 							<td colspan="2" align="center">
-								<input type="file" name="reloadFile">
-								<!-- <button type="button" id="memberProfile" value="">프로필 사진 변경</button> -->
+								<input type="file" id="memberFilename" name="uploadFile">
+								<!-- 파일에 name값을 부여하지 않아서 이미지 업로드가 계속 null포인트 났던 것 -->
 							</td>
 						</tr>
 						<tr>
@@ -130,6 +130,10 @@
 			}
 		}
 		$("#postcodify_search_button").postcodifyPopUp();
+		
+		function seeyoulater() {
+			alert("추후 업데이트 예정입니다.");
+		}
 		
 		function modifyform_check() {
 
