@@ -35,7 +35,7 @@
  /* nav */
  
 .nav{
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0,0,0,0.9);
     height: 50px;
 }
 
@@ -49,7 +49,7 @@
 	vertical-align : middle;
 	font-size : 30px;
 	background : black;
-	color : white;
+	color : #fffff5;
 	justify-content:center;
 	float:left;
 	align-items:center;
@@ -81,8 +81,8 @@
         <div class="gallary">
 			<ul>
 
-                <li class="col-12"><img src="/resources/image/header/flower1.PNG" alt="배너이미지" width="100%" ></li>
-                <li class="col-12"><img src="/resources/image/header/flower2.PNG" alt="배너이미지" width="100%" ></li>
+                <li class="col-12"><img src="/resources/image/header/banner1.png" alt="배너이미지" width="100%" ></li>
+                <li class="col-12"><img src="/resources/image/header/1.jpg" alt="배너이미지" width="100%" ></li>
                 <li class="col-12"><img src="/resources/image/header/flower3.PNG" alt="배너이미지" width="100%" ></li>
                 <li class="col-12"><img src="/resources/image/header/flower4.PNG" alt="배너이미지" width="100%" ></li>
             </ul>

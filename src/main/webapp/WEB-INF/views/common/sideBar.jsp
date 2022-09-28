@@ -107,7 +107,6 @@ body{
 						비밀번호:<br>
 						<input type="password" name="memberPwd"><br>
 						<input type="submit" value="로그인"><br>
-						<a href="/member/findId.kh">ID찾기</a> <br>
 						<a href="/member/joinView.kh">회원가입</a> <br>
 			</form>
 		</c:if>
