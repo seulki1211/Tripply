@@ -56,11 +56,11 @@ div{
 				border-radius: 10px;
 				padding: 3px;
 				text-align:center;
+				max-width:300px;
 			}
 
 			.detail-one-wrap{
 				align:center;
-				width:30%;
 			}
 			.thumbnale-wrap{
 				padding:5px 1px;

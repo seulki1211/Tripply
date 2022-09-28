@@ -63,6 +63,7 @@
 <!-- 헤더-메뉴바 -->
 	<div id="header">
 		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
 <!-- 컨텐츠 -->
 	<div id="contents">
@@ -89,7 +90,7 @@
 							<option value="35" label="전라북도"></option>
 							<option value="36" label="전라남도"></option>
 						</select>
-						<input  type="text" id="inputTitle" name="reviewTitle" placeholder="제목을 입력하세요" required="required"><br>
+						<input  type="text" id="inputTitle" onkeyup="titleLengthCheck(this);" name="reviewTitle" placeholder="제목을 입력하세요" required="required"><br>
 						<textarea id="summernote" name="reviewContents"></textarea>
 <!-- 썸네일 선택-->
 						<span onclick="clickThumbnailAppend();" id="test"><button class="writeBtn" type="button">썸네일 새로고침</button></span>
@@ -105,6 +106,8 @@
 </body>
 
 <script>
+
+//썸네일 새로고침 버튼 함수
 function clickThumbnailAppend(){
 	
 	//1.셀렉트 박스 하위 옵션을 먼저 모두 지워준다.
@@ -125,5 +128,14 @@ function clickThumbnailAppend(){
 		}
 	}
 }
+
+//제목 길이 유효성 검사 / 30글자 넘으면 지워진다.
+ function titleLengthCheck(thisInput){
+ 	console.log(thisInput.value.length);
+ 	if(thisInput.value.length>30){
+ 		thisInput.value = thisInput.value.substr(0,30);
+ 	}	
+}
+
 </script>
 </html>

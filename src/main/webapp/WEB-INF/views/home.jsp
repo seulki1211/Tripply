@@ -16,7 +16,11 @@
 	</div>
  <div class="right-side">
 		<div id="contents-1">
-		<!-- 최신글 5개 조회	mbk	 -->
+<!-- 배너	 -->
+			</div>
+				<jsp:include page="/WEB-INF/views/common/banner.jsp"></jsp:include>
+			</div>
+<!-- 최신글 5개 조회	mbk	 -->
 				<br><br>
 				<h3 align="center">최신글</h3>
 	 			<br><br>
@@ -61,7 +65,9 @@
 				</c:if>
 			</table>
 		</div>
-			<br><br>
+		
+<!-- 공지사항		 -->
+		<br><br>
 		<br><br>
 		<br><br>
 		<h3 align="center">공지사항</h3>
@@ -87,12 +93,6 @@
 				</c:forEach>
 			</tbody>
 			</table>
-		</div>
-		<jsp:include page="/WEB-INF/views/common/banner.jsp"></jsp:include>
-		
-		</div>
-		<div id="contents-2"></div>
-		
 	<div id="footer"></div>
 </body>
 
@@ -100,7 +100,6 @@
 function noticeView(noticeNo) {
 	window.open('/home/notice/detail.kh?noticeNo='+noticeNo+'', 'window', 'width=800, height=700, menubar=no, status=no, toolbar=no');
 }
-
 
 //로그인 체크 기능
 function loginCheck(loginId,url){
@@ -110,7 +109,6 @@ function loginCheck(loginId,url){
 		alert("로그인을 해주세요.")
 	}
 }
-
 
 </script>
 </html>

@@ -1,33 +1,66 @@
 @charset "UTF-8";
 
+/* 바디,헤더,컨텐츠,푸터 폭 설정 */
 body{
 }
 #header{
+	width: 1100px;
 }
 #contents{
-	
+	width: 1100px;
 }
+#footer{
+	width: 1100px;
+}
+div{
+/* 	border: 1px solid black; */
+}
+
+/* 사이드바 */
 #sideBar{
 	position:relative;
 	display:block;
 	float: left;
 	height:800px;
-	width:150px;
-	background-color:lightcyan;
+	width:160px;
+	border-right: 2px solid rgb(210,210,210);
 	font-weight: bold;
 }
-	#point-navi{
-	
-		font-whight: normal;
-		background-color:lavender;
+	.side-bar{
+		height:10%;
+		text-align:center;
+		border-bottom: 2px solid rgb(210,210,210);
 	}
-		li{
-			list-style: none;
+		.side-bar:hover{
+			cursor:pointer;
+			background-color:rgb(180,180,180);
 		}
-		.li{
-			width:100%;
+
+	#point-navi{
+		font-whight: normal;
+		background-color:rgb(250,250,250);
+	}
+	.point-li{
+		height:20%;
+		text-align:center;
+		border-bottom: 2px solid rgb(210,210,210);
+	}
+		.point-li:hover{
+			background-color:rgb(180,180,180);
 		}
-		.li:hover{
-			background-color:gold;
-		}
+			#side-charge{
+				background-color:rgb(180,180,180);
+			}
+			
+/* 충전	 */
+#charge-area{
+	margin: 30px auto;
+	width:500px;
+}
+	#charge-title{
+		text-align:center;
+	}
+#pointCharge-form{
+	
+}
 		

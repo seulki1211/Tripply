@@ -12,20 +12,44 @@
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 <style type="text/css">
 
+body{
+	min-width: 1100px;
+}
+
 .login-area {
     list-style-type: none;
     padding-left: 10px;
-    margin-top: 0px;
+    margin-top: -395px;
+    margin-left: 5px;
     width: 200px;
-    background-color: rgba(0,0,0,0.9);
-    height: 100%;
+    background-color: rgba(255,255,255,0.9);
+    height: 200px;
     overflow: auto;
     position: fixed;
     font-family: 'Jua', sans-serif;	
-    color:white;
-     cuusor: pointer;
-    
+    color:black;
+    cursor: pointer;
+    border:1px solid rgb(210,210,210);
+   	border-radius: 10px;
+   	display:none;
+   	z-index: 1000;
   }
+  	#login-menu{
+  		width: 60px;
+  		height: 50px;
+  		margin-top:-445px;
+  		margin-left:-20px;
+  		background-color: rgba(255,255,255,0.8);
+    	overflow: auto;
+	    position: fixed;
+	    font-family: 'Jua', sans-serif;	
+	    border-radius: 40px;
+	    cursor: pointer;
+	    z-index:999;
+  	}
+  	.bottom_line{
+  		bordor-bottom: 3px solid white;
+  	}
   
   ul.service-menu {
     list-style-type: none;
@@ -44,7 +68,7 @@
     text-decoration: none;
     padding: 10px;
     display: block;
-    color: #fff;
+    color: black;
     font-weight: bold;
      cuusor: pointer;
   }
@@ -96,12 +120,25 @@
 			</c:if>
 	</div>
 	
+	<div id="login-menu" onclick="loginMenuToggle(this);">
+<!-- 		<img alt="" src="/resources/image/header/tripply-logo.png"> -->
+	</div>
+	
     
     </div>
         
      <script type="text/javascript">
 		function messageView(memberNickname) {
 			window.open('/message/recvList.kh?msgReciever='+memberNickname+'', 'window', 'width=800, height=700, menubar=no, status=no, toolbar=no');
+		}
+		
+		function loginMenuToggle(target){
+			var loginArea = target.previousElementSibling;
+			if(loginArea.style.display == "none"){
+				loginArea.style.display = "block";
+			}else{
+				loginArea.style.display = "none";
+			}
 		}
      </script>
        

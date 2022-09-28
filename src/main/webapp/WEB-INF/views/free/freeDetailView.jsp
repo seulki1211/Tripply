@@ -11,6 +11,7 @@
 <body>
 	<div>
 		<jsp:include page="../common/menuBar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
 	<br><br>
 	<table align="center" width="500" border="1">

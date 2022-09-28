@@ -12,6 +12,7 @@
 	<!-- 헤더-메뉴바 -->
 	<div id="header">
 	<jsp:include page="../common/menuBar.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
 	<h1 align="center">아이디 찾기</h1>
 	<div class="findId-Email">

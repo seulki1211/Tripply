@@ -125,7 +125,7 @@ public class PointController {
 			//2.성공 시 포인트히스토리에 INSERT한다.
 			int registerHistoryResult = pService.registerPointHistory(point);
 			if(registerHistoryResult>0) {
-				mv.addObject("message","충전")
+				mv.addObject("message","전송")
 				.addObject("point",point)
 				.setViewName("/point/pointWorkSuccess");
 			}else {

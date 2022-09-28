@@ -84,7 +84,7 @@
             </ul>
       
             <div class="logo col-12">
-               <a href="/home.kh"> <img src="/resources/image/header/tripply-logo.png" alt="로고이미지" width="400px"></a>
+               <a href="/home.kh"> <img id="logo-img" src="/resources/image/header/tripply-logo.png" alt="로고이미지" width="400px"></a>
             </div>
 		</div>
         <div class="nav justify-content-center">
