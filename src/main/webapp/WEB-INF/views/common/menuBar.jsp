@@ -77,8 +77,8 @@
 	   <div class="header" style="height: 450px;">
         <div class="gallary">
 			<ul>
-                <li class="col-12"><img src="/resources/image/header/flower1.PNG" alt="배너이미지" width="1920px" ></li>
-                <li class="col-12"><img src="/resources/image/header/flower2.PNG" alt="배너이미지" width="1920px" ></li>
+                <li class="col-12"><img src="/resources/image/header/1.jpg" alt="배너이미지" width="1920px" ></li>
+                <li class="col-12"><img src="/resources/image/header/2.jpg" alt="배너이미지" width="1920px" ></li>
                 <li class="col-12"><img src="/resources/image/header/flower3.PNG" alt="배너이미지" width="1920px" ></li>
                 <li class="col-12"><img src="/resources/image/header/flower4.PNG" alt="배너이미지" width="1920px" ></li>
             </ul>

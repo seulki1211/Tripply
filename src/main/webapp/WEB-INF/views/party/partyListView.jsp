@@ -73,6 +73,7 @@
 							<div align="center">
 								<span class="detail region">[${party.partyLocation }]</span>
 								
+								
 								<c:if test="${(!empty loginUser) and (today le party.partyFirstDate) }">
 								<a href='/party/detail.kh?partyNo=${party.partyNo }&page=${currentPage }'>${party.partyTitle }</a>
 								</c:if>
