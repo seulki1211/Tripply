@@ -101,7 +101,7 @@
 							<option value="35" label="전라북도"></option>
 							<option value="36" label="전라남도"></option>
 						</select>
-						<input type="text" id="inputTitle" name="tradeTitle" placeholder="제목을 입력하세요" required="required"><br>
+						<input type="text" id="inputTitle" onkeyup="titleLengthCheck(this);" name="tradeTitle" placeholder="제목을 입력하세요" required="required"><br>
 						<textarea class="textarea-summer" id="summernote" name="tradeContents"></textarea>
 <!-- 썸네일 선택-->
 						<div id="btn-wrap">
@@ -138,6 +138,14 @@ function clickThumbnailAppend(){
 			index++;
 		}
 	}
+}
+
+//제목 길이 유효성 검사 / 30글자 넘으면 지워진다.
+function titleLengthCheck(thisInput){
+	console.log(thisInput.value.length);
+	if(thisInput.value.length>30){
+		thisInput.value = thisInput.value.substr(0,30);
+	}	
 }
 </script>
 </html>

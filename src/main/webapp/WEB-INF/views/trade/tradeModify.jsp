@@ -17,6 +17,7 @@
   <script src="/resources/js/summernote-lite.js"></script>
   <script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
   <link rel="stylesheet" href="/resources/css/summernote-lite.css">
+  <link rel="stylesheet" href="/resources/css/trade/tradeWrite.css">
 </head>
 <!-- 스크립트태그-썸머노트설정 -->
 <script>
@@ -79,9 +80,7 @@
 		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
 <!-- 컨텐츠 -->
-	<div id="contents">
-		<div id="sideBar"></div>
-		<div id="contents-1">
+		<div id="write-area">
 			<form action="/trade/modify.kh" method="post">
 					<input type="hidden" name="boardNo" value="${trade.boardNo }">
 					<input type="hidden" name="tradeWriter" value="${trade.tradeWriter }">
@@ -105,7 +104,7 @@
 							<option value="35" label="전라북도"></option>
 							<option value="36" label="전라남도"></option>
 					</select>
-					<input type="text" id="inputTitle" name="tradeTitle" value="${trade.tradeTitle }" required="required"><br>
+					<input type="text" id="inputTitle" onkeyup="titleLengthCheck(this);" name="tradeTitle" value="${trade.tradeTitle }" required="required"><br>
 					<textarea id="summernote" name="tradeContents">
 						${trade.tradeContents }
 					</textarea>
@@ -116,8 +115,6 @@
 						<button>저장</button>
 			</form>
 		</div>
-		<div id="contents-2"></div>
-	</div>
 <!-- 푸터 -->
 	<div id="footer"></div>
 </body>
@@ -142,6 +139,14 @@ function clickThumbnailAppend(){
 			index++;
 		}
 	}
+}
+
+//제목 길이 유효성 검사 / 30글자 넘으면 지워진다.
+function titleLengthCheck(thisInput){
+	console.log(thisInput.value.length);
+	if(thisInput.value.length>30){
+		thisInput.value = thisInput.value.substr(0,30);
+	}	
 }
 </script>
 </html>

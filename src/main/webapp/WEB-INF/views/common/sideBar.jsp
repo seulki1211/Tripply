@@ -39,7 +39,7 @@ body{
   		height: 50px;
   		margin-top:-445px;
   		margin-left:-20px;
-  		background-color: rgba(0,0,0,0.8);
+  		background-color: rgba(255,255,255,0.8);
     	overflow: auto;
 	    position: fixed;
 	    font-family: 'Jua', sans-serif;	
@@ -121,6 +121,7 @@ body{
 	</div>
 	
 	<div id="login-menu" onclick="loginMenuToggle(this);">
+<!-- 		<img alt="" src="/resources/image/header/tripply-logo.png"> -->
 	</div>
 	
     
