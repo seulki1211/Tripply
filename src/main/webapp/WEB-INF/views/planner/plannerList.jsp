@@ -12,23 +12,27 @@
 position:relative;
 } 
 .p_table{
+width:85%;
+height:100%;
+
  position: absolute;
-  margin-left:auto; 
-  margin-right:auto;
+ align:center;
+ margin-left:auto; 
+  margin-right:100;
     z-index: 1;
 }
-.planL-popupcontainer {
+.popupcontainer {
     position: absolute;
     z-index: 2;
-    top: -30px;
-  	left: 500px;
+    top: 500px;
+  	left: 550px;
     width: 100;
     height: 100;
     display: none;
     background: rgba(0, 0, 0, 0.7);
 }
 
-.planL-popbox {
+.popbox {
     width: 700px;
     height: 550px;
     position: relative;
@@ -40,14 +44,14 @@ position:relative;
     text-align: center;
 }
 
-.planL-popheadbox {
+.popheadbox {
     width: 700px;
     height: 80px;
     border: 4px solid #abb2c7;
     position: relative;
 }
 
-.planL-popheadbox__span--big {
+.popheadbox__span--big {
     position: absolute;
     top: 15px;
     left: 20px;
@@ -56,7 +60,7 @@ position:relative;
     font-family: 'Jua', sans-serif;
 }
 
-.planL-popheadbox__button--big {
+.popheadbox__button--big {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -71,7 +75,7 @@ position:relative;
     cursor: pointer;
 }
 
-.planL-popcontentbox {
+.popcontentbox {
     height: 450px;
     width: 700px;
     border-left: 4px solid #abb2c7;
@@ -79,13 +83,13 @@ position:relative;
     border-bottom: 4px solid #abb2c7;
 }
 
-.planL-popdetailbox {
+.popdetailbox {
     width: 100%;
     height: 80px;
     position: relative;
 }
 
-.planL-popdetailbox__span--big {
+.popdetailbox__span--big {
     width: 100px;
     height: 100px;
     font-size: 23px;
@@ -96,14 +100,14 @@ position:relative;
     font-family: 'Jua', sans-serif;
 }
 
-.planL-popdetailbox__span--small {
+.popdetailbox__span--small {
     position: absolute;
     top: 44px;
     right: 275px;
     font-weight: bolder;
 }
 
-.planL-popdetailbox__input--gray {
+.popdetailbox__input--gray {
     position: absolute;
     top: 36px;
     right: 100px;
@@ -112,7 +116,7 @@ position:relative;
     border: 2.5px solid #dadce0;
     font-size: 16px;
 }
-.planL-popdetailbox__input {
+.popdetailbox__input {
     position: absolute;
     top: 36px;
     right: 100px;
@@ -122,7 +126,7 @@ position:relative;
     font-size: 16px;
 }
 
-.planL-popdetailbox__input--date {
+.popdetailbox__input--date {
     width: 150px;
     height: 35px;
     margin-left: 87px;
@@ -132,7 +136,7 @@ position:relative;
     font-size: 14px;
 }
 
-.planL-popbtnbox__input--blue {
+.popbtnbox__input--blue {
     width: 200px;
     height: 50px;
     background-color: lightsteelblue;
@@ -145,10 +149,9 @@ position:relative;
     cursor: pointer;
 }
 
-.p_table{
-width:100%;
-height:100%;
-}
+ .pagination{
+        justify-content: center;
+    }
 </style>
 </head>
 
@@ -167,13 +170,12 @@ height:100%;
 <body>
 <div id="header">
 		<jsp:include page="/WEB-INF/views/common/menuBar.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 </div>
-<div class="wrap">
+<div class="right-side">
  <h1 align="center">일정 목록</h1>
 	<br><br>
-	<table class="p_table" >
-				<tr>
-			<td colspan="5"align="center">
+	<div class="row justify-content-center">
 			<form action="/plan/search.kh" method="get">
 			
 				<select name = "searchCondition" >
@@ -204,45 +206,46 @@ height:100%;
 				<input type="text" name="searchValue" value="${searchValue }">
 				<input type="submit" class="btn btn-dark" value="검색">
 			</form>
-				</td> 
-				<td align="center">
-					<div>
+				<button class="btn btn-dark" id="btn">플래너 작성</button>
+		</div>
+					<!-- <div>
  <button class="btn btn-dark" id="btn">플래너 작성</button>
-</div>
-<div class="planL-popupcontainer" id="popup">
+</div> -->
+<br><br>
+<div class="popupcontainer" id="popup">
 
-    <div class="planL-popbox">
+    <div class="popbox">
 
         <!-- 플래너 팝업창 header 부분 -->
-        <div class="planL-popheadbox">
-            <span class="planL-popheadbox__span--big">플래너 만들기</span>
-            <button class="planL-popheadbox__button--big" id="popdown">닫기</button>
+        <div class="popheadbox">
+            <span class="popheadbox__span--big">플래너 만들기</span>
+            <button class="popheadbox__button--big" id="popdown">닫기</button>
         </div>
         <!-- // 플래너 팝업창 header 부분 -->
 
         <!-- 플래너 팝업창 입력 부분 -->
-        <div class="planL-popcontentbox">
+        <div class="popcontentbox">
             <form action="/plan/regist.kh" method="post" enctype="multipart/form-data"> <!-- name="popupFrm" onsubmit="return popupCheck()" -->
 			<%-- <input type="hidden" name=boardNo value="${planner.boardNo}"> --%>
 			<%-- <input type="text" name=memberId value="${planner.memberId}"> --%>
-                <div class="planL-popdetailbox">
-                    <span class="planL-popdetailbox__span--big">여행제목</span>
-                    <input type="text" name="planTitle" placeholder="20자 내로 입력해주세요" maxlength="20" class="planL-popdetailbox__input--gray" required>
+                <div class="popdetailbox">
+                    <span class="popdetailbox__span--big">여행제목</span>
+                    <input type="text" name="planTitle" placeholder="20자 내로 입력해주세요" maxlength="20" class="popdetailbox__input--gray" required>
                 </div>
 
-                <div class="planL-popdetailbox">
-                    <span class="planL-popdetailbox__span--big">여행기간</span>
-                    <input type="date" name="firstDay" class="planL-popdetailbox__input--date" required>
-                    <span class="planL-popdetailbox__span--small">~</span>
-                    <input type="date" name="lastDay" class="planL-popdetailbox__input--date" required>
+                <div class="popdetailbox">
+                    <span class="popdetailbox__span--big">여행기간</span>
+                    <input type="date" name="firstDay" class="popdetailbox__input--date" required>
+                    <span class="popdetailbox__span--small">~</span>
+                    <input type="date" name="lastDay" class="popdetailbox__input--date" required>
                 </div>
-                <div class="planL-popdetailbox">
-                <span class="planL-popdetailbox__span--big">썸네일</span>
-                <input type = "file" name="uploadFile" class="planL-popdetailbox__input--gray">
+                <div class="popdetailbox">
+                <span class="popdetailbox__span--big">썸네일</span>
+                <input type = "file" name="uploadFile" class="popdetailbox__input--gray">
                 </div>
-                <div class="planL-popdetailbox">
-                <span class="planL-popdetailbox__span--big">여행장소</span>
-                <select name="plannerLocation" class="planL-popdetailbox__input">
+                <div class="popdetailbox">
+                <span class="popdetailbox__span--big">여행장소</span>
+                <select name="plannerLocation" class="popdetailbox__input">
 						<option value="전국" label="전국"></option>
 						<option value="서울" label="서울"></option>
 						<option value="부산" label="부산"></option>
@@ -263,8 +266,8 @@ height:100%;
 						<option value="전라남도" label="전라남도"></option>
 					</select>
                 </div>
-                <div class="planL-popbtnbox">
-                    <input type="submit" class="planL-popbtnbox__input--blue" value="플래너 만들기">
+                <div class="popbtnbox">
+                    <input type="submit" class="popbtnbox__input--blue" value="플래너 만들기">
                 </div>
             </form>
         </div>
@@ -272,29 +275,54 @@ height:100%;
 
     </div>
 </div>
-
+	<table class="p_table" >
 		<c:if test="${!empty pList }">
 		<tr>
 		<c:forEach items ="${pList }" var="planner" varStatus = "i">
 		<!--var는 여기서 사용하는 변수명을 적음  -->
 			<td>
+			<div class="card">
 			<div class="detail title thumbnale-wrap" align="center">
 			<c:if test="${empty planner.plannerFileName }">
-				<img alt="기본이미지" src="/resources/image/basic.jpg" width='300px' height="200px">
-				
+				<c:if test="${!empty loginUser.memberId }">
+				<a href="/planner/planerDetail.kh?boardNo=${planner.boardNo }&page=${currentPage}#">
+				<img alt="기본이미지" src="/resources/image/tripply-logo.png" width='350px' height="300px">
+				</a>
+				</c:if>
+				<c:if test="${empty loginUser.memberId }">
+				<a>
+				<img alt="기본이미지" src="/resources/image/tripply-logo.png" width='350px' height="300px" onclick="message()">
+				</a>
+				</c:if>
 			</c:if>
 			<c:if test="${!empty planner.plannerFileName }">
-				<img alt="유저이미지" src="/resources/planneruploadFiles/${planner.plannerFileRename}" width='300px' height="200px">
+				<c:if test="${!empty loginUser.memberId }">
+				<a href="/planner/planerDetail.kh?boardNo=${planner.boardNo }&page=${currentPage}#">
+				<img alt="유저이미지" src="/resources/planneruploadFiles/${planner.plannerFileRename}" width='350px' height="300px">
+				</a>
+				</c:if>
+				<c:if test="${empty loginUser.memberId }">
+				<a>
+				<img alt="유저이미지" src="/resources/planneruploadFiles/${planner.plannerFileRename}" width='350px' height="300px"
+				onclick="message()">
+				</a>
+				</c:if>
 			</c:if>
 			</div>
 			<div align="center">
 			<span class="title">[${planner.plannerLocation }]</span>
+			<c:if test="${!empty loginUser.memberId }">
 			<a href="/planner/planerDetail.kh?boardNo=${planner.boardNo }&page=${currentPage}#"> ${planner.planTitle }</a>
+			</c:if>
+			<c:if test="${empty loginUser.memberId }">
+			<div>${planner.planTitle }</div>
+			</c:if>
 			<div>${planner.planWriter }</div>
 			<div>${planner.firstDay}-${planner.lastDay }</div>
 			<div>
 			<img alt="눈모양 아이콘" src="/resources/image/viewcount.jpg" width="25px" height="25px">
 			${planner.plannerCount }
+			</div>
 			</div>
 			</div>
 			</td>
@@ -305,7 +333,34 @@ height:100%;
 		</c:forEach>
 		
 			</tr>
-		<tr align="center" height="20">
+			<tr >
+		<td colspan="6">
+		<div class="paging">
+		<nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+				<c:if test="${currentPage != 1}">
+					<a class="page-link" href="/plan/${urlVal }.kh?page=${currentPage - 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[이전]</a>
+					
+				</c:if>
+				</li>
+				<c:forEach var="p" begin="${startNavi }" end="${endNavi }">
+					<c:if test="${currentPage eq p }">
+					<li class="page-item"><b class="page-link">${p }</b></li>						
+					</c:if>
+					<c:if test="${currentPage ne p }">						
+					<li class="page-item"><a class="page-link"  href="/plan/${urlVal }.kh?page=${p }&searchCondition=${searchCondition}&searchValue=${searchValue}">${p }</a></li>
+					</c:if>
+				</c:forEach>
+				<c:if test="${maxPage > currentPage }">
+				<a class="page-link" href="/plan/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
+				</c:if>
+				</li>
+        </ul>
+      </nav>
+		</div>
+		</tr>
+<%-- 		<tr align="center" height="20">
 			<td colspan="6">
 			
 				<c:if test="${currentPage != 1}">
@@ -323,20 +378,23 @@ height:100%;
 				<a href="/plan/${urlVal }.kh?page=${currentPage + 1 }&searchCondition=${searchCondition}&searchValue=${searchValue}">[다음]</a>
 				</c:if>
 			</td>
-		</tr>
+		</tr> --%>
 		</c:if>
 		<c:if test="${empty pList }">
 			<tr>
 			<td colspan="6" aligin="center">데이터가 존재하지 않습니다</td>
 			</tr>
 		</c:if>
-		
-	
- 
+
 	</table>
 	</div>
 		
 
 
 </body>
+<script>
+function message(){
+	alert("로그인하세요");
+}
+</script>
 </html>

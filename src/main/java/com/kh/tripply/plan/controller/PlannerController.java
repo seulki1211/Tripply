@@ -119,11 +119,9 @@ public class PlannerController {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 			String boardFileRename = sdf.format(new Date(System.currentTimeMillis()))+"."
 					+boardFilename.substring(boardFilename.lastIndexOf(".")+1);//오늘 날짜 시분초+확장자명 붙임
-			//1.png, img.png
 			if(!file.exists()) {
 				file.mkdir();
 			}
-			/////////////////////////////////////////////////////////////////////////////////////파일 여러개는??for문 
 			uploadFile.transferTo(new File(savePath+"\\"+boardFileRename));
 			String boardFilepath= savePath+"\\"+boardFileRename;
 			planner.setPlannerFileName(boardFilename);
@@ -161,7 +159,8 @@ public class PlannerController {
 	@RequestMapping(value="/plan/plan.kh", method=RequestMethod.GET)
 	public ModelAndView planerListShow(
 			ModelAndView mv
-			,@RequestParam(value="page", required=false) Integer page) {
+			,@RequestParam(value="page", required=false) Integer page
+			,HttpSession session) {
 		int currentPage=(page !=null) ? page : 1;
 		int totalCount = pService.getTotalCount("","","");//현재 페이지 값과 전체 게시물 갯수 가져옴
 		int boardLimit=9;
@@ -187,6 +186,7 @@ public class PlannerController {
 			mv.addObject("endNavi",endNavi);
 			mv.addObject("pList",pList);
 		}
+		
 		mv.setViewName("planner/plannerList");
 		return mv;
 	}
