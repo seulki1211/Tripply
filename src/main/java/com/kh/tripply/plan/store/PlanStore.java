@@ -41,4 +41,6 @@ public interface PlanStore {
 
 	public int updateReply(SqlSession session, PlannerReply plannerReply);
 
+	public int organizePlan(SqlSession session);
+
 }

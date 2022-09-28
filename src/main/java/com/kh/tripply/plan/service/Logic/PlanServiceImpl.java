@@ -113,6 +113,13 @@ public class PlanServiceImpl implements PlanService{
 		return result;
 	}
 
+	//플랜정리
+	@Override
+	public int organizePlan() {
+		int result2 = pStore.organizePlan(session);
+		return result2;
+	}
+
 	
 
 

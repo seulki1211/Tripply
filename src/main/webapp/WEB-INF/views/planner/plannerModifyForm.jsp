@@ -93,9 +93,6 @@ border:1px solid;
 		<div class="readinfo">
 			<input type="hidden" name="page" id="page"value="${page }" />
 			<input type="hidden" name="boardNo" id="boardNo"value="${planner.boardNo }" />
-			<%-- <input type="text" name="title" id="planTitle"value="${planner.planTitle }" />
-			<input type="text" name="firstDay" id="firstDay"value="<fmt:formatDate value="${planner.firstDay}" pattern="yyyy-MM-dd" />" />
-			<input type="text" name="lastDate" id="lastDay"value="<fmt:formatDate value="${planner.lastDay}" pattern="yyyy-MM-dd" />" />  --%>
 		
 		<span>[${planner.plannerLocation}]</span>	
 			<h2>${planner.planTitle}</h2>
@@ -109,7 +106,7 @@ border:1px solid;
 		
 		<div class="resultButton">
 			<button  form="submitForm" type="submit" class="btn btn-outline-info" >저장</button>
-			<button class="btn btn-outline-danger" onclick="plannerRemove(${page})">닫기</button>
+			<button class="btn btn-outline-danger" onclick="location.href='/planner/planerDetail.kh?boardNo=${planner.boardNo }&page=${page}'">닫기</button>
 		</div>
 		
 	</div>
@@ -145,36 +142,20 @@ border:1px solid;
 	<c:forEach items="${planList }" var="plan" varStatus="i">
  	<c:if test= "${plan.day eq day}">
  	
-	<div id="plan" class="planNum${i.count-1 }">${i.count-1 }
+	<div id="plan" class="planNum${i.count }"><span class="badge badge-secondary">${i.count }</span>
 	<input type="hidden" name="planList[${i.count-1}].boardNo" id="boardNo" value="${plan.boardNo}"/>		
 	<input type="hidden" name="planList[${i.count-1}].day" id="planDate" value="${plan.day}"/>		
 	<input type="hidden" name="planList[${i.count-1}].Y" id="planY" value="${plan.y}"/>		
 	<input type="hidden" name="planList[${i.count-1}].X" id="planX" value="${plan.x}"/>		 
-	<input type="text" name="planList[${i.count-1}].address" id="planTitle" value="${plan.address}"/><br>		
+	<input type="text"  name="planList[${i.count-1}].address" id="planTitle" class="form-control"value="${plan.address}"readonly/>		
 	<div>Memo</div>	
-	<textarea cols="30px" rows="3px" name="planList[${i.count-1}].Memo" id="planMemo">${plan.memo} </textarea>
-	<button class="planDetailButton" onclick="planDelete(${i.count})">&times;</button></div>
+	<textarea cols="40" rows="3" name="planList[${i.count-1}].Memo" id="planMemo">${plan.memo} </textarea>
+	<button class="planDetailButton" onclick="planDelete(${i.count},${i.count-1},${plan.boardNo},${plan.day},${plan.y},${plan.x})">&times;</button></div>
 			
-			<%--  <tr>
-			<td>${i.count }</td>
-			<td>${plan.day }</td>
-			<td>${plan.address }</td>
-			<td>${plan.y }</td>
-			<td>${plan.x }</td>
-			<td>${plan.memo }</td>
-			<td><button class="planDetailButton" onclick="planDelete("${i.count }")">&times;</button></td>
-			</tr>  --%>
-			
+		
 			</c:if> 
 			</c:forEach>
-			<!-- </table> -->
-   	<!-- <input type='hidden' name='planList["+i+"].boardNo' id='boardNo'value="+boardNo +" />"
-   	<input type='hidden' name='planList["+i+"].day' id='planDate'value="+data_date +" />"
-   	<input type='hidden' name='planList["+i+"].Y' id='planY'value="+place_y+" />"
-   	<input type='hidden' name='planList["+i+"].X' id='planX'value="+place_x +" />"
-   	<input type='text' name='planList["+i+"].address' id='planTitle'value="+place_name+" /><br>"
-   	<input type='text' name='planList["+i+"].Memo' id='planMemo'placeholder='20자 이내로 입력하세요'maxlength='20' />"
-    <button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\')\">&times;</button></div> </div>"; -->
+			
 			</div>
 		</c:forEach>
 		
@@ -204,23 +185,7 @@ border:1px solid;
 	</div>
 	</div>
 	</body>
-<script type="text/javascript">
-function plannerRemove(page){
-	event.preventDefault();//하이퍼링크 이동 방지
-	if(confirm("게시물작성을 취소하시겠습니까?")){
-		location.href="/plan/infoRremove.kh";
-		
-	}
-}
-/* function plannerSave(){
-	event.preventDefault();//하이퍼링크 이동 방지
-	if(confirm("게시물을 저장하겠습니까?")){
-		planList.removeAll(Arrays.asList("", null));
-		location.href="/plan/registplan.kh";
-	}
-	
-} */
-</script>
+
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55f8ef22507421de3927e33382a4c630&libraries=services,clusterer,drawing"></script>
 	<script>
@@ -508,20 +473,20 @@ var markers = [];
    	div +="<input class='form-control' type='text' name='planList["+i+"].address' id='planTitle'value="+place_name+" /><br>"
    	div +="<div>Memo</div>"
    	div +="<textarea cols='40'rows='3' name='planList["+i+"].Memo' id='planTitle' > </textarea>"
-    div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\')\">&times;</button></div>";
+    div += "<button class=\"planDetailButton\" onclick=\"planDelete(\'" + num  +"\','"+i+"','"+boardNo+"','"+data_date+"','"+place_y+"','"+place_x+"','"+place_name+"')\">&times;</button></div>";
    
     return div;
    }
   
    
-   function planDelete(num,i){
+   function planDelete(num,i,boardNo,data_date,place_y,place_x){
 	   event.preventDefault();
 	   var parent =  $('.planI-plansbox[style*="display: block"]');
        var kid = parent.children().eq(num); // 일정 부분에 제목도 자식에 포함되기에 index +1
        var next_kids = parent.nextAll();
 
        kid.detach();
-
+       parent.append(getdelHtml(num,i,boardNo,data_date,place_y,place_x));
         next_kids.each(function (index, element){
       /*      var url = "_image/plan/num/number" + num + ".png";
            $(this).find('img').attr("src", url); */
@@ -531,6 +496,14 @@ var markers = [];
            ++ num;
        }); 
    }
+   function getdelHtml(num,i,boardNo,data_date,place_y,place_x){
+		  var div="<div class=\"planNum\""+i+"><span class='badge badge-secondary'>"+i+"</span>";
+		div +="<input type='text' name='planList["+i+"].boardNo' id='boardNo'value='"+boardNo +"'/>"
+	   	div +="<input type='hidden' name='planList["+i+"].day' id='planDate'value='"+data_date +"' />"
+	    div +="<input type='hidden' name='planList["+i+"].Y' id='planY'value='"+place_y+"'/>"
+	  	div +="<input type='hidden' name='planList["+i+"].X' id='planX' value='"+place_x+"'/>"
+	    return div;
+	   }
 
 	 
 	 </script>	
