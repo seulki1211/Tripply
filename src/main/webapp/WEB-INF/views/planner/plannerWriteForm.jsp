@@ -504,7 +504,7 @@ var markers = [];
    }
    function getdelHtml(num,i,boardNo,data_date,place_y,place_x){
 	  var div="<div class=\"planNum\""+i+"><span class='badge badge-secondary'>"+i+"</span>";
-		div +="<input type='text' name='planList["+i+"].boardNo' id='boardNo'value="+boardNo +" />"
+		div +="<input type='hidden' name='planList["+i+"].boardNo' id='boardNo'value="+boardNo +" />"
 	   	div +="<input type='hidden' name='planList["+i+"].day' id='planDate'value="+data_date +" />"
 	    div +="<input type='hidden' name='planList["+i+"].Y' id='planY'value="+place_y+" />"
 	   	div +="<input type='hidden' name='planList["+i+"].X' id='planX'value="+place_x +" />" 

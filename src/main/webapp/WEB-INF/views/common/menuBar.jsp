@@ -14,6 +14,9 @@
     display : block;
 }
     
+.recent_title{
+	margin-top:30px;
+}    
     /* gallary */
 	.gallary {position: relative; width: 100%; height: 400px; top: 0px;  margin:0 auto; padding:0; overflow:hidden; }
 	.gallary ul {position: absolute; margin: 0px; padding: 0px; list-style: none;  }
@@ -77,10 +80,11 @@
 	   <div class="header" style="height: 450px;">
         <div class="gallary">
 			<ul>
-                <li class="col-12"><img src="/resources/image/header/1.jpg" alt="배너이미지" width="1920px" ></li>
-                <li class="col-12"><img src="/resources/image/header/2.jpg" alt="배너이미지" width="1920px" ></li>
-                <li class="col-12"><img src="/resources/image/header/flower3.PNG" alt="배너이미지" width="1920px" ></li>
-                <li class="col-12"><img src="/resources/image/header/flower4.PNG" alt="배너이미지" width="1920px" ></li>
+
+                <li class="col-12"><img src="/resources/image/header/flower1.PNG" alt="배너이미지" width="100%" ></li>
+                <li class="col-12"><img src="/resources/image/header/flower2.PNG" alt="배너이미지" width="100%" ></li>
+                <li class="col-12"><img src="/resources/image/header/flower3.PNG" alt="배너이미지" width="100%" ></li>
+                <li class="col-12"><img src="/resources/image/header/flower4.PNG" alt="배너이미지" width="100%" ></li>
             </ul>
       
             <div class="logo col-12">

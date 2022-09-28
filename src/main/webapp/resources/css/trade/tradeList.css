@@ -9,7 +9,9 @@ div{
 }
 
 #contents{
-	
+	width:100%;
+	display:flex;
+	justify-content:space-around;
 }
 	#search-area{
 			height:40px;
@@ -20,6 +22,7 @@ div{
 		}
 		.search-wrap{
 			padding-bottom:15px;
+			dispaly:block;
 		}
 			.searchCon{
 				border:1px solid rgb(210,210,210) ;
@@ -39,7 +42,8 @@ div{
 			}
 	#list-area{
 		width:80%;
-		margin:0 auto;
+	/* 	margin:0 auto; */
+	
 	}
 		#list-table{
 			width:100%;
@@ -58,9 +62,9 @@ div{
 				text-align:center;
 				max-width:300px;
 			}
-
 			.detail-one-wrap{
-				align:center;
+				text-align:center;	
+				padding-left:50px;
 			}
 			.thumbnale-wrap{
 				padding:5px 1px;
@@ -71,17 +75,14 @@ div{
 					width: 90%;
 					border-radius: 10px;
 				}
-
 				.title{
 					display:block;
 					width:250px;
 					overflow:hidden;
-					text-overflow:hidden;
 					white-space: nowrap; 
 					text-overflow: ellipsis;
 					margin:0 auto;
-				}	
-				
+				}					
 	#pageNavi{
 		margin-top:10px;
 		text-align:center;
@@ -97,6 +98,7 @@ div{
 		}
 	#write-wrap{
 		text-align:center;
+		
 	}	
 	
 	.writeBtn{
@@ -105,7 +107,7 @@ div{
 				padding:3px;
 				background-color:lightcyan;
 				border:1px solid rgb(210,210,210) ;
-				margin: 3px auto;
+				margin-top: 3px auto;
 	}	
 			
 #footer{
@@ -114,3 +116,5 @@ div{
 	border-top : 2px solid rgb(210,210,210);
 	background-color:lavender;
 }
+
+

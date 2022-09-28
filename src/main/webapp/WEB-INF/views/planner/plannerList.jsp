@@ -12,7 +12,7 @@
 position:relative;
 } 
 .p_table{
-width:85%;
+width:100%;
 height:100%;
 
  position: absolute;
@@ -173,7 +173,8 @@ height:100%;
 		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 </div>
 <div class="right-side">
- <h1 align="center">일정 목록</h1>
+<br><br>
+ <h1 align="center">어디로 떠날까요?</h1>
 	<br><br>
 	<div class="row justify-content-center">
 			<form action="/plan/search.kh" method="get">

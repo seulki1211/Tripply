@@ -4,13 +4,13 @@
 body{
 }
 #header{
-	width: 1100px;
+	width: 100%;
 }
 #contents{
-	width: 1100px;
+	width: 100%;
 }
 #footer{
-	width: 1100px;
+	width: 100%;
 }
 div{
 /* 	border: 1px solid black; */
@@ -61,6 +61,6 @@ div{
 		text-align:center;
 	}
 #pointCharge-form{
-	
+	text-align:center;
 }
 		

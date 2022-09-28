@@ -293,6 +293,8 @@ public class FreeController {
 		// session에 저장된 로그인정보를 getAttribute를 통해 불러옴.
 		// Member객체에 담아서 사용하기 위해 Object타입을 Member로 형변환해주고 member 변수에 담음.
 		String memberNickname = member.getMemberNickname();
+		String memberFileRename = member.getMemberFileRename();
+		System.out.println(memberFileRename);
 		// 로그인유저의 닉네임을 getter메소드로 불러와서 mapper에서 ${memberNickname}으로 호출해서 사용.
 		// session 불러오는 건 아주 많이 쓰이니 기억해둘것
 		int currentPage = (page != null) ? page : 1;
@@ -319,6 +321,7 @@ public class FreeController {
 			mv.addObject("startNavi", startNavi);
 			mv.addObject("endNavi", endNavi);
 			mv.addObject("fList", fList);
+			mv.addObject("member", member);
 		}
 		mv.setViewName("free/freeMyWrite");
 		return mv;

@@ -272,7 +272,10 @@ public class PartyController {
 			
 			//urlVal로 url 상황에 맞게 변경하기//////
 			mv.addObject("urlVal", "search");
-
+			//////////today 넘기기///////////////
+	        Date today = new Date(System.currentTimeMillis());
+	        mv.addObject("today",today);
+	         
 			mv.setViewName("party/partyListView");
 
 		} catch (Exception e) {

@@ -9,7 +9,9 @@ div{
 }
 
 #contents{
-	
+	width:100%;
+	display:flex;
+	justify-content:space-around;
 }
 	#search-area{
 			height:40px;
@@ -20,6 +22,7 @@ div{
 		}
 		.search-wrap{
 			padding-bottom:15px;
+			display:block;
 		}
 			.searchCon{
 				border:1px solid rgb(210,210,210) ;
@@ -39,7 +42,7 @@ div{
 			}
 	#list-area{
 		width:80%;
-		margin:0 auto;
+	/* 	margin:0 auto; */
 	
 	}
 		#list-table{
@@ -58,9 +61,11 @@ div{
 				padding: 3px;
 				text-align:center;
 				max-width:300px;
+
 			}
 			.detail-one-wrap{
-				align:center;
+				text-align:center;
+				padding-left:50px; 	
 			}
 			.thumbnale-wrap{
 				padding:5px 1px;

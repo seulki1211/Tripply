@@ -38,7 +38,8 @@
 				</tr>
 				<tr>
 					<td colspan="2" align="right">
-						<input type="submit" value="수정">
+						<!-- <input type="submit" value="수정"> -->
+						<button type="button" onclick="/free/detail.kh?boardNo='${free.boardNo}'&page='${page }'">수정</button>
 						<button type="button" onclick="javascript:history.go(-1);">취소</button> 
 						<%-- <a href="/free/list.kh?page=${page }">목록으로</a>
 						<a href="javascript:history.go(-1);">이전 페이지로</a> --%>
