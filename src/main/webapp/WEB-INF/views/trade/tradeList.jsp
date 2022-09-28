@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>트리플리,Tripply</title>
 <!-- 화면 뼈대 설정용 css -->
-<link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css">
+<!-- <link rel="stylesheet" href="/WEB-INF/resources/css/common-style.css"> -->
 <link rel="stylesheet" href="/resources/css/trade/tradeList.css">
 </head>
 <body>
@@ -17,17 +17,16 @@
 		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
 	<br><br>
-	<h1 align="center" style="font-weight:bolder"> 여행 상품 사고 팔아요</h1>
+	<h1 align="center" > 여행 상품 사고 팔아요</h1>
 	<br>
-<!-- 컨텐츠	 -->
-	<div id="contents" width="90%">
-		<div id="sideBar"></div>
 <!-- 검색		 -->
 		<div id="search-area">
 			<form action="/trade/search.kh" method="get">
 				<jsp:include page="/WEB-INF/views/common/search.jsp"></jsp:include>
 			</form>
 		</div>
+<!-- 컨텐츠	 -->
+	<div id="contents">
 <!-- 게시물목록출력 -->
 		<div id="list-area">
 			<table id="list-table">

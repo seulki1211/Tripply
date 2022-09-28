@@ -18,16 +18,16 @@
 		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
 	<br><br>
-	<h1 align="center" style="font-weight:bolder"> 여행 후기 공유해요</h1>
+	<h1 align="center" > 여행 후기 공유해요</h1>
 	<br>
-<!-- 컨텐츠	 -->
-	<div id="contents" width="90%">
 <!-- 검색		 -->
 		<div id="search-area">
 			<form action="/review/search.kh" method="get">
 				<jsp:include page="/WEB-INF/views/common/search.jsp"></jsp:include>
 			</form>
 		</div>
+<!-- 컨텐츠	 -->
+	<div id="contents">
 <!-- 게시물목록출력 -->
 		<div id="list-area">
 			<table id="list-table">

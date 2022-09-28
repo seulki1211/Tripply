@@ -16,6 +16,13 @@ body{
 	min-width: 1100px;
 }
 
+.login_menu_img{
+	width:90%;
+	height:90%;
+	object-fit:cover;
+	padding-left:17px;
+}
+
 .login-area {
     list-style-type: none;
     padding-left: 10px;
@@ -46,6 +53,7 @@ body{
 	    border-radius: 40px;
 	    cursor: pointer;
 	    z-index:999;
+	    border: solid 1px black;
   	}
   	.bottom_line{
   		bordor-bottom: 3px solid white;
@@ -82,9 +90,9 @@ body{
   
 
   
-  .right-side {
+/*   .right-side {
     margin-left: 200px;
-  }
+  } */
 
 </style>
 </head>
@@ -121,7 +129,7 @@ body{
 	</div>
 	
 	<div id="login-menu" onclick="loginMenuToggle(this);">
-<!-- 		<img alt="" src="/resources/image/header/tripply-logo.png"> -->
+ 		<img alt="img" src="https://t3.ftcdn.net/jpg/05/14/18/46/360_F_514184651_W5rVCabKKRH6H3mVb62jYWfuXio8c8si.jpg" class="login_menu_img">
 	</div>
 	
     

@@ -8,6 +8,11 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <title>트리플리,Tripply</title>
+<style>
+.recent_list{
+	margin-top:70px;
+}   
+</style>
 </head>
 <body>
 	<div id="header">
@@ -22,7 +27,7 @@
 			</div>
 <!-- 최신글 5개 조회	mbk	 -->
 				<br><br>
-				<h3 align="center">최신글</h3>
+				<h3 align="center" class="recent_list">최신글</h3>
 	 			<br><br>
 				<table align="center" class="table table-hover col-10">
 				<tr>

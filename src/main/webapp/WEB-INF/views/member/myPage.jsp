@@ -17,7 +17,7 @@
 	<div class="wrapper-form">
 		<jsp:include page="/WEB-INF/views/common/myside.jsp"></jsp:include>
 		<div class="profile-form">
-			<h1 align="center">회원정보수정</h1>
+			<h1 align="center" class="title_text">회원정보수정</h1>
 			<form action="/member/modify.kh" method="post" name="modify_form" enctype="multipart/form-data">
 			<div class="wrapper">
 				<div class="profile-box">

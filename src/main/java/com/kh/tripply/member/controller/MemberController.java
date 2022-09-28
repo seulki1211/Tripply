@@ -107,7 +107,8 @@ public class MemberController {
 			mv.addObject("member", mOne).addObject("addrInfos", addrInfos);
 			mv.setViewName("member/myPage");
 		} catch (Exception e) {
-			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+//			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+			
 		}
 		return mv;
 	}

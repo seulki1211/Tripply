@@ -36,7 +36,7 @@
 		DELETE FROM MEMBER_TBL WHERE MEMBER_ID = #{memberId}
 	</delete>
 	<select id="selectLoginMember" resultMap="memberResultMap">
-		SELECT MEMBER_ID, MEMBER_NAME, MEMBER_NICKNAME FROM MEMBER_TBL
+		SELECT MEMBER_ID, MEMBER_NAME, MEMBER_NICKNAME, MEMBERFILENAME, MEMBERFILERENAME, MEMBERFILEPATH FROM MEMBER_TBL
 		WHERE MEMBER_ID = #{memberId} AND MEMBER_PWD = #{memberPwd} AND M_STATUS = 'Y'
 	</select>
 	<select id="selectMemberId" resultMap="memberResultMap">

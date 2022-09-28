@@ -15,7 +15,8 @@
 		<jsp:include page="../common/menuBar.jsp"></jsp:include>
 		<jsp:include page="/WEB-INF/views/common/sideBar.jsp"></jsp:include>
 	</div>
-	<h1 align="center">게시글 목록</h1>
+	<br><br>
+	<h1 align="center">자유롭게 얘기해요.</h1>
 	<br><br>
 	<div class="main_table">
 		<table align="center" border="1">
@@ -29,7 +30,7 @@
 			<c:if test="${!empty fList }">
 				<c:forEach items="${fList }" var="free" varStatus="i">
 					<tr>
-						<td>${fn:length(fList) - i.index}<!--${i.count } 얘는 게시글 순서대로 출력--></td>
+						<td>${free.boardNo }<%-- ${fn:length(fList) - i.index} 얘는 DESC로 출력 --%><!--${i.count } 얘는 게시글 ASC로 출력--></td>
 						<td colspan="2"><a href="#" onclick="loginCheck('${loginUser.memberNickname}', '/free/detail.kh?boardNo=${free.boardNo }&page=${currentPage }')" >${free.freeTitle  }</a></td>
 						<!--  -->
 						<td>${free.freeWriter }</td>
@@ -72,12 +73,9 @@
 						</select>
 						<input type="text" name="searchValue" value="${searchValue }">
 						<input type="submit" value="검색">
-						<button onclick="loginCheck('${loginUser.memberId}','/free/writeView.kh')";>글쓰기</button>
 					</form>
+						<button onclick="loginCheck('${loginUser.memberId}','/free/writeView.kh')";>글쓰기</button>
 				</td>
-				<%-- <td>
-					<button onclick="loginCheck('${loginUser.memberId}','/free/writeView.kh')";>글쓰기</button>
-				</td> --%>
 			</tr>
 		</table>
 	</div>

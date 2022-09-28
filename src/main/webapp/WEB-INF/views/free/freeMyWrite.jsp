@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>내가 쓴 게시물</title>
 <link rel="stylesheet" href="/resources/css/common-style.css">
+<link rel="stylesheet" href="/resources/css/free/freeMyWrite.css">
 </head>
 <body>
 <!-- 헤더-메뉴바 -->
@@ -18,7 +19,7 @@
 	<div class="wrapper-form">
 			<jsp:include page="/WEB-INF/views/common/myside.jsp"></jsp:include>
 		<div class="profile-form">
-	<h1 align="center">작성글</h1>
+	<h1 align="center" class="title_text">작성글</h1>
 			<div class="wrapper">
 				<div class="profile-box">
 					<img class="profile" alt="본문이미지" src="/resources/buploadFiles/${member.memberFileRename }" >
@@ -28,11 +29,11 @@
 				<form action="/member/modify.kh" method="post" name="modify_form">
 					<table align="center">
 						<tr>
-							<td colspan="2" align="center">
-							<th>${loginUser.memberNickname }님</th>
+							
+							<th>${loginUser.memberNickname }님의 작성글</th>
 								<!-- <input type="file" name="reloadFile"> -->
 								<!-- <button type="button" id="memberProfile" value="">프로필 사진 변경</button> -->
-							</td>
+							
 						</tr>
 					<table align="center" border="1">
 		<tr>
