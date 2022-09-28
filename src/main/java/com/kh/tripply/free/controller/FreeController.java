@@ -185,10 +185,12 @@ public class FreeController {
 			@RequestParam("page") Integer page, HttpSession session) {
 		try {
 			Free free = fService.printOneByNo(boardNo);
-			List<FreeReply> frList = fService.printAllReply(boardNo);
+			List<FreeReply> fRList = fService.printAllReply(boardNo);
+			// 댓글조회하기 위해 댓글모음을 List로 받아서 detailView.jsp에서 가져옴
+			// 이름 오타 안나게 조심할 것!
 			session.setAttribute("boardNo", free.getBoardNo());
 			// 세션에 boardNo 저장 -> 삭제하기 위해서
-			mv.addObject("frList", frList);
+			mv.addObject("fRList", fRList);
 			mv.addObject("free", free);
 			mv.addObject("page", page);
 			mv.setViewName("free/freeDetailView");
@@ -292,6 +294,7 @@ public class FreeController {
 		// Member객체에 담아서 사용하기 위해 Object타입을 Member로 형변환해주고 member 변수에 담음.
 		String memberNickname = member.getMemberNickname();
 		// 로그인유저의 닉네임을 getter메소드로 불러와서 mapper에서 ${memberNickname}으로 호출해서 사용.
+		// session 불러오는 건 아주 많이 쓰이니 기억해둘것
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = fService.getEveryTotalCount("", "");
 		int boardLimit = 10;
@@ -329,8 +332,10 @@ public class FreeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/free/addReply.kh", method = RequestMethod.POST)
-	public ModelAndView addBoardReply(ModelAndView mv, @ModelAttribute FreeReply fReply, @RequestParam("page") int page,
-			HttpSession session) {
+	public ModelAndView addBoardReply(ModelAndView mv
+			, @ModelAttribute FreeReply fReply
+			, @RequestParam("page") int page
+			, HttpSession session) {
 		Member member = (Member) session.getAttribute("loginUser");
 		String freeReplyWriter = member.getMemberId();
 		fReply.setFreeReplyWriter(freeReplyWriter);

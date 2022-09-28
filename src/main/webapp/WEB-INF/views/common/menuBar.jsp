@@ -15,9 +15,9 @@
 }
     
     /* gallary */
-	.gallary {position: relative; width: 1920px; height: 400px; top: 0px;  margin:0 auto; padding:0; overflow:hidden; }
+	.gallary {position: relative; width: 100%; height: 400px; top: 0px;  margin:0 auto; padding:0; overflow:hidden; }
 	.gallary ul {position: absolute; margin: 0px; padding: 0px; list-style: none;  }
-	.gallary ul li {float: left; width: 1920; height: 500; margin:0; padding:0; }
+	.gallary ul li {float: left; width: 100%; height: 500; margin:0; padding:0; }
     .gallary ul li img{   margin: 0; padding: 0%;}
 
     /* logo */

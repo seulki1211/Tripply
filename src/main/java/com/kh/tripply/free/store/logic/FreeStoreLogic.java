@@ -91,7 +91,7 @@ public class FreeStoreLogic implements FreeStore{
 	
 	@Override
 	public int updateFreeReply(SqlSession session, FreeReply fReply) {
-		int result = session.update("FreeReplyMapper.updateReply", fReply);
+		int result = session.update("FreeReplyMapper.updateFreeReply", fReply);
 		return result;
 	}
 
