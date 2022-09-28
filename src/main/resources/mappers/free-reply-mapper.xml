@@ -16,11 +16,11 @@
 		INSERT INTO FREE_REPLY_TBL VALUES(SEQ_REPLYNO.NEXTVAL, #{boardNo}, #{freeReplyWriter}, 
 	#{freeReplyContents}, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
-	<update id="modifyFreeReply">
-		UPDATE FREE_REPLY_TBL SET F_REPLY_CONTENTS = #{freeReplyContents}
+	<update id="updateFreeReply">
+		UPDATE FREE_REPLY_TBL SET F_REPLY_CONTENTS = #{freeReplyContents}, F_UPDATE_DATE = DEFAULT WHERE F_REPLY_NO = #{freeReplyNo}
 	</update>
 	<delete id="deleteFreeReply">
-		DELETE FROM FREE_REPLY_TBL WHERE F_REPLY_NO = #{freeReplyNo}
+		UPDATE FREE_REPLY_TBL SET F_REPLY_STATUS = 'N' WHERE F_REPLY_NO = #{freeReplyNo}
 	</delete>
 	<select id="selectAllReply" resultMap="freeReplyResultMap">
 		SELECT * FROM FREE_REPLY_TBL WHERE BOARD_NO = #{boardNo} AND F_REPLY_STATUS = 'Y'

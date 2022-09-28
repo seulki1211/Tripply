@@ -77,9 +77,9 @@
 				location.href="/free/remove.kh?page="+value;
 			}
 		}
-		function removeReply(replyNo) {
+		function removeReply(freeReplyNo) {
 			event.preventDefault();
-			console.log(replyNo);
+			console.log(freeReplyNo);
 			if(confirm("정말 삭제하시겠습니까?")) {
 				var $delForm = $("<form>");
 				$delForm.attr("action", "/free/removeReply.kh");
@@ -98,7 +98,8 @@
 			//console.log(obj); // obj는 this를 통해 이벤트가 발생한 태그
 			$(obj).parent().parent().after($tr);
 		}
-		function modifyReply(obj, rNo) {
+		// 변수명 오타나서 여태 안되던 거였다...
+		function modifyReply(obj, freeReplyNo) {
 			var inputTag = $(obj).parent().prev().children();
 			console.log(inputTag.val());
 			var freeReplyContents = inputTag.val(); //= $("#modifyInput").val();
@@ -106,7 +107,7 @@
 			$form.attr("action", "/free/modifyReply.kh");
 			$form.attr("method", "post");
 			$form.append("<input type='hidden' value='"+freeReplyContents+"' name='freeReplyContents'>");
-			$form.append("<input type='hidden' value='"+rNo+"' name='freeReplyNo'>");
+			$form.append("<input type='hidden' value='"+freeReplyNo+"' name='freeReplyNo'>");
 			console.log($form[0]);
 			$form.appendTo("body");
 			$form.submit();
