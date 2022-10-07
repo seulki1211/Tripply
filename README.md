@@ -53,11 +53,7 @@
 </ul>
 
 
-<div>
-![메인페이지](https://user-images.githubusercontent.com/99261591/194527565-ea659ae0-8248-49bc-b8a3-d5be2ad96426.png)
-![회원정보](https://user-images.githubusercontent.com/99261591/194527530-86cf7faa-fceb-4e6e-b761-26c973454770.png)
-
-</div>
+<div style="color:red" width="300px" height="300px"> 안녕하세요</div>
 
 <img src="https://user-images.githubusercontent.com/99261591/194527565-ea659ae0-8248-49bc-b8a3-d5be2ad96426.png">
 
