@@ -22,9 +22,26 @@
 팀 선정 및 문서 작성:  2022.8.4 ~ 2022.9.16  <br>
 작업 기간:  2022.9.16 ~ 2022.9.28  
 
+<h3>개발 환경</h3>
+<ul>
+<li>eclipse</li>
+<li>VSCode</li>
+<li>Apache Tomcat 8.5</li>
+<li>Maven</li>
+<li>Mybatis</li>
+<li>github</li>
+</ul>
 
-<h3>추가 사용기술</h3>
-
+<h3>기술 스택</h3>
+<ul>
+<li>Java(jdk 1.8)</li>
+<li>HTML5</li>
+<li>CSS3</li>
+<li>javascript</li>
+<li>jQuery</li>
+<li>Spring Framework</li>
+<li>Oracle DB</li>
+</ul>
 
 <h3>추가 사용기술</h3>
 <ul>
