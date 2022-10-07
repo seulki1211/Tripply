@@ -1,5 +1,4 @@
-![헤더로고](https://user-images.githubusercontent.com/99261591/194527525-04842e04-1d25-4b40-a09f-2272f360a713.png)
-
+<img src="https://user-images.githubusercontent.com/99261591/194527525-04842e04-1d25-4b40-a09f-2272f360a713.png">
 
 <h1>트리플리(Tripply, trip-flea)</h1>
 <hr>
@@ -53,9 +52,7 @@
 </ul>
 
 
-<div style="color:red" width="300px" height="300px"> 안녕하세요</div>
 
-<img src="https://user-images.githubusercontent.com/99261591/194527565-ea659ae0-8248-49bc-b8a3-d5be2ad96426.png">
 
 
 
