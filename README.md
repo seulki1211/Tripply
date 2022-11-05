@@ -12,14 +12,14 @@
 1) 여행과 관련된 세 가지 주요기능을 갖추었다는 의미가 있습니다.<br>
 2) 여행과 플리마켓의 합성어입니다.
 
-<h3>팀원 및 담당기능</h3>
+<h3 name="seulki">팀원 및 담당기능</h3>
 
  + 권마빈 - 후기게시판, 거래게시판, 포인트관리 및 거래, 최신글 조회
 
  + 김석진 - 회원 관련 기능, 로그인, 로그아웃, 본인 작성글 조회, 자유게시판
  + 주원영 - 일정 게시판, 카카오 지도API를 이용한 여행 플래너
  
- <details>
+<details >
 <summary >정슬기 - <b> Click here for more information </b> </summary>
 <div markdown="1">
 
@@ -79,35 +79,9 @@ https://user-images.githubusercontent.com/110793386/200091207-533d9bed-254e-413f
 팀 선정 및 문서 작성:  2022.8.4 ~ 2022.9.16  <br>
 작업 기간:  2022.9.16 ~ 2022.9.28  
 
-<h3>개발 환경</h3>
-<ul>
-<li>eclipse</li>
-<li>VSCode</li>
-<li>Apache Tomcat 8.5</li>
-<li>Maven</li>
-<li>Mybatis</li>
-<li>github</li>
-</ul>
-
-<h3>기술 스택</h3>
-<ul>
-<li>Java(jdk 1.8)</li>
-<li>HTML5</li>
-<li>CSS3</li>
-<li>javascript</li>
-<li>jQuery</li>
-<li>Spring Framework</li>
-<li>Oracle DB</li>
-</ul>
-
-<h3>추가 사용기술</h3>
-<ul>
-<li>카카오 지도 API</li>
-<li>썸머노트</li>
-</ul>
-<br><br>
 <h3>실행화면</h3>
-<br><br>메인페이지<br>
+<br>동행자 게시판, 쪽지, 배너, 공지사항 관리는 위의 <a href= "#seulki">정슬기</a>를 클릭해주세요!<br>
+<br>메인페이지<br>
 <img src="https://user-images.githubusercontent.com/99261591/194527565-ea659ae0-8248-49bc-b8a3-d5be2ad96426.png">
 <br><br>여행일정게시판목록<br>
 <img src="https://user-images.githubusercontent.com/99261591/194527461-f67b45a5-a224-4e8f-9587-546245693afb.png">
@@ -145,17 +119,34 @@ https://user-images.githubusercontent.com/110793386/200091207-533d9bed-254e-413f
 <img src="https://user-images.githubusercontent.com/99261591/194527496-ae8b458d-d2aa-4b54-bb88-1e9fb6228f19.png">
 <br><br>자유게시판 상세보기<br>
 <img src="https://user-images.githubusercontent.com/99261591/194527501-61e10215-5912-4bfd-83f5-4fc5af281195.png">
-<br><br>동행자 게시판<br>
-<img src="https://user-images.githubusercontent.com/99261591/194527559-c903b464-2060-4a59-bd66-543700db43a2.png">
-<br><br>받은 쪽지<br>
-<img src="https://user-images.githubusercontent.com/99261591/194527567-e47db3c5-fd89-433a-8891-b894d16fe8e7.png">
-<br><br>보낸 쪽지<br>
-<img src="https://user-images.githubusercontent.com/99261591/194527575-03e20508-674a-46d9-9e4d-7f3971f91a37.png">
-<br><br>배너 관리<br>
-<img src="https://user-images.githubusercontent.com/99261591/194527572-6f2b62a1-6634-46a3-bd97-fdf14bcaf4a7.png">
-<br><br>공지 관리<br>
-<img src="https://user-images.githubusercontent.com/99261591/194527548-170fceab-b888-46f5-b1c4-d8eb8847e061.png">
 
+<h3>개발 환경</h3>
+<ul>
+<li>eclipse</li>
+<li>VSCode</li>
+<li>Apache Tomcat 8.5</li>
+<li>Maven</li>
+<li>Mybatis</li>
+<li>github</li>
+</ul>
+
+<h3>기술 스택</h3>
+<ul>
+<li>Java(jdk 1.8)</li>
+<li>HTML5</li>
+<li>CSS3</li>
+<li>javascript</li>
+<li>jQuery</li>
+<li>Spring Framework</li>
+<li>Oracle DB</li>
+</ul>
+
+<h3>추가 사용기술</h3>
+<ul>
+<li>카카오 지도 API</li>
+<li>썸머노트</li>
+</ul>
+<br><br>
 
 
 
