@@ -13,12 +13,67 @@
 2) 여행과 플리마켓의 합성어입니다.
 
 <h3>팀원 및 담당기능</h3>
-<ul>
-<li>권마빈 - 후기게시판, 거래게시판, 포인트관리 및 거래, 최신글 조회</li>
-<li>정슬기 - 동행자게시판, 관리자(공지사항관리, 배너관리), 쪽지</li>
-<li>김석진 - 회원 관련 기능, 로그인, 로그아웃, 본인 작성글 조회, 자유게시판</li>
-<li>주원영 - 일정 게시판, 카카오 지도API를 이용한 여행 플래너 </li>
-</ul>
+
+ + 권마빈 - 후기게시판, 거래게시판, 포인트관리 및 거래, 최신글 조회
+
+ + 김석진 - 회원 관련 기능, 로그인, 로그아웃, 본인 작성글 조회, 자유게시판
+ + 주원영 - 일정 게시판, 카카오 지도API를 이용한 여행 플래너
+ 
+ <details>
+<summary >정슬기 - <b> Click here for more information </b> </summary>
+<div markdown="1">
+
+
++ 쪽지
+
+
+https://user-images.githubusercontent.com/110793386/200091656-07be0f7d-d31a-4093-b1a1-fc72ecf971cd.mp4
+
+     - 수신자 체크(수신자가 없는 경우 발송 못하도록 조치)
+     - 받은 편지함 / 보낸 편지함 구현
+     - 쪽지 검색 구현
+  
+
+https://user-images.githubusercontent.com/110793386/200091757-c1581980-4506-4c5c-a62b-bd0bd6ee8329.mp4
+
+     - 답장시 수신자 체크 해제
+
+
++ 공지사항 
+
+https://user-images.githubusercontent.com/110793386/200091197-2b289d83-ba8e-4d24-8105-eafd0883aef4.mp4
+
+     - 공지사항 CRUD 구현
+     - 섬머노트 활용으로 게시글 작성 시 간단한 편집 가능
+     - 공지사항 노출 갯수 제한
+     - home에서 공지사항 열람시 팝업 처리
+
+
++ 동행자게시판(우리 함께 게시판)
+
+https://user-images.githubusercontent.com/110793386/200092507-3fc5754f-9a52-444c-9f83-8a5422a1cac1.mp4
+
+     - 게시판 CRUD 구현
+     - 섬머노트 활용으로 게시글 작성 시 간단한 편집 가능
+     - 작성자 본인 외 수정 불가
+     - 설정한 여행 기간 경과 시 해당 게시글 열람 불가
+
+
+https://user-images.githubusercontent.com/110793386/200092666-bbfef49a-2b43-40b6-91a8-6c37531ba5b3.mp4
+
+     - 댓글 CRUD 구현
+     - 작성자 본인 외 수정 불가
+     
+ 
++ 배너
+
+https://user-images.githubusercontent.com/110793386/200091207-533d9bed-254e-413f-9ccf-a2f9cd49adf1.mp4
+
+     - 배너 CRUD 구현
+
+     
+</div>
+</details>
  
 <h3>프로젝트 제작 기간</h3>
 팀 선정 및 문서 작성:  2022.8.4 ~ 2022.9.16  <br>
